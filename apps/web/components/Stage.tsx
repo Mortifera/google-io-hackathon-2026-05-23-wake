@@ -23,7 +23,6 @@ import InspectorPanel, { type Focus } from "./InspectorPanel";
 import MonteCarloFan from "./MonteCarloFan";
 import OperatorConsole from "./OperatorConsole";
 import ReasoningFeed from "./ReasoningFeed";
-import TwoBeat from "./TwoBeat";
 import ABTesting from "./ABTesting";
 import s from "./stage.module.css";
 
@@ -45,7 +44,7 @@ export interface ReasoningItem {
 }
 
 type Layer = "public" | "private";
-type View = "cascade" | "futures" | "twobeat" | "abtesting";
+type View = "cascade" | "futures" | "abtesting";
 type RunMode = "replay" | "live";
 export type LiveStatus = "idle" | "connecting" | "streaming" | "done" | "error";
 
@@ -446,12 +445,6 @@ export default function Stage({ world }: Props) {
               Futures
             </button>
             <button
-              data-active={view === "twobeat"}
-              onClick={() => setView("twobeat")}
-            >
-              Two worlds
-            </button>
-            <button
               data-active={view === "abtesting"}
               onClick={() => setView("abtesting")}
             >
@@ -556,8 +549,6 @@ export default function Stage({ world }: Props) {
         </>
       ) : view === "abtesting" ? (
         <ABTesting world={world} />
-      ) : view === "twobeat" ? (
-        <TwoBeat world={world} />
       ) : mc ? (
         <MonteCarloFan mc={mc} />
       ) : (
