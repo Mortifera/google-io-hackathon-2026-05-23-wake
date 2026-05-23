@@ -27,29 +27,52 @@ function parseArgs(argv: string[]): {
   ticks: number;
   out?: string;
   model?: string;
+  verify?: string;
 } {
   const positional: string[] = [];
   let budget = 1;
   let ticks = 12;
   let out: string | undefined;
   let model: string | undefined;
+  let verify: string | undefined;
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i]!;
     if (a === "--budget") budget = Number(argv[++i]);
     else if (a === "--ticks") ticks = Number(argv[++i]);
     else if (a === "--out") out = argv[++i];
     else if (a === "--model") model = argv[++i];
+    else if (a === "--verify") verify = argv[++i];
     else if (a.startsWith("--budget=")) budget = Number(a.slice(9));
     else if (a.startsWith("--ticks=")) ticks = Number(a.slice(8));
     else if (a.startsWith("--out=")) out = a.slice(6);
     else if (a.startsWith("--model=")) model = a.slice(8);
+    else if (a.startsWith("--verify=")) verify = a.slice(9);
     else positional.push(a);
   }
-  return { scenario: positional.join(" ").trim(), budget, ticks, out, model };
+  return { scenario: positional.join(" ").trim(), budget, ticks, out, model, verify };
+}
+
+/** Offline proof that a committed world artifact loads + runs (the demo fallback). */
+async function verifyWorld(file: string): Promise<void> {
+  const p = path.resolve(file);
+  const world = loadWorld(p);
+  const report = await validateAndRun(world, world.seeds[0]!.id);
+  console.log(`\n🔎 Genesis verify — ${path.basename(p)}`);
+  console.log(`   ✓ parses WorldSchema + loads via kernel loadWorld()`);
+  console.log(
+    `   ✓ ${world.nodes.length} nodes, ${world.edges.length} edges, ${world.seeds.length} seeds`,
+  );
+  console.log(
+    `   ✓ runnable: ${report.ticks} ticks, ${report.events} events (${report.llmCalls} mock calls)\n`,
+  );
 }
 
 async function main() {
   const args = parseArgs(process.argv.slice(2));
+  if (args.verify) {
+    await verifyWorld(args.verify);
+    return;
+  }
   if (!args.scenario) {
     console.error('Usage: tsx tools/genesis/genesis.ts "<scenario>" [--budget 1] [--ticks 12]');
     process.exit(1);

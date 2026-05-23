@@ -66,7 +66,7 @@ export async function fillDossiers(
   let filled = 0;
 
   const batches = chunk(world.nodes, 10);
-  for (const batch of batches) {
+  const runBatch = async (batch: NodeDef[]): Promise<DossierOut | null> => {
     const user = [
       `Write a final dossier for each node. Preserve the draft's meaning; make it sharper and scenario-specific.`,
       ``,
@@ -75,25 +75,37 @@ export async function fillDossiers(
           `- id: ${n.id}\n  label: ${n.label}\n  ${tierLabel(n)}, function: ${n.fn}\n  draft: ${noteById.get(n.id) ?? n.dossier}`,
       ),
     ].join("\n");
-
     try {
-      const out = await llm.json<DossierOut>({
+      return await llm.json<DossierOut>({
         system: systemPrompt(cast.scenario),
         user,
         schema: DOSSIER_SCHEMA,
         temperature: 0.75,
       });
-      for (const r of out.dossiers ?? []) {
-        if (!r.id || !r.dossier) continue;
-        const node = byId.get(r.id);
-        if (!node) continue;
-        node.dossier = r.dossier.trim();
-        if (r.publicFace) node.initialState.publicFace = r.publicFace.trim().slice(0, 200);
-        filled++;
-      }
     } catch (err) {
       // Non-fatal: nodes keep their draft dossier (still valid). Log and move on.
       onStep?.("Dossier batch failed (keeping drafts)", (err as Error)?.message);
+      return null;
+    }
+  };
+
+  // Run batches with bounded concurrency so a ~30-node world finishes in ~one
+  // batch-time instead of N serial round-trips (on-camera speed).
+  const CONCURRENCY = 4;
+  const outputs: Array<DossierOut | null> = [];
+  for (let i = 0; i < batches.length; i += CONCURRENCY) {
+    const group = batches.slice(i, i + CONCURRENCY);
+    outputs.push(...(await Promise.all(group.map(runBatch))));
+  }
+
+  for (const out of outputs) {
+    for (const r of out?.dossiers ?? []) {
+      if (!r.id || !r.dossier) continue;
+      const node = byId.get(r.id);
+      if (!node) continue;
+      node.dossier = r.dossier.trim();
+      if (r.publicFace) node.initialState.publicFace = r.publicFace.trim().slice(0, 200);
+      filled++;
     }
   }
   return filled;
