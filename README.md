@@ -71,3 +71,7 @@ Greenfield. Kernel, graphs, prompts, and visualization to come.
 *Wake* — the trail of disturbance left behind a moving object; the thing every
 action leaves behind in the world. Also: the act of waking a world up to what
 just happened.
+
+## License
+
+[MIT](./LICENSE) © 2026 Jack Gardner
