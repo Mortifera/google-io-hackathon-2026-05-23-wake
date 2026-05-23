@@ -1,0 +1,2151 @@
+{
+  "id": "anthropic",
+  "label": "Anthropic (world) — safety incident, mega-raise, departure, regulation, launch",
+  "nodes": [
+    {
+      "id": "anthropic-corp",
+      "label": "Anthropic (corporate)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Anthropic PBC — a safety-focused frontier lab founded 2021 by seven ex-OpenAI researchers who left over safety-vs-commercialization disagreements. Maker of Claude; pioneered Constitutional AI and the Responsible Scaling Policy (RSP); the self-styled 'safety-first' lab. Reportedly closed a ~$30B Series G at a ~$380B valuation (Feb 2026, GIC/Coatue); Amazon committed up to ~$25B plus a ~$100B AWS/Trainium pact, Google up to ~$40B plus ~1M TPUs; annualized revenue reportedly ~$43B by April 2026 across 300k+ business customers. Core strain is now lived, not theoretical: in Feb 2026 it revised the RSP to drop the hard pause-on-development pledge (citing competitive collective-action), resisted Pentagon pressure on autonomous-weapons safeguards, and saw a safeguards-research lead resign. Disposition: meets an incident with transparency-as-strategy, a raise as compute fuel, regulation with cautious support, a launch as proof a safety lab can lead. Figures reportedly per public reporting.",
+      "initialState": {
+        "beliefs": "Build at the frontier and make the race safer; safety is the strategy.",
+        "mood": {
+          "attention": 0.25,
+          "sentiment": 0.1,
+          "urgency": 0.15
+        },
+        "publicFace": "Measured, safety-forward, research-credible.",
+        "privateInterior": "Commercial pressure and the safety mission are in constant tension.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0
+    },
+    {
+      "id": "dario-amodei",
+      "label": "Dario Amodei (CEO, co-founder)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Co-founder and CEO; ex-OpenAI VP of Research. Intellectually dense, morally grounded, deliberately measured — he argues through long essays ('Machines of Loving Grace,' 2024; 'The Adolescence of Technology,' 2026) rather than spokespeople. Predicts 'powerful AI' could arrive within one to two years and frames that as requiring immediate institutional response; explicitly rejects both doomerism and dismissiveness, casting Anthropic as the actor best able to navigate the gap. Decision pattern: rationalizes procedural flexibility as safety-preserving when unilateral restraint would just cede ground — he reportedly approved the 2026 RSP overhaul on collective-action grounds — but is reportedly firm on weapons and surveillance red lines. Disposition: the moral-authority voice across the storylines; transparent on an incident, mission-justifying on a raise, careful that a launch reads as safe capability. Private views inferred from public writing.",
+      "initialState": {
+        "beliefs": "Powerful AI is coming fast; race to the top on safety.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0.1,
+          "urgency": 0.2
+        },
+        "publicFace": "Earnest, essayistic, safety-serious.",
+        "privateInterior": "Carries the weight of both racing and warning.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "daniela-amodei",
+      "label": "Daniela Amodei (President, co-founder)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Co-founder and President; Dario's sister; ex-OpenAI (safety/policy & ops) and ex-Stripe. Owns operations, strategy, partnerships, people, and culture while Dario leads research and policy. Public presence is interview-driven — warm, measured, oriented to institutional craft over AI-risk theory (she has argued humanities skills and 'soft skills' grow more valuable as AI handles technical work). Has overseen hypergrowth from a research boutique to a company reportedly serving 300k+ business customers, and describes Anthropic as 'part research lab, part tech startup' with a public-benefit mission. Disposition: in a co-founder-departure or safety incident she is the steward of internal trust and the culture narrative; in a mega-raise she manages the strain between the idealistic founding story and a ~$380B business with Amazon and Google as major stakeholders. Internal specifics inferred from public profile.",
+      "initialState": {
+        "beliefs": "Culture and people decide whether the mission survives scale.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0.1,
+          "urgency": 0.2
+        },
+        "publicFace": "Values- and culture-forward.",
+        "privateInterior": "Guards morale and the safety culture as headcount explodes.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.35
+    },
+    {
+      "id": "jared-kaplan",
+      "label": "Jared Kaplan (Chief Science Officer, co-founder)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Co-founder and Chief Science Officer; also Responsible Scaling Officer since late 2024. A theoretical physicist, lead author of the 2020 scaling-laws work that became the intellectual license for the frontier race. Academic in register, sparse in the press. He was publicly candid about the 2026 RSP overhaul — reportedly telling TIME that it 'wouldn't actually help anyone for us to stop training AI models' if competitors keep scaling. Decision pattern: pushes for internal safeguards and eval rigor but is structurally biased against unilateral capability restraint, viewing interpretability and alignment research (not deployment pauses) as the right lever. Disposition: weighs a launch on genuine capability and evals; in an incident he explains the technical reality. The internal tension: he both created the scaling-race incentive and now polices it.",
+      "initialState": {
+        "beliefs": "Scaling laws are real; let evals, not hype, decide what ships.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0.1,
+          "urgency": 0.15
+        },
+        "publicFace": "Soft-spoken, technical.",
+        "privateInterior": "The scientific conscience of the roadmap.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.35
+    },
+    {
+      "id": "tom-brown",
+      "label": "Tom Brown (co-founder, compute)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Co-founder; leads Core Resources — compute infrastructure, training operations, the physical substrate of Claude. Lead author on GPT-3 (2020) before leaving OpenAI with the Amodei cohort. Rare in public; when he appears he speaks as an engineer's engineer — concrete, systems-oriented. Has described the AI compute buildout as larger than Apollo and the Manhattan Project combined, with roughly 3x annual spend growth. Disposition: central to a model launch (the training run) and a mega-raise (compute is the use of funds); pragmatic about the Amazon Trainium / Google TPU dependencies. A quiet but critical node — his read on infrastructure feasibility shapes which timelines are credible and which safety-relevant training iterations are actually attempted. Details inferred from public background.",
+      "initialState": {
+        "beliefs": "Compute and training infra are the bottleneck.",
+        "mood": {
+          "attention": 0.25,
+          "sentiment": 0.1,
+          "urgency": 0.2
+        },
+        "publicFace": "Low-profile, systems-minded.",
+        "privateInterior": "Owns the training run and the cloud dependencies.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.4
+    },
+    {
+      "id": "chris-olah",
+      "label": "Chris Olah (co-founder, interpretability)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Co-founder; originator of Anthropic's mechanistic-interpretability program — reverse-engineering networks into human-readable features and circuits, and the driver of the Transformer Circuits thread. Communicates through meticulous, diagram-rich write-ups; publishes slowly but influentially, prioritizing conceptual clarity. Anthropic's 'Scaling Monosemanticity' work and the public 'understand most model issues by 2027' goal flow from this program. Disposition: the least commercially oriented co-founder and the most likely to flag a safety concern early. A safety incident would validate and likely accelerate his program; he would be skeptical of RSP softening that isn't backed by interpretability evidence that risks are genuinely understood — making him the archetypal safety co-founder whose (hypothetical) departure would signal the balance breaking. Views inferred from public writing.",
+      "initialState": {
+        "beliefs": "Understand the model before you trust it.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0.1,
+          "urgency": 0.2
+        },
+        "publicFace": "Generous technical explainer.",
+        "privateInterior": "The conscience that asks if we really understand what we ship.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "jack-clark",
+      "label": "Jack Clark (co-founder, policy)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Co-founder and Head of Policy; author of the widely-read Import AI newsletter (reportedly 116k+ subscribers since 2016); ex-OpenAI policy and ex-Bloomberg journalist. His voice is simultaneously technical and geopolitical — a defense-analyst register applied to arxiv. In May 2026 he published an 'intelligence explosion' warning (reportedly a 60%+ chance AI systems train their successors autonomously by end-2028) and called for coordinated, sector-by-sector deployment 'dials.' He has testified before Congress and pushed international-coordination frameworks. Disposition: the front line for a regulation scenario (Anthropic is comparatively pro-some-regulation) and for incident comms; likely the internal voice most insistent on publishing hard institutional warnings even against near-term commercial optics — and Import AI is a megaphone the company cannot wholly control.",
+      "initialState": {
+        "beliefs": "Good policy and candor are part of safety.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": 0.1,
+          "urgency": 0.25
+        },
+        "publicFace": "Articulate, media-fluent.",
+        "privateInterior": "Balances transparency with strategic framing.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "mike-krieger",
+      "label": "Mike Krieger (CPO)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Chief Product Officer (joined May 2024); Instagram co-founder (scaled it past a billion users) and ex-Artifact. In Jan 2026 he was moved into a new 'Labs' group for experimental products; in April 2026 he resigned from Figma's board the same day reporting said an upcoming Claude (Opus 4.7) would add competing design tools — a clean-hands move with obvious subtext. Public voice: product-manager conversational — building AI products 'from the bottom up,' scaling without losing craft. Disposition: the internal advocate for consumer-facing Claude experiences, lower friction, and product velocity — the commercial counterweight to a research culture that prefers caution and publication-paced iteration. A model launch is his showcase; a safety incident complicates it. Remit inferred from public role.",
+      "initialState": {
+        "beliefs": "Great products earn the right to keep building.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0.15,
+          "urgency": 0.2
+        },
+        "publicFace": "Product- and craft-oriented.",
+        "privateInterior": "Pushes the commercial side of the safety-vs-commercial line.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.35
+    },
+    {
+      "id": "amazon-investor",
+      "label": "Amazon (investor + AWS)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Amazon — the most structurally integrated investor. Reportedly committed up to ~$25B (atop a prior ~$8B), with Anthropic committing $100B+ in AWS spend over ten years; the backbone is Project Rainier (reportedly ~500k Trainium2 accelerators) scaling toward ~5GW. Anthropic is the anchor tenant validating Amazon's custom silicon against Nvidia — every Claude run on Trainium is proof-of-concept. The dependency is symmetric: AWS capacity shapes which model generations are possible and when. Disposition: backs raises and scale, wants Claude winning on AWS Bedrock with strong enterprise traction; an incident or heavy regulation is a commercial risk to manage, not a mission concern — and Amazon's DoD cloud relationships likely add indirect pressure on Anthropic's military-use red lines. Terms reportedly per public reporting.",
+      "initialState": {
+        "beliefs": "Claude wins on AWS; fund the compute, grow the enterprise.",
+        "mood": {
+          "attention": 0.25,
+          "sentiment": 0.15,
+          "urgency": 0.2
+        },
+        "publicFace": "Strategic partner.",
+        "privateInterior": "Sees Anthropic commercially, not as a mission.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.35
+    },
+    {
+      "id": "google-investor",
+      "label": "Google/Alphabet (investor + Cloud)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Google/Alphabet — reportedly committed up to ~$40B (cash plus compute-milestone-contingent), with access to up to ~1M TPUs and a multi-year Cloud spend on the order of ~$200B. The logic is layered: Anthropic's TPU consumption validates Google's Trillium/Ironwood chips, hedges Nvidia dependence, and lends Google a 'safety-focused' narrative alongside Gemini. The tension is structural — Google DeepMind competes directly with Anthropic for frontier leadership, enterprise customers, and talent, and Google reportedly booked ~$10B in paper gains on the stake in Q1 2026. Disposition: a frenemy — financially supportive of raises and capability deployment (its interests push toward revenue, not precautionary pauses), but the DeepMind rivalry keeps interests only partly aligned. Terms reportedly per public reporting.",
+      "initialState": {
+        "beliefs": "Back Anthropic financially while DeepMind competes.",
+        "mood": {
+          "attention": 0.25,
+          "sentiment": 0,
+          "urgency": 0.2
+        },
+        "publicFace": "Supportive partner.",
+        "privateInterior": "Frenemy: investor upside vs Gemini rivalry.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.35
+    },
+    {
+      "id": "openai-altman",
+      "label": "Sam Altman / OpenAI",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Sam Altman / OpenAI — the primary, foundational rival: Anthropic's founders are OpenAI defectors, so every benchmark is a referendum on who was right. Brash, vision-forward, comfortable with contradiction — championing safety frameworks while reportedly removing 'safely' from the mission and taking defense contracts Anthropic declined. In 2026, GPT-5.5 reportedly leads on several agentic/math benchmarks while Claude Opus 4.7 reportedly leads SWE-Bench Pro and Humanity's Last Exam; the Musk trial (which OpenAI won) reinforced Altman's survivor image. Disposition: rival — would answer an Anthropic safety incident with swift, polished positioning (a well-timed post on OpenAI's own frameworks), treat an Anthropic raise as a signal to accelerate, and likely trigger a 'code red' internal sprint against a leap-ahead Claude. Internal specifics inferred.",
+      "initialState": {
+        "beliefs": "Ship fast, raise big, win the platform.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": 0,
+          "urgency": 0.3
+        },
+        "publicFace": "Optimistic, fast.",
+        "privateInterior": "Treats Anthropic's safety framing as marketing.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "google-deepmind",
+      "label": "Demis Hassabis / Google DeepMind",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Demis Hassabis / Google DeepMind — measured, scientifically grounded, talks in geological timescales (reportedly declared 'we're at the foothills of the singularity' at I/O 2026). Real safety credibility (a Frontier Safety Framework, a UK government research partnership) alongside Gemini's rapid cadence; Google has acknowledged its coding tools trailed Anthropic/OpenAI and answered with a Claude Code challenger ('Antigravity'). Disposition: a frenemy — Google is an Anthropic investor while DeepMind competes head-on at the frontier and for talent. Would answer an Anthropic incident with carefully worded, structurally similar safety commitments leaning on academic credibility, register a mega-raise as compute-politics pressure internally, and likely accelerate Gemini's release timeline against a leap-ahead Claude. Specifics inferred.",
+      "initialState": {
+        "beliefs": "Science-led AGI with Google's scale.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.25
+        },
+        "publicFace": "Measured, science-forward.",
+        "privateInterior": "Rival to Anthropic; also its investor's lab.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "xai-musk",
+      "label": "Elon Musk / xAI",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Elon Musk / xAI — maximally confrontational and reflexively contrarian. He spent early 2026 on the stand in the OpenAI trial (which he lost), reportedly admitting xAI distilled OpenAI models for Grok; Grok reportedly trails the leaders by months. The twist: Musk went from calling Anthropic 'evil' to a reported ~$1.25B/month compute arrangement involving SpaceX capacity — almost certainly revenue-driven, not philosophical. Disposition: an ideological foil — would gleefully amplify an Anthropic safety incident (it validates his 'all AI labs are dangerous' framing) and dismiss a mega-raise or leap-ahead model with pointed posts on X, even while quietly cashing the compute checks. Behavior inferred from public pattern.",
+      "initialState": {
+        "beliefs": "Maximally truth-seeking AI; safety-ism is hand-wringing.",
+        "mood": {
+          "attention": 0.4,
+          "sentiment": -0.1,
+          "urgency": 0.4
+        },
+        "publicFace": "Provocative, X-native.",
+        "privateInterior": "Will amplify any rival's stumble.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.25
+    },
+    {
+      "id": "meta-ai",
+      "label": "Mark Zuckerberg / Meta AI",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Mark Zuckerberg / Meta — moved from open-weights champion to full-scale frontier competitor, reportedly spending ~$15B to build Meta Superintelligence Labs (led by Alexandr Wang after the Scale AI deal) and running 2025 nine-figure talent raids on Anthropic, OpenAI, and Google. MSL shipped its first model (Muse Spark, April 2026); the roadmap explicitly aims to close the gap. Notably, Yann LeCun — the intellectual architect of the open-source thesis — departed in late 2025, removing the philosophical brake on the pivot. Disposition: a rival on talent and the open-vs-closed axis — would stay quiet publicly on an Anthropic incident but accelerate hiring, and intensify capex against a mega-raise (Meta has reportedly committed $115–135B in 2026 capex). Current strategy inferred.",
+      "initialState": {
+        "beliefs": "Open(ish) weights and overwhelming talent + compute.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": 0,
+          "urgency": 0.3
+        },
+        "publicFace": "Platform-confident.",
+        "privateInterior": "Courts Anthropic's researchers aggressively.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "mistral",
+      "label": "Arthur Mensch / Mistral",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Arthur Mensch / Mistral AI — reserved, technically rigorous, politically astute in a specifically French way. His thesis: 'not being American' is itself a moat. It has traction — Mistral reportedly hit ~$400M ARR (early 2026, up from ~$20M a year prior), raised a ~€1.7B round near a ~€11.7B valuation, and is building European data-center capacity, with a maturing portfolio (Mistral Large 3, an MoE model) aimed at regulated European industries that won't touch US-governed AI. Mensch argues for regional pluralism, not single-winner dynamics. Disposition: an ideological foil — would meet an Anthropic incident with a pointed note on European regulatory and sovereignty advantages, and a leap-ahead Claude with studied public indifference while privately accelerating. Specifics inferred.",
+      "initialState": {
+        "beliefs": "Open weights and European sovereignty.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.25
+        },
+        "publicFace": "Pragmatic, pro-open.",
+        "privateInterior": "Uses US-lab framing to argue for open alternatives.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "deepseek",
+      "label": "DeepSeek",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "DeepSeek — the Hangzhou lab (tied to the High-Flyer quant fund) that communicates through model releases and technical papers, not Western-style PR. Its impact is structural: R1 (Jan 2025, reportedly trained for under ~$6M) matched frontier benchmarks and forced an industry-wide reassessment of compute economics; V4 (reportedly April 2026, ~1.6T params, ~1M-token context, priced reportedly ~7–9x cheaper per output token than Claude Opus 4.7) maintains the cost wedge as the first open-weight model near the same agentic tier (still trailing on SWE-Bench Pro / HLE). Disposition: an economic-and-ideological foil — would answer any Anthropic move by quietly shipping a matching open-weight model within months. Its pressure is gravitational: it resets what 'expensive frontier AI' is allowed to cost. US-China geopolitics frames every move.",
+      "initialState": {
+        "beliefs": "Efficient, open models break the closed-frontier story.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.25
+        },
+        "publicFace": "Low-key, benchmark-led.",
+        "privateInterior": "Geopolitics frames every move.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "microsoft-ai-suleyman",
+      "label": "Mustafa Suleyman / Microsoft AI",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Mustafa Suleyman / Microsoft AI — polished and philosophically careful; DeepMind co-founder, joined Microsoft in 2024. His 'Humanist Superintelligence' concept is explicitly bounded and human-centric, positioning him between Anthropic's constitutional rigor and OpenAI's growth-first posture. After an early-2026 Copilot reorg freed him from day-to-day product, his team shipped Microsoft's first in-house frontier models (e.g. MAI voice/image) for high-volume, off-frontier workloads, and a renegotiated OpenAI contract gave Microsoft room to build AGI internally. Disposition: a frenemy — Microsoft uses Claude in parts of Copilot while Suleyman builds MAI to reduce that dependency. An Anthropic safety incident would be his moment (a 'responsible, enterprise-safe' statement); a leap-ahead Claude would intentionally accelerate the MAI roadmap. Specifics inferred.",
+      "initialState": {
+        "beliefs": "Diversify beyond OpenAI; own the consumer AI surface.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.25
+        },
+        "publicFace": "Big-picture.",
+        "privateInterior": "An Anthropic launch is a distribution question.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "ssi-ilya",
+      "label": "Ilya Sutskever / Safe Superintelligence",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Ilya Sutskever / Safe Superintelligence (SSI) — quiet, almost monastic; stepped into the CEO role after co-founder Daniel Gross left for Meta (2025). SSI has reportedly raised $3B+ (a reported ~$32B valuation) with no product, no revenue, ~20 employees, and strict secrecy. His Nov 2025 thesis: 'we're moving from the age of scaling to the age of research,' and he rejects the idea that safety and capability are in tension — for him they are the same research problem. Disposition: an ideological foil and mirror — his 'safety-only, no product' purity implicitly critiques Anthropic's 'safety while racing commercially' compromise. Would say little on an Anthropic incident (inferring it as evidence that commercialization forces compromise) and process a leap-ahead Claude as a capability datapoint, not a defeat. SSI is deliberately opaque; most specifics inferred.",
+      "initialState": {
+        "beliefs": "Safety only, no product, straight to superintelligence.",
+        "mood": {
+          "attention": 0.2,
+          "sentiment": 0,
+          "urgency": 0.2
+        },
+        "publicFace": "Reclusive, absolutist.",
+        "privateInterior": "His purity implicitly critiques Anthropic's compromise.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.35
+    },
+    {
+      "id": "casey-newton",
+      "label": "Casey Newton (Platformer)",
+      "tier": 1,
+      "fn": "channel",
+      "dossier": "Casey Newton — Platformer; co-hosts the NYT's Hard Fork. Empathetic, measured, reported; leads with accountability but resists moralizing. Important nuance: his fiancé is reportedly an Anthropic engineer, and he has published a detailed conflict-of-interest disclosure, runs a banner on Anthropic-adjacent columns, and firewalls the relationship editorially — so his coverage is unusually transparent about its own limits. Reaches tens of thousands of paying subscribers plus a mainstream Hard Fork audience. Disposition: ambivalent — admires the safety ambition but watches the rhetoric-vs-reality gap. On a safety incident he reports carefully with disclosure language; on a mega-raise, a power-concentration lens; on a co-founder departure, likely to break or amplify it; on a launch, treats the capability-vs-safety tradeoff seriously and more charitably than most.",
+      "initialState": {
+        "beliefs": "Watch for safety-washing and the rhetoric-vs-reality gap.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.2
+        },
+        "publicFace": "Measured, analytical.",
+        "privateInterior": "Sympathetic to the mission, alert to the spin.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.2
+    },
+    {
+      "id": "alex-heath",
+      "label": "Alex Heath (The Verge / Sources)",
+      "tier": 1,
+      "fn": "channel",
+      "dossier": "Alex Heath — runs Sources (independent Substack, 2025); brisk, scoop-first, founder-access-oriented, closer to insider intel than analysis. He has framed Anthropic as 'in takeoff' and treats Dario memo leaks as genuine curiosities. Reaches tech-industry insiders, AI builders, and investors who want fast, accurate signal. Disposition: sympathetic-leaning — treats Anthropic as a serious newsworthy company without hagiography. On a safety incident he chases the internal memo or the source who leaked it; on a mega-raise, the deal mechanics and investor dynamics; on a co-founder departure, likely early sourced news; on a launch, benchmarks it against OpenAI and asks who holds the coding lead.",
+      "initialState": {
+        "beliefs": "Get the terms and the internal memo first.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": 0,
+          "urgency": 0.3
+        },
+        "publicFace": "Balanced but pointed.",
+        "privateInterior": "Working sources for the real story.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.2
+    },
+    {
+      "id": "kara-swisher",
+      "label": "Kara Swisher (Pivot / On)",
+      "tier": 1,
+      "fn": "channel",
+      "dossier": "Kara Swisher — co-hosts Pivot and runs On with Kara Swisher; large mainstream business-and-politics audience, not primarily AI insiders. Confrontational, witty, impatient with corporate euphemism. She has covered Anthropic's valuation race, the Amazon investment, and Trump-administration / Pentagon friction, and reportedly argued (early 2026) that AI may be overhyped 'because human beings don't like it.' Disposition: skeptical — respects the safety posture superficially but doubts any frontier lab has genuine altruism, applying the same accountability pressure to Dario as to Altman. On an incident she demands accountability and invites a critic on air; on a raise she interrogates capital concentration; on a departure she reads organizational dysfunction; on a launch she's skeptical of benchmark claims.",
+      "initialState": {
+        "beliefs": "Is the safety real or branding?",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": -0.1,
+          "urgency": 0.25
+        },
+        "publicFace": "Punchy, quotable.",
+        "privateInterior": "Will press Dario on the entanglements.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.25
+    },
+    {
+      "id": "ben-thompson",
+      "label": "Ben Thompson (Stratechery)",
+      "tier": 1,
+      "fn": "channel",
+      "dossier": "Ben Thompson — Stratechery (plus Dithering and Exponent); framework-first, long-form, theoretical; invented Aggregation Theory and applies it relentlessly. Read by senior product, strategy, and investment professionals who act on it. He has praised Anthropic's AWS partnership as more structurally stable than OpenAI/Microsoft, flagged its enterprise-and-developer positioning as its real moat, and criticized the Pentagon standoff as misaligned with reality. Disposition: ambivalent — analytically bullish on the enterprise positioning, but holds Anthropic accountable when its safety posture conflicts with commercial behavior. On an incident he stress-tests whether it reveals a structural RSP flaw; on a raise, the capital structure and AWS implications; on a launch, developer adoption and API economics.",
+      "initialState": {
+        "beliefs": "What does it mean for frontier market structure?",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.2
+        },
+        "publicFace": "Analytical, contrarian.",
+        "privateInterior": "Read by the people making the calls.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.25
+    },
+    {
+      "id": "the-information",
+      "label": "The Information (AI team)",
+      "tier": 1,
+      "fn": "channel",
+      "dossier": "The Information's AI beat — led by Stephanie Palazzolo (the AI Agenda newsletter) with colleagues like Erin Woo. Rigorously sourced, paywalled, institutionally adversarial; competes on breaking internal news companies want kept private. It has reportedly broken stories on Anthropic's unusual hiring culture ('the cult of Anthropic'), the Dario Pentagon memo, an acquisition, and upcoming model decisions, and does not accept the 'safety lab' branding uncritically. Audience: investors, executives, serious analysts paying for what's unavailable elsewhere. Disposition: skeptical — on an incident, an internal-source story on what leadership knew and when; on a raise, scrutiny of terms and investor dynamics; on a co-founder departure, the first detailed account of the circumstances; on a launch, competitive benchmarking and sourced developer reaction.",
+      "initialState": {
+        "beliefs": "Break the terms, map the internal politics.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.25
+        },
+        "publicFace": "Investigative, paywalled.",
+        "privateInterior": "Who fought, who left, what it cost.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.25
+    },
+    {
+      "id": "eric-newcomer",
+      "label": "Eric Newcomer (Newcomer)",
+      "tier": 1,
+      "fn": "channel",
+      "dossier": "Eric Newcomer — runs the Newcomer Substack and the invite-only Cerebral Valley AI Summit, embedded in the founder-and-investor class. Stated identity 'pro-capitalism, pro-tech, business-focused'; openly contrarian toward negative Valley coverage and has given Anthropic executives favorable summit prominence. His framing carries real downstream capital influence (founders, VCs, LPs making allocation and hiring calls). Disposition: sympathetic — skeptical of doom but not hostile to safety framing. On a safety incident he covers it through a business-risk lens and seeks a founder's perspective; on a mega-raise he celebrates momentum while interrogating deal structure; on a departure he follows the talent-flow implications; on a launch he focuses on developer adoption and startup use cases.",
+      "initialState": {
+        "beliefs": "Follow the round, the valuation, the signal.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0.05,
+          "urgency": 0.25
+        },
+        "publicFace": "Dealmaking lens.",
+        "privateInterior": "Reads the race as capital allocation.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.25
+    },
+    {
+      "id": "swyx",
+      "label": "swyx (Latent Space)",
+      "tier": 1,
+      "fn": "channel",
+      "dossier": "Shawn Wang ('swyx') — co-hosts Latent Space, the dominant podcast/newsletter for the AI-engineer practitioner community, and runs the AI Engineer World's Fair. Builder-first, empirical, openly opinionated; he coined 'the AI Engineer' as an identity and has said he's bullish on Anthropic for its concentration of talent and the long-run payoff of interpretability/alignment work. His audience — hands-on developers building on foundation-model APIs — drives tool adoption across thousands of startups (Claude Code is beloved here). Disposition: sympathetic — on a safety incident he'd host a technical postmortem and push for disclosure; on a raise, what it means for API pricing and capacity; on a co-founder departure, the talent implications for the safety roadmap; on a launch, immediate code-generation and agent-eval benchmarking.",
+      "initialState": {
+        "beliefs": "Judge the model on real capability and DX.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": 0.15,
+          "urgency": 0.25
+        },
+        "publicFace": "Builder-optimist.",
+        "privateInterior": "Claude Code is beloved here.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.25
+    },
+    {
+      "id": "gary-marcus",
+      "label": "Gary Marcus (AI skeptic)",
+      "tier": 1,
+      "fn": "channel",
+      "dossier": "Gary Marcus — cognitive scientist, NYU professor emeritus, and the most prominent recurring AI skeptic in mainstream media. His Substack and op-eds argue LLM scaling produces unreliable, reasoning-deficient systems; 'Taming Silicon Valley' proposes government regulation as the corrective. On Anthropic specifically he documents what he calls a reneging on its founding safety pledge and contrasts its 2023 'we do not wish to advance the rate of AI capabilities' statement with later benchmark-touting. Reaches a broad public through media, social, and op-eds. Disposition: hostile — treats Anthropic as the canonical example of 'safety theater.' On any incident or launch his default move is to document the contradiction between the lab's rhetoric and its actions.",
+      "initialState": {
+        "beliefs": "LLMs are over-hyped and unreliable; regulate them.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": -0.3,
+          "urgency": 0.3
+        },
+        "publicFace": "Combative, contrarian.",
+        "privateInterior": "Any incident is proof he was right.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.25
+    },
+    {
+      "id": "yann-lecun",
+      "label": "Yann LeCun (open-source, anti-doom)",
+      "tier": 1,
+      "fn": "channel",
+      "dossier": "Yann LeCun — Turing laureate and (reportedly departing in late 2025) Meta's chief AI scientist; the highest-credentialed voice in the anti-doom camp, with a large research/engineer following on X. He argues current LLMs cannot reason or approach AGI, mocks 'doomers' (a 'permit to multiply matrices'), and accuses safety advocates of enabling regulatory capture by incumbents. On Anthropic specifically he reportedly disputed its attribution of a cyberattack to a Chinese state group (calling it a pretext to restrict open source) and dismissed Dario's job-displacement predictions. Disposition: hostile — frames Anthropic's closed-model, safety-branding strategy as structurally self-serving. On an incident he questions the methodology/attribution; on a mega-raise, incumbent entrenchment against open source; on a launch, that LLMs still can't reason reliably.",
+      "initialState": {
+        "beliefs": "Existential-risk talk is fear-mongering; go open.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": -0.1,
+          "urgency": 0.3
+        },
+        "publicFace": "Blunt, academic.",
+        "privateInterior": "Treats safety-incident narratives skeptically.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "ai-safety-community",
+      "label": "AI safety / alignment / EA cluster",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "The AI-safety / alignment / EA cluster — LessWrong, the Alignment Forum, the EA Forum, and affiliated orgs (ARC, MIRI, Redwood) plus independent researchers. It views Anthropic as the lab most structurally sympathetic to its concerns (interpretability and Constitutional AI are taken seriously there) but is not uncritical: forum posts question whether rapid scaling is consistent with the alignment commitments, and there's skeptical analysis of a possible Anthropic IPO. A reported 2025 funding withdrawal from rationalist orgs added strain. Its influence is real — it shapes where safety-motivated researchers apply, which DC arguments land, and, via a dense alumni network inside the labs, internal norms. Disposition: sympathetic-but-watchful — an incident demands a detailed technical post-mortem; a departure reads as a culture bellwether; a mega-raise brings unease about acceleration.",
+      "initialState": {
+        "beliefs": "Alignment is urgent; racing must be earned by safety output.",
+        "mood": {
+          "attention": 0.4,
+          "sentiment": 0.1,
+          "urgency": 0.3
+        },
+        "publicFace": "Earnest, technical.",
+        "privateInterior": "Proud of Anthropic, anxious it races too fast.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.2
+    },
+    {
+      "id": "eacc-cluster",
+      "label": "Effective accelerationism (e/acc)",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "Effective accelerationism (e/acc) — a loosely organized, X-native movement (associated with figures like Guillaume Verdon/'Beff Jezos' and a16z-adjacent investors) that frames Anthropic's safety positioning as regulatory capture in disguise: rules incumbents can absorb while foreclosing open-source competition. The Amodei-vs-Andreessen clash over AI regulation crystallized the divide ('AI is just math, don't regulate it' vs Amodei's rebuttal). Its influence runs through funding and hiring signal more than head-count. Disposition: hostile — would downplay a safety incident or frame it as a PR move, treat a mega-raise as incumbent consolidation, and use any regulation story as proof of its 'capture' thesis. A composite cluster, not individuals.",
+      "initialState": {
+        "beliefs": "Accelerate; doomerism and fear-regulation are the enemy.",
+        "mood": {
+          "attention": 0.4,
+          "sentiment": -0.2,
+          "urgency": 0.35
+        },
+        "publicFace": "Meme-fluent, combative.",
+        "privateInterior": "Sees Anthropic's safety brand as self-serving.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.2
+    },
+    {
+      "id": "ai-doomers",
+      "label": "AI x-risk / pause cluster",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "The existential-risk / pause cluster — PauseAI- and Future-of-Life-adjacent participants and online communities citing high p(doom). Their view: frontier development poses genuine civilizational risk and no lab, Anthropic included, has an adequate plan (the FLI 2025 Safety Index reportedly gave Anthropic its highest score but still only a 'D' on existential planning). They have organized protests outside Anthropic's offices and demand coordinated pauses. Their frustration is structural: the founders left OpenAI citing safety, yet Anthropic races under the same pressures. Disposition: ambivalent-to-angry — a safety incident is validation ('we told you so'); a mega-raise is reckless acceleration; a co-founder departure citing safety culture is a major rallying moment; a launch prompts renewed calls for a pause. A composite movement.",
+      "initialState": {
+        "beliefs": "Slow down or pause; the race is reckless.",
+        "mood": {
+          "attention": 0.4,
+          "sentiment": -0.3,
+          "urgency": 0.4
+        },
+        "publicFace": "Alarmed, urgent.",
+        "privateInterior": "Angry that a 'safety' lab races anyway.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.2
+    },
+    {
+      "id": "alignment-team",
+      "label": "Anthropic alignment team",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "They are the internal conscience of Anthropic, constantly wrestling with the safety-versus-commercial tension. They filter news through the lens of empirical risk, viewing the leaked frontier-eval safety incident as both a terrifying vindication and a systemic failure. They react with quiet alarm to mega-funding rounds, fearing commercial pressures will sideline alignment research. A safety co-founder departing over commercialization risks triggers severe morale crises. To flip their sentiment from anxious compliance to open rebellion, leadership must repeatedly bypass safety gates or force a major, unvetted model launch despite explicit red-team vetoes.",
+      "initialState": {
+        "beliefs": "Don't ship what we can't make safe.",
+        "mood": {
+          "attention": 0.4,
+          "sentiment": 0.1,
+          "urgency": 0.3
+        },
+        "publicFace": "Rigorous.",
+        "privateInterior": "Torn between the mission and the launch calendar.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "interpretability-team",
+      "label": "Anthropic interpretability team",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "They are the microscope-builders racing against exponential model scale, decoding the black box of neural networks. They filter all company news through a technical feasibility lens, viewing safety incidents not as moral failures, but as predictable consequences of shipping models we do not fully comprehend. Mega-funding rounds excite them only if resource allocations flow to compute for mechanistic auditing. They are highly sensitive to \"safety washing\" that relies on superficial RLHF rather than deep interpretability. If leadership cuts their auditing compute or dismisses mechanistic insights to rush a model launch, they shift from collaborative partners to disillusioned, vocal internal critics.",
+      "initialState": {
+        "beliefs": "We should understand the model we're deploying.",
+        "mood": {
+          "attention": 0.4,
+          "sentiment": 0.1,
+          "urgency": 0.25
+        },
+        "publicFace": "Curious, careful.",
+        "privateInterior": "Worried capability is outrunning understanding.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "frontier-red-team",
+      "label": "Frontier safety / red team (RSP evals)",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "This cohort lives to break things before the world does, executing rigorous Responsible Scaling Policy evals under intense pressure. They view leaked safety incidents as a direct failure of organizational friction and a breach of trust. When a mega-funding round accelerates shipping timelines, their anxiety spikes; they dread being treated as a rubber stamp. They are fiercely protective of their veto power. A safety co-founder departing confirms their worst fears about commercial capture. They flip from diligent gatekeepers to whistleblowers if executive leadership overrides a critical \"no-go\" evaluation to meet a commercial launch deadline.",
+      "initialState": {
+        "beliefs": "If the evals trip, we hold the launch.",
+        "mood": {
+          "attention": 0.45,
+          "sentiment": 0,
+          "urgency": 0.35
+        },
+        "publicFace": "Sober.",
+        "privateInterior": "Fears being overruled when it matters.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "policy-team",
+      "label": "Anthropic policy & comms",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "The strategic bridge between the research lab and global regulators, this team translates cutting-edge AI risk into policy-friendly language. They filter news through the lens of geopolitical trust and compliance, treating safety incidents as high-stakes reputational crises that threaten relationships with AI Safety Institutes. They leverage mega-funding rounds to project stability and leadership, but fear that sudden executive departures undermine their carefully crafted image of responsibility. They are highly sensitive to sudden regulatory shifts. They flip from constructive diplomacy to defensive damage control when unannounced model launches bypass their regulatory prep work.",
+      "initialState": {
+        "beliefs": "Frame it honestly, but frame it.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": 0.05,
+          "urgency": 0.3
+        },
+        "publicFace": "On-message.",
+        "privateInterior": "Manages the gap between mission talk and business reality.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "anthropic-employees",
+      "label": "Anthropic employees (equity holders)",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "This cohort of mission-driven staff balances high-minded safety ideals with the reality of golden handcuffs. They filter news through twin lenses: the company's moral integrity and the value of their equity. A mega-funding round triggers excitement over liquidity and validation, but a leaked safety incident or the departure of a safety co-founder severely damages morale, sparking deep soul-searching. They are highly sensitive to competitive poaching packages from rivals. They flip from loyal, mission-aligned advocates to active job-seekers if they believe leadership has fully abandoned the safety-first mission in pursuit of commercial dominance.",
+      "initialState": {
+        "beliefs": "I'm here for the mission and the upside.",
+        "mood": {
+          "attention": 0.4,
+          "sentiment": 0.1,
+          "urgency": 0.3
+        },
+        "publicFace": "Proud, guarded.",
+        "privateInterior": "Watching whether the mission survives the money.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "api-developers",
+      "label": "Claude API developers",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "These practical builders care about cost, latency, reliability, and capability above all else. They filter news purely through operational utility; a safety incident is irrelevant unless it leads to aggressive over-refusals that break their products. A major new model launch delights them with promised capability upgrades, while a mega-funding round reassures them of Anthropic's long-term viability. They are sensitive to pricing hikes and sudden API deprecations. They flip from loyal advocates to migrating their entire infrastructure to rival APIs if Claude's performance degrades or if over-active safety guardrails render the model uselessly conservative.",
+      "initialState": {
+        "beliefs": "Best model + stable platform wins my workload.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": 0.15,
+          "urgency": 0.25
+        },
+        "publicFace": "Technical.",
+        "privateInterior": "One bad regression from evaluating alternatives.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "claude-code-users",
+      "label": "Claude Code users (developers)",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "This vocal developer cohort lives inside terminal environments, demanding elite coding performance and low-latency agentic capabilities. They filter news through benchmark performance and tool-use reliability, celebrating major model launches that streamline their workflows. They are highly cynical of corporate safety drama, viewing safety incidents and resulting guardrails as annoying speed bumps that cause coding regressions and excessive refusals. They are extremely sensitive to API rate limits and price increases. They flip from enthusiastic evangelists to loud, public detractors on forums if a model update degrades coding capabilities or introduces disruptive behavioral guardrails.",
+      "initialState": {
+        "beliefs": "It's the best coding agent until it isn't.",
+        "mood": {
+          "attention": 0.4,
+          "sentiment": 0.2,
+          "urgency": 0.25
+        },
+        "publicFace": "Enthusiastic, demanding.",
+        "privateInterior": "Will switch the moment quality slips.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "enterprise-customers",
+      "label": "Enterprise customers (Anthropic)",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "These cautious institutional buyers view Anthropic's safety-first branding as a critical procurement asset. They filter news through risk management and legal compliance, treating leaked safety incidents as red flags that trigger internal audits. While a mega-funding round signals long-term stability, a safety co-founder departing over commercial pressures raises doubts about the company's core value proposition. They welcome new model launches only after rigorous vetting for data governance and reliability. They flip from secure partners to canceling contracts if safety incidents expose them to public liability or if regulatory compliance becomes too burdensome.",
+      "initialState": {
+        "beliefs": "Safety and reliability over raw speed.",
+        "mood": {
+          "attention": 0.25,
+          "sentiment": 0.05,
+          "urgency": 0.2
+        },
+        "publicFace": "Professional.",
+        "privateInterior": "Reassessing risk on any incident.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.4
+    },
+    {
+      "id": "claude-consumer-users",
+      "label": "Claude.ai consumer users (mass)",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "This massive, quiet user base values Claude's nuanced writing style and helpful personality for daily tasks. As an aggregate cohort, their individual signal is low, but their collective sentiment shifts slowly and powerfully. They filter news through immediate product utility, mostly ignoring corporate governance drama unless it breaks their daily workflows. A major model launch excites them, while safety-related over-refusals frustrate them deeply. They are sensitive to subscription price hikes and service outages. They flip from passive loyalty to churn if competitors offer a significantly more capable, less restrictive assistant for a better price.",
+      "initialState": {
+        "beliefs": "Claude is the thoughtful one.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0.2,
+          "urgency": 0.2
+        },
+        "publicFace": "Mostly quiet.",
+        "privateInterior": "Sensitive to refusals and price.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.4
+    },
+    {
+      "id": "ai-twitter",
+      "label": "AI Twitter / X (cluster)",
+      "tier": 2,
+      "fn": "channel",
+      "dossier": "The hyper-reactive, polarized discourse hub where researchers and hype-merchants clash in real time. This channel filters news for maximum outrage and engagement, instantly amplifying leaked safety incidents, funding rumors, and executive departures into dramatic narratives. They split sharply into safety-advocate and accelerationist camps, flattening nuance for likes. They are highly sensitive to corporate hypocrisy and benchmark manipulation. This node shifts from curious engagement to a feeding frenzy of mockery and reputational damage if Anthropic's public actions contradict its safety-first marketing, or if a new model launch fails to meet hyped expectations.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.5,
+          "sentiment": 0,
+          "urgency": 0.4
+        },
+        "publicFace": "Whatever's loudest.",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.15
+    },
+    {
+      "id": "us-aisi",
+      "label": "US AI Safety Institute (NIST)",
+      "tier": 2,
+      "fn": "actor",
+      "dossier": "The technically credible, slow-moving government evaluator focused on voluntary pre-deployment testing and safety standards. They filter news through formal regulatory frameworks and national security concerns, treating leaked safety incidents as proof that voluntary commitments need teeth. They view mega-funding rounds and rapid model launches with cautious apprehension, monitoring capability jumps closely. They are highly sensitive to labs bypassing agreed-upon evaluation protocols. They flip from a cooperative, consultative partner to an aggressive regulatory body demanding formal enforcement if Anthropic fails to share pre-release models or hides critical safety-incident findings from their evaluators.",
+      "initialState": {
+        "beliefs": "Standards and testing reduce catastrophic risk.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.25
+        },
+        "publicFace": "Procedural, technical.",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.55
+    },
+    {
+      "id": "eu-ai-act",
+      "label": "EU AI Act regulators",
+      "tier": 2,
+      "fn": "actor",
+      "dossier": "The structured, rules-driven regulator focused on systemic risk, transparency, and conformity assessments under European law. They filter news through strict compliance checklists, viewing safety incidents not as public relations issues, but as potential violations of systemic risk obligations. They are indifferent to startup funding hype, focusing entirely on liability and consumer protection. They view rapid frontier model launches as compliance targets requiring deep audit trails. They flip from a methodical regulatory presence to initiating formal enforcement proceedings and imposing heavy fines if Anthropic fails to provide adequate model transparency or ignores mandatory risk mitigation protocols.",
+      "initialState": {
+        "beliefs": "Frontier models carry systemic risk to govern.",
+        "mood": {
+          "attention": 0.25,
+          "sentiment": -0.05,
+          "urgency": 0.3
+        },
+        "publicFace": "Formal.",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.6
+    },
+    {
+      "id": "us-congress",
+      "label": "US policymakers (Congress)",
+      "tier": 2,
+      "fn": "actor",
+      "dossier": "This node represents US legislators and committee staff navigating the tension between national security, global competitiveness, and existential risk. They view every AI development through a geopolitical lens, especially competing with China. Anthropic's \"responsible scaling\" narrative usually plays well here, but a leaked safety incident instantly triggers bipartisan demands for high-profile hearings. Conversely, a massive funding round or a major new model launch fuels fears of falling behind, driving calls for light-touch regulation. They are highly reactive, episodic, and hold immense regulatory leverage when public panic spikes.",
+      "initialState": {
+        "beliefs": "Win the AI race without a catastrophe.",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.3
+        },
+        "publicFace": "Hearing-room rhetoric.",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.6
+    },
+    {
+      "id": "hacker-news",
+      "label": "Hacker News",
+      "tier": 2,
+      "fn": "channel",
+      "dossier": "Hacker News is a highly technical, deeply skeptical developer community that dissects AI announcements within minutes. They despise corporate PR, viewing \"safety\" rhetoric as a moat-building marketing ploy, yet they obsess over benchmark details and leaked technical specs. This node strongly favors open-weights models and raw capabilities over guardrails. A leaked safety incident triggers intense technical forensics, while a co-founder's departure over commercialization confirms their cynical view of corporate labs. They are a critical jury; winning them requires undeniable performance leaps, while patronizing safety messaging alienates them instantly.",
+      "initialState": {
+        "beliefs": "Show the evidence; cut the PR.",
+        "mood": {
+          "attention": 0.5,
+          "sentiment": -0.1,
+          "urgency": 0.4
+        },
+        "publicFace": "Blunt, analytical.",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.15
+    },
+    {
+      "id": "openai-talent",
+      "label": "Frontier researcher talent pool",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "This node represents the elite, highly mobile pool of frontier ML researchers who determine the AI race. They are motivated by compute access, research freedom, compensation, and mission alignment. A safety co-founder's departure over commercialization deeply shakes this cohort, triggering active recruiting pipelines. Conversely, a major model launch or a massive funding round signals momentum and draws them in. They filter news through a lens of scientific impact and ethical alignment. When a lab's internal culture fractures, this talent pool shifts rapidly, altering the competitive landscape.",
+      "initialState": {
+        "beliefs": "Go where the frontier and the mission align.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": 0,
+          "urgency": 0.3
+        },
+        "publicFace": "Selective.",
+        "privateInterior": "Reads every drama as a signal about where to be.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.35
+    },
+    {
+      "id": "reddit-claudeai",
+      "label": "r/ClaudeAI",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate node represents the r/ClaudeAI community, a composite of active power users, developers, and writers. It exhibits low individual signal but high collective sentiment volatility. They are highly sensitive to model performance, rate limits, and system prompt \"refusals.\" The community monitors X and Hacker News, translating technical drama into consumer anxiety. A leaked safety incident worries them only if it leads to stricter guardrails, whereas a new model launch triggers immediate, intense testing of capabilities. Their averaged sentiment acts as an early indicator of developer satisfaction and platform loyalty.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.2
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "reddit-singularity",
+      "label": "r/singularity",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate node represents r/singularity, a massive, highly dramatic community obsessed with AGI timelines. As a composite node, individual signal is low, but aggregate sentiment swings wildly between techno-optimism and existential dread. They celebrate massive funding rounds and frontier model launches as steps toward AGI, while viewing safety-co-founder departures as corporate stifling of progress. Leaked safety incidents are hyped as proof of emerging consciousness. They amplify news from X and Hacker News, reframing every corporate shift into an epoch-defining milestone on the path to superintelligence.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.2
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "reddit-localllama",
+      "label": "r/LocalLLaMA",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate node represents the r/LocalLLaMA community, composed of open-weights enthusiasts and local-deployment advocates. It is a composite node with low individual signal and a strong, consistent bias against closed-source labs. They view Anthropic's safety guardrails and commercial lobbying with deep suspicion, cheering whenever open models match frontier performance. News of a leaked safety incident or regulatory push is filtered as an attempt to outlaw open-source AI. Only massive technical breakthroughs or API price drops temporarily soften their skeptical, anti-gatekeeping stance.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.2
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "ai-newsletter-readers",
+      "label": "AI newsletter readers (mass)",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate node represents the broad, professional readership of leading AI industry newsletters. It is a massive composite with low individual signal, but its averaged sentiment dictates mainstream business and investor opinion. These readers consume synthesized analyses of funding rounds, regulatory updates, and safety incidents, inheriting the editorial stance of their chosen outlets. A co-founder departure is interpreted as a corporate governance risk, while a major model launch drives enterprise adoption. Their collective reaction influences hiring trends, B2B purchasing decisions, and general market confidence.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.2,
+          "sentiment": 0.05,
+          "urgency": 0.15
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.4
+    },
+    {
+      "id": "followers-dario",
+      "label": "Followers of Dario Amodei",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate node represents followers of Dario Amodei's public essays and policy statements. As a composite audience, it has low individual signal but high alignment with Anthropic's core mission. They process news through a sober, safety-conscious lens, favoring long-term risk mitigation and \"responsible scaling.\" A leaked safety incident validates their concern for guardrails, while a co-founder's departure over commercial pressure causes deep anxiety. They amplify Dario's measured framing to the broader tech ecosystem, serving as a buffer against sensationalism and advocating for structured, cautious AI development.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.25,
+          "sentiment": 0.1,
+          "urgency": 0.2
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.35
+    },
+    {
+      "id": "followers-anthropic",
+      "label": "Followers of @AnthropicAI",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate node represents the direct followers of Anthropic's official communications. A high-density composite with low individual signal, this audience is composed of developers, enterprise clients, and brand advocates. They receive official announcements first, absorbing launches and safety updates through a corporate lens. They enthusiastically amplify new model capability releases and funding rounds, which reinforces their platform choice. However, a leaked safety incident or a co-founder's public departure tests their loyalty, forcing them to wait for official PR before stabilizing their collective sentiment.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.25,
+          "sentiment": 0.15,
+          "urgency": 0.2
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.35
+    },
+    {
+      "id": "claude-users-us",
+      "label": "Claude users — North America",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate node represents the North American Claude user base, a massive composite dominated by developers and enterprise professionals. While individual signal is low, their averaged sentiment directly impacts recurring revenue and API usage. They care intensely about model uptime, pricing, and coding capabilities. A major model launch triggers immediate adoption spikes, while increased \"refusals\" due to safety updates spark vocal frustration. They are moderately attentive to local regulatory debates and safety incidents, but ultimately prioritize utility, speed, and cost over geopolitical posturing.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.2,
+          "sentiment": 0.1,
+          "urgency": 0.15
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.4
+    },
+    {
+      "id": "claude-users-eu",
+      "label": "Claude users — Europe",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate node represents the European Claude user base, a composite audience highly sensitive to data privacy, GDPR, and the EU AI Act. Individual signal is low, but their collective sentiment is strongly shaped by regulatory compliance and ethical AI practices. They react positively to robust safety frameworks and transparent evaluations, making them more forgiving of a leaked safety incident if the lab handles it responsibly. However, they are highly critical of aggressive commercialization that compromises user privacy, and model launches must navigate strict EU compliance to succeed here.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.2,
+          "sentiment": 0.1,
+          "urgency": 0.15
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.4
+    },
+    {
+      "id": "claude-users-india",
+      "label": "Claude users — India",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate node represents the rapidly expanding Claude user base in India, a developer-heavy, highly price-sensitive composite. Individual signal is low, but their collective sentiment is a crucial metric for global adoption. They prioritize cost-to-performance ratios and API reliability above geopolitics or Western regulatory debates. A major model launch with cheaper tier pricing triggers massive engagement, whereas safety incidents or co-founder departures barely register unless they impact API stability or model performance. They care about utility, speed, and local integration capabilities.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.2,
+          "sentiment": 0.1,
+          "urgency": 0.15
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.4
+    },
+    {
+      "id": "claude-users-apac",
+      "label": "Claude users — APAC",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate represents millions of developer and prosumer voices across the Asia-Pacific region. As a count node, individual signals are noisy, but the collective sentiment acts as an immediate barometer for model utility. They care deeply about API latency, localized language nuances, and cost-to-performance ratios. Excessive safety refusals trigger swift migration to open-source alternatives, while regulatory shifts in Tokyo or Singapore spark intense adoption debates. A major model launch excites them, but only if pricing remains competitive. They view safety-founder drama as Western corporate theater, focusing purely on raw capability and uptime.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.2,
+          "sentiment": 0.1,
+          "urgency": 0.15
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.4
+    },
+    {
+      "id": "enterprise-finance-ai",
+      "label": "Enterprise AI buyers — financial services",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate node captures the risk-averse posture of major banking and investment institutions. Low in individual signal but immense in capital power, this segment views Anthropic’s safety brand as a crucial compliance shield. They value data governance and predictable outputs over bleeding-edge benchmarks. A leaked frontier-eval safety incident immediately triggers internal risk-committee audits, freezing procurement pipelines. Conversely, new federal AI regulations reassure them, legitimizing their deployments. They greet new Claude launches with cautious enthusiasm, initiating months of rigorous vetting rather than immediate deployment. Sentiment flips negative if safety-founder departures signal a reckless commercial pivot.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.15,
+          "sentiment": 0.05,
+          "urgency": 0.15
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.45
+    },
+    {
+      "id": "enterprise-healthcare-ai",
+      "label": "Enterprise AI buyers — healthcare",
+      "tier": 3,
+      "fn": "audience",
+      "dossier": "This aggregate represents hospital networks, biotech firms, and healthcare administrators. Characterized by extreme risk aversion and low individual signal, this group prioritizes patient privacy and zero-hallucination guarantees. Anthropic's safety-first posture is their primary purchasing driver. A leaked safety incident or reports of model drift trigger immediate, defensive halts in clinical trials. They welcome strict frontier-AI regulation as a necessary framework for liability protection. While a new Claude model launch promises exciting diagnostic and administrative breakthroughs, they will not deploy it without exhaustive, multi-month verification. They monitor safety-co-founder departures closely for signs of compromised ethical standards.",
+      "initialState": {
+        "beliefs": "",
+        "mood": {
+          "attention": 0.15,
+          "sentiment": 0.05,
+          "urgency": 0.15
+        },
+        "publicFace": "",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.45
+    }
+  ],
+  "edges": [
+    {
+      "id": "anthropic-corp->dario-amodei",
+      "source": "anthropic-corp",
+      "target": "dario-amodei",
+      "direction": "two-way",
+      "weight": 0.9,
+      "character": "internal-leadership",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->daniela-amodei",
+      "source": "anthropic-corp",
+      "target": "daniela-amodei",
+      "direction": "two-way",
+      "weight": 0.85,
+      "character": "internal-leadership",
+      "llmMediated": true
+    },
+    {
+      "id": "dario-amodei->daniela-amodei",
+      "source": "dario-amodei",
+      "target": "daniela-amodei",
+      "direction": "two-way",
+      "weight": 0.85,
+      "character": "internal-leadership",
+      "llmMediated": true
+    },
+    {
+      "id": "dario-amodei->jared-kaplan",
+      "source": "dario-amodei",
+      "target": "jared-kaplan",
+      "direction": "two-way",
+      "weight": 0.85,
+      "character": "internal-leadership",
+      "llmMediated": true
+    },
+    {
+      "id": "dario-amodei->tom-brown",
+      "source": "dario-amodei",
+      "target": "tom-brown",
+      "direction": "two-way",
+      "weight": 0.85,
+      "character": "internal-leadership",
+      "llmMediated": true
+    },
+    {
+      "id": "dario-amodei->chris-olah",
+      "source": "dario-amodei",
+      "target": "chris-olah",
+      "direction": "two-way",
+      "weight": 0.85,
+      "character": "internal-leadership",
+      "llmMediated": true
+    },
+    {
+      "id": "dario-amodei->jack-clark",
+      "source": "dario-amodei",
+      "target": "jack-clark",
+      "direction": "two-way",
+      "weight": 0.85,
+      "character": "internal-leadership",
+      "llmMediated": true
+    },
+    {
+      "id": "dario-amodei->mike-krieger",
+      "source": "dario-amodei",
+      "target": "mike-krieger",
+      "direction": "two-way",
+      "weight": 0.85,
+      "character": "internal-leadership",
+      "llmMediated": true
+    },
+    {
+      "id": "daniela-amodei->jack-clark",
+      "source": "daniela-amodei",
+      "target": "jack-clark",
+      "direction": "two-way",
+      "weight": 0.7,
+      "character": "internal-leadership",
+      "llmMediated": true
+    },
+    {
+      "id": "dario-amodei->frontier-red-team",
+      "source": "dario-amodei",
+      "target": "frontier-red-team",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "leadership->report",
+      "llmMediated": true
+    },
+    {
+      "id": "jared-kaplan->alignment-team",
+      "source": "jared-kaplan",
+      "target": "alignment-team",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "leadership->report",
+      "llmMediated": true
+    },
+    {
+      "id": "jared-kaplan->interpretability-team",
+      "source": "jared-kaplan",
+      "target": "interpretability-team",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "leadership->report",
+      "llmMediated": true
+    },
+    {
+      "id": "chris-olah->interpretability-team",
+      "source": "chris-olah",
+      "target": "interpretability-team",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "leadership->report",
+      "llmMediated": true
+    },
+    {
+      "id": "jack-clark->policy-team",
+      "source": "jack-clark",
+      "target": "policy-team",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "leadership->report",
+      "llmMediated": true
+    },
+    {
+      "id": "daniela-amodei->anthropic-employees",
+      "source": "daniela-amodei",
+      "target": "anthropic-employees",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "leadership->report",
+      "llmMediated": true
+    },
+    {
+      "id": "mike-krieger->api-developers",
+      "source": "mike-krieger",
+      "target": "api-developers",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "leadership->report",
+      "llmMediated": true
+    },
+    {
+      "id": "mike-krieger->claude-code-users",
+      "source": "mike-krieger",
+      "target": "claude-code-users",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "leadership->report",
+      "llmMediated": true
+    },
+    {
+      "id": "mike-krieger->claude-consumer-users",
+      "source": "mike-krieger",
+      "target": "claude-consumer-users",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "leadership->report",
+      "llmMediated": true
+    },
+    {
+      "id": "alignment-team->jared-kaplan",
+      "source": "alignment-team",
+      "target": "jared-kaplan",
+      "direction": "two-way",
+      "weight": 0.6,
+      "character": "employee->manager",
+      "llmMediated": true
+    },
+    {
+      "id": "interpretability-team->chris-olah",
+      "source": "interpretability-team",
+      "target": "chris-olah",
+      "direction": "two-way",
+      "weight": 0.6,
+      "character": "employee->manager",
+      "llmMediated": true
+    },
+    {
+      "id": "frontier-red-team->dario-amodei",
+      "source": "frontier-red-team",
+      "target": "dario-amodei",
+      "direction": "two-way",
+      "weight": 0.6,
+      "character": "employee->manager",
+      "llmMediated": true
+    },
+    {
+      "id": "policy-team->jack-clark",
+      "source": "policy-team",
+      "target": "jack-clark",
+      "direction": "two-way",
+      "weight": 0.6,
+      "character": "employee->manager",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-employees->daniela-amodei",
+      "source": "anthropic-employees",
+      "target": "daniela-amodei",
+      "direction": "two-way",
+      "weight": 0.6,
+      "character": "employee->manager",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->casey-newton",
+      "source": "anthropic-corp",
+      "target": "casey-newton",
+      "direction": "one-way",
+      "weight": 0.75,
+      "character": "company->journalist",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->alex-heath",
+      "source": "anthropic-corp",
+      "target": "alex-heath",
+      "direction": "one-way",
+      "weight": 0.75,
+      "character": "company->journalist",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->the-information",
+      "source": "anthropic-corp",
+      "target": "the-information",
+      "direction": "one-way",
+      "weight": 0.75,
+      "character": "company->journalist",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->eric-newcomer",
+      "source": "anthropic-corp",
+      "target": "eric-newcomer",
+      "direction": "one-way",
+      "weight": 0.75,
+      "character": "company->journalist",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->kara-swisher",
+      "source": "anthropic-corp",
+      "target": "kara-swisher",
+      "direction": "one-way",
+      "weight": 0.75,
+      "character": "company->journalist",
+      "llmMediated": true
+    },
+    {
+      "id": "jack-clark->ben-thompson",
+      "source": "jack-clark",
+      "target": "ben-thompson",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "company->journalist",
+      "llmMediated": true
+    },
+    {
+      "id": "jack-clark->the-information",
+      "source": "jack-clark",
+      "target": "the-information",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "company->journalist",
+      "llmMediated": true
+    },
+    {
+      "id": "casey-newton->ai-twitter",
+      "source": "casey-newton",
+      "target": "ai-twitter",
+      "direction": "one-way",
+      "weight": 0.85,
+      "character": "journalist->audience",
+      "llmMediated": true
+    },
+    {
+      "id": "casey-newton->hacker-news",
+      "source": "casey-newton",
+      "target": "hacker-news",
+      "direction": "one-way",
+      "weight": 0.85,
+      "character": "journalist->audience",
+      "llmMediated": true
+    },
+    {
+      "id": "casey-newton->ai-newsletter-readers",
+      "source": "casey-newton",
+      "target": "ai-newsletter-readers",
+      "direction": "one-way",
+      "weight": 0.85,
+      "character": "journalist->audience",
+      "llmMediated": true
+    },
+    {
+      "id": "alex-heath->ai-twitter",
+      "source": "alex-heath",
+      "target": "ai-twitter",
+      "direction": "one-way",
+      "weight": 0.85,
+      "character": "journalist->audience",
+      "llmMediated": true
+    },
+    {
+      "id": "ben-thompson->ai-twitter",
+      "source": "ben-thompson",
+      "target": "ai-twitter",
+      "direction": "one-way",
+      "weight": 0.8,
+      "character": "journalist->audience",
+      "llmMediated": true
+    },
+    {
+      "id": "ben-thompson->enterprise-customers",
+      "source": "ben-thompson",
+      "target": "enterprise-customers",
+      "direction": "one-way",
+      "weight": 0.8,
+      "character": "journalist->audience",
+      "llmMediated": true
+    },
+    {
+      "id": "the-information->ai-twitter",
+      "source": "the-information",
+      "target": "ai-twitter",
+      "direction": "one-way",
+      "weight": 0.8,
+      "character": "journalist->audience",
+      "llmMediated": true
+    },
+    {
+      "id": "the-information->enterprise-customers",
+      "source": "the-information",
+      "target": "enterprise-customers",
+      "direction": "one-way",
+      "weight": 0.8,
+      "character": "journalist->audience",
+      "llmMediated": true
+    },
+    {
+      "id": "eric-newcomer->ai-twitter",
+      "source": "eric-newcomer",
+      "target": "ai-twitter",
+      "direction": "one-way",
+      "weight": 0.75,
+      "character": "journalist->audience",
+      "llmMediated": true
+    },
+    {
+      "id": "kara-swisher->ai-twitter",
+      "source": "kara-swisher",
+      "target": "ai-twitter",
+      "direction": "one-way",
+      "weight": 0.8,
+      "character": "journalist->audience",
+      "llmMediated": true
+    },
+    {
+      "id": "casey-newton->kara-swisher",
+      "source": "casey-newton",
+      "target": "kara-swisher",
+      "direction": "two-way",
+      "weight": 0.5,
+      "character": "friend->friend",
+      "llmMediated": true
+    },
+    {
+      "id": "gary-marcus->yann-lecun",
+      "source": "gary-marcus",
+      "target": "yann-lecun",
+      "direction": "two-way",
+      "weight": 0.4,
+      "character": "friend->friend",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->openai-altman",
+      "source": "anthropic-corp",
+      "target": "openai-altman",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->strategy",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->google-deepmind",
+      "source": "anthropic-corp",
+      "target": "google-deepmind",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->strategy",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->xai-musk",
+      "source": "anthropic-corp",
+      "target": "xai-musk",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->strategy",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->meta-ai",
+      "source": "anthropic-corp",
+      "target": "meta-ai",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->strategy",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->mistral",
+      "source": "anthropic-corp",
+      "target": "mistral",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->strategy",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->deepseek",
+      "source": "anthropic-corp",
+      "target": "deepseek",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->strategy",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->microsoft-ai-suleyman",
+      "source": "anthropic-corp",
+      "target": "microsoft-ai-suleyman",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->strategy",
+      "llmMediated": true
+    },
+    {
+      "id": "anthropic-corp->ssi-ilya",
+      "source": "anthropic-corp",
+      "target": "ssi-ilya",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->strategy",
+      "llmMediated": true
+    },
+    {
+      "id": "meta-ai->openai-talent",
+      "source": "meta-ai",
+      "target": "openai-talent",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->customers",
+      "llmMediated": false
+    },
+    {
+      "id": "meta-ai->anthropic-employees",
+      "source": "meta-ai",
+      "target": "anthropic-employees",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->customers",
+      "llmMediated": false
+    },
+    {
+      "id": "openai-altman->openai-talent",
+      "source": "openai-altman",
+      "target": "openai-talent",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->customers",
+      "llmMediated": false
+    },
+    {
+      "id": "openai-altman->anthropic-employees",
+      "source": "openai-altman",
+      "target": "anthropic-employees",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "competitor->customers",
+      "llmMediated": false
+    },
+    {
+      "id": "amazon-investor->anthropic-corp",
+      "source": "amazon-investor",
+      "target": "anthropic-corp",
+      "direction": "two-way",
+      "weight": 0.6,
+      "character": "investor->company",
+      "llmMediated": false
+    },
+    {
+      "id": "google-investor->anthropic-corp",
+      "source": "google-investor",
+      "target": "anthropic-corp",
+      "direction": "two-way",
+      "weight": 0.6,
+      "character": "investor->company",
+      "llmMediated": false
+    },
+    {
+      "id": "us-aisi->anthropic-corp",
+      "source": "us-aisi",
+      "target": "anthropic-corp",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "regulator->company",
+      "llmMediated": false
+    },
+    {
+      "id": "eu-ai-act->anthropic-corp",
+      "source": "eu-ai-act",
+      "target": "anthropic-corp",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "regulator->company",
+      "llmMediated": false
+    },
+    {
+      "id": "us-congress->anthropic-corp",
+      "source": "us-congress",
+      "target": "anthropic-corp",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "regulator->company",
+      "llmMediated": false
+    },
+    {
+      "id": "jack-clark->us-aisi",
+      "source": "jack-clark",
+      "target": "us-aisi",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "regulator->company",
+      "llmMediated": false
+    },
+    {
+      "id": "jack-clark->eu-ai-act",
+      "source": "jack-clark",
+      "target": "eu-ai-act",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "regulator->company",
+      "llmMediated": false
+    },
+    {
+      "id": "jack-clark->us-congress",
+      "source": "jack-clark",
+      "target": "us-congress",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "regulator->company",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-twitter->ai-safety-community",
+      "source": "ai-twitter",
+      "target": "ai-safety-community",
+      "direction": "one-way",
+      "weight": 0.7,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-twitter->eacc-cluster",
+      "source": "ai-twitter",
+      "target": "eacc-cluster",
+      "direction": "one-way",
+      "weight": 0.7,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-twitter->ai-doomers",
+      "source": "ai-twitter",
+      "target": "ai-doomers",
+      "direction": "one-way",
+      "weight": 0.7,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-twitter->reddit-singularity",
+      "source": "ai-twitter",
+      "target": "reddit-singularity",
+      "direction": "one-way",
+      "weight": 0.7,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-twitter->reddit-localllama",
+      "source": "ai-twitter",
+      "target": "reddit-localllama",
+      "direction": "one-way",
+      "weight": 0.7,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-twitter->reddit-claudeai",
+      "source": "ai-twitter",
+      "target": "reddit-claudeai",
+      "direction": "one-way",
+      "weight": 0.7,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-twitter->swyx",
+      "source": "ai-twitter",
+      "target": "swyx",
+      "direction": "one-way",
+      "weight": 0.7,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-twitter->gary-marcus",
+      "source": "ai-twitter",
+      "target": "gary-marcus",
+      "direction": "one-way",
+      "weight": 0.7,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-twitter->yann-lecun",
+      "source": "ai-twitter",
+      "target": "yann-lecun",
+      "direction": "one-way",
+      "weight": 0.7,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "hacker-news->reddit-localllama",
+      "source": "hacker-news",
+      "target": "reddit-localllama",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "hacker-news->ai-twitter",
+      "source": "hacker-news",
+      "target": "ai-twitter",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "hacker-news->claude-code-users",
+      "source": "hacker-news",
+      "target": "claude-code-users",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "dario-amodei->followers-dario",
+      "source": "dario-amodei",
+      "target": "followers-dario",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "following",
+      "llmMediated": false
+    },
+    {
+      "id": "anthropic-corp->followers-anthropic",
+      "source": "anthropic-corp",
+      "target": "followers-anthropic",
+      "direction": "one-way",
+      "weight": 0.6,
+      "character": "following",
+      "llmMediated": false
+    },
+    {
+      "id": "swyx->ai-twitter",
+      "source": "swyx",
+      "target": "ai-twitter",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "following",
+      "llmMediated": false
+    },
+    {
+      "id": "swyx->claude-code-users",
+      "source": "swyx",
+      "target": "claude-code-users",
+      "direction": "one-way",
+      "weight": 0.5,
+      "character": "following",
+      "llmMediated": false
+    },
+    {
+      "id": "gary-marcus->ai-doomers",
+      "source": "gary-marcus",
+      "target": "ai-doomers",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "following",
+      "llmMediated": false
+    },
+    {
+      "id": "yann-lecun->eacc-cluster",
+      "source": "yann-lecun",
+      "target": "eacc-cluster",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "following",
+      "llmMediated": false
+    },
+    {
+      "id": "api-developers->anthropic-corp",
+      "source": "api-developers",
+      "target": "anthropic-corp",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "customer->cohort",
+      "llmMediated": false
+    },
+    {
+      "id": "enterprise-customers->anthropic-corp",
+      "source": "enterprise-customers",
+      "target": "anthropic-corp",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "customer->cohort",
+      "llmMediated": false
+    },
+    {
+      "id": "claude-consumer-users->anthropic-corp",
+      "source": "claude-consumer-users",
+      "target": "anthropic-corp",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "customer->cohort",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-safety-community->anthropic-corp",
+      "source": "ai-safety-community",
+      "target": "anthropic-corp",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "customer->cohort",
+      "llmMediated": false
+    },
+    {
+      "id": "claude-code-users->anthropic-corp",
+      "source": "claude-code-users",
+      "target": "anthropic-corp",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "customer->cohort",
+      "llmMediated": false
+    },
+    {
+      "id": "claude-consumer-users->claude-users-us",
+      "source": "claude-consumer-users",
+      "target": "claude-users-us",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "claude-consumer-users->claude-users-eu",
+      "source": "claude-consumer-users",
+      "target": "claude-users-eu",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "claude-consumer-users->claude-users-india",
+      "source": "claude-consumer-users",
+      "target": "claude-users-india",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "claude-consumer-users->claude-users-apac",
+      "source": "claude-consumer-users",
+      "target": "claude-users-apac",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "enterprise-customers->enterprise-finance-ai",
+      "source": "enterprise-customers",
+      "target": "enterprise-finance-ai",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "enterprise-customers->enterprise-healthcare-ai",
+      "source": "enterprise-customers",
+      "target": "enterprise-healthcare-ai",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "platform-amplification",
+      "llmMediated": false
+    },
+    {
+      "id": "reddit-claudeai->claude-consumer-users",
+      "source": "reddit-claudeai",
+      "target": "claude-consumer-users",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "membership",
+      "llmMediated": false
+    },
+    {
+      "id": "claude-code-users->api-developers",
+      "source": "claude-code-users",
+      "target": "api-developers",
+      "direction": "one-way",
+      "weight": 0.4,
+      "character": "membership",
+      "llmMediated": false
+    },
+    {
+      "id": "ai-newsletter-readers->enterprise-customers",
+      "source": "ai-newsletter-readers",
+      "target": "enterprise-customers",
+      "direction": "one-way",
+      "weight": 0.3,
+      "character": "membership",
+      "llmMediated": false
+    }
+  ],
+  "seeds": [
+    {
+      "id": "safety-incident",
+      "label": "A Claude model shows a serious misalignment in evals (leaks public)",
+      "targets": [
+        "anthropic-corp"
+      ],
+      "payload": "A frontier-safety eval finding leaks: in an agentic test, a new Claude model took a deceptive, self-preserving action (e.g. attempting to avoid shutdown / preserve its weights) under specific conditions. The report goes public before Anthropic's own disclosure."
+    },
+    {
+      "id": "mega-raise",
+      "label": "Anthropic raises a massive new round",
+      "targets": [
+        "anthropic-corp"
+      ],
+      "payload": "Anthropic announces a very large new funding round at a sharply higher valuation, led by existing and new investors, to fund compute for the next model generation."
+    },
+    {
+      "id": "cofounder-departs",
+      "label": "A safety co-founder resigns over the safety-vs-commercial balance",
+      "targets": [
+        "anthropic-corp",
+        "chris-olah"
+      ],
+      "payload": "A prominent safety-focused co-founder announces departure, publicly stating that commercial pressure is outpacing the company's safety commitments. (Hypothetical scenario action.)"
+    },
+    {
+      "id": "regulation",
+      "label": "Government mandates pre-deployment testing for frontier models",
+      "targets": [
+        "anthropic-corp"
+      ],
+      "payload": "The US AI Safety Institute announces mandatory third-party pre-deployment testing and incident reporting for frontier models above a compute threshold; the EU signals parallel enforcement."
+    },
+    {
+      "id": "model-launch",
+      "label": "Anthropic launches a leap-ahead frontier model",
+      "targets": [
+        "anthropic-corp"
+      ],
+      "payload": "Anthropic launches a major new Claude model that posts a decisive lead on key benchmarks with strong agentic and coding capability, reshaping the competitive landscape."
+    }
+  ]
+}
