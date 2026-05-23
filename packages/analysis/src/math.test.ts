@@ -64,7 +64,7 @@ describe("computePivotal", () => {
   it("selects the numeric dial that perfectly tracks cluster membership", () => {
     const cascades = [mk({ dial: 0.1 }), mk({ dial: 0.1 }), mk({ dial: 0.9 }), mk({ dial: 0.9 })];
     const clusterIndex = [0, 0, 1, 1];
-    const piv = computePivotal(cascades, clusterIndex, ["A", "B"], emptyFp);
+    const piv = computePivotal(cascades, clusterIndex, ["A", "B"], [0.5, -0.5], emptyFp);
     expect(piv.dimension).toBe("dial");
     expect(piv.explainedVariance).toBeCloseTo(1, 10);
   });
@@ -76,7 +76,7 @@ describe("computePivotal", () => {
       mk({ driver: 0.9, noise: 1 }),
       mk({ driver: 0.9, noise: 1 }),
     ];
-    const piv = computePivotal(cascades, [0, 0, 1, 1], ["A", "B"], emptyFp);
+    const piv = computePivotal(cascades, [0, 0, 1, 1], ["A", "B"], [0.5, -0.5], emptyFp);
     expect(piv.dimension).toBe("driver");
   });
 });

@@ -9,6 +9,8 @@ import { centroid, mean } from "./stats";
 export interface ClusterCopy {
   label: string;
   summary: string;
+  /** Mean sentiment across nodes — lets the pivotal copy order best→worst. */
+  avgSentiment: number;
 }
 
 interface LabelInput {
@@ -38,87 +40,84 @@ export function describeCluster(input: LabelInput): ClusterCopy {
   const avgSent = sentIdx.length === 0 ? 0 : mean(sentIdx.map((f) => clusterMean[f.i] ?? 0));
 
   // Who stands out, two ways:
-  //  - by *delta* from the population baseline → what makes this cluster distinct
-  //    (e.g. a competitor that wins big here but not elsewhere),
-  //  - by *absolute* sentiment → the actual locus of anger / cheer.
-  let mostPosDelta: { node: string; delta: number } | null = null;
-  let mostNegDelta: { node: string; delta: number } | null = null;
+  //  - the biggest *gainer* vs the population baseline (delta) → a rival that wins
+  //    here but not elsewhere; we keep its absolute value to tell a real win from
+  //    "least bad",
+  //  - the *angriest* node by absolute sentiment → the locus of the anger.
+  let gainer: { node: string; delta: number; value: number } | null = null;
   let angriest: { node: string; value: number } | null = null;
   for (const f of sentIdx) {
     const value = clusterMean[f.i] ?? 0;
     const delta = value - (popMean[f.i] ?? 0);
     const node = f.name.slice(0, -SENTIMENT_SUFFIX.length);
-    if (!mostNegDelta || delta < mostNegDelta.delta) mostNegDelta = { node, delta };
-    if (!mostPosDelta || delta > mostPosDelta.delta) mostPosDelta = { node, delta };
+    if (!gainer || delta > gainer.delta) gainer = { node, delta, value };
     if (!angriest || value < angriest.value) angriest = { node, value };
   }
 
-  const hostileCount = sentIdx.filter((f) => (clusterMean[f.i] ?? 0) <= HOSTILE).length;
+  const hostileFraction =
+    sentIdx.length === 0
+      ? 0
+      : sentIdx.filter((f) => (clusterMean[f.i] ?? 0) <= HOSTILE).length / sentIdx.length;
 
-  const label = pickLabel(avgSent, mostPosDelta, angriest);
-  const summary = buildSummary({ share, avgSent, hostileCount, mostNegDelta, mostPosDelta });
+  // A genuine winner amid an otherwise sour room = a rival capturing the moment.
+  const rivalWins = !!gainer && gainer.delta > 0.3 && gainer.value > 0.2 && avgSent < 0.1;
 
-  return { label, summary };
+  const label = pickLabel(avgSent, rivalWins);
+  const summary = buildSummary({ share, avgSent, hostileFraction, angriest, gainer, rivalWins });
+
+  return { label, summary, avgSentiment: avgSent };
 }
 
-function pickLabel(
-  avgSent: number,
-  mostPosDelta: { node: string; delta: number } | null,
-  angriest: { node: string; value: number } | null,
-): string {
-  // A standout winner amid an otherwise sour room reads as "someone else won".
-  if (mostPosDelta && mostPosDelta.delta > 0.25 && avgSent < 0.1) {
-    return `${prettyNode(mostPosDelta.node)} capitalizes`;
-  }
+/** Clean, card-ready cluster names that match Wake's outcome vocabulary. */
+function pickLabel(avgSent: number, rivalWins: boolean): string {
+  if (rivalWins) return "Competitors capitalize";
   if (avgSent >= 0.15) return "Smooth integration";
-  if (avgSent >= 0) return "Muted, mixed reception";
-  if (avgSent >= -0.25) return "Simmering discontent";
-  // Sharpest tier — name the locus if one node is clearly the angriest.
-  if (angriest && angriest.value <= -0.5) return `Backlash led by ${prettyNode(angriest.node)}`;
-  return "Sharp backlash";
+  if (avgSent >= 0) return "Cautious acceptance";
+  if (avgSent >= -0.3) return "Simmering discontent";
+  return "Full-blown backlash";
 }
 
+/** One tight, verifiable sentence — the node specifics that back the label. */
 function buildSummary(args: {
   share: number;
   avgSent: number;
-  hostileCount: number;
-  mostNegDelta: { node: string; delta: number } | null;
-  mostPosDelta: { node: string; delta: number } | null;
+  hostileFraction: number;
+  angriest: { node: string; value: number } | null;
+  gainer: { node: string; delta: number; value: number } | null;
+  rivalWins: boolean;
 }): string {
-  const { share, avgSent, hostileCount, mostNegDelta, mostPosDelta } = args;
+  const { share, avgSent, hostileFraction, angriest, gainer, rivalWins } = args;
   const pct = Math.round(share * 100);
+  const hostilePct = Math.round(hostileFraction * 100);
 
-  const tone =
-    avgSent >= 0.15
-      ? "broadly positive"
-      : avgSent >= 0
-        ? "mildly positive"
-        : avgSent >= -0.25
-          ? "mildly negative"
-          : "strongly negative";
-
-  const parts: string[] = [`${pct}% of futures land here, with ${tone} average sentiment`];
-
-  if (mostNegDelta && mostNegDelta.delta < -0.1) {
-    parts.push(`${prettyNode(mostNegDelta.node)} turns notably more hostile than typical`);
+  if (rivalWins && gainer) {
+    return `${pct}% of futures: the room sours (${hostilePct}% of nodes hostile), but ${prettyNode(gainer.node)} comes out ahead.`;
   }
-  if (mostPosDelta && mostPosDelta.delta > 0.1) {
-    parts.push(`${prettyNode(mostPosDelta.node)} comes out ahead`);
+  if (avgSent >= 0.15) {
+    return `${pct}% of futures: sentiment holds broadly positive and the independence story sticks.`;
   }
-  if (hostileCount > 0) {
-    parts.push(`${hostileCount} ${hostileCount === 1 ? "node" : "nodes"} end openly hostile`);
+  if (avgSent >= 0) {
+    return `${pct}% of futures: a wary, mixed reception — net-neutral sentiment, no real blow-up.`;
   }
-
-  return capitalize(parts.join("; ")) + ".";
+  const locus =
+    angriest && angriest.value <= -0.5 ? `, led by ${prettyNode(angriest.node)}` : "";
+  return `${pct}% of futures: sentiment turns sharply negative — ${hostilePct}% of nodes go hostile${locus}.`;
 }
 
-/** Generic, world-agnostic prettifier: "prod-twitter" → "Prod Twitter". */
+/**
+ * World-agnostic prettifier: "prod-twitter" → "Prod Twitter",
+ * "considered-notion-chose-competitor" → "Considered Notion Chose Competitor",
+ * keeping short connectors lowercase for readability.
+ */
+const CONNECTORS = new Set(["of", "the", "to", "and", "for", "in", "on", "a"]);
 export function prettyNode(id: string): string {
   return id
     .split(/[-_]/)
     .filter(Boolean)
-    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .map((w, i) =>
+      i > 0 && CONNECTORS.has(w.toLowerCase())
+        ? w.toLowerCase()
+        : w.charAt(0).toUpperCase() + w.slice(1),
+    )
     .join(" ");
 }
-
-const capitalize = (s: string): string => (s.length === 0 ? s : s[0]!.toUpperCase() + s.slice(1));

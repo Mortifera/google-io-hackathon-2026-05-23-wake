@@ -12,16 +12,17 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { CascadeSchema, MonteCarloResultSchema } from "@wake/contracts";
 import { analyze } from "./index";
-import { syntheticCascades } from "./synthetic";
+import { framedScenario } from "./synthetic";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../..");
 
+// The real 207-node Notion cascade; fan it into a synthetic Monte Carlo set.
 const base = CascadeSchema.parse(
-  JSON.parse(readFileSync(path.join(root, "fixtures/cascades/notion-acquisition.json"), "utf8")),
+  JSON.parse(readFileSync(path.join(root, "fixtures/cascades/notion-world.acquisition.json"), "utf8")),
 );
 
-const cascades = syntheticCascades(base);
-const result = analyze(cascades, { worldId: "notion-mini", seedActionId: "acquisition" });
+const cascades = framedScenario(base);
+const result = analyze(cascades, { worldId: base.meta.worldId, seedActionId: base.meta.seedActionId });
 
 // Fail loudly if we ever emit something off-contract.
 MonteCarloResultSchema.parse(result);

@@ -75,37 +75,55 @@ export function drawRegime(base: Cascade, spec: RegimeSpec, seedBase: number): C
 }
 
 /**
- * A demo-ready Monte Carlo set: three regimes separated by a categorical
- * `messagingFraming` dial (plus two uncorrelated numeric noise dials). Framing
- * should come out as the pivotal variable.
+ * Competitor nodes to lift in the "competitor capitalizes" regime. perturbCascade
+ * only touches ids that exist, so listing both mini- and full-world ids is safe.
  */
-export function syntheticCascades(base: Cascade): Cascade[] {
+const COMPETITORS: Record<string, number> = {
+  "linear-leadership": 0.8,
+  "airtable-leadership": 0.75,
+  "clickup-leadership": 0.7,
+  "considered-notion-chose-competitor": 0.85,
+};
+
+/**
+ * A demo-ready Monte Carlo set built from a single real cascade. One recorded
+ * dial — `framing ∈ {independent, integrated}` — drives the headline split, so
+ * it is, by construction, the pivotal variable. Within "integrated" we bake (into
+ * finalState, not as a second dial) a competitor-led sub-future, which gives the
+ * clusterer a clean third outcome to find. Two uncorrelated noise dials sit
+ * alongside framing to prove the scorer ignores them.
+ *
+ * Result: 3 cleanly separated clusters, framing as the pivot.
+ */
+export function framedScenario(base: Cascade): Cascade[] {
   const noiseDials = {
     seedTiming: [0, 24] as [number, number],
-    competitorAggression: [0, 1] as [number, number],
+    boardConfidence: [0, 1] as [number, number],
   };
 
   const regimes: RegimeSpec[] = [
     {
+      // "We stay independent." The base keeps its footing.
       count: 6,
-      perturbation: { messagingFraming: "independent" },
+      perturbation: { framing: "independent" },
       sentimentBias: 0.5,
-      perNodeSentiment: { "linear-leadership": 0.2 },
       divergence: 1,
       noiseDials,
     },
     {
+      // "We're integrating into Microsoft." The room turns.
       count: 5,
-      perturbation: { messagingFraming: "integrated" },
-      sentimentBias: -0.4,
-      divergence: 3,
+      perturbation: { framing: "integrated" },
+      sentimentBias: -0.5,
+      divergence: 4,
       noiseDials,
     },
     {
+      // Same integrated framing, but the moment hands competitors the narrative.
       count: 4,
-      perturbation: { messagingFraming: "leaked" },
-      sentimentBias: -0.3,
-      perNodeSentiment: { "linear-leadership": 0.9 },
+      perturbation: { framing: "integrated" },
+      sentimentBias: -0.25,
+      perNodeSentiment: COMPETITORS,
       divergence: 4,
       noiseDials,
     },
@@ -119,3 +137,6 @@ export function syntheticCascades(base: Cascade): Cascade[] {
   }
   return out;
 }
+
+/** @deprecated kept as an alias; use {@link framedScenario}. */
+export const syntheticCascades = framedScenario;

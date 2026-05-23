@@ -58,6 +58,7 @@ export function analyze(
     }),
   );
   const clusterLabels: string[] = copies.map((copy) => copy.label);
+  const clusterSentiment: number[] = copies.map((copy) => copy.avgSentiment);
 
   const clusters: OutcomeCluster[] = membersByCluster.map((members, c) => {
     const repIdx = representativeMember(standardized, members);
@@ -71,7 +72,7 @@ export function analyze(
   });
 
   // 3. Pivotal variable.
-  const pivotal = computePivotal(cascades, assignment, clusterLabels, fp);
+  const pivotal = computePivotal(cascades, assignment, clusterLabels, clusterSentiment, fp);
 
   const runs: MonteCarloRun[] = cascades.map((_, i) => ({
     id: runIds[i]!,
