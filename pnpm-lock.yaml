@@ -90,6 +90,19 @@ importers:
       '@wake/util':
         specifier: workspace:*
         version: link:../util
+    devDependencies:
+      '@wake/edges':
+        specifier: workspace:*
+        version: link:../edges
+      '@wake/llm':
+        specifier: workspace:*
+        version: link:../llm
+      '@wake/nodes':
+        specifier: workspace:*
+        version: link:../nodes
+      tsx:
+        specifier: ^4.19.2
+        version: 4.22.3
 
   packages/llm:
     dependencies:

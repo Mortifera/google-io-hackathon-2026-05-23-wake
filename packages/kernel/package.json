@@ -11,10 +11,17 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "run:cascade": "tsx src/run.ts"
   },
   "dependencies": {
     "@wake/contracts": "workspace:*",
     "@wake/util": "workspace:*"
+  },
+  "devDependencies": {
+    "@wake/edges": "workspace:*",
+    "@wake/llm": "workspace:*",
+    "@wake/nodes": "workspace:*",
+    "tsx": "^4.19.2"
   }
 }
