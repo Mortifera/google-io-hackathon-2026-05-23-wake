@@ -949,35 +949,35 @@ const seeds: SeedAction[] = [
     label: "Notion is acquired by Microsoft",
     targets: ["notion-corp"],
     payload:
-      "Microsoft is acquiring Notion. The acquisition is announced publicly today; Notion keeps its brand and operates as an independent Microsoft subsidiary, with its product integrating into Microsoft 365 and Copilot.",
+      "Microsoft and Notion have signed a definitive agreement; the acquisition is now public and final — Notion is becoming a Microsoft company. This is confirmed and done, not a rumor to deny. Microsoft says Notion keeps its brand and runs as an independent subsidiary, integrating with Microsoft 365 and Copilot.",
   },
   {
     id: "free-tier-removal",
     label: "Notion guts its free tier",
     targets: ["notion-corp"],
     payload:
-      "Notion is ending its free personal tier today: free workspaces become read-only and users must upgrade to a paid plan to keep editing. Notion cites the cost of running its AI features.",
+      "Notion has ended its free personal tier, effective today — this is in effect now, not a proposal: free workspaces are read-only and require a paid upgrade to keep editing. Notion cites the cost of its AI features.",
   },
   {
     id: "ceo-steps-down",
     label: "Ivan Zhao steps down as CEO",
     targets: ["notion-corp", "ivan-zhao"],
     payload:
-      "Ivan Zhao is stepping down as Notion's CEO, moving to executive chairman to focus on product and craft. Notion's board appoints a new operator-CEO to run the business.",
+      "Ivan Zhao has stepped down as Notion's CEO, effective today, moving to executive chairman; the board has appointed a new operator-CEO who is now running the company. This is official.",
   },
   {
     id: "open-source",
     label: "Notion open-sources its core engine",
     targets: ["notion-corp"],
     payload:
-      "Notion is open-sourcing its core block and editor engine under a permissive (Apache-2.0-style) license, releasing the code publicly and inviting the ecosystem to build on it as the open foundation for tools for thought.",
+      "Notion has open-sourced its core block and editor engine — the code is public now, today, under a permissive (Apache-2.0-style) license, and the company is inviting the ecosystem to build on it as the open foundation for tools for thought.",
   },
   {
     id: "engineer-idea",
     label: "An engineer DMs their manager with a product idea",
     targets: ["maya"],
     payload:
-      "Maya direct-messages her engineering manager with a product idea: use AI to auto-generate links between Notion pages based on semantic similarity.",
+      "Maya has just sent her engineering manager a direct message proposing a concrete product idea: use AI to auto-generate links between Notion pages based on semantic similarity. The DM is sent and is sitting in his inbox now, awaiting his response.",
   },
 ];
 
