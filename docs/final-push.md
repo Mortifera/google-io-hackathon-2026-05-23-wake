@@ -52,9 +52,11 @@ One continuous arc, ~90 seconds of breathtaking material, then conversational de
    to leadership post-acquisition* — because the world changed shape, and the same
    action means different things in different worlds. Nobody has to explain it.
 5. **The thousand futures + the recommendation.** Pull back: the single run
-   becomes a sheaf of futures, two clean regimes, and the card that travels —
-   *"the single dial that decides your fate is whether you lead with 'independent'
-   or 'integrated.'"* That's not a prediction; it's a **decision made legible.**
+   becomes a sheaf of futures, two clean regimes. We frame it as *"we ran your
+   announcement two ways"* and the card that travels surfaces the dial **and the
+   call**: *"the single thing that decides your fate is whether you lead with
+   'independent' or 'integrated' — so lead with 'independent.'"* That's not a
+   prediction; it's a **decision made legible, and a recommendation made.**
 6. **It generalizes.** Flash to Anthropic — same engine, a different world.
 7. **You can touch it.** A shareable URL the judges open themselves afterward.
 8. **The moonshot (if it lands).** Type *any* company in plain language → an agent
@@ -140,6 +142,16 @@ The current fan reads *too* clean (framing explains 100%, a perfect 50/50 split)
 a skeptic smells synthetic. A light re-tune to ~80% explained variance with a
 slightly uneven split makes the punchline more believable without weakening it.
 
+### 3f. The decision made explicit — variant A/B + a recommendation
+The fan *already is* a variant comparison (its two clusters are the two framings),
+but it's framed implicitly as "16 futures." Make the wedge explicit, cheaply: read
+the fan as **"we ran your announcement two ways — independent vs. integrated"** and
+surface a **recommended variant** ("lead with 'independent' — it avoids the backlash
+regime entirely"). This is the move that turns Wake from "watch consequences" into
+"**here's which way to do it**" — the AIFF decision-optimization wedge, on screen, in
+one line. It's a `recommendation` field + a copy/narration change, *not* the full
+interactive variant/sequence lab (that stays a future extension).
+
 ---
 
 ## 4. Principles of execution
@@ -199,14 +211,17 @@ Agent 4 (anlys)  █credibility re-tune█ ░QA full arc + (stretch) Anthropic 
   switch) and a shareable Vercel deployment of the replay.
 - **Agent 3** — *the moonshot, isolated:* Genesis via Gemini Managed Agents — NL →
   research → Flash-generated world; decoupled, use-if-ready.
-- **Agent 4** — *credibility + the wedge:* the fan credibility re-tune, a QA pass
-  of the full arc, and (stretch) an Anthropic Monte-Carlo fan.
+- **Agent 4** — *credibility + the wedge:* the fan credibility re-tune; the
+  **variant A/B recommendation** (a `recommendation` derived from the existing sweep
+  — "lead with 'independent'"); a QA pass of the full arc; (stretch) an Anthropic
+  Monte-Carlo fan.
 
 ---
 
 ## 7. Explicitly not doing (so we don't drift)
-- No new build on the full "variant lab" UI — the fan + pivotal card already deliver
-  the decision-optimization wedge; the narration names it.
+- No full interactive "variant lab" UI (edit/sequence arbitrary variants live) —
+  *but* the variant A/B framing + a recommended-variant callout **is in** (3f); only
+  the heavyweight interactive lab is deferred to a future extension.
 - No live world-state-chaining UI — the "different world" beat ships as a precompute,
   not an interactive chain.
 - No bigger graph for its own sake — fidelity over node count; generalization
