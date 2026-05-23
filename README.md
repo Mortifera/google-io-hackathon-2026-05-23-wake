@@ -4,6 +4,8 @@
 
 > Watch your decision before you make it.
 
+**▶ Live demo:** https://wake-web-zeta.vercel.app · **Run-of-show:** [`docs/demo-script.md`](./docs/demo-script.md)
+
 Wake is a graph-based simulator. Take any organizational action — a product
 announcement, an acquisition, a layoff, an internal proposal, a tweet — and
 watch its consequences propagate through a model of the surrounding world.
@@ -85,9 +87,10 @@ packages/nodes       per-node behaviour (TickFn)
 packages/edges       per-edge behaviour (EdgeTransform)
 packages/analysis    Monte Carlo clustering + pivotal variable
 packages/interp      event-DAG trace-back ("why did X happen")
-worlds/notion        the graph data (mini.json toy; full world to come)
-apps/web             Next.js visualization
-fixtures/            golden Cascade + MonteCarloResult (unblock viz/interp/analysis)
+worlds/              graph data: notion (208 nodes), anthropic (57), mini (toy)
+apps/web             Next.js visualization (live SSE streaming + replay)
+tools/genesis        natural language -> a researched, runnable world (CLI)
+fixtures/            golden Cascade + MonteCarloResult artifacts
 briefs/              one build brief per worker
 ```
 
@@ -99,8 +102,27 @@ checkpoints), and your **[`briefs/`](./briefs/README.md)** entry.
 
 ## Status
 
-Scaffold complete: contracts frozen, fixtures + mock shipped, `apps/web` builds,
-all green. L1–L8 are typed stubs ready to be picked up in parallel.
+**Feature-complete and deployed**, built at the hackathon (2026-05-23). Live at
+**https://wake-web-zeta.vercel.app**.
+
+- **Engine** — propagation kernel: variable time-stepping, activation thresholds +
+  attention-budget saturation, a `causedBy` provenance DAG, deterministic seeding,
+  and a streaming mode (`runCascadeStream`) whose output is byte-identical to batch.
+- **Reasoning** — every node and load-bearing edge is a **Gemini 3.5 Flash** call
+  (structured output, dossier context-caching, backoff retries, a concurrency
+  semaphore for Tier-1 limits). A `MockLLMClient` runs the whole system offline.
+- **Worlds** — Notion (208 nodes / 346 edges / 5 seeds) and Anthropic (57 nodes),
+  from real public-source dossiers.
+- **Live cascade** — tick-by-tick SSE streaming paints the graph as Gemini resolves,
+  with a per-node **reasoning stream** (who's thinking + why) and a precomputed
+  Replay one click away (the escape hatch).
+- **Same action, different world** — the same idea is run in independent-Notion vs.
+  Notion-as-a-Microsoft-subsidiary; the manager's private reasoning inverts.
+- **Monte Carlo** — a perturbation sweep → outcome clusters → the **pivotal
+  variable** (the dial that most decides which future you land in).
+- **Interpretability** — click any outcome → the causal chain traces back to your
+  action, cited event by event.
+- **Genesis** — one English sentence → a researched, runnable world (`tools/genesis`).
 
 ## Name
 

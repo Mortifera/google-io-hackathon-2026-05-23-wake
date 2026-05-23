@@ -24,7 +24,7 @@ describe("sweep", () => {
   it("produces (combos × reps) cascades, each tagged with its perturbation", async () => {
     const cascades = await sweep(world, "acquisition", deps, {
       dimensions: [
-        { name: "framing", values: ["independent", "integrated"] },
+        { name: "acquisitionMessagingFraming", values: ["independent", "integrated"] },
         { name: "pressClimate", values: ["skeptical", "favorable"] },
       ],
       repetitions: 2,
@@ -34,7 +34,7 @@ describe("sweep", () => {
     expect(cascades).toHaveLength(8); // 2 × 2 combos × 2 reps
     for (const c of cascades) {
       expect(() => CascadeSchema.parse(c)).not.toThrow();
-      expect(c.meta.perturbation?.framing).toBeDefined();
+      expect(c.meta.perturbation?.acquisitionMessagingFraming).toBeDefined();
       expect(c.meta.perturbation?.pressClimate).toBeDefined();
     }
     const distinct = new Set(
@@ -43,16 +43,16 @@ describe("sweep", () => {
     expect(distinct.size).toBe(4); // 4 distinct perturbation combos
   });
 
-  it("applyPerturbation rewrites the seed payload by framing", () => {
+  it("applyPerturbation rewrites the seed payload by acquisition messaging framing", () => {
     const integrated = applyPerturbation(world, "acquisition", {
-      framing: "integrated",
+      acquisitionMessagingFraming: "integrated",
     });
     expect(
       integrated.seeds.find((s) => s.id === "acquisition")!.payload.toLowerCase(),
     ).toContain("integrated");
 
     const independent = applyPerturbation(world, "acquisition", {
-      framing: "independent",
+      acquisitionMessagingFraming: "independent",
     });
     expect(
       independent.seeds.find((s) => s.id === "acquisition")!.payload.toLowerCase(),
