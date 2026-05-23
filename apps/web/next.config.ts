@@ -18,6 +18,16 @@ const nextConfig: NextConfig = {
   // Turbopack resolves and traces files outside apps/web correctly.
   turbopack: {
     root: repoRoot,
+    resolveAlias: {
+      "@genesis": path.join(repoRoot, "tools/genesis"),
+    },
+  },
+  webpack(config) {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@genesis": path.join(repoRoot, "tools/genesis"),
+    };
+    return config;
   },
   // Match turbopack.root so Vercel's build (which otherwise sets this to the
   // project Root Directory, apps/web) still traces files outside apps/web —

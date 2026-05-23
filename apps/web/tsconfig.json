@@ -21,7 +21,8 @@
     "paths": {
       "@/*": ["./*"],
       "@fixtures/*": ["../../fixtures/*"],
-      "@worlds/*": ["../../worlds/*"]
+      "@worlds/*": ["../../worlds/*"],
+      "@genesis/*": ["../../tools/genesis/*"]
     }
   },
   "include": [
@@ -30,7 +31,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "../../tools/genesis/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
