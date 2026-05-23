@@ -12,13 +12,15 @@
   },
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "run:cascade": "tsx src/run.ts"
+    "run:cascade": "tsx src/run.ts",
+    "run:sweep": "tsx src/run-sweep.ts"
   },
   "dependencies": {
     "@wake/contracts": "workspace:*",
     "@wake/util": "workspace:*"
   },
   "devDependencies": {
+    "@wake/analysis": "workspace:*",
     "@wake/edges": "workspace:*",
     "@wake/llm": "workspace:*",
     "@wake/nodes": "workspace:*",

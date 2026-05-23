@@ -12,7 +12,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
-import type { LLMClient } from "@wake/contracts";
+import type { LLMClient, CompleteArgs } from "@wake/contracts";
 import { tickFn } from "@wake/nodes";
 import { edgeTransform } from "@wake/edges";
 import { runCascade, loadWorld } from "./index";
@@ -44,7 +44,7 @@ const base = await makeLLM();
 let calls = 0;
 let costUsd = 0;
 const llm: LLMClient = {
-  async complete<T>(args) {
+  async complete<T>(args: CompleteArgs) {
     const r = await base.complete<T>(args);
     calls++;
     costUsd += r.usage.costUsd;

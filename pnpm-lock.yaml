@@ -97,6 +97,9 @@ importers:
         specifier: workspace:*
         version: link:../util
     devDependencies:
+      '@wake/analysis':
+        specifier: workspace:*
+        version: link:../analysis
       '@wake/edges':
         specifier: workspace:*
         version: link:../edges
