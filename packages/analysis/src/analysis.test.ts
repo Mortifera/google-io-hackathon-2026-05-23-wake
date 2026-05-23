@@ -53,7 +53,7 @@ describe("analyze on the real cascade (demo-grade)", () => {
     }
   });
 
-  it("names framing as the pivotal variable with a crisp one-sentence punchline", () => {
+  it("names framing as the pivotal variable, in the instrument-not-advisor register", () => {
     expect(result.pivotal.dimension).toBe("framing");
     expect(result.pivotal.explainedVariance).toBeGreaterThan(0.6);
 
@@ -61,8 +61,11 @@ describe("analyze on the real cascade (demo-grade)", () => {
     expect(d.toLowerCase()).toContain("framing");
     expect(d).toContain("independent");
     expect(d).toContain("integrated");
-    // One sentence: a single terminal period.
-    expect((d.match(/\.\s/g) ?? []).length).toBe(0);
+    // Instrument framing: report the reading + point at the lever the data favours.
+    expect(d).toContain("The pivotal variable points to");
+    expect(d).toMatch(/\d+ of \d+ runs/); // hedged to the counts, never "always"
+    // Never advisory / opinionated.
+    expect(d).not.toMatch(/\b(recommend|you should|lead with|we suggest|advise)\b/i);
   });
 });
 
