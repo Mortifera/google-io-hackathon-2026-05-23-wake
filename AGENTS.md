@@ -88,6 +88,10 @@ solo; surface the need and let the human/orchestrator coordinate:
 - **Never commit secrets.** `.env` is gitignored; keep it that way. Never print a
   full API key in logs, commit messages, or code. Never weaken `.gitignore`'s
   `.env` rules.
+- **Never `git add -A` / `git add .` / `git commit -a`.** All agents share one
+  working tree, so staging everything sweeps other agents' in-progress files into
+  your commit. **Stage only your own paths**, e.g.
+  `git add packages/<you> <your other files>`, then commit.
 - **Never `git push --force`** or rewrite shared history on `main`.
 - **Never delete or overwrite another worker's work** to resolve a conflict —
   rebase and keep both (your folders shouldn't actually collide).
@@ -102,6 +106,8 @@ We work on `main` and push continuously. Because each worker owns a separate
 folder, real conflicts are rare. Keep it clean:
 
 - **Commit small and often**, scoped to your folder, with a clear message.
+- **Stage your own paths only** — never `git add -A`/`.` (you share the tree;
+  see §4). Run `pnpm install` after editing your `package.json`.
 - **`git pull --rebase` before you push.** If a push is rejected, rebase (your
   folder won't conflict) and push again.
 - **The one file that *will* conflict is `pnpm-lock.yaml`** (when two agents add
