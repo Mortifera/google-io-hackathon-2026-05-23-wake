@@ -163,13 +163,9 @@ export default function GraphCanvas({
       if (Math.abs(w - prev.w) < 1 && Math.abs(h - prev.h) < 1) return;
       sizeRef.current = { w, h };
       sizeCanvas(canvas, w, h);
-      if (settledRef.current && prev.w > 0) {
-        const sx = w / prev.w;
-        const sy = h / prev.h;
-        for (const n of sim.nodes) {
-          n.x = (n.x ?? w / 2) * sx;
-          n.y = (n.y ?? h / 2) * sy;
-        }
+      if (settledRef.current) {
+        // re-fit the already-settled relative layout to the new frame
+        fitToFrame(sim.nodes, w, h);
       } else {
         settleLayout(sim.nodes, sim.links, w, h);
         settledRef.current = true;
@@ -443,7 +439,7 @@ export default function GraphCanvas({
 /** Font stack for canvas text (ctx.font can't read CSS custom properties). */
 const CANVAS_FONT = "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif";
 
-/** Run the force sim to a settled state at a real frame size, then clamp in. */
+/** Run the force sim to a settled state, then fit it to the frame. */
 function settleLayout(nodes: SimNode[], links: SimLink[], w: number, h: number) {
   const sim = forceSimulation(nodes)
     .force("charge", forceManyBody().strength(-560))
@@ -460,10 +456,29 @@ function settleLayout(nodes: SimNode[], links: SimLink[], w: number, h: number) 
     .force("collide", forceCollide(40))
     .stop();
   for (let i = 0; i < 380; i++) sim.tick();
-  const m = 72;
+  fitToFrame(nodes, w, h);
+}
+
+/** Scale + centre the settled layout so its bounding box fills the frame nicely.
+ * Robust to whatever size the sim happened to run at, and re-runnable on resize. */
+function fitToFrame(nodes: SimNode[], w: number, h: number, margin = 86) {
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
   for (const n of nodes) {
-    n.x = Math.max(m, Math.min(w - m, n.x ?? w / 2));
-    n.y = Math.max(m, Math.min(h - m, n.y ?? h / 2));
+    const x = n.x ?? 0;
+    const y = n.y ?? 0;
+    minX = Math.min(minX, x);
+    maxX = Math.max(maxX, x);
+    minY = Math.min(minY, y);
+    maxY = Math.max(maxY, y);
+  }
+  const bw = Math.max(1, maxX - minX);
+  const bh = Math.max(1, maxY - minY);
+  const scale = Math.min((w - 2 * margin) / bw, (h - 2 * margin) / bh, 1.9);
+  const cx = (minX + maxX) / 2;
+  const cy = (minY + maxY) / 2;
+  for (const n of nodes) {
+    n.x = w / 2 + ((n.x ?? 0) - cx) * scale;
+    n.y = h / 2 + ((n.y ?? 0) - cy) * scale;
   }
 }
 

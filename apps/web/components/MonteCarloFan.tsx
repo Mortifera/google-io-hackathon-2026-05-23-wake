@@ -127,8 +127,9 @@ export default function MonteCarloFan({ mc }: Props) {
                     opacity: dim ? 0.08 : st.isRep ? 0.95 : 0.42,
                     strokeDasharray: 1,
                     strokeDashoffset: 1,
-                    animation: "wake-strand-draw 1.1s cubic-bezier(0.16,1,0.3,1) forwards",
-                    animationDelay: `${i * 0.035}s`,
+                    animation: `wake-strand-draw 1.1s cubic-bezier(0.16,1,0.3,1) ${(
+                      i * 0.035
+                    ).toFixed(3)}s forwards`,
                   }}
                 />
               );
