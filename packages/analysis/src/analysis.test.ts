@@ -17,13 +17,12 @@ const mini = load("fixtures/cascades/notion-acquisition.json");
 
 const opts = { worldId: real.meta.worldId, seedActionId: real.meta.seedActionId };
 
-// The card-ready vocabulary describeCluster is allowed to emit.
+// The card-ready vocabulary describeCluster is allowed to emit — mirrors the fan
+// design (somedesignwork.pen): three regime names.
 const CLEAN_LABELS = new Set([
-  "Smooth integration",
-  "Cautious acceptance",
-  "Simmering discontent",
-  "Full-blown backlash",
-  "Competitors capitalize",
+  "Muted positive integration",
+  "Consumer backlash",
+  "Competitor wins",
 ]);
 // On collision a label is suffixed (" · Qualifier"); the base must still be clean.
 const baseOf = (label: string): string => label.split(" · ")[0]!;

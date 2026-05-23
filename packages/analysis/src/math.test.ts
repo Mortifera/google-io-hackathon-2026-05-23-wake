@@ -98,7 +98,7 @@ describe("describeClusters dedup guard", () => {
 
     const copies = describeClusters([c1, c2]);
     expect(copies[0]!.label).not.toBe(copies[1]!.label); // distinct headings
-    for (const c of copies) expect(c.label.startsWith("Full-blown backlash")).toBe(true);
+    for (const c of copies) expect(c.label.startsWith("Consumer backlash")).toBe(true);
   });
 
   it("guarantees uniqueness even when the qualifier node would also collide", () => {

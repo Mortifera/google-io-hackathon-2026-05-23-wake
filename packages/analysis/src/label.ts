@@ -105,13 +105,15 @@ function computeStats(input: LabelInput): ClusterStats {
   };
 }
 
-/** Clean, card-ready cluster names that match Wake's outcome vocabulary. */
+/**
+ * Card-ready cluster names mirroring the fan design (somedesignwork.pen): three
+ * regimes — the positive/integration majority, the negative backlash, and the
+ * competitor-wins outcome. Severity nuance lives in the summary, not the label.
+ */
 function pickBaseLabel(avgSent: number, rivalWins: boolean): string {
-  if (rivalWins) return "Competitors capitalize";
-  if (avgSent >= 0.15) return "Smooth integration";
-  if (avgSent >= 0) return "Cautious acceptance";
-  if (avgSent >= -0.3) return "Simmering discontent";
-  return "Full-blown backlash";
+  if (rivalWins) return "Competitor wins";
+  if (avgSent >= 0) return "Muted positive integration";
+  return "Consumer backlash";
 }
 
 /**
