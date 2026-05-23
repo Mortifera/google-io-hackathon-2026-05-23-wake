@@ -67,7 +67,17 @@ const cascades = await sweep(
   world,
   seedId,
   { llm, tickFn, edgeTransform },
-  { dimensions: DIMENSIONS, repetitions: reps, runConcurrency, concurrency, maxTicks },
+  {
+    dimensions: DIMENSIONS,
+    repetitions: reps,
+    runConcurrency,
+    concurrency,
+    maxTicks,
+    onProgress: (d, t) =>
+      console.error(
+        `  [${d}/${t}] runs done — $${costUsd.toFixed(2)}, ${((Date.now() - t0) / 1000).toFixed(0)}s`,
+      ),
+  },
 );
 const mc = analyze(cascades, { worldId: world.id, seedActionId: seedId });
 

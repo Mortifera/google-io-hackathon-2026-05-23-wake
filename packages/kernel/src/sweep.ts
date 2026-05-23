@@ -22,6 +22,8 @@ export interface SweepOptions {
   concurrency?: number;
   maxTicks?: number;
   temperature?: number;
+  /** Called after each cascade resolves — for progress visibility. */
+  onProgress?: (done: number, total: number) => void;
 }
 
 function combos(dims: SweepDimension[]): Perturbation[] {
@@ -110,13 +112,22 @@ export async function sweep(
       i++;
     }
   }
-  return mapWithConcurrency(tasks, opts.runConcurrency ?? 4, (t) =>
-    runCascade(applyPerturbation(world, seedId, t.p), seedId, deps, {
-      seed: t.seed,
-      perturbation: t.p,
-      concurrency: opts.concurrency,
-      maxTicks: opts.maxTicks,
-      temperature: opts.temperature,
-    }),
-  );
+  let done = 0;
+  const total = tasks.length;
+  return mapWithConcurrency(tasks, opts.runConcurrency ?? 4, async (t) => {
+    const cascade = await runCascade(
+      applyPerturbation(world, seedId, t.p),
+      seedId,
+      deps,
+      {
+        seed: t.seed,
+        perturbation: t.p,
+        concurrency: opts.concurrency,
+        maxTicks: opts.maxTicks,
+        temperature: opts.temperature,
+      },
+    );
+    opts.onProgress?.(++done, total);
+    return cascade;
+  });
 }
