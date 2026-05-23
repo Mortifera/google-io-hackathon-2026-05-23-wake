@@ -949,35 +949,35 @@ const seeds: SeedAction[] = [
     label: "Notion is acquired by Microsoft",
     targets: ["notion-corp"],
     payload:
-      "Microsoft announces it is acquiring Notion. Official messaging emphasizes that Notion will continue to operate independently, with investment to deepen integration with Microsoft 365 and Copilot.",
+      "Microsoft is acquiring Notion. The acquisition is announced publicly today; Notion keeps its brand and operates as an independent Microsoft subsidiary, with its product integrating into Microsoft 365 and Copilot.",
   },
   {
     id: "free-tier-removal",
     label: "Notion guts its free tier",
     targets: ["notion-corp"],
     payload:
-      "Notion announces it is sharply curtailing its free tier — removing unlimited blocks for personal use and pushing free users toward a paid plan — citing the rising cost of AI features and a focus on serious users.",
+      "Notion is ending its free personal tier today: free workspaces become read-only and users must upgrade to a paid plan to keep editing. Notion cites the cost of running its AI features.",
   },
   {
     id: "ceo-steps-down",
     label: "Ivan Zhao steps down as CEO",
     targets: ["notion-corp", "ivan-zhao"],
     payload:
-      "Ivan Zhao announces he is stepping down as CEO to focus on product philosophy and craft as chairman; a new operator-CEO is named to scale the business.",
+      "Ivan Zhao is stepping down as Notion's CEO, moving to executive chairman to focus on product and craft. Notion's board appoints a new operator-CEO to run the business.",
   },
   {
     id: "open-source",
     label: "Notion open-sources its core engine",
     targets: ["notion-corp"],
     payload:
-      "Notion announces it is open-sourcing its core block/editor engine under a permissive license, positioning itself as the open foundation for the next generation of tools for thought.",
+      "Notion is open-sourcing its core block and editor engine under a permissive (Apache-2.0-style) license, releasing the code publicly and inviting the ecosystem to build on it as the open foundation for tools for thought.",
   },
   {
     id: "engineer-idea",
     label: "An engineer DMs their manager with a product idea",
     targets: ["maya"],
     payload:
-      "Maya proposes to her manager: use AI to auto-generate connections between Notion pages based on semantic similarity.",
+      "Maya direct-messages her engineering manager with a product idea: use AI to auto-generate links between Notion pages based on semantic similarity.",
   },
 ];
 
