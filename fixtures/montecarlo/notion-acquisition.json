@@ -1,0 +1,46 @@
+{
+  "worldId": "notion-mini",
+  "seedActionId": "acquisition",
+  "runs": [
+    { "id": "r01", "clusterId": "c-integration", "outcomeVector": [0.1, -0.1, 0.2, 0.0] },
+    { "id": "r02", "clusterId": "c-integration", "outcomeVector": [0.0, -0.2, 0.1, 0.1] },
+    { "id": "r03", "clusterId": "c-integration", "outcomeVector": [0.2, 0.0, 0.1, -0.1] },
+    { "id": "r04", "clusterId": "c-integration", "outcomeVector": [0.1, -0.1, 0.0, 0.0] },
+    { "id": "r05", "clusterId": "c-integration", "outcomeVector": [0.0, 0.0, 0.2, 0.1] },
+    { "id": "r06", "clusterId": "c-integration", "outcomeVector": [0.1, -0.2, 0.1, 0.0] },
+    { "id": "r07", "clusterId": "c-backlash", "outcomeVector": [-0.6, -0.7, -0.5, 0.4] },
+    { "id": "r08", "clusterId": "c-backlash", "outcomeVector": [-0.7, -0.6, -0.6, 0.5] },
+    { "id": "r09", "clusterId": "c-backlash", "outcomeVector": [-0.5, -0.8, -0.4, 0.3] },
+    { "id": "r10", "clusterId": "c-competitor", "outcomeVector": [-0.3, -0.4, -0.2, 0.8] },
+    { "id": "r11", "clusterId": "c-competitor", "outcomeVector": [-0.2, -0.3, -0.1, 0.9] },
+    { "id": "r12", "clusterId": "c-competitor", "outcomeVector": [-0.4, -0.4, -0.3, 0.7] }
+  ],
+  "clusters": [
+    {
+      "id": "c-integration",
+      "label": "Muted positive integration",
+      "summary": "The independence narrative holds. Power users grumble but mostly stay; coverage is neutral-to-positive. The majority of futures land here.",
+      "memberRunIds": ["r01", "r02", "r03", "r04", "r05", "r06"],
+      "representativeRunId": "r03"
+    },
+    {
+      "id": "c-backlash",
+      "label": "Consumer backlash",
+      "summary": "Skeptical coverage catches fire on Twitter; productivity power users turn hostile and a morale leak compounds it. Sharp, vocal, churn-threatening.",
+      "memberRunIds": ["r07", "r08", "r09"],
+      "representativeRunId": "r08"
+    },
+    {
+      "id": "c-competitor",
+      "label": "Competitor wins",
+      "summary": "Linear moves fast on a switcher campaign during the uncertainty window and captures a meaningful slice of wavering users.",
+      "memberRunIds": ["r10", "r11", "r12"],
+      "representativeRunId": "r11"
+    }
+  ],
+  "pivotal": {
+    "dimension": "acquisition messaging framing",
+    "explainedVariance": 0.62,
+    "description": "Across these futures, the single biggest determinant of which cluster you land in is whether the acquisition messaging leads with 'independent' or 'integrated'."
+  }
+}

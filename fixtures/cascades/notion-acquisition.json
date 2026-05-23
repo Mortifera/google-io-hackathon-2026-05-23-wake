@@ -1,0 +1,103 @@
+{
+  "meta": { "worldId": "notion-mini", "seedActionId": "acquisition", "seed": 1 },
+  "ticks": [
+    {
+      "clock": 0,
+      "activeNodeIds": ["notion-corp"],
+      "events": [
+        { "id": "e1", "type": "action", "source": "world", "target": "notion-corp", "channel": "seed", "content": "Microsoft announces acquisition of Notion; messaging emphasizes continued independence.", "time": 0, "causedBy": null, "rationale": "Injected seed action." }
+      ]
+    },
+    {
+      "clock": 15,
+      "activeNodeIds": ["notion-corp"],
+      "events": [
+        { "id": "e2", "type": "public_post", "source": "notion-corp", "target": "casey-newton", "channel": "corp-press", "content": "Press release: Notion to join Microsoft and operate independently.", "time": 15, "causedBy": "e1", "rationale": "Get ahead of the story with on-brand framing." },
+        { "id": "e3", "type": "private_message", "source": "notion-corp", "target": "ivan-zhao", "channel": "corp-ceo", "content": "Deal signed. Align leadership on the independence narrative.", "time": 15, "causedBy": "e1", "rationale": "Brief the CEO before it leaks." },
+        { "id": "e4", "type": "action", "source": "notion-corp", "target": "linear-leadership", "channel": "corp-linear", "content": "Public M&A signal reaches the competitive market.", "time": 15, "causedBy": "e1", "rationale": "The announcement is public; competitors will notice." }
+      ]
+    },
+    {
+      "clock": 45,
+      "activeNodeIds": ["casey-newton", "ivan-zhao", "linear-leadership"],
+      "events": [
+        { "id": "e5", "type": "public_post", "source": "casey-newton", "target": "twitter", "channel": "journo-twitter", "content": "Analysis: another beloved tool absorbed by Microsoft. Can independence survive integration?", "time": 45, "causedBy": "e2", "rationale": "Frame the deal skeptically for my audience." },
+        { "id": "e6", "type": "private_message", "source": "ivan-zhao", "target": "eng-manager", "channel": "ceo-mgr", "content": "We stay focused and independent. Look for genuine synergies, not theater.", "time": 45, "causedBy": "e3", "rationale": "Reassure and redirect the org." },
+        { "id": "e7", "type": "decision", "source": "linear-leadership", "target": "linear-leadership", "channel": "corp-linear", "content": "Prepare a 'still independent — choose Linear' switcher campaign.", "time": 45, "causedBy": "e4", "rationale": "Exploit the uncertainty window." }
+      ]
+    },
+    {
+      "clock": 120,
+      "activeNodeIds": ["twitter"],
+      "events": [
+        { "id": "e8", "type": "public_post", "source": "twitter", "target": "prod-twitter", "channel": "twitter-prod", "content": "Trending #NotionMicrosoft — 'RIP the vibes' takes spreading fast.", "time": 120, "causedBy": "e5", "rationale": "Amplify the loudest framing." }
+      ]
+    },
+    {
+      "clock": 240,
+      "activeNodeIds": ["prod-twitter", "maya"],
+      "events": [
+        { "id": "e9", "type": "public_post", "source": "prod-twitter", "target": "notion-corp", "channel": "prod-corp", "content": "Power users voice betrayal; some publicly threaten to migrate.", "time": 240, "causedBy": "e8", "rationale": "Express fear that the craft will be ruined." },
+        { "id": "e10", "type": "emergent", "source": "maya", "target": "twitter", "channel": "blind", "content": "Anonymous Blind post: 'Morale low on the AI team; nobody knows the roadmap.'", "time": 240, "causedBy": "e6", "rationale": "Private anxiety leaks when it diverges too far from the public line." }
+      ]
+    }
+  ],
+  "eventDag": [
+    { "id": "e1", "type": "action", "source": "world", "target": "notion-corp", "channel": "seed", "content": "Microsoft announces acquisition of Notion; messaging emphasizes continued independence.", "time": 0, "causedBy": null, "rationale": "Injected seed action." },
+    { "id": "e2", "type": "public_post", "source": "notion-corp", "target": "casey-newton", "channel": "corp-press", "content": "Press release: Notion to join Microsoft and operate independently.", "time": 15, "causedBy": "e1", "rationale": "Get ahead of the story with on-brand framing." },
+    { "id": "e3", "type": "private_message", "source": "notion-corp", "target": "ivan-zhao", "channel": "corp-ceo", "content": "Deal signed. Align leadership on the independence narrative.", "time": 15, "causedBy": "e1", "rationale": "Brief the CEO before it leaks." },
+    { "id": "e4", "type": "action", "source": "notion-corp", "target": "linear-leadership", "channel": "corp-linear", "content": "Public M&A signal reaches the competitive market.", "time": 15, "causedBy": "e1", "rationale": "The announcement is public; competitors will notice." },
+    { "id": "e5", "type": "public_post", "source": "casey-newton", "target": "twitter", "channel": "journo-twitter", "content": "Analysis: another beloved tool absorbed by Microsoft. Can independence survive integration?", "time": 45, "causedBy": "e2", "rationale": "Frame the deal skeptically for my audience." },
+    { "id": "e6", "type": "private_message", "source": "ivan-zhao", "target": "eng-manager", "channel": "ceo-mgr", "content": "We stay focused and independent. Look for genuine synergies, not theater.", "time": 45, "causedBy": "e3", "rationale": "Reassure and redirect the org." },
+    { "id": "e7", "type": "decision", "source": "linear-leadership", "target": "linear-leadership", "channel": "corp-linear", "content": "Prepare a 'still independent — choose Linear' switcher campaign.", "time": 45, "causedBy": "e4", "rationale": "Exploit the uncertainty window." },
+    { "id": "e8", "type": "public_post", "source": "twitter", "target": "prod-twitter", "channel": "twitter-prod", "content": "Trending #NotionMicrosoft — 'RIP the vibes' takes spreading fast.", "time": 120, "causedBy": "e5", "rationale": "Amplify the loudest framing." },
+    { "id": "e9", "type": "public_post", "source": "prod-twitter", "target": "notion-corp", "channel": "prod-corp", "content": "Power users voice betrayal; some publicly threaten to migrate.", "time": 240, "causedBy": "e8", "rationale": "Express fear that the craft will be ruined." },
+    { "id": "e10", "type": "emergent", "source": "maya", "target": "twitter", "channel": "blind", "content": "Anonymous Blind post: 'Morale low on the AI team; nobody knows the roadmap.'", "time": 240, "causedBy": "e6", "rationale": "Private anxiety leaks when it diverges too far from the public line." }
+  ],
+  "stateTimeline": [
+    {
+      "tick": 0,
+      "states": {
+        "notion-corp": { "beliefs": "Acquisition is happening; control the narrative.", "mood": { "attention": 0.9, "sentiment": 0.0, "urgency": 0.8 }, "publicFace": "Excited about the next chapter.", "privateInterior": "Bracing for backlash from power users.", "history": ["Received acquisition action"], "commitments": ["Issue press release"], "attentionBudget": 0.9, "active": true }
+      }
+    },
+    {
+      "tick": 2,
+      "states": {
+        "casey-newton": { "beliefs": "This is a consolidation story worth telling.", "mood": { "attention": 0.9, "sentiment": -0.3, "urgency": 0.7 }, "publicFace": "Measured but skeptical analysis.", "privateInterior": "This will get a lot of reads.", "history": ["Read Notion press release"], "commitments": ["Publish analysis"], "attentionBudget": 0.7, "active": true },
+        "ivan-zhao": { "beliefs": "Independence is the thing to defend.", "mood": { "attention": 0.8, "sentiment": -0.1, "urgency": 0.6 }, "publicFace": "Calm, reassuring.", "privateInterior": "Worried the craft gets diluted.", "history": ["Briefed on deal"], "commitments": ["Reassure the org"], "attentionBudget": 0.8, "active": true },
+        "linear-leadership": { "beliefs": "An opening to capture switchers.", "mood": { "attention": 0.7, "sentiment": 0.3, "urgency": 0.6 }, "publicFace": "Confident, restrained.", "privateInterior": "Move fast while Notion is distracted.", "history": ["Saw acquisition news"], "commitments": ["Prep switcher campaign"], "attentionBudget": 0.8, "active": true }
+      }
+    },
+    {
+      "tick": 3,
+      "states": {
+        "twitter": { "beliefs": "", "mood": { "attention": 1.0, "sentiment": -0.4, "urgency": 0.9 }, "publicFace": "Loud, polarized.", "privateInterior": "", "history": ["Amplified Platformer take"], "commitments": [], "attentionBudget": 0.6, "active": true }
+      }
+    },
+    {
+      "tick": 4,
+      "states": {
+        "prod-twitter": { "beliefs": "Notion's independence is at risk; the magic may die.", "mood": { "attention": 0.9, "sentiment": -0.6, "urgency": 0.7 }, "publicFace": "Betrayed, threatening to migrate.", "privateInterior": "Hoping to be proven wrong.", "history": ["Saw trending takes"], "commitments": ["Evaluate alternatives"], "attentionBudget": 0.4, "active": true },
+        "maya": { "beliefs": "Direction is unclear post-acquisition.", "mood": { "attention": 0.7, "sentiment": -0.5, "urgency": 0.4 }, "publicFace": "Quietly going along.", "privateInterior": "Anxious and unheard.", "history": ["Received CEO redirect message"], "commitments": [], "attentionBudget": 0.5, "active": true }
+      }
+    }
+  ],
+  "divergence": [
+    { "tick": 0, "count": 0 },
+    { "tick": 1, "count": 0 },
+    { "tick": 2, "count": 1 },
+    { "tick": 3, "count": 1 },
+    { "tick": 4, "count": 3 }
+  ],
+  "finalState": {
+    "notion-corp": { "beliefs": "Independence narrative under pressure; churn risk rising.", "mood": { "attention": 0.8, "sentiment": -0.3, "urgency": 0.7 }, "publicFace": "Holding the independent line.", "privateInterior": "Worried about power-user churn and morale.", "history": ["Issued press release", "Saw backlash"], "commitments": ["Reaffirm independence publicly"], "attentionBudget": 0.4, "active": false },
+    "ivan-zhao": { "beliefs": "Must visibly defend the craft.", "mood": { "attention": 0.6, "sentiment": -0.2, "urgency": 0.5 }, "publicFace": "Reassuring the community.", "privateInterior": "Tired but resolved.", "history": ["Briefed org"], "commitments": ["Protect design culture"], "attentionBudget": 0.5, "active": false },
+    "eng-manager": { "beliefs": "Now expected to find Microsoft synergies.", "mood": { "attention": 0.6, "sentiment": 0.0, "urgency": 0.4 }, "publicFace": "On board with the plan.", "privateInterior": "Unsure what counts as a real synergy.", "history": ["Received CEO redirect"], "commitments": [], "attentionBudget": 0.6, "active": false },
+    "maya": { "beliefs": "Direction unclear; morale low.", "mood": { "attention": 0.6, "sentiment": -0.5, "urgency": 0.3 }, "publicFace": "Quiet.", "privateInterior": "Anxious; vented anonymously.", "history": ["Heard redirect", "Posted on Blind"], "commitments": [], "attentionBudget": 0.4, "active": false },
+    "casey-newton": { "beliefs": "Story landed; following the fallout.", "mood": { "attention": 0.7, "sentiment": -0.3, "urgency": 0.4 }, "publicFace": "Continuing coverage.", "privateInterior": "Watching for the leak angle.", "history": ["Published analysis"], "commitments": ["Follow-up piece"], "attentionBudget": 0.5, "active": false },
+    "twitter": { "beliefs": "", "mood": { "attention": 0.9, "sentiment": -0.4, "urgency": 0.6 }, "publicFace": "Still buzzing.", "privateInterior": "", "history": ["Amplified backlash"], "commitments": [], "attentionBudget": 0.3, "active": false },
+    "prod-twitter": { "beliefs": "Considering migration; trust shaken.", "mood": { "attention": 0.8, "sentiment": -0.6, "urgency": 0.6 }, "publicFace": "Loudly skeptical.", "privateInterior": "Wants reassurance.", "history": ["Reacted to trend"], "commitments": ["Evaluate Linear"], "attentionBudget": 0.3, "active": false },
+    "linear-leadership": { "beliefs": "Window is open; press the advantage.", "mood": { "attention": 0.7, "sentiment": 0.4, "urgency": 0.6 }, "publicFace": "Confident.", "privateInterior": "Quietly delighted.", "history": ["Saw news", "Decided on campaign"], "commitments": ["Launch switcher campaign"], "attentionBudget": 0.6, "active": false }
+  }
+}

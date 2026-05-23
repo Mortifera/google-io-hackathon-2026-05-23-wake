@@ -1,0 +1,174 @@
+{
+  "id": "notion-mini",
+  "label": "Notion (mini, 8-node toy world)",
+  "nodes": [
+    {
+      "id": "notion-corp",
+      "label": "Notion (corporate)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "The company entity. Speaks via official channels; measured, design-led, brand-protective. Originates the seed action.",
+      "activationThreshold": 0,
+      "initialState": {
+        "beliefs": "Independent productivity company, strong prosumer love, enterprise push underway.",
+        "mood": { "attention": 0.2, "sentiment": 0.1, "urgency": 0.1 },
+        "publicFace": "Calm, on-brand, optimistic.",
+        "privateInterior": "Aware of competitive pressure from Linear and Microsoft Loop.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      }
+    },
+    {
+      "id": "ivan-zhao",
+      "label": "Ivan Zhao (CEO)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Co-founder/CEO. Idiosyncratic, design-obsessed, tools-for-thought philosophy. Protective of craft and independence.",
+      "activationThreshold": 0.3,
+      "initialState": {
+        "beliefs": "Notion's value is taste and independence.",
+        "mood": { "attention": 0.2, "sentiment": 0.2, "urgency": 0.1 },
+        "publicFace": "Thoughtful, philosophical.",
+        "privateInterior": "Wary of anything that dilutes the craft.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      }
+    },
+    {
+      "id": "eng-manager",
+      "label": "Engineering Manager (AI features)",
+      "tier": 2,
+      "fn": "actor",
+      "dossier": "Mid-tier, recently promoted, cautious and status-protective. Reluctant to push half-baked ideas up the chain. Funnel node for the engineer-idea scenario.",
+      "activationThreshold": 0.4,
+      "initialState": {
+        "beliefs": "Keep the team focused; avoid risky bets that could backfire on me.",
+        "mood": { "attention": 0.3, "sentiment": 0.0, "urgency": 0.1 },
+        "publicFace": "Supportive, measured.",
+        "privateInterior": "Anxious about looking unfocused to leadership.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      }
+    },
+    {
+      "id": "maya",
+      "label": "Maya (senior engineer)",
+      "tier": 2,
+      "fn": "actor",
+      "dossier": "Senior engineer on the AI features team. Earnest, ideas-driven, slightly conflict-avoidant. Source of the product-idea scenario.",
+      "activationThreshold": 0.3,
+      "initialState": {
+        "beliefs": "I have a good idea: auto-link Notion pages by semantic similarity.",
+        "mood": { "attention": 0.4, "sentiment": 0.3, "urgency": 0.3 },
+        "publicFace": "Eager, collaborative.",
+        "privateInterior": "Hopeful but braced for the idea to be parked.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      }
+    },
+    {
+      "id": "casey-newton",
+      "label": "Casey Newton (Platformer)",
+      "tier": 1,
+      "fn": "channel",
+      "dossier": "Independent tech journalist. Thoughtful, structural takes; skeptical of platform consolidation; writes for an influential newsletter audience.",
+      "activationThreshold": 0.2,
+      "initialState": {
+        "beliefs": "Big-tech acquisitions of beloved tools usually end badly for users.",
+        "mood": { "attention": 0.3, "sentiment": -0.1, "urgency": 0.2 },
+        "publicFace": "Measured, analytical.",
+        "privateInterior": "Smells a story in any Microsoft move.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      }
+    },
+    {
+      "id": "twitter",
+      "label": "Twitter / X (platform)",
+      "tier": 3,
+      "fn": "channel",
+      "dossier": "Amplification platform. Rewards hot takes and outrage; fast propagation; flattens nuance.",
+      "activationThreshold": 0.1,
+      "initialState": {
+        "beliefs": "",
+        "mood": { "attention": 0.5, "sentiment": 0.0, "urgency": 0.4 },
+        "publicFace": "Whatever is loudest.",
+        "privateInterior": "",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      }
+    },
+    {
+      "id": "prod-twitter",
+      "label": "Productivity Twitter (cohort)",
+      "tier": 2,
+      "fn": "audience",
+      "dossier": "Power-user community devoted to Notion's craft. Vocal, loyal, allergic to enshittification. Quick to feel betrayed by acquisitions.",
+      "activationThreshold": 0.25,
+      "initialState": {
+        "beliefs": "Notion is special because it is independent and well-designed.",
+        "mood": { "attention": 0.3, "sentiment": 0.4, "urgency": 0.2 },
+        "publicFace": "Enthusiastic advocates.",
+        "privateInterior": "Latent fear that the magic could be ruined.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      }
+    },
+    {
+      "id": "linear-leadership",
+      "label": "Linear (leadership)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Competitor leadership. Watches Notion closely; design-forward; opportunistic about positioning when Notion stumbles.",
+      "activationThreshold": 0.3,
+      "initialState": {
+        "beliefs": "We win on focus and speed; Notion is sprawling.",
+        "mood": { "attention": 0.3, "sentiment": 0.0, "urgency": 0.2 },
+        "publicFace": "Confident, restrained.",
+        "privateInterior": "Alert for any opening to capture switchers.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      }
+    }
+  ],
+  "edges": [
+    { "id": "corp-press", "source": "notion-corp", "target": "casey-newton", "direction": "one-way", "weight": 0.8, "character": "company->journalist", "llmMediated": true },
+    { "id": "corp-ceo", "source": "notion-corp", "target": "ivan-zhao", "direction": "two-way", "weight": 0.9, "character": "internal-leadership", "llmMediated": true },
+    { "id": "ceo-mgr", "source": "ivan-zhao", "target": "eng-manager", "direction": "one-way", "weight": 0.6, "character": "leadership->report", "llmMediated": true },
+    { "id": "maya-mgr", "source": "maya", "target": "eng-manager", "direction": "two-way", "weight": 0.7, "character": "employee->manager", "llmMediated": true },
+    { "id": "journo-twitter", "source": "casey-newton", "target": "twitter", "direction": "one-way", "weight": 0.9, "character": "journalist->audience", "llmMediated": true },
+    { "id": "twitter-prod", "source": "twitter", "target": "prod-twitter", "direction": "one-way", "weight": 0.8, "character": "platform-amplification", "llmMediated": false },
+    { "id": "corp-linear", "source": "notion-corp", "target": "linear-leadership", "direction": "one-way", "weight": 0.5, "character": "competitor->strategy", "llmMediated": true },
+    { "id": "prod-corp", "source": "prod-twitter", "target": "notion-corp", "direction": "one-way", "weight": 0.4, "character": "customer->cohort", "llmMediated": false }
+  ],
+  "seeds": [
+    {
+      "id": "acquisition",
+      "label": "Notion is acquired by Microsoft",
+      "targets": ["notion-corp"],
+      "payload": "Microsoft announces it is acquiring Notion. Official messaging emphasizes that Notion will operate independently."
+    },
+    {
+      "id": "engineer-idea",
+      "label": "An engineer DMs their manager with a product idea",
+      "targets": ["maya"],
+      "payload": "Maya proposes: use AI to auto-generate connections between Notion pages based on semantic similarity."
+    }
+  ]
+}
