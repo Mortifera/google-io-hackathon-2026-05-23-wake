@@ -67,7 +67,10 @@ build costs only the generation calls (~$0.05).
 | `validateRun.ts` | `WorldSchema.parse` + offline cascade through the kernel |
 | `genesis.test.ts` | offline pipeline test (fake LLM, zero network) |
 
-Output worlds are written to `tools/genesis/out/<worldId>.json`.
+Fresh runs are written to `tools/genesis/out/<worldId>.json` (gitignored). A
+committed sample lives at `tools/genesis/examples/stripe-plaid.json` — a real
+Genesis run of "What happens if Stripe acquires Plaid?" (31 nodes, 60 edges, 3
+seeds; loads via `loadWorld()` and runs a cascade).
 
 ## Isolation
 
