@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { World } from "@wake/contracts";
+import type { Cascade, World } from "@wake/contracts";
 import {
   buildCascadeModel,
   buildGraphModel,
@@ -13,6 +13,12 @@ import {
   shortHeadline,
   type ExplanationResult,
 } from "../lib/explain";
+import {
+  appendTick,
+  emptyCascade,
+  openCascadeStream,
+  type LiveHandle,
+} from "../lib/liveStream";
 import { usePlayback } from "../lib/usePlayback";
 import { AFFECT_LEGEND, affectStyle } from "../lib/palette";
 import { DEFAULT_ACTION_ID, isLive, scenarioFor } from "../lib/scenarios";
@@ -31,6 +37,8 @@ interface ActiveTrace {
 
 type Layer = "public" | "private";
 type View = "cascade" | "futures";
+type RunMode = "replay" | "live";
+export type LiveStatus = "idle" | "connecting" | "streaming" | "done" | "error";
 
 interface Props {
   world: World;
@@ -54,11 +62,26 @@ function fmtClock(min: number): string {
 export default function Stage({ world }: Props) {
   const [actionId, setActionId] = useState(DEFAULT_ACTION_ID);
   const scenario = scenarioFor(actionId);
-  const cascade = scenario.cascade;
   const mc = scenario.mc;
 
-  const graph = useMemo(() => buildGraphModel(cascade, world), [cascade, world]);
-  const model = useMemo(() => buildCascadeModel(cascade, graph), [cascade, graph]);
+  // Live streaming state. In live mode the active cascade is the growing
+  // accumulator; the graph layout always comes from the (full) scenario cascade
+  // + world, so node positions stay fixed while ticks stream in.
+  const [mode, setMode] = useState<RunMode>("replay");
+  const [liveStatus, setLiveStatus] = useState<LiveStatus>("idle");
+  const [liveCascade, setLiveCascade] = useState<Cascade | null>(null);
+  const liveHandleRef = useRef<LiveHandle | null>(null);
+
+  const graph = useMemo(
+    () => buildGraphModel(scenario.cascade, world),
+    [scenario.cascade, world],
+  );
+  const activeCascade =
+    mode === "live" && liveCascade ? liveCascade : scenario.cascade;
+  const model = useMemo(
+    () => buildCascadeModel(activeCascade, graph),
+    [activeCascade, graph],
+  );
   // Playback spans [0, nTicks] so the final act animates fully (see resolveFrame).
   const last = model.ticks.length;
 
@@ -70,6 +93,10 @@ export default function Stage({ world }: Props) {
   const [consoleOpen, setConsoleOpen] = useState(false);
   const [trace, setTrace] = useState<ActiveTrace | null>(null);
   const nonceRef = useRef(0);
+  // bump to (re)start the precomputed replay, even if scenario/mode are unchanged
+  const [replayNonce, setReplayNonce] = useState(0);
+  const modeRef = useRef(mode);
+  modeRef.current = mode;
 
   // Run the DAG trace-back and enter the cinematic "why" mode (pauses playback).
   // The local trace renders instantly; we then try to enrich the prose with the
@@ -158,27 +185,86 @@ export default function Stage({ world }: Props) {
     }
   }, [pb.playing, trace]);
 
-  // autoplay on mount and whenever the scenario changes (the cinematic open)
+  // (re)start the precomputed replay: on mount, scenario change, and escape hatch.
+  // Skips while a live run is in progress so we don't autoplay over the stream.
   useEffect(() => {
+    if (modeRef.current === "live") return;
     setFocus({ kind: "none" });
     setP(0);
-    const t = setTimeout(() => play(), 550);
+    const t = setTimeout(() => play(), 450);
     return () => clearTimeout(t);
-  }, [actionId, setP, play]);
+  }, [replayNonce, actionId, setP, play]);
+
+  const stopLive = useCallback(() => {
+    liveHandleRef.current?.close();
+    liveHandleRef.current = null;
+    setMode("replay");
+    setLiveCascade(null);
+  }, []);
+
+  // Escape hatch / live fallback: always returns to the canonical precomputed run.
+  const goReplay = useCallback(
+    (id: string) => {
+      stopLive();
+      setActionId(id);
+      setView("cascade");
+      setConsoleOpen(false);
+      setReplayNonce((n) => n + 1);
+    },
+    [stopLive],
+  );
+
+  const startLive = useCallback(() => {
+    liveHandleRef.current?.close();
+    setFocus({ kind: "none" });
+    setView("cascade");
+    setConsoleOpen(false);
+    setLiveCascade(emptyCascade(world.id, actionId));
+    setMode("live");
+    setLiveStatus("connecting");
+    setP(0);
+    liveHandleRef.current = openCascadeStream(actionId, {
+      onTick: (tick, snapshot, divergence) => {
+        setLiveStatus("streaming");
+        setLiveCascade((prev) =>
+          prev ? appendTick(prev, tick, snapshot, divergence) : prev,
+        );
+      },
+      onDone: (full) => {
+        liveHandleRef.current = null;
+        setLiveStatus("done");
+        setLiveCascade(full);
+      },
+      onError: () => {
+        // stream failed/stalled → fall back to the precomputed run
+        liveHandleRef.current = null;
+        setLiveStatus("error");
+        goReplay(DEFAULT_ACTION_ID);
+      },
+    });
+  }, [world.id, actionId, setP, goReplay]);
 
   const selectAction = (id: string) => {
     if (!isLive(id)) return;
-    setActionId(id);
-    setView("cascade");
-    setConsoleOpen(false);
+    goReplay(id);
   };
-  const escapeHatch = () => {
-    setActionId(DEFAULT_ACTION_ID);
-    setView("cascade");
-    setConsoleOpen(false);
-    setP(0);
-    play();
-  };
+  const escapeHatch = () => goReplay(DEFAULT_ACTION_ID);
+
+  // Live mode: chase the streaming edge — each new tick extends `last`, so resume
+  // playback toward it (idles when caught up, resumes when the next tick lands).
+  useEffect(() => {
+    if (mode === "live" && last > 0) play();
+  }, [mode, last, play]);
+
+  // Tear down any open stream on unmount.
+  useEffect(() => () => liveHandleRef.current?.close(), []);
+
+  // Auto-clear the "stream unavailable" notice after a few seconds.
+  useEffect(() => {
+    if (liveStatus !== "error") return;
+    const t = setTimeout(() => setLiveStatus("idle"), 5000);
+    return () => clearTimeout(t);
+  }, [liveStatus]);
 
   // keyboard transport + operator shortcuts
   useEffect(() => {
@@ -234,6 +320,20 @@ export default function Stage({ world }: Props) {
           </span>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          {mode === "live" ? (
+            <span className={s.liveTag} data-status={liveStatus}>
+              <span className={s.liveDot} />
+              {liveStatus === "connecting"
+                ? "LIVE · connecting…"
+                : liveStatus === "streaming"
+                  ? "LIVE · streaming…"
+                  : liveStatus === "done"
+                    ? "LIVE · complete"
+                    : "LIVE"}
+            </span>
+          ) : liveStatus === "error" ? (
+            <span className={s.fallbackTag}>stream unavailable — precomputed run</span>
+          ) : null}
           <button
             className={s.opBtn}
             data-active={consoleOpen}
@@ -313,6 +413,9 @@ export default function Stage({ world }: Props) {
                   pb={pb}
                   onEscape={escapeHatch}
                   onClose={() => setConsoleOpen(false)}
+                  onRunLive={startLive}
+                  liveStatus={liveStatus}
+                  mode={mode}
                 />
               ) : null}
             </div>

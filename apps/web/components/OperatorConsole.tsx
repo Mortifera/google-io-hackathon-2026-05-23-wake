@@ -3,6 +3,7 @@
 import type { World } from "@wake/contracts";
 import type { Playback } from "../lib/usePlayback";
 import { isLive } from "../lib/scenarios";
+import type { LiveStatus } from "./Stage";
 import s from "./stage.module.css";
 
 interface Props {
@@ -12,6 +13,9 @@ interface Props {
   pb: Playback;
   onEscape: () => void;
   onClose: () => void;
+  onRunLive: () => void;
+  liveStatus: LiveStatus;
+  mode: "replay" | "live";
 }
 
 export default function OperatorConsole({
@@ -21,6 +25,9 @@ export default function OperatorConsole({
   pb,
   onEscape,
   onClose,
+  onRunLive,
+  liveStatus,
+  mode,
 }: Props) {
   const labelOf = (id: string) =>
     world.nodes.find((n) => n.id === id)?.label ?? id;
@@ -68,13 +75,47 @@ export default function OperatorConsole({
             );
           })}
 
-          <div className={`${s.opSection} ${s.spaced}`}>Run control</div>
-          <div className={s.opRow}>
-            <button className={`${s.opAction} ${s.primary}`} onClick={pb.restart}>
+          <div className={`${s.opSection} ${s.spaced}`}>Run mode</div>
+          <button
+            className={`${s.opAction} ${s.primary}`}
+            style={{ width: "100%" }}
+            onClick={onRunLive}
+            disabled={liveStatus === "connecting" || liveStatus === "streaming"}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            {mode === "live"
+              ? liveStatus === "streaming"
+                ? "Streaming live…"
+                : liveStatus === "connecting"
+                  ? "Connecting…"
+                  : "Run live (stream)"
+              : "Run live (stream)"}
+          </button>
+          {mode === "live" ? (
+            <div className={s.liveLine} data-status={liveStatus}>
+              <span className={s.liveDot} />
+              {liveStatus === "connecting"
+                ? "opening stream…"
+                : liveStatus === "streaming"
+                  ? "streaming the simulation tick-by-tick (~110s full world)"
+                  : liveStatus === "done"
+                    ? "live run complete — scrub & ask why"
+                    : "live"}
+            </div>
+          ) : liveStatus === "error" ? (
+            <div className={s.liveLine} data-status="error">
+              stream unavailable — fell back to the precomputed run
+            </div>
+          ) : null}
+
+          <div className={s.opRow} style={{ marginTop: 10 }}>
+            <button className={s.opAction} onClick={pb.restart}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 5V2L7 6l5 4V7a5 5 0 11-5 5H5a7 7 0 107-7z" />
               </svg>
-              Run from top
+              Replay precomputed
             </button>
             <button className={s.opAction} onClick={pb.toggle}>
               {pb.playing ? "Pause" : "Resume"}
@@ -88,11 +129,13 @@ export default function OperatorConsole({
           </button>
 
           <div className={s.opTip}>
-            Keys: <span className={s.kbd}>1</span>–<span className={s.kbd}>5</span>{" "}
-            switch scenario · <span className={s.kbd}>space</span> play/pause ·{" "}
+            <strong>Run live</strong> streams the kernel tick-by-tick; if it stalls
+            or errors it auto-falls-back to the precomputed run (the escape hatch
+            always works). Keys: <span className={s.kbd}>1</span>–
+            <span className={s.kbd}>5</span> scenario ·{" "}
+            <span className={s.kbd}>space</span> play/pause ·{" "}
             <span className={s.kbd}>←</span>/<span className={s.kbd}>→</span> step ·{" "}
-            <span className={s.kbd}>O</span> toggle this console. Pending scenarios
-            unlock once their cascade is precomputed.
+            <span className={s.kbd}>O</span> console.
           </div>
         </div>
       </aside>

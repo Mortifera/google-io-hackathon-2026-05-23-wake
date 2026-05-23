@@ -656,6 +656,56 @@
   animation: wake-pulse 1.8s var(--ease-out) infinite;
 }
 
+/* live-stream affordances */
+.liveTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  font-weight: 650;
+  letter-spacing: 0.4px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  color: #ff5d8f;
+  background: rgba(255, 93, 143, 0.1);
+  border: 1px solid rgba(255, 93, 143, 0.35);
+}
+.liveTag[data-status="done"] {
+  color: var(--accent);
+  background: rgba(91, 209, 160, 0.1);
+  border-color: rgba(91, 209, 160, 0.35);
+}
+.liveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 8px;
+  background: currentColor;
+  animation: leak-throb 1.3s ease-in-out infinite;
+}
+.fallbackTag {
+  font-size: 11.5px;
+  color: var(--alarmed);
+  background: rgba(242, 180, 80, 0.1);
+  border: 1px solid rgba(242, 180, 80, 0.3);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+.liveLine {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 9px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--ev-emergent);
+}
+.liveLine[data-status="done"] {
+  color: var(--accent);
+}
+.liveLine[data-status="error"] {
+  color: var(--alarmed);
+}
+
 .scrim {
   position: absolute;
   inset: 0;
