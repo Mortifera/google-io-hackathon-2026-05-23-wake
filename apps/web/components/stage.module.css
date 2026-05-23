@@ -326,6 +326,30 @@
   line-height: 1.55;
   color: var(--text);
 }
+/* Beat 1: "Gemini is reasoning…" shimmer while the live call is in flight */
+.shimmer {
+  color: var(--accent-sky);
+  background: linear-gradient(
+    90deg,
+    rgba(91, 156, 240, 0.35) 0%,
+    rgba(231, 236, 246, 0.95) 50%,
+    rgba(91, 156, 240, 0.35) 100%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer-sweep 1.3s linear infinite;
+  font-style: italic;
+}
+@keyframes shimmer-sweep {
+  to {
+    background-position: -200% 0;
+  }
+}
+.explainBadge[data-pending="true"] {
+  opacity: 0.7;
+}
 .chain {
   margin-top: 12px;
   display: flex;

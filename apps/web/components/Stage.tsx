@@ -29,6 +29,8 @@ interface ActiveTrace {
   exp: ExplanationResult;
   anchorId: string;
   nonce: number;
+  /** Beat 1: a live Gemini call is in flight (show the "reasoning…" shimmer). */
+  pending: boolean;
 }
 
 export interface ReasoningItem {
@@ -147,7 +149,9 @@ export default function Stage({ world }: Props) {
       }
       nonceRef.current += 1;
       const myNonce = nonceRef.current;
-      setTrace({ exp, anchorId, nonce: myNonce });
+      // Beat 1 (instant): the DAG trace renders now; if we'll try the live model,
+      // mark pending so the prose shows a "Gemini is reasoning…" shimmer.
+      setTrace({ exp, anchorId, nonce: myNonce, pending: !!question });
       pause();
 
       if (question) {
@@ -163,28 +167,32 @@ export default function Stage({ world }: Props) {
               headline?: string;
               citedEventIds?: string[];
             }) => {
-              if (!live?.answer) return;
-              const answer = live.answer;
               setTrace((t) =>
                 t && t.nonce === myNonce
-                  ? {
-                      ...t,
-                      exp: {
-                        ...t.exp,
-                        answer,
-                        headline: live.headline ?? shortHeadline(answer),
-                        citedEventIds: live.citedEventIds?.length
-                          ? live.citedEventIds
-                          : t.exp.citedEventIds,
-                        source: "model",
-                      },
-                    }
+                  ? live?.answer
+                    ? {
+                        ...t,
+                        pending: false,
+                        exp: {
+                          ...t.exp,
+                          answer: live.answer,
+                          headline: live.headline ?? shortHeadline(live.answer),
+                          citedEventIds: live.citedEventIds?.length
+                            ? live.citedEventIds
+                            : t.exp.citedEventIds,
+                          source: "model",
+                        },
+                      }
+                    : { ...t, pending: false } // keep templated trace
                   : t,
               );
             },
           )
           .catch(() => {
-            /* keep the templated trace */
+            // fall back to the templated trace (Beat 1 prose)
+            setTrace((t) =>
+              t && t.nonce === myNonce ? { ...t, pending: false } : t,
+            );
           });
       }
     },
@@ -518,6 +526,7 @@ export default function Stage({ world }: Props) {
                 focus={focus}
                 setFocus={setFocus}
                 explanation={trace?.exp ?? null}
+                explanationPending={trace?.pending ?? false}
                 onAskWhy={() => runExplain(focus)}
               />
             )}

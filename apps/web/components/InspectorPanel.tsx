@@ -28,6 +28,8 @@ interface Props {
   setFocus: (f: Focus) => void;
   /** The active causal trace's explanation (owned by Stage), if any. */
   explanation: ExplanationResult | null;
+  /** Beat 1: live model call in flight → show the "reasoning…" shimmer. */
+  explanationPending: boolean;
   /** Request a trace for the current focus (the "Ask why" gesture). */
   onAskWhy: () => void;
 }
@@ -56,6 +58,7 @@ function NodeDetail({
   layer,
   tick,
   explanation,
+  explanationPending,
   onAskWhy,
 }: {
   graph: GraphModel;
@@ -64,6 +67,7 @@ function NodeDetail({
   layer: Layer;
   tick: number;
   explanation: ExplanationResult | null;
+  explanationPending: boolean;
   onAskWhy: () => void;
 }) {
   const node = graph.nodes.find((n) => n.id === nodeId);
@@ -139,7 +143,9 @@ function NodeDetail({
         </div>
       )}
 
-      {explanation ? <ExplanationView graph={graph} exp={explanation} /> : null}
+      {explanation ? (
+        <ExplanationView graph={graph} exp={explanation} pending={explanationPending} />
+      ) : null}
     </div>
   );
 }
@@ -149,11 +155,13 @@ function EventDetail({
   model,
   eventId,
   explanation,
+  explanationPending,
 }: {
   graph: GraphModel;
   model: CascadeModel;
   eventId: string;
   explanation: ExplanationResult | null;
+  explanationPending: boolean;
 }) {
   const ev = model.eventById.get(eventId);
   if (!ev) return null;
@@ -179,7 +187,9 @@ function EventDetail({
           <div className={`${s.fieldVal} dim`}>“{ev.rationale}”</div>
         </div>
       ) : null}
-      {explanation ? <ExplanationView graph={graph} exp={explanation} /> : null}
+      {explanation ? (
+        <ExplanationView graph={graph} exp={explanation} pending={explanationPending} />
+      ) : null}
     </div>
   );
 }
@@ -187,19 +197,29 @@ function EventDetail({
 function ExplanationView({
   graph,
   exp,
+  pending = false,
 }: {
   graph: GraphModel;
   exp: ExplanationResult;
+  pending?: boolean;
 }) {
   return (
     <div className={s.explain}>
       <div className={s.explainHead}>
         Interpretability
-        <span className={s.explainBadge}>
-          {exp.source === "model" ? "live · Gemini" : "DAG trace"}
+        <span className={s.explainBadge} data-pending={pending}>
+          {pending
+            ? "DAG trace"
+            : exp.source === "model"
+              ? "live · Gemini"
+              : "DAG trace"}
         </span>
       </div>
-      <div className={s.explainText}>{exp.answer}</div>
+      {pending ? (
+        <div className={`${s.explainText} ${s.shimmer}`}>Gemini is reasoning…</div>
+      ) : (
+        <div className={s.explainText}>{exp.answer}</div>
+      )}
       {exp.chain.length ? (
         <div className={s.chain}>
           {exp.chain.map((e, i) => {
@@ -315,13 +335,14 @@ export default function InspectorPanel({
   focus,
   setFocus,
   explanation,
+  explanationPending,
   onAskWhy,
 }: Props) {
   const tick = resolveFrame(model, p).tick;
   return (
     <aside className={s.side}>
       <div className={s.panelHead}>
-        <div className={s.panelTitle}>Inspector</div>
+        <div className={s.panelTitle}>Entity</div>
       </div>
       <div className={s.panelScroll}>
         {focus.kind === "node" ? (
@@ -332,6 +353,7 @@ export default function InspectorPanel({
             layer={layer}
             tick={tick}
             explanation={explanation}
+            explanationPending={explanationPending}
             onAskWhy={onAskWhy}
           />
         ) : focus.kind === "event" ? (
@@ -340,6 +362,7 @@ export default function InspectorPanel({
             model={model}
             eventId={focus.id}
             explanation={explanation}
+            explanationPending={explanationPending}
           />
         ) : (
           <div className={s.empty}>
