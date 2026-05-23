@@ -38,6 +38,10 @@ Work hard here. No permission needed, no pausing to check in:
 - **Add dependencies to your own package's `package.json`** and `pnpm install`.
 - **Use `MockLLMClient` (`@wake/llm`) as much as you want** — it's free and
   offline. Run cascades, evals, and iterations against the mock all day.
+- **Spend up to ~$20 (soft cap, per agent) on live Gemini** for experimental
+  testing and evals — no prior approval needed. Track roughly what you spend; if
+  you'd cross ~$20, pause and flag. (Default to the mock; reach for live when you
+  genuinely need to validate quality.)
 - **Write your own tests and fixtures inside your folder.** Add a test that
   validates the JSON artifact you produce against its contract schema.
 - **Iterate on prompts** and re-run your eval loop against the mock.
@@ -62,10 +66,10 @@ solo; surface the need and let the human/orchestrator coordinate:
   coordinated re-freeze.
 - **Editing another worker's folder** or the shared fixtures
   (`fixtures/`, `worlds/notion/mini.json`). Those are everyone's baseline.
-- **Spending real money / hitting the live Gemini API at scale.** The mock is the
-  default. A few real calls to smoke-test L2's client is fine; **batch runs, the
-  Monte Carlo precompute, or any large live run need an explicit human go** (cost
-  + Tier 1 rate limits — see `GEMINI_RATE_LIMITS.md`).
+- **Spending beyond your ~$20 experimental budget**, or the **coordinated Monte
+  Carlo precompute / large production runs** (cost + Tier 1 rate limits — see
+  `GEMINI_RATE_LIMITS.md`). Up to ~$20 of live Gemini for experiments is
+  pre-approved (§2); past that, flag it.
 - **Changing shared root config**: root `package.json`, `tsconfig.base.json`,
   `pnpm-workspace.yaml`, `vitest.config.ts`, or `apps/web/next.config.ts` in ways
   that affect everyone.
@@ -100,6 +104,10 @@ folder, real conflicts are rare. Keep it clean:
 - **Commit small and often**, scoped to your folder, with a clear message.
 - **`git pull --rebase` before you push.** If a push is rejected, rebase (your
   folder won't conflict) and push again.
+- **The one file that *will* conflict is `pnpm-lock.yaml`** (when two agents add
+  deps). If it conflicts on rebase, don't hand-merge it: take either side
+  (`git checkout --theirs pnpm-lock.yaml`), run `pnpm install` to regenerate it,
+  then `git add pnpm-lock.yaml` and continue the rebase.
 - End every commit message with the trailer:
   `Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>`
 - Don't commit `node_modules`, `.env`, build output, or run artifacts (already in
@@ -136,10 +144,12 @@ Before you call your piece done:
 ## 8. Cost & rate limits
 
 - Default to `MockLLMClient`. It is free and deterministic.
+- **Each agent has a ~$20 soft budget** for live Gemini experimentation, no
+  approval needed (§2). Past that, or for the big precompute, coordinate.
 - Live Gemini is **Tier 1** — see `GEMINI_RATE_LIMITS.md`. Bound concurrency with
   `mapWithConcurrency` (`@wake/util`); don't blast the API.
-- Big live runs and the Monte Carlo precompute are coordinated, budgeted events
-  (see `PLAN.md` → budget allocation), not something a worker kicks off alone.
+- The Monte Carlo precompute and large production runs are coordinated, budgeted
+  events (see `PLAN.md` → budget allocation), not something a worker kicks off alone.
 
 ---
 
