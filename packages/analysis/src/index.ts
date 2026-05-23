@@ -46,20 +46,25 @@ export function analyze(
   const membersByCluster: number[][] = Array.from({ length: k }, () => []);
   assignment.forEach((c, i) => membersByCluster[c]!.push(i));
 
-  const clusterLabels: string[] = [];
-  const clusters: OutcomeCluster[] = membersByCluster.map((members, c) => {
-    const repIdx = representativeMember(standardized, members);
-    const copy = describeCluster({
+  // Describe every cluster up front, in an explicit pass, so the labels are a
+  // fully-built array before anything (clusters *or* the pivotal description)
+  // reads them. A future parallel/reordered refactor then can't desync them.
+  const copies = membersByCluster.map((members) =>
+    describeCluster({
       memberVectors: members.map((i) => fp.vectors[i]!),
       allVectors: fp.vectors,
       featureNames: fp.featureNames,
       share: members.length / cascades.length,
-    });
-    clusterLabels[c] = copy.label;
+    }),
+  );
+  const clusterLabels: string[] = copies.map((copy) => copy.label);
+
+  const clusters: OutcomeCluster[] = membersByCluster.map((members, c) => {
+    const repIdx = representativeMember(standardized, members);
     return {
       id: clusterIds[c]!,
-      label: copy.label,
-      summary: copy.summary,
+      label: copies[c]!.label,
+      summary: copies[c]!.summary,
       memberRunIds: members.map((i) => runIds[i]!),
       representativeRunId: runIds[repIdx]!,
     };
