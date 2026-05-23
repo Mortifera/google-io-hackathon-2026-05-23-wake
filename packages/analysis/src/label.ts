@@ -178,9 +178,12 @@ function buildSummary(s: ClusterStats): string {
   if (avgSent >= 0) {
     return `${pct}% of futures: a wary, mixed reception — net-neutral sentiment, no real blow-up.`;
   }
+  // Match the wording to the tier: < -0.3 is the "Full-blown backlash" band;
+  // -0.3..0 is "Simmering discontent" and shouldn't read as a full blow-up.
+  const tone = avgSent < -0.3 ? "turns sharply negative" : "drifts into the negative";
   const locus =
     angriest && angriest.value <= -0.5 ? `, led by ${prettyNode(angriest.node)}` : "";
-  return `${pct}% of futures: sentiment turns sharply negative — ${hostilePct}% of nodes go hostile${locus}.`;
+  return `${pct}% of futures: sentiment ${tone} — ${hostilePct}% of nodes go hostile${locus}.`;
 }
 
 /**
