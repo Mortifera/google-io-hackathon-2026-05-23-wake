@@ -7,7 +7,7 @@ import {
   type EdgeTransform,
   type LLMClient,
 } from "@wake/contracts";
-import { runCascade, loadWorld } from "./index";
+import { runCascade, runCascadeStream, loadWorld } from "./index";
 
 const root = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
@@ -106,5 +106,34 @@ describe("kernel runCascade", () => {
       t.activeNodeIds.includes("notion-corp"),
     ).length;
     expect(corpActs).toBeLessThanOrEqual(3);
+  });
+});
+
+describe("kernel runCascadeStream", () => {
+  it("yields a tick event per tick, then one done with the full cascade", async () => {
+    const events = [];
+    for await (const ev of runCascadeStream(world, "acquisition", deps, {
+      seed: 1,
+    })) {
+      events.push(ev);
+    }
+    const done = events.filter((e) => e.type === "done");
+    const tickEvents = events.filter((e) => e.type === "tick");
+    expect(done).toHaveLength(1);
+    expect(tickEvents.length).toBeGreaterThan(0);
+    const streamed = done[0]!.type === "done" ? done[0]!.cascade : undefined;
+    expect(streamed).toBeDefined();
+    expect(tickEvents.length).toBe(streamed!.ticks.length); // one event per tick
+  });
+
+  it("streamed output is identical to the batch runCascade", async () => {
+    let streamed;
+    for await (const ev of runCascadeStream(world, "acquisition", deps, {
+      seed: 5,
+    })) {
+      if (ev.type === "done") streamed = ev.cascade;
+    }
+    const batch = await runCascade(world, "acquisition", deps, { seed: 5 });
+    expect(JSON.stringify(streamed)).toBe(JSON.stringify(batch));
   });
 });
