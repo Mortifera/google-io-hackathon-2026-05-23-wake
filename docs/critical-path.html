@@ -47,15 +47,15 @@
 </head>
 <body>
   <h1>Wake — Critical Path <span style="color:var(--muted);font-weight:400">· the final push</span></h1>
-  <p class="sub">a world model for organizational action · feature-complete → polish &amp; rehearse</p>
+  <p class="sub">a world model for organizational action · feature-complete + all final-push upgrades landed</p>
 
-  <div class="banner"><b>Final-push upgrades landed.</b> The centerpiece — <b>live per-node reasoning</b> — renders end-to-end and is verified (kernel streams <code>tick-start</code> + <code>node-acted</code>; Agent&nbsp;1 paints "watch the minds think"). The <b>same-action-different-world</b> beat is published as a matched pre/post pair, and the app is <b>live on Vercel</b>. The only open item is the <b>credibility fan re-run</b>, finishing in the background now. Remaining ≈ 60 min is <b>rehearse → record → submit</b>. The record is sacred.</div>
+  <div class="banner"><b>All four agents done. Every final-push upgrade is on main.</b> Centerpiece (live per-node reasoning) verified. Same-action-different-world beat published. Credibility fan published (commit be625d6) — <b>58% "acquisition messaging framing,"</b> mock-aligned labels, instrument register. Anthropic cascade live on Vercel. Genesis bulletproof with fallback + DEMO.md. The only open items are the <b>submission package</b> (Orchestrator writing now) and <b>recording the demo video</b>. Submit at 5:00.</div>
 
   <div class="clock">
     <span class="chip">build start <b>10:40</b></span>
-    <span class="chip" style="border-color:#2f5a45"><b style="color:var(--done)">NOW ≈ 4:00</b></span>
-    <span class="chip" style="border-color:#5a2a30">app freeze <b style="color:var(--crit)">4:00 — hit</b></span>
-    <span class="chip" style="border-color:#2f5a45">record video <b>4:15–4:45</b></span>
+    <span class="chip" style="border-color:#2f5a45"><b style="color:var(--done)">NOW ≈ 4:30</b></span>
+    <span class="chip" style="border-color:#2f5a45">app freeze <b style="color:var(--done)">hit ✓</b></span>
+    <span class="chip" style="border-color:#5a2a30">record video <b style="color:var(--crit)">4:30–4:50 ← NOW</b></span>
     <span class="chip">submit <b>5:00</b></span>
   </div>
 
@@ -68,45 +68,43 @@
         <span class="tick" style="left:50%">4:30</span>
         <span class="tick" style="left:75%">4:45</span>
         <span class="tick" style="left:100%">5:00</span>
-        <span class="tick line now" style="left:0%"></span>
-        <span class="tick line cut" style="left:25%"></span>
+        <span class="tick line cut" style="left:50%"></span>
+        <span class="tick line now" style="left:50%"></span>
         <span class="tick line target" style="left:100%"></span>
       </div>
-      <div class="row"><div class="lbl">Orch ✦ bg</div><div class="track">
-        <div class="bar b-crit" style="left:0%;width:15%">fan re-run ↦ publish</div>
-        <div class="bar b-build" style="left:15%;width:45%">submission pkg + demo-script</div>
-        <div class="bar b-slack" style="left:60%;width:40%">support rehearsal</div>
+      <div class="row"><div class="lbl">Orch ✦</div><div class="track">
+        <div class="bar b-reh" style="left:0%;width:50%">fan + all upgrades done ✓</div>
+        <div class="bar b-crit" style="left:50%;width:50%">submission pkg + demo-script</div>
       </div></div>
       <div class="row"><div class="lbl">Agent 1 · viz</div><div class="track">
-        <div class="bar b-build" style="left:0%;width:28%">wire 2nd-beat compare</div>
-        <div class="bar b-reh" style="left:28%;width:32%">rehearse arc</div>
-        <div class="bar b-slack" style="left:60%;width:40%">slack / polish</div>
+        <div class="bar b-reh" style="left:0%;width:50%">centerpiece + beat-2 done ✓</div>
+        <div class="bar b-slack" style="left:50%;width:50%">on call / slack</div>
       </div></div>
       <div class="row"><div class="lbl">Agent 2 · deploy</div><div class="track">
-        <div class="bar b-build" style="left:0%;width:38%">Preview env + live QA (backup path)</div>
-        <div class="bar b-slack" style="left:38%;width:62%">slack</div>
+        <div class="bar b-reh" style="left:0%;width:50%">Vercel live + QA'd ✓</div>
+        <div class="bar b-build" style="left:50%;width:50%">re-QA after fan + beat-2 landed</div>
       </div></div>
       <div class="row"><div class="lbl">Agent 3 · genesis</div><div class="track">
-        <div class="bar b-iso" style="left:0%;width:100%">Genesis — NL → world via Gemini Managed Agents (isolated, use-if-ready)</div>
+        <div class="bar b-reh" style="left:0%;width:50%">Genesis bulletproof ✓</div>
+        <div class="bar b-slack" style="left:50%;width:50%">done / slack</div>
       </div></div>
       <div class="row"><div class="lbl">Agent 4 · analysis</div><div class="track">
-        <div class="bar b-slack" style="left:0%;width:10%">hold</div>
-        <div class="bar b-build" style="left:10%;width:25%">re-validate fan</div>
-        <div class="bar b-slack" style="left:35%;width:65%">slack</div>
+        <div class="bar b-reh" style="left:0%;width:50%">fan published (be625d6) ✓</div>
+        <div class="bar b-build" style="left:50%;width:30%">re-validate published fan</div>
+        <div class="bar b-slack" style="left:80%;width:20%">slack</div>
       </div></div>
       <div class="row"><div class="lbl">RECORD</div><div class="track">
-        <div class="bar b-crit" style="left:50%;width:40%">record demo video</div>
+        <div class="bar b-crit" style="left:50%;width:40%">record demo video ← critical</div>
       </div></div>
       <div class="row"><div class="lbl">SUBMIT</div><div class="track">
         <div class="bar b-reh" style="left:92%;width:8%">submit ▸</div>
       </div></div>
     </div>
     <div class="legend">
-      <span><span class="dot" style="background:var(--crit)"></span>critical path (fan ▸ record ▸ submit)</span>
-      <span><span class="dot" style="background:#39506e"></span>build</span>
-      <span><span class="dot" style="background:var(--iso)"></span>isolated (Genesis)</span>
+      <span><span class="dot" style="background:var(--crit)"></span>critical path (submission pkg ▸ record ▸ submit)</span>
+      <span><span class="dot" style="background:#39506e"></span>build / re-QA</span>
       <span><span class="dot" style="background:#2a3346"></span>slack / hold</span>
-      <span><span class="dot" style="background:var(--done)"></span>rehearse / submit</span>
+      <span><span class="dot" style="background:var(--done)"></span>done ✓ / submit</span>
     </div>
   </div>
 
@@ -114,23 +112,24 @@
   <div class="grid2">
     <div class="panel">
       <p><b class="crit">The one chain that must hold (now):</b></p>
-      <p style="color:var(--muted)">Orch <code>fan re-run</code> → publish → Agent&nbsp;4 <code>re-validate</code> → <b>record video</b> → submit 5:00.</p>
-      <p>The centerpiece chain (per-node events → reasoning render) is <b class="ok">closed and verified</b> — identification already lands on "watch the minds think." The remaining risk is purely the fan re-run; it carries a <b>no-regression guarantee</b> (publish only if the new shape beats the current clean-but-stale fan, else keep the current one).</p>
+      <p style="color:var(--muted)">Orch <code>submission pkg</code> → <b>record video (4:30–4:50)</b> → submit 5:00.</p>
+      <p>Everything else is closed. The centerpiece chain is <b class="ok">verified</b>. The credibility fan is <b class="ok">published</b> (58% pivotal, mock-aligned labels). The Anthropic cascade is <b class="ok">live on Vercel</b>. Genesis is <b class="ok">bulletproof with fallback</b>. No blocking inflight compute. The demo records cleanly right now.</p>
       <ul>
-        <li><b>Off-path / parallel:</b> live-deploy QA (A2), beat-#2 wiring (A1), Genesis (A3, fully decoupled).</li>
-        <li><b>Bottleneck:</b> none blocking — the only inflight compute is the bg sweep; everything else is rehearse/polish.</li>
-        <li><b>Floor:</b> the demo records cleanly right now even if the fan re-run is discarded — nothing pending can break it.</li>
+        <li><b>Off-path / parallel:</b> Agent 2 re-QA of live URL; Agent 4 fan re-validation — neither blocks recording.</li>
+        <li><b>Bottleneck:</b> none. Only open is the submission package (in progress).</li>
+        <li><b>Floor:</b> all features verified before app freeze. Recording can begin immediately.</li>
       </ul>
     </div>
     <div class="panel">
-      <p><b>Priority order</b> — status as of 4:00:</p>
+      <p><b>Priority order</b> — status as of 4:30:</p>
       <ul>
         <li><b class="ok">3a ✓</b> live per-node reasoning — <b>centerpiece, verified</b></li>
         <li><b class="ok">3b ✓</b> same action, different world — matched pre/post pair, published</li>
-        <li><b class="crit">3e ⟳</b> credibility re-tune — <b>fan re-run finishing (bg)</b></li>
-        <li><b>3f</b> variant A/B + recommendation — wedge (instrument-not-oracle)</li>
+        <li><b class="ok">3e ✓</b> credibility fan published — <b>58% "acquisition messaging framing,"</b> clusters "Consumer backlash" (24) + "Competitor wins" (8), mock-aligned labels</li>
+        <li><b class="ok">3f ✓</b> variant A/B + recommendation — instrument-not-oracle register</li>
         <li><b class="ok">3c ✓</b> Anthropic cascade + live Vercel URL — done</li>
-        <li><b class="amb">3d</b> Genesis — decoupled bonus (use-if-ready)</li>
+        <li><b class="ok">3d ✓</b> Genesis — bulletproof for camera, fallback + DEMO.md committed</li>
+        <li><b class="crit">→</b> submission package + recording — only open item</li>
       </ul>
     </div>
   </div>
@@ -140,18 +139,19 @@
     <div class="grid2">
       <ul>
         <li class="ok">✓ Kernel: wave propagation, variable time-stepping, saturation, provenance DAG, deterministic seeding, <b>streaming</b></li>
-        <li class="ok">✓ <b>Live per-node reasoning</b> — kernel streams <code>tick-start</code> (who) + <code>node-acted</code> (why); Agent&nbsp;1 renders it — <b>verified</b></li>
-        <li class="ok">✓ <b>Same action, different world</b> — matched pre/post-acquisition pair published; the manager's reasoning inverts (buries ↔ weaponizes)</li>
-        <li class="ok">✓ Per-node + per-edge behaviour on Gemini 3.5 Flash</li>
+        <li class="ok">✓ <b>Live per-node reasoning</b> — kernel streams <code>tick-start</code> (who) + <code>node-acted</code> (why); Agent&nbsp;1 renders "watch the minds think" — <b>verified</b></li>
+        <li class="ok">✓ <b>Same action, different world</b> — matched pre/post-acquisition pair (commit 1f7bdeb); the manager's reasoning inverts: buries the idea in independent Notion, weaponizes it as Microsoft synergy in the subsidiary</li>
+        <li class="ok">✓ Per-node + per-edge behaviour on Gemini Flash</li>
         <li class="ok">✓ Notion world (208 nodes) + Anthropic world (57)</li>
+        <li class="ok">✓ <b>Credibility fan published</b> (commit be625d6) — 32-run Gemini sweep ($3.19), pivotal "acquisition messaging framing" at 58%, clusters "Consumer backlash" (24) + "Competitor wins" (8), mock-aligned labels, instrument register</li>
       </ul>
       <ul>
         <li class="ok">✓ Interpretability money-shot (click node → causal trace)</li>
         <li class="ok">✓ Force graph, dual-layer + leaks, operator console, escape hatch</li>
         <li class="ok">✓ Live tick-by-tick streaming (SSE), end-to-end verified</li>
         <li class="ok">✓ Hero cascade accepts the deal; 5 menu seeds precomputed</li>
-        <li class="ok">✓ <b>Live on Vercel</b> — <code>wake-web-zeta.vercel.app</code> (backup demo path)</li>
-        <li class="amb">⟳ Monte-Carlo fan — re-tuning for credibility (3 uneven regimes, sub-100% pivotal)</li>
+        <li class="ok">✓ <b>Live on Vercel</b> — <code>wake-web-zeta.vercel.app</code> (backup demo path, QA'd green, env keyed across Production/Preview/Dev, auto-deploys from main)</li>
+        <li class="ok">✓ <b>Genesis bulletproof for camera</b> — one sentence → runnable world: <code>pnpm exec tsx tools/genesis/genesis.ts "What happens if Stripe acquires Plaid?" --budget 0.1 --ticks 8</code> (~21 entities, ~$0.016, ~55s live); precomputed fallback at <code>tools/genesis/examples/stripe-plaid.json</code> + DEMO.md committed</li>
       </ul>
     </div>
   </div>
