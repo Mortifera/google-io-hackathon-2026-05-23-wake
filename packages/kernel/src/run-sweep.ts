@@ -29,9 +29,10 @@ const worldPath = path.isAbsolute(worldArg)
   ? worldArg
   : path.join(repoRoot, worldArg);
 
-// Demo perturbation axes. `framing` is the headline pivotal candidate.
+// Demo perturbation axes. `acquisitionMessagingFraming` is the headline pivotal
+// candidate (humanizes to "acquisition messaging framing" in the fan card).
 const DIMENSIONS: SweepDimension[] = [
-  { name: "framing", values: ["independent", "integrated"] },
+  { name: "acquisitionMessagingFraming", values: ["independent", "integrated"] },
   { name: "pressClimate", values: ["skeptical", "favorable"] },
   { name: "competitorSpeed", values: ["fast", "slow"] },
 ];
