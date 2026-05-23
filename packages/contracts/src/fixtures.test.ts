@@ -35,6 +35,14 @@ describe("shared fixtures validate against the contracts", () => {
     ).not.toThrow();
   });
 
+  it("real full-world cascade (the demo artifact) conforms to CascadeSchema", () => {
+    expect(() =>
+      CascadeSchema.parse(
+        load("fixtures/cascades/notion-world.acquisition.json"),
+      ),
+    ).not.toThrow();
+  });
+
   it("cascade event ids are unique and causedBy references resolve", () => {
     const c = CascadeSchema.parse(
       load("fixtures/cascades/notion-acquisition.json"),
