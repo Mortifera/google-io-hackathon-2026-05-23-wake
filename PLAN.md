@@ -35,18 +35,21 @@ kernel never imports node/edge code):
 
 If these six are stable, the merge at the end is mechanical.
 
-## Live assignment (2026-05-23)
+## Roster & live assignment (2026-05-23)
 
-- **Core agent** (owns `packages/kernel` + `packages/nodes` + `packages/edges`,
-  and stays contracts steward): the coupled simulation core that produces the
-  real `Cascade`. Picks up `packages/interp` after CP2 unless run separately.
-- **4 parallel agents**, one per Claude instance, each building only against the
-  committed contracts + fixtures (nobody blocks anyone):
-  - **L8** visualization — `apps/web`
-  - **L5** world data — `worlds/notion`
-  - **L2** llm client — `packages/llm/src/gemini.ts`
-  - **L6** analysis — `packages/analysis`
-- Kickoff is one line per agent → see `briefs/KICKOFF.md`.
+Worker naming (stable, for coordination):
+
+| Name | Lane | Folder | Status |
+|------|------|--------|--------|
+| **Orchestrator** | core sim (kernel, nodes, edges, interp) + sweep engine + contracts/fixtures steward | `packages/{kernel,nodes,edges,interp,contracts,util}` | core ✅ done & validated on real Flash; sweep engine next |
+| **Agent 1** | L8 visualization | `apps/web` | ✅ done (built, QA'd, 13 tests); standby for CP1/CP3 swaps |
+| **Agent 2** | L5 world data | `worlds/notion` | 🟡 in progress (long pole; re-scope to ~50 nodes) |
+| **Agent 3** | L2 llm client | `packages/llm` | ✅ done + reviewed; hardening pass |
+| **Agent 4** | L6 analysis | `packages/analysis` | ✅ done + reviewed + hardened |
+
+Each worker stays in its own folder, stages only its own paths (never `git add
+-A` — shared working tree), and builds against the committed contracts + fixtures.
+Kickoff is one line per agent → see `briefs/KICKOFF.md`.
 
 **Integration is git-mediated** (no live orchestration between instances): the
 core agent commits a real `Cascade` into `fixtures/` at CP1 (mock LLM + mini
