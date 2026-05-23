@@ -11,11 +11,23 @@ import { classifyAffect, affectStyle } from "./palette";
  */
 export interface ExplanationResult {
   answer: string;
+  /** A single short sentence for the on-stage caption (full answer can be a
+   * multi-sentence paragraph that would overflow the overlay). */
+  headline: string;
   citedEventIds: string[];
   /** The ordered cause chain (root → leaf), for visual rendering. */
   chain: Event[];
   /** Whether this came from the local stub (vs. the live model). */
   source: "local-trace" | "model";
+}
+
+/** First sentence of an answer, hard-capped — safe for a caption overlay even
+ * when the model returns one long run-on sentence. */
+export function shortHeadline(answer: string, max = 150): string {
+  const m = answer.match(/^(.*?[.!?])(\s|$)/);
+  let s = (m ? m[1] : answer).trim();
+  if (s.length > max) s = `${s.slice(0, max - 1).trimEnd()}…`;
+  return s;
 }
 
 /** Walk `causedBy` from an event back to its root, returning root→leaf order. */
@@ -89,6 +101,7 @@ export function explainNode(
     : `${label}:`;
   return {
     answer: narrate(graph, chain, lead),
+    headline: lead,
     citedEventIds: chain.map((e) => e.id),
     chain,
     source: "local-trace",
@@ -107,6 +120,7 @@ export function explainEvent(
     : "This event:";
   return {
     answer: narrate(graph, chain, lead),
+    headline: lead,
     citedEventIds: chain.map((e) => e.id),
     chain,
     source: "local-trace",

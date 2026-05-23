@@ -3,6 +3,7 @@ import type { Cascade } from "@wake/contracts";
 import { explain } from "@wake/interp";
 import { GeminiLLMClient } from "@wake/llm";
 import { scenarioFor } from "../../../lib/scenarios";
+import { shortHeadline } from "../../../lib/explain";
 
 // Live interpretability: the real @wake/interp explain() over a Gemini Flash
 // call, server-side so the API key never reaches the browser. The client uses
@@ -37,7 +38,9 @@ export async function POST(req: Request) {
   try {
     const llm = new GeminiLLMClient();
     const result = await explain(cascade, question, llm);
-    return NextResponse.json(result);
+    // A one-sentence headline for the on-stage caption; the full multi-sentence
+    // answer goes to the inspector panel.
+    return NextResponse.json({ ...result, headline: shortHeadline(result.answer) });
   } catch (err) {
     // Don't leak internals (or the key) to the client; just signal fallback.
     console.error("[/api/explain] live explain failed:", (err as Error)?.message);

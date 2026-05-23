@@ -7,7 +7,12 @@ import {
   buildGraphModel,
   resolveFrame,
 } from "../lib/model";
-import { explainEvent, explainNode, type ExplanationResult } from "../lib/explain";
+import {
+  explainEvent,
+  explainNode,
+  shortHeadline,
+  type ExplanationResult,
+} from "../lib/explain";
 import { usePlayback } from "../lib/usePlayback";
 import { AFFECT_LEGEND, affectStyle } from "../lib/palette";
 import { DEFAULT_ACTION_ID, isLive, scenarioFor } from "../lib/scenarios";
@@ -104,24 +109,32 @@ export default function Stage({ world }: Props) {
           body: JSON.stringify({ seedActionId: actionId, question }),
         })
           .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-          .then((live: { answer?: string; citedEventIds?: string[] }) => {
-            if (!live?.answer) return;
-            setTrace((t) =>
-              t && t.nonce === myNonce
-                ? {
-                    ...t,
-                    exp: {
-                      ...t.exp,
-                      answer: live.answer as string,
-                      citedEventIds: live.citedEventIds?.length
-                        ? live.citedEventIds
-                        : t.exp.citedEventIds,
-                      source: "model",
-                    },
-                  }
-                : t,
-            );
-          })
+          .then(
+            (live: {
+              answer?: string;
+              headline?: string;
+              citedEventIds?: string[];
+            }) => {
+              if (!live?.answer) return;
+              const answer = live.answer;
+              setTrace((t) =>
+                t && t.nonce === myNonce
+                  ? {
+                      ...t,
+                      exp: {
+                        ...t.exp,
+                        answer,
+                        headline: live.headline ?? shortHeadline(answer),
+                        citedEventIds: live.citedEventIds?.length
+                          ? live.citedEventIds
+                          : t.exp.citedEventIds,
+                        source: "model",
+                      },
+                    }
+                  : t,
+              );
+            },
+          )
           .catch(() => {
             /* keep the templated trace */
           });
@@ -272,9 +285,7 @@ export default function Stage({ world }: Props) {
               {trace ? (
                 <div className={s.caption} key={`trace-${trace.nonce}`}>
                   <div className={s.captionKicker}>Causal trace</div>
-                  <div className={s.captionText}>
-                    {trace.exp.answer.split(/\.\s+Tracing/)[0]}.
-                  </div>
+                  <div className={s.captionText}>{trace.exp.headline}</div>
                 </div>
               ) : salient ? (
                 <div className={s.caption} key={`${actionId}-${frame.act}`}>
