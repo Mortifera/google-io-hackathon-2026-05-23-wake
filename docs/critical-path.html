@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wake — Critical Path Analysis</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0b0d12;
+    color: #e6e9f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 24px 28px 48px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #f0f3ff;
+    margin-bottom: 4px;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #7a7f9a;
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+
+  .subtitle strong {
+    color: #e0556b;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #7a7f9a;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #232838;
+  }
+
+  .panel {
+    background: #12151d;
+    border: 1px solid #232838;
+    border-radius: 8px;
+    padding: 20px 20px 16px;
+    margin-bottom: 20px;
+  }
+
+  svg text { user-select: none; }
+
+  .legend-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px 28px;
+    align-items: center;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 12px;
+    color: #b0b5cc;
+  }
+  .legend-swatch {
+    width: 28px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .legend-diamond {
+    width: 14px;
+    height: 14px;
+    transform: rotate(45deg);
+    flex-shrink: 0;
+  }
+  .legend-line {
+    width: 28px;
+    height: 2px;
+    flex-shrink: 0;
+    border-top: 2px solid #e0556b;
+  }
+  .legend-line-muted {
+    width: 28px;
+    height: 2px;
+    flex-shrink: 0;
+    border-top: 2px dashed #3a3f55;
+  }
+
+  .summary-bar {
+    background: #0e111a;
+    border: 1px solid #232838;
+    border-radius: 6px;
+    padding: 14px 18px;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: 20px;
+  }
+  .summary-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .summary-stat .label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #7a7f9a; font-weight: 600; }
+  .summary-stat .value { font-size: 15px; font-weight: 700; color: #f0f3ff; }
+  .summary-stat .value.accent { color: #e0556b; }
+  .summary-stat .value.green { color: #5bd1a0; }
+  .summary-stat small { font-size: 11px; color: #7a7f9a; margin-top: 1px; }
+
+  /* Tooltip */
+  #tooltip {
+    position: fixed;
+    background: #1a1e2c;
+    border: 1px solid #353a52;
+    border-radius: 6px;
+    padding: 10px 13px;
+    font-size: 12px;
+    color: #e6e9f0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.12s;
+    z-index: 9999;
+    max-width: 220px;
+    line-height: 1.6;
+  }
+  #tooltip.visible { opacity: 1; }
+  #tooltip .tt-title { font-weight: 700; color: #f0f3ff; margin-bottom: 4px; font-size: 13px; }
+  #tooltip .tt-row { display: flex; justify-content: space-between; gap: 12px; }
+  #tooltip .tt-key { color: #7a7f9a; }
+  #tooltip .tt-val { color: #e6e9f0; font-weight: 600; }
+  #tooltip .tt-critical { color: #e0556b; font-weight: 700; font-size: 11px; margin-top: 4px; }
+  #tooltip .tt-float { color: #5bd1a0; font-size: 11px; margin-top: 2px; }
+</style>
+</head>
+<body>
+
+<h1>Wake — Critical Path Analysis</h1>
+<p class="subtitle">Hackathon build · 2026-05-23 · Total critical path: <strong>5.5 h</strong> (Scaffold → CORE-N → CP2 → L6 → CP3 → L9 → CP4/DEMO)</p>
+
+<!-- Summary stats -->
+<div class="summary-bar">
+  <div class="summary-stat">
+    <span class="label">Critical Path</span>
+    <span class="value accent">5.5 h</span>
+    <small>Scaffold → CORE-N → CP2 → L6 → CP3 → L9 → DEMO</small>
+  </div>
+  <div class="summary-stat">
+    <span class="label">Hardest Task</span>
+    <span class="value accent">CORE-N (2.5 h)</span>
+    <small>Per-node behaviour + eval · zero float</small>
+  </div>
+  <div class="summary-stat">
+    <span class="label">Most Float</span>
+    <span class="value green">CORE-E (+1.5 h)</span>
+    <small>Per-edge behaviour · can slip 1.5 h</small>
+  </div>
+  <div class="summary-stat">
+    <span class="label">Parallel Critical</span>
+    <span class="value accent">L5 (0 float)</span>
+    <small>World data also gates CP2</small>
+  </div>
+  <div class="summary-stat">
+    <span class="label">Checkpoints</span>
+    <span class="value">CP1 → CP2 → CP3 → CP4</span>
+    <small>≈ 2.5 h · 2.5 h · 4.0 h · 5.5 h</small>
+  </div>
+</div>
+
+<!-- PERT NETWORK DIAGRAM -->
+<div class="panel">
+  <div class="section-label">Network / PERT Dependency Diagram</div>
+  <!-- SVG: 1100 × 560 -->
+  <svg id="pert" viewBox="0 0 1100 560" width="100%" style="display:block; max-width:1100px;">
+    <defs>
+      <!-- Arrow markers -->
+      <marker id="arrow-critical" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#e0556b"/>
+      </marker>
+      <marker id="arrow-muted" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#3a3f55"/>
+      </marker>
+      <marker id="arrow-float" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L0,6 L8,3 z" fill="#4a506a"/>
+      </marker>
+    </defs>
+
+    <!-- ===================== NODES ===================== -->
+
+    <!-- Scaffold (DONE) — col 0, center-ish -->
+    <!-- x=60, y=260, w=120, h=64 -->
+    <g class="node" data-id="scaffold" data-name="Scaffold (L0)" data-owner="Core" data-dur="0h (DONE)" data-es="0.0h" data-ef="0.0h" data-float="0.0h" data-critical="true">
+      <rect x="30" y="228" width="120" height="64" rx="6" fill="#1a2a1a" stroke="#5bd1a0" stroke-width="2"/>
+      <text x="90" y="248" text-anchor="middle" fill="#5bd1a0" font-size="9" font-weight="700" letter-spacing="0.05em">SCAFFOLD (L0)</text>
+      <text x="90" y="261" text-anchor="middle" fill="#a0e8c0" font-size="10" font-weight="600">Contracts + Fixtures</text>
+      <text x="90" y="274" text-anchor="middle" fill="#5bd1a0" font-size="10">MockLLM · done ✓</text>
+      <text x="90" y="285" text-anchor="middle" fill="#5bd1a0" font-size="9">Core · 0h</text>
+    </g>
+
+    <!-- ---- Column 1: tasks that start from Scaffold (ES=0) ---- -->
+    <!-- CORE-N y=60 (critical) -->
+    <g class="node" data-id="CORE-N" data-name="Per-node behaviour + eval" data-owner="Core agent" data-dur="2.5h" data-es="0.0h" data-ef="2.5h" data-float="0.0h (CRITICAL)" data-critical="true">
+      <rect x="220" y="40" width="130" height="68" rx="6" fill="#1e1215" stroke="#e0556b" stroke-width="2.5"/>
+      <text x="285" y="57" text-anchor="middle" fill="#e0556b" font-size="9" font-weight="700" letter-spacing="0.05em">CORE-N ★ CRITICAL</text>
+      <text x="285" y="70" text-anchor="middle" fill="#f0d0d5" font-size="10" font-weight="600">Per-node + eval</text>
+      <text x="285" y="82" text-anchor="middle" fill="#c09098" font-size="9">(HARDEST)</text>
+      <text x="285" y="95" text-anchor="middle" fill="#c09098" font-size="9">Core · 2.5h · float: 0</text>
+    </g>
+
+    <!-- L5 y=145 (also critical to CP2) -->
+    <g class="node" data-id="L5" data-name="World data (Notion, ~200 nodes)" data-owner="Agent 2 – World" data-dur="2.5h" data-es="0.0h" data-ef="2.5h" data-float="0.0h (co-critical to CP2)" data-critical="true">
+      <rect x="220" y="140" width="130" height="68" rx="6" fill="#1e1215" stroke="#e0556b" stroke-width="2.5"/>
+      <text x="285" y="157" text-anchor="middle" fill="#e0556b" font-size="9" font-weight="700" letter-spacing="0.05em">L5 ★ CO-CRITICAL</text>
+      <text x="285" y="170" text-anchor="middle" fill="#f0d0d5" font-size="10" font-weight="600">World data (Notion)</text>
+      <text x="285" y="182" text-anchor="middle" fill="#c09098" font-size="9">~200 nodes</text>
+      <text x="285" y="195" text-anchor="middle" fill="#c09098" font-size="9">Agent2-World · 2.5h · float: 0</text>
+    </g>
+
+    <!-- CORE-K y=248 (float 0.5h) -->
+    <g class="node" data-id="CORE-K" data-name="Kernel engine" data-owner="Core agent" data-dur="2.0h" data-es="0.0h" data-ef="2.0h" data-float="0.5h" data-critical="false">
+      <rect x="220" y="248" width="130" height="60" rx="6" fill="#13151e" stroke="#3a3f55" stroke-width="1.5"/>
+      <text x="285" y="264" text-anchor="middle" fill="#9095b0" font-size="9" font-weight="700" letter-spacing="0.05em">CORE-K</text>
+      <text x="285" y="277" text-anchor="middle" fill="#d0d4e8" font-size="10" font-weight="600">Kernel engine</text>
+      <text x="285" y="291" text-anchor="middle" fill="#9095b0" font-size="9">Core · 2.0h · float: 0.5h</text>
+    </g>
+
+    <!-- L2 y=348 (float 1.0h) -->
+    <g class="node" data-id="L2" data-name="LLM client (Gemini Flash)" data-owner="Agent 3 – LLM" data-dur="1.5h" data-es="0.0h" data-ef="1.5h" data-float="1.0h" data-critical="false">
+      <rect x="220" y="348" width="130" height="60" rx="6" fill="#13151e" stroke="#3a3f55" stroke-width="1.5"/>
+      <text x="285" y="364" text-anchor="middle" fill="#9095b0" font-size="9" font-weight="700" letter-spacing="0.05em">L2</text>
+      <text x="285" y="377" text-anchor="middle" fill="#d0d4e8" font-size="10" font-weight="600">LLM client</text>
+      <text x="285" y="391" text-anchor="middle" fill="#9095b0" font-size="9">Agent3-LLM · 1.5h · float: 1.0h</text>
+    </g>
+
+    <!-- CORE-E y=445 (float 1.5h — most float) -->
+    <g class="node" data-id="CORE-E" data-name="Per-edge behaviour" data-owner="Core agent" data-dur="1.0h" data-es="0.0h" data-ef="1.0h" data-float="1.5h (most float)" data-critical="false">
+      <rect x="220" y="448" width="130" height="60" rx="6" fill="#13151e" stroke="#3a3f55" stroke-width="1.5"/>
+      <text x="285" y="464" text-anchor="middle" fill="#9095b0" font-size="9" font-weight="700" letter-spacing="0.05em">CORE-E</text>
+      <text x="285" y="477" text-anchor="middle" fill="#d0d4e8" font-size="10" font-weight="600">Per-edge behaviour</text>
+      <text x="285" y="491" text-anchor="middle" fill="#9095b0" font-size="9">Core · 1.0h · float: 1.5h ↑max</text>
+    </g>
+
+    <!-- L8 far right of col1 y=500 builds vs fixtures, float 1.0h -->
+    <!-- Actually L8 starts ES=0 EF=3.0, needed at CP3=4.0, float=1.0h -->
+    <!-- Put L8 in a separate col since it's long and goes to CP3 -->
+    <!-- Let's place it at x=220, y=540 would be off screen — use a special column -->
+
+    <!-- ---- Column 2: CP1 milestone ---- -->
+    <!-- CP1 at (440, 174) — diamond — depends CORE-N + CORE-K -->
+    <g class="node milestone" data-id="CP1" data-name="CP1 — the seam works" data-owner="—" data-dur="0h (milestone)" data-es="2.5h" data-ef="2.5h" data-float="0.0h" data-critical="false">
+      <polygon points="440,148 468,174 440,200 412,174" fill="#12151d" stroke="#9a7a30" stroke-width="2"/>
+      <text x="440" y="170" text-anchor="middle" fill="#d4a830" font-size="9" font-weight="700">CP1</text>
+      <text x="440" y="182" text-anchor="middle" fill="#d4a830" font-size="8">seam works</text>
+      <text x="440" y="193" text-anchor="middle" fill="#9a7a30" font-size="8">@2.5h</text>
+    </g>
+
+    <!-- ---- Column 2: CP2 milestone ---- -->
+    <!-- CP2 at (440, 280) — the main convergence — critical -->
+    <g class="node milestone" data-id="CP2" data-name="CP2 — it's real (Gemini + Notion)" data-owner="—" data-dur="0h (milestone)" data-es="2.5h" data-ef="2.5h" data-float="0.0h (CRITICAL)" data-critical="true">
+      <polygon points="440,248 476,280 440,312 404,280" fill="#1e1215" stroke="#e0556b" stroke-width="2.5"/>
+      <text x="440" y="276" text-anchor="middle" fill="#e0556b" font-size="9" font-weight="700">CP2 ★</text>
+      <text x="440" y="288" text-anchor="middle" fill="#f0b0b8" font-size="8">it's real</text>
+      <text x="440" y="300" text-anchor="middle" fill="#e0556b" font-size="8">@2.5h</text>
+    </g>
+
+    <!-- ---- L8 visualization — starts ES=0, EF=3.0, float 1.0h to CP3 ---- -->
+    <!-- Place at col 2.5 to show it runs long -->
+    <g class="node" data-id="L8" data-name="Visualization (Next.js)" data-owner="Agent 1 – Viz" data-dur="3.0h" data-es="0.0h" data-ef="3.0h" data-float="1.0h" data-critical="false">
+      <rect x="530" y="448" width="140" height="68" rx="6" fill="#13151e" stroke="#4a90e2" stroke-width="1.5"/>
+      <text x="600" y="464" text-anchor="middle" fill="#4a90e2" font-size="9" font-weight="700" letter-spacing="0.05em">L8</text>
+      <text x="600" y="477" text-anchor="middle" fill="#a0c0f0" font-size="10" font-weight="600">Visualization</text>
+      <text x="600" y="490" text-anchor="middle" fill="#6080a0" font-size="9">builds vs fixtures</text>
+      <text x="600" y="503" text-anchor="middle" fill="#6080a0" font-size="9">Agent1-Viz · 3.0h · float: 1.0h</text>
+    </g>
+
+    <!-- ---- Column 3: L6 (critical, after CP2) and L7 (float 0.5h) ---- -->
+    <!-- L6 at x=580, y=100 — critical -->
+    <g class="node" data-id="L6" data-name="Monte Carlo analysis" data-owner="Agent 4 – Analysis" data-dur="1.5h" data-es="2.5h" data-ef="4.0h" data-float="0.0h (CRITICAL)" data-critical="true">
+      <rect x="550" y="60" width="140" height="68" rx="6" fill="#1e1215" stroke="#e0556b" stroke-width="2.5"/>
+      <text x="620" y="77" text-anchor="middle" fill="#e0556b" font-size="9" font-weight="700" letter-spacing="0.05em">L6 ★ CRITICAL</text>
+      <text x="620" y="90" text-anchor="middle" fill="#f0d0d5" font-size="10" font-weight="600">Monte Carlo analysis</text>
+      <text x="620" y="102" text-anchor="middle" fill="#c09098" font-size="9">after CP2: real cascades</text>
+      <text x="620" y="115" text-anchor="middle" fill="#c09098" font-size="9">Agent4-Analysis · 1.5h · float: 0</text>
+    </g>
+
+    <!-- L7 at x=580, y=200 — float 0.5h -->
+    <g class="node" data-id="L7" data-name="Interpretability" data-owner="Core agent" data-dur="1.0h" data-es="2.5h" data-ef="3.5h" data-float="0.5h" data-critical="false">
+      <rect x="550" y="200" width="140" height="68" rx="6" fill="#13151e" stroke="#3a3f55" stroke-width="1.5"/>
+      <text x="620" y="217" text-anchor="middle" fill="#9095b0" font-size="9" font-weight="700" letter-spacing="0.05em">L7</text>
+      <text x="620" y="230" text-anchor="middle" fill="#d0d4e8" font-size="10" font-weight="600">Interpretability</text>
+      <text x="620" y="242" text-anchor="middle" fill="#9095b0" font-size="9">vs fixture, real after CP2</text>
+      <text x="620" y="255" text-anchor="middle" fill="#9095b0" font-size="9">Core · 1.0h · float: 0.5h</text>
+    </g>
+
+    <!-- ---- Column 4: CP3 milestone (critical) ---- -->
+    <g class="node milestone" data-id="CP3" data-name="CP3 — the punchline (fan + interp wired)" data-owner="—" data-dur="0h (milestone)" data-es="4.0h" data-ef="4.0h" data-float="0.0h (CRITICAL)" data-critical="true">
+      <polygon points="760,268 796,300 760,332 724,300" fill="#1e1215" stroke="#e0556b" stroke-width="2.5"/>
+      <text x="760" y="296" text-anchor="middle" fill="#e0556b" font-size="9" font-weight="700">CP3 ★</text>
+      <text x="760" y="308" text-anchor="middle" fill="#f0b0b8" font-size="8">the punchline</text>
+      <text x="760" y="320" text-anchor="middle" fill="#e0556b" font-size="8">@4.0h</text>
+    </g>
+
+    <!-- ---- Column 5: L9 (critical) ---- -->
+    <g class="node" data-id="L9" data-name="Integration / operator / precompute / rehearsal" data-owner="Core + Agents" data-dur="1.5h" data-es="4.0h" data-ef="5.5h" data-float="0.0h (CRITICAL)" data-critical="true">
+      <rect x="850" y="268" width="150" height="68" rx="6" fill="#1e1215" stroke="#e0556b" stroke-width="2.5"/>
+      <text x="925" y="285" text-anchor="middle" fill="#e0556b" font-size="9" font-weight="700" letter-spacing="0.05em">L9 ★ CRITICAL</text>
+      <text x="925" y="298" text-anchor="middle" fill="#f0d0d5" font-size="10" font-weight="600">Integration / Operator</text>
+      <text x="925" y="310" text-anchor="middle" fill="#c09098" font-size="9">precompute · rehearsal</text>
+      <text x="925" y="323" text-anchor="middle" fill="#c09098" font-size="9">Core+All · 1.5h · float: 0</text>
+    </g>
+
+    <!-- ---- Column 6: CP4 / DEMO (critical) ---- -->
+    <g class="node milestone" data-id="CP4" data-name="CP4 / DEMO — operator console, escape hatch, rehearsal done" data-owner="—" data-dur="0h (milestone)" data-es="5.5h" data-ef="5.5h" data-float="0.0h (CRITICAL)" data-critical="true">
+      <polygon points="1060,268 1090,300 1060,332 1030,300" fill="#1e1215" stroke="#e0556b" stroke-width="3"/>
+      <text x="1060" y="292" text-anchor="middle" fill="#e0556b" font-size="9" font-weight="700">CP4</text>
+      <text x="1060" y="304" text-anchor="middle" fill="#ff8090" font-size="8.5" font-weight="700">DEMO ★</text>
+      <text x="1060" y="316" text-anchor="middle" fill="#e0556b" font-size="8">@5.5h</text>
+    </g>
+
+    <!-- ===================== EDGES ===================== -->
+
+    <!-- SCAFFOLD → CORE-N (critical) -->
+    <line x1="150" y1="260" x2="218" y2="90" stroke="#e0556b" stroke-width="2" marker-end="url(#arrow-critical)"/>
+
+    <!-- SCAFFOLD → L5 (co-critical) -->
+    <line x1="150" y1="265" x2="218" y2="180" stroke="#e0556b" stroke-width="2" marker-end="url(#arrow-critical)"/>
+
+    <!-- SCAFFOLD → CORE-K (float 0.5) -->
+    <line x1="150" y1="270" x2="218" y2="278" stroke="#3a3f55" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-muted)"/>
+
+    <!-- SCAFFOLD → L2 (float 1.0) -->
+    <line x1="150" y1="275" x2="218" y2="370" stroke="#3a3f55" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-muted)"/>
+
+    <!-- SCAFFOLD → CORE-E (float 1.5 — most) -->
+    <line x1="150" y1="280" x2="218" y2="470" stroke="#3a3f55" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrow-muted)"/>
+
+    <!-- SCAFFOLD → L8 (float 1.0, goes to far position) -->
+    <path d="M150 285 Q 380 540 528 480" stroke="#4a506a" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-float)"/>
+
+    <!-- CORE-N → CP1 (dashed, CORE-N also feeds CP1) -->
+    <path d="M350 74 Q 400 80 410 174" stroke="#3a3f55" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-muted)"/>
+
+    <!-- CORE-K → CP1 -->
+    <path d="M350 265 Q 390 200 412 174" stroke="#3a3f55" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-muted)"/>
+
+    <!-- CORE-N → CP2 (critical) -->
+    <path d="M350 80 Q 395 200 402 280" stroke="#e0556b" stroke-width="2" fill="none" marker-end="url(#arrow-critical)"/>
+
+    <!-- L5 → CP2 (co-critical) -->
+    <line x1="350" y1="174" x2="402" y2="280" stroke="#e0556b" stroke-width="2" marker-end="url(#arrow-critical)"/>
+
+    <!-- CORE-K → CP2 (float) -->
+    <path d="M350 278 L402 280" stroke="#3a3f55" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-muted)"/>
+
+    <!-- L2 → CP2 (float) -->
+    <path d="M350 368 Q 390 330 402 280" stroke="#3a3f55" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-muted)"/>
+
+    <!-- CORE-E → CP2 (most float) -->
+    <path d="M350 468 Q 395 380 402 280" stroke="#3a3f55" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-muted)"/>
+
+    <!-- CP2 → L6 (critical) -->
+    <path d="M476 265 Q 520 150 548 95" stroke="#e0556b" stroke-width="2" fill="none" marker-end="url(#arrow-critical)"/>
+
+    <!-- CP2 → L7 (float 0.5) -->
+    <path d="M476 275 Q 510 245 548 235" stroke="#3a3f55" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-muted)"/>
+
+    <!-- CP1 → L8 (L8 swaps fixture at CP1) -->
+    <path d="M440 200 Q 490 380 528 470" stroke="#4a506a" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-float)"/>
+
+    <!-- L6 → CP3 (critical) -->
+    <path d="M690 94 Q 730 200 722 300" stroke="#e0556b" stroke-width="2" fill="none" marker-end="url(#arrow-critical)"/>
+
+    <!-- L7 → CP3 (float 0.5) -->
+    <path d="M690 234 Q 720 268 722 300" stroke="#3a3f55" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-muted)"/>
+
+    <!-- CP2 → CP3 (through time, mediated by L6 etc but show the gate) -->
+    <!-- Already shown via L6, skip direct line to avoid clutter -->
+
+    <!-- L8 → CP3 (float 1.0) -->
+    <path d="M670 480 Q 720 420 722 332" stroke="#4a506a" stroke-width="1.5" stroke-dasharray="5,3" fill="none" marker-end="url(#arrow-float)"/>
+
+    <!-- CP3 → L9 (critical) -->
+    <line x1="796" y1="300" x2="848" y2="302" stroke="#e0556b" stroke-width="2.5" marker-end="url(#arrow-critical)"/>
+
+    <!-- L9 → CP4 (critical) -->
+    <line x1="1000" y1="302" x2="1028" y2="300" stroke="#e0556b" stroke-width="2.5" marker-end="url(#arrow-critical)"/>
+
+    <!-- ===================== CRITICAL PATH LABEL ===================== -->
+    <text x="55" y="530" fill="#e0556b" font-size="10" font-weight="600">★ Critical path: 0 → CORE-N (2.5h) → CP2 (2.5h) → L6 (4.0h) → CP3 (4.0h) → L9 (5.5h) → CP4/DEMO</text>
+  </svg>
+</div>
+
+<!-- GANTT CHART -->
+<div class="panel">
+  <div class="section-label">Gantt Timeline (Earliest Start · Float shown as hatched extension)</div>
+  <!--
+    SVG Gantt:
+    - left margin (labels): 140px
+    - right margin: 20px
+    - total width: 1060
+    - chart width: 1060 - 140 - 20 = 900px
+    - time scale: 0..6.0h → 900px → 150px/h
+    - row height: 36px, gap: 6px
+    - rows (9 tasks + L8): CORE-N, L5, CORE-K, L2, CORE-E, L6, L7, L8, L9
+    - milestone lines: CP1@2.5, CP2@2.5, CP3@4.0, CP4@5.5
+
+    x(t) = 140 + t * 150
+    ES(CORE-N)=0   EF=2.5   float=0
+    ES(L5)=0       EF=2.5   float=0
+    ES(CORE-K)=0   EF=2.0   float=0.5  → bar ends at x(2.0), float extension to x(2.5)
+    ES(L2)=0       EF=1.5   float=1.0  → bar to x(1.5), float to x(2.5)
+    ES(CORE-E)=0   EF=1.0   float=1.5  → bar to x(1.0), float to x(2.5)
+    ES(L8)=0       EF=3.0   float=1.0  → bar to x(3.0), float to x(4.0)
+    ES(L6)=2.5     EF=4.0   float=0
+    ES(L7)=2.5     EF=3.5   float=0.5  → bar to x(3.5), float to x(4.0)
+    ES(L9)=4.0     EF=5.5   float=0
+
+    Row y (top of bar), bar height=24:
+    row 0 y=40:  CORE-N
+    row 1 y=82:  L5
+    row 2 y=124: CORE-K
+    row 3 y=166: L2
+    row 4 y=208: CORE-E
+    row 5 y=250: L8
+    row 6 y=292: L6
+    row 7 y=334: L7
+    row 8 y=376: L9
+    Total height needed: 376+24+30=430
+  -->
+  <svg id="gantt" viewBox="0 0 1060 440" width="100%" style="display:block; max-width:1060px;">
+    <!-- Axis -->
+    <!-- x labels at 0,1,2,3,4,5,6 -->
+    <!-- x = 140 + t*150 -->
+
+    <!-- Background grid lines -->
+    <line x1="140" y1="20" x2="140" y2="410" stroke="#232838" stroke-width="1"/>
+    <line x1="290" y1="20" x2="290" y2="410" stroke="#232838" stroke-width="1"/>
+    <line x1="440" y1="20" x2="440" y2="410" stroke="#232838" stroke-width="1"/>
+    <line x1="590" y1="20" x2="590" y2="410" stroke="#232838" stroke-width="1"/>
+    <line x1="740" y1="20" x2="740" y2="410" stroke="#232838" stroke-width="1"/>
+    <line x1="890" y1="20" x2="890" y2="410" stroke="#232838" stroke-width="1"/>
+    <line x1="1040" y1="20" x2="1040" y2="410" stroke="#232838" stroke-width="1"/>
+
+    <!-- Axis labels -->
+    <text x="140" y="16" text-anchor="middle" fill="#5a5f75" font-size="10">0h</text>
+    <text x="290" y="16" text-anchor="middle" fill="#5a5f75" font-size="10">1h</text>
+    <text x="440" y="16" text-anchor="middle" fill="#5a5f75" font-size="10">2h</text>
+    <text x="590" y="16" text-anchor="middle" fill="#5a5f75" font-size="10">3h</text>
+    <text x="740" y="16" text-anchor="middle" fill="#5a5f75" font-size="10">4h</text>
+    <text x="890" y="16" text-anchor="middle" fill="#5a5f75" font-size="10">5h</text>
+    <text x="1040" y="16" text-anchor="middle" fill="#5a5f75" font-size="10">6h</text>
+
+    <!-- ============ MILESTONE VERTICAL LINES ============ -->
+    <!-- CP1 @ 2.5h = 140 + 2.5*150 = 515 -->
+    <!-- CP2 @ 2.5h = 515 (same, drawn on top) -->
+    <!-- CP3 @ 4.0h = 740 -->
+    <!-- CP4 @ 5.5h = 965 -->
+
+    <!-- CP2 @ 2.5h (critical) -->
+    <line x1="515" y1="20" x2="515" y2="415" stroke="#e0556b" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="517" y="420" fill="#e0556b" font-size="9" font-weight="600">CP1/CP2 @2.5h</text>
+
+    <!-- CP3 @ 4.0h (critical) -->
+    <line x1="740" y1="20" x2="740" y2="415" stroke="#e0556b" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="742" y="420" fill="#e0556b" font-size="9" font-weight="600">CP3 @4.0h</text>
+
+    <!-- CP4 @ 5.5h (critical) -->
+    <line x1="965" y1="20" x2="965" y2="415" stroke="#e0556b" stroke-width="2" stroke-dasharray="6,3"/>
+    <text x="967" y="420" fill="#e0556b" font-size="9" font-weight="600">CP4/DEMO @5.5h</text>
+
+    <!-- ============ ROW 0: CORE-N (critical, ES=0 EF=2.5, float=0) ============ -->
+    <!-- bar: x=140, width=375 (2.5*150), y=40, h=24 -->
+    <rect x="140" y="40" width="375" height="24" rx="3" fill="#e0556b" opacity="0.9"/>
+    <text x="138" y="57" text-anchor="end" fill="#e6e9f0" font-size="11" font-weight="600">CORE-N</text>
+    <text x="143" y="56" fill="#fff" font-size="10" font-weight="700">Per-node + eval (HARDEST) · Core · 2.5h</text>
+    <!-- no float bar -->
+    <text x="518" y="57" fill="#e0556b" font-size="10" font-weight="600"> ← critical</text>
+
+    <!-- ============ ROW 1: L5 (co-critical, ES=0 EF=2.5, float=0) ============ -->
+    <rect x="140" y="82" width="375" height="24" rx="3" fill="#e0556b" opacity="0.8"/>
+    <text x="138" y="99" text-anchor="end" fill="#e6e9f0" font-size="11" font-weight="600">L5</text>
+    <text x="143" y="98" fill="#fff" font-size="10" font-weight="700">World data · Agent2-World · 2.5h</text>
+    <text x="518" y="99" fill="#e0556b" font-size="10" font-weight="600"> ← co-critical</text>
+
+    <!-- ============ ROW 2: CORE-K (ES=0 EF=2.0, float=0.5) ============ -->
+    <!-- bar: x=140 w=300 (2.0h); float: w=75 (0.5h) -->
+    <rect x="140" y="124" width="300" height="24" rx="3" fill="#6c7ac0" opacity="0.85"/>
+    <!-- float hatched -->
+    <rect x="440" y="124" width="75" height="24" rx="3" fill="none" stroke="#6c7ac0" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.5"/>
+    <text x="138" y="141" text-anchor="end" fill="#e6e9f0" font-size="11" font-weight="600">CORE-K</text>
+    <text x="143" y="140" fill="#e6e9f0" font-size="10">Kernel engine · Core · 2.0h</text>
+    <text x="518" y="140" fill="#5bd1a0" font-size="10"> ← float: 0.5h</text>
+
+    <!-- ============ ROW 3: L2 (ES=0 EF=1.5, float=1.0) ============ -->
+    <!-- bar: x=140 w=225; float: w=150 -->
+    <rect x="140" y="166" width="225" height="24" rx="3" fill="#e09a40" opacity="0.85"/>
+    <rect x="365" y="166" width="150" height="24" rx="3" fill="none" stroke="#e09a40" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.5"/>
+    <text x="138" y="183" text-anchor="end" fill="#e6e9f0" font-size="11" font-weight="600">L2</text>
+    <text x="143" y="182" fill="#e6e9f0" font-size="10">LLM client (Gemini) · Agent3-LLM · 1.5h</text>
+    <text x="518" y="182" fill="#5bd1a0" font-size="10"> ← float: 1.0h</text>
+
+    <!-- ============ ROW 4: CORE-E (ES=0 EF=1.0, float=1.5 — MOST) ============ -->
+    <!-- bar: x=140 w=150; float: w=225 -->
+    <rect x="140" y="208" width="150" height="24" rx="3" fill="#6c7ac0" opacity="0.85"/>
+    <rect x="290" y="208" width="225" height="24" rx="3" fill="none" stroke="#6c7ac0" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.5"/>
+    <text x="138" y="225" text-anchor="end" fill="#e6e9f0" font-size="11" font-weight="600">CORE-E</text>
+    <text x="143" y="224" fill="#e6e9f0" font-size="10">Per-edge behaviour · Core · 1.0h</text>
+    <text x="518" y="224" fill="#5bd1a0" font-size="10" font-weight="700"> ← float: 1.5h ↑ MOST FLOAT</text>
+
+    <!-- ============ ROW 5: L8 (ES=0 EF=3.0, float=1.0) ============ -->
+    <!-- bar: x=140 w=450; float: w=150 -->
+    <rect x="140" y="250" width="450" height="24" rx="3" fill="#4a90e2" opacity="0.85"/>
+    <rect x="590" y="250" width="150" height="24" rx="3" fill="none" stroke="#4a90e2" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.5"/>
+    <text x="138" y="267" text-anchor="end" fill="#e6e9f0" font-size="11" font-weight="600">L8</text>
+    <text x="143" y="266" fill="#fff" font-size="10">Visualization · Agent1-Viz · 3.0h (builds vs fixtures)</text>
+    <text x="743" y="266" fill="#5bd1a0" font-size="10"> ← float: 1.0h</text>
+
+    <!-- ============ ROW 6: L6 (critical, ES=2.5 EF=4.0, float=0) ============ -->
+    <!-- bar: x=515 w=225 -->
+    <rect x="515" y="292" width="225" height="24" rx="3" fill="#e0556b" opacity="0.9"/>
+    <text x="138" y="309" text-anchor="end" fill="#e6e9f0" font-size="11" font-weight="600">L6</text>
+    <text x="518" y="308" fill="#fff" font-size="10" font-weight="700">Monte Carlo analysis · Agent4-Analysis · 1.5h</text>
+    <text x="743" y="308" fill="#e0556b" font-size="10"> ← critical</text>
+
+    <!-- ============ ROW 7: L7 (ES=2.5 EF=3.5, float=0.5) ============ -->
+    <!-- bar: x=515 w=150; float w=75 -->
+    <rect x="515" y="334" width="150" height="24" rx="3" fill="#a060c0" opacity="0.85"/>
+    <rect x="665" y="334" width="75" height="24" rx="3" fill="none" stroke="#a060c0" stroke-width="1.5" stroke-dasharray="4,2" opacity="0.5"/>
+    <text x="138" y="351" text-anchor="end" fill="#e6e9f0" font-size="11" font-weight="600">L7</text>
+    <text x="518" y="350" fill="#e6e9f0" font-size="10">Interpretability · Core · 1.0h</text>
+    <text x="743" y="350" fill="#5bd1a0" font-size="10"> ← float: 0.5h</text>
+
+    <!-- ============ ROW 8: L9 (critical, ES=4.0 EF=5.5, float=0) ============ -->
+    <!-- bar: x=740 w=225 -->
+    <rect x="740" y="376" width="225" height="24" rx="3" fill="#e0556b" opacity="0.9"/>
+    <text x="138" y="393" text-anchor="end" fill="#e6e9f0" font-size="11" font-weight="600">L9</text>
+    <text x="743" y="392" fill="#fff" font-size="10" font-weight="700">Integration / Operator / Rehearsal · Core+All · 1.5h</text>
+    <text x="968" y="392" fill="#e0556b" font-size="10"> ← critical</text>
+
+    <!-- Scaffold label on axis (DONE, t=0) -->
+    <text x="140" y="16" text-anchor="middle" fill="#5bd1a0" font-size="9" font-weight="700">Scaffold↑</text>
+  </svg>
+</div>
+
+<!-- LEGEND + SUMMARY -->
+<div class="panel">
+  <div class="section-label">Legend</div>
+  <div class="legend-grid">
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#e0556b;"></div>
+      <span>Critical path (0 float)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#6c7ac0; opacity:0.85;"></div>
+      <span>Core agent (non-critical)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#4a90e2; opacity:0.85;"></div>
+      <span>Agent 1 – Viz (L8)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#e09a40; opacity:0.85;"></div>
+      <span>Agent 3 – LLM (L2)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#a060c0; opacity:0.85;"></div>
+      <span>Interpretability (L7)</span>
+    </div>
+    <div class="legend-item" style="margin-left:8px;">
+      <div style="width:28px;height:14px;border:1.5px dashed #6c7ac0;border-radius:2px;opacity:0.6;"></div>
+      <span>Float / slack extension</span>
+    </div>
+    <div class="legend-item">
+      <svg width="28" height="20" viewBox="0 0 28 20"><polygon points="14,3 25,10 14,17 3,10" fill="#1e1215" stroke="#e0556b" stroke-width="2"/></svg>
+      <span>Milestone (critical)</span>
+    </div>
+    <div class="legend-item">
+      <svg width="28" height="20" viewBox="0 0 28 20"><polygon points="14,3 25,10 14,17 3,10" fill="#12151d" stroke="#d4a830" stroke-width="1.5"/></svg>
+      <span>Milestone (non-critical)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line"></div>
+      <span>Critical edge</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-line-muted"></div>
+      <span>Non-critical edge</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-swatch" style="background:#5bd1a0;"></div>
+      <span>Completed (Scaffold)</span>
+    </div>
+  </div>
+
+  <div style="margin-top:18px; padding-top:14px; border-top:1px solid #232838;">
+    <div class="section-label" style="margin-bottom:10px;">Float Summary</div>
+    <table style="width:100%; border-collapse:collapse; font-size:12px;">
+      <thead>
+        <tr style="border-bottom:1px solid #232838;">
+          <th style="text-align:left; padding:5px 10px 5px 0; color:#7a7f9a; font-weight:600;">Task</th>
+          <th style="text-align:left; padding:5px 10px; color:#7a7f9a; font-weight:600;">Owner</th>
+          <th style="text-align:right; padding:5px 10px; color:#7a7f9a; font-weight:600;">ES</th>
+          <th style="text-align:right; padding:5px 10px; color:#7a7f9a; font-weight:600;">EF</th>
+          <th style="text-align:right; padding:5px 10px; color:#7a7f9a; font-weight:600;">Dur.</th>
+          <th style="text-align:right; padding:5px 10px; color:#7a7f9a; font-weight:600;">LF</th>
+          <th style="text-align:right; padding:5px 0; color:#7a7f9a; font-weight:600;">Float</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #1a1e2c;">
+          <td style="padding:5px 10px 5px 0; color:#e0556b; font-weight:700;">CORE-N</td>
+          <td style="padding:5px 10px; color:#b0b5cc;">Core</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">0.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 0; color:#e0556b; font-weight:700;">0.0h ★</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1a1e2c;">
+          <td style="padding:5px 10px 5px 0; color:#e0556b; font-weight:700;">L5</td>
+          <td style="padding:5px 10px; color:#b0b5cc;">Agent2-World</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">0.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 0; color:#e0556b; font-weight:700;">0.0h ★</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1a1e2c;">
+          <td style="padding:5px 10px 5px 0; color:#e0556b; font-weight:700;">L6</td>
+          <td style="padding:5px 10px; color:#b0b5cc;">Agent4-Analysis</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">4.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">1.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">4.0h</td>
+          <td style="text-align:right; padding:5px 0; color:#e0556b; font-weight:700;">0.0h ★</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1a1e2c;">
+          <td style="padding:5px 10px 5px 0; color:#e0556b; font-weight:700;">L9</td>
+          <td style="padding:5px 10px; color:#b0b5cc;">Core+All</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">4.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">5.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">1.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">5.5h</td>
+          <td style="text-align:right; padding:5px 0; color:#e0556b; font-weight:700;">0.0h ★</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1a1e2c;">
+          <td style="padding:5px 10px 5px 0; color:#b0b5cc;">L7</td>
+          <td style="padding:5px 10px; color:#b0b5cc;">Core</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">3.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">1.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">4.0h</td>
+          <td style="text-align:right; padding:5px 0; color:#5bd1a0; font-weight:700;">0.5h</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1a1e2c;">
+          <td style="padding:5px 10px 5px 0; color:#b0b5cc;">CORE-K</td>
+          <td style="padding:5px 10px; color:#b0b5cc;">Core</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">0.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 0; color:#5bd1a0; font-weight:700;">0.5h</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1a1e2c;">
+          <td style="padding:5px 10px 5px 0; color:#b0b5cc;">L8</td>
+          <td style="padding:5px 10px; color:#b0b5cc;">Agent1-Viz</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">0.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">3.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">3.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">4.0h</td>
+          <td style="text-align:right; padding:5px 0; color:#5bd1a0; font-weight:700;">1.0h</td>
+        </tr>
+        <tr style="border-bottom:1px solid #1a1e2c;">
+          <td style="padding:5px 10px 5px 0; color:#b0b5cc;">L2</td>
+          <td style="padding:5px 10px; color:#b0b5cc;">Agent3-LLM</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">0.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">1.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">1.5h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 0; color:#5bd1a0; font-weight:700;">1.0h</td>
+        </tr>
+        <tr>
+          <td style="padding:5px 10px 5px 0; color:#b0b5cc;">CORE-E</td>
+          <td style="padding:5px 10px; color:#b0b5cc;">Core</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">0.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">1.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">1.0h</td>
+          <td style="text-align:right; padding:5px 10px; color:#b0b5cc;">2.5h</td>
+          <td style="text-align:right; padding:5px 0; color:#5bd1a0; font-weight:700; font-size:13px;">1.5h ↑</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip"></div>
+
+<script>
+(function() {
+  const tooltip = document.getElementById('tooltip');
+
+  function showTooltip(e, node) {
+    const id = node.dataset.id;
+    const name = node.dataset.name;
+    const owner = node.dataset.owner;
+    const dur = node.dataset.dur;
+    const es = node.dataset.es;
+    const ef = node.dataset.ef;
+    const floatVal = node.dataset.float;
+    const critical = node.dataset.critical === 'true';
+
+    let html = `<div class="tt-title">${id}: ${name}</div>`;
+    html += `<div class="tt-row"><span class="tt-key">Owner</span><span class="tt-val">${owner}</span></div>`;
+    html += `<div class="tt-row"><span class="tt-key">Duration</span><span class="tt-val">${dur}</span></div>`;
+    html += `<div class="tt-row"><span class="tt-key">Early Start</span><span class="tt-val">${es}</span></div>`;
+    html += `<div class="tt-row"><span class="tt-key">Early Finish</span><span class="tt-val">${ef}</span></div>`;
+    html += `<div class="tt-row"><span class="tt-key">Float</span><span class="tt-val">${floatVal}</span></div>`;
+    if (critical) {
+      html += `<div class="tt-critical">★ On the critical path — zero float</div>`;
+    } else {
+      html += `<div class="tt-float">Has slack — can slip without delaying DEMO</div>`;
+    }
+    tooltip.innerHTML = html;
+    tooltip.classList.add('visible');
+    moveTooltip(e);
+  }
+
+  function moveTooltip(e) {
+    const x = e.clientX + 14;
+    const y = e.clientY + 14;
+    const tw = tooltip.offsetWidth;
+    const th = tooltip.offsetHeight;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    tooltip.style.left = Math.min(x, vw - tw - 10) + 'px';
+    tooltip.style.top = Math.min(y, vh - th - 10) + 'px';
+  }
+
+  function hideTooltip() {
+    tooltip.classList.remove('visible');
+  }
+
+  // Attach to all node groups in PERT
+  document.querySelectorAll('#pert .node, #gantt .node').forEach(function(node) {
+    node.style.cursor = 'pointer';
+    node.addEventListener('mouseenter', function(e) { showTooltip(e, node); });
+    node.addEventListener('mousemove', moveTooltip);
+    node.addEventListener('mouseleave', hideTooltip);
+  });
+
+  // Attach to gantt bars as well (rect elements with data attrs from parent g)
+  // Already handled above via g.node containers in gantt if we add them
+})();
+</script>
+
+</body>
+</html>
