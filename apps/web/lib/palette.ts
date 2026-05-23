@@ -116,11 +116,13 @@ export const EVENT_LABEL: Record<string, string> = {
 /** A curated, distinguishable hue per Monte Carlo cluster, by order. */
 export const CLUSTER_COLORS = ["#4fd18b", "#f0556b", "#f2b450", "#5b9cf0", "#b06bf0"];
 
-/** Map a hex colour to an rgba() string at the given alpha. */
+/** Map a hex colour to an rgba() string at the given alpha. Defensive: any
+ * non-hex input is returned unchanged so it can never crash a canvas draw. */
 export function withAlpha(hex: string, alpha: number): string {
-  const h = hex.replace("#", "");
-  const r = parseInt(h.slice(0, 2), 16);
-  const g = parseInt(h.slice(2, 4), 16);
-  const b = parseInt(h.slice(4, 6), 16);
+  if (hex[0] !== "#" || hex.length < 7) return hex;
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  if (Number.isNaN(r) || Number.isNaN(g) || Number.isNaN(b)) return hex;
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }

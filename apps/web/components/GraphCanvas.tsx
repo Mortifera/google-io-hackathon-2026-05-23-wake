@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import {
   forceCenter,
   forceCollide,
@@ -49,13 +49,16 @@ interface Props {
   onSelectNode: (id: string | null) => void;
 }
 
-const TIER_RADIUS: Record<number, number> = { 1: 8.5, 2: 5.5, 3: 4 };
+const TIER_RADIUS: Record<number, number> = { 1: 10, 2: 6.5, 3: 5 };
 
 function mixHex(a: string, b: string, t: number): string {
   const pa = [1, 3, 5].map((i) => parseInt(a.slice(i, i + 2), 16));
   const pb = [1, 3, 5].map((i) => parseInt(b.slice(i, i + 2), 16));
-  const r = pa.map((v, i) => Math.round(v + (pb[i] - v) * t));
-  return `rgb(${r[0]}, ${r[1]}, ${r[2]})`;
+  const toHex = (n: number) => Math.max(0, Math.min(255, Math.round(n)))
+    .toString(16)
+    .padStart(2, "0");
+  const r = pa.map((v, i) => v + (pb[i] - v) * t);
+  return `#${toHex(r[0])}${toHex(r[1])}${toHex(r[2])}`;
 }
 
 const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
@@ -121,39 +124,33 @@ export default function GraphCanvas({
     });
   }, [model]);
 
-  // --- force layout: settle once, then freeze (stable, readable) ---
   const sizeRef = useRef({ w: 800, h: 560 });
-  useEffect(() => {
-    const settle = (w: number, h: number) => {
-      const f = forceSimulation(sim.nodes)
-        .force("charge", forceManyBody().strength(-420))
-        .force(
-          "link",
-          forceLink<SimNode, SimLink>(sim.links)
-            .id((d) => d.id)
-            .distance(118)
-            .strength(0.55),
-        )
-        .force("center", forceCenter(w / 2, h / 2))
-        .force("x", forceX(w / 2).strength(0.04))
-        .force("y", forceY(h / 2).strength(0.06))
-        .force("collide", forceCollide(34))
-        .stop();
-      for (let i = 0; i < 320; i++) f.tick();
-      // clamp into frame with margin
-      const m = 56;
-      for (const n of sim.nodes) {
-        n.x = Math.max(m, Math.min(w - m, n.x ?? w / 2));
-        n.y = Math.max(m, Math.min(h - m, n.y ?? h / 2));
-      }
-    };
-    settle(sizeRef.current.w, sizeRef.current.h);
+  const settledRef = useRef(false);
+
+  const sizeCanvas = (canvas: HTMLCanvasElement, w: number, h: number) => {
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    canvas.style.width = `${w}px`;
+    canvas.style.height = `${h}px`;
+  };
+
+  // --- initial layout: settle the physics at the REAL frame size, synchronously
+  // before paint (getBoundingClientRect forces layout, so width is accurate). ---
+  useLayoutEffect(() => {
+    const wrap = wrapRef.current;
+    const canvas = canvasRef.current;
+    if (!wrap || !canvas) return;
+    const r = wrap.getBoundingClientRect();
+    const w = Math.max(320, r.width);
+    const h = Math.max(360, r.height);
+    sizeRef.current = { w, h };
+    sizeCanvas(canvas, w, h);
+    settleLayout(sim.nodes, sim.links, w, h);
     settledRef.current = true;
   }, [sim]);
 
-  const settledRef = useRef(false);
-
-  // --- resize handling ---
+  // --- resize: rescale the settled layout to follow the frame ---
   useEffect(() => {
     const wrap = wrapRef.current;
     const canvas = canvasRef.current;
@@ -163,13 +160,9 @@ export default function GraphCanvas({
       const w = Math.max(320, r.width);
       const h = Math.max(360, r.height);
       const prev = sizeRef.current;
+      if (Math.abs(w - prev.w) < 1 && Math.abs(h - prev.h) < 1) return;
       sizeRef.current = { w, h };
-      const dpr = Math.min(2, window.devicePixelRatio || 1);
-      canvas.width = w * dpr;
-      canvas.height = h * dpr;
-      canvas.style.width = `${w}px`;
-      canvas.style.height = `${h}px`;
-      // rescale settled positions to the new frame so the layout follows
+      sizeCanvas(canvas, w, h);
       if (settledRef.current && prev.w > 0) {
         const sx = w / prev.w;
         const sy = h / prev.h;
@@ -177,6 +170,9 @@ export default function GraphCanvas({
           n.x = (n.x ?? w / 2) * sx;
           n.y = (n.y ?? h / 2) * sy;
         }
+      } else {
+        settleLayout(sim.nodes, sim.links, w, h);
+        settledRef.current = true;
       }
     });
     ro.observe(wrap);
@@ -419,7 +415,7 @@ export default function GraphCanvas({
         // label: tier-1 always; others on hover/select
         if (tier === 1 || isSel || isHov) {
           const label = meta?.label ?? n.id;
-          ctx.font = `${tier === 1 ? 12 : 11}px var(--font-geist-sans), system-ui, sans-serif`;
+          ctx.font = `${tier === 1 ? 600 : 500} ${tier === 1 ? 12.5 : 11}px ${CANVAS_FONT}`;
           const tw = ctx.measureText(label).width;
           const lx = x - tw / 2;
           const ly = y + baseR + 15;
@@ -443,6 +439,33 @@ export default function GraphCanvas({
 }
 
 /* ---------------- canvas helpers ---------------- */
+
+/** Font stack for canvas text (ctx.font can't read CSS custom properties). */
+const CANVAS_FONT = "ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif";
+
+/** Run the force sim to a settled state at a real frame size, then clamp in. */
+function settleLayout(nodes: SimNode[], links: SimLink[], w: number, h: number) {
+  const sim = forceSimulation(nodes)
+    .force("charge", forceManyBody().strength(-560))
+    .force(
+      "link",
+      forceLink<SimNode, SimLink>(links)
+        .id((d) => d.id)
+        .distance(Math.max(110, Math.min(w, h) * 0.26))
+        .strength(0.5),
+    )
+    .force("center", forceCenter(w / 2, h / 2))
+    .force("x", forceX(w / 2).strength(0.05))
+    .force("y", forceY(h / 2).strength(0.08))
+    .force("collide", forceCollide(40))
+    .stop();
+  for (let i = 0; i < 380; i++) sim.tick();
+  const m = 72;
+  for (const n of nodes) {
+    n.x = Math.max(m, Math.min(w - m, n.x ?? w / 2));
+    n.y = Math.max(m, Math.min(h - m, n.y ?? h / 2));
+  }
+}
 
 function controlPoint(s: { x: number; y: number }, t: { x: number; y: number }, seed: string) {
   const mx = (s.x + t.x) / 2;

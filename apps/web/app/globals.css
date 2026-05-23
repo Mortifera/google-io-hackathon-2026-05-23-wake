@@ -136,6 +136,15 @@ a {
   }
 }
 
+/* Monte Carlo fan: strands draw themselves in. Defined globally because the
+ * animation is referenced from an inline style (CSS-module @keyframes get
+ * renamed and wouldn't match a plain name). */
+@keyframes wake-strand-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.001ms !important;
