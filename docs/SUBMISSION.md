@@ -159,9 +159,11 @@ A real propagation-wave simulator (not a scripted swarm):
 - **10 cascade fixtures** including the real Notion acquisition (14 ticks), the other
   4 menu scenarios (ceo-steps-down, open-source, free-tier-removal, engineer-idea),
   and the **Anthropic safety-incident cascade (21 ticks)** for generalization.
-- **2 Monte Carlo fixtures** (Notion acquisition fan, 16 runs / 2 clusters).
-- A **post-acquisition run** (`runs/notion.postacq.engineer-idea.json`, 8 ticks) for
-  the "same action, different world" beat.
+- **Monte Carlo fan fixture** (Notion acquisition, **32 runs / 2 regimes**, pivotal
+  "acquisition messaging framing" 58%).
+- A **matched pre/post-acquisition pair** (`fixtures/cascades/notion-{pre,post}acq.engineer-idea.json`)
+  for the "same action, different world" beat — the manager buries vs. weaponizes the
+  same idea.
 
 ### 3.8 Genesis — natural language → a runnable world — `tools/genesis`
 A working CLI that turns one English sentence into a validated, runnable Wake world:
@@ -175,8 +177,10 @@ A working CLI that turns one English sentence into a validated, runnable Wake wo
    invariants (unique ids, no self-loops, every edge resolves, reachability repair).
 6. **Validate** — `WorldSchema.parse` + `loadWorld()` + a real offline cascade.
 
-Committed sample: **"What happens if Stripe acquires Plaid?" → 31 nodes, 60 edges, 3
-seeds**, loads and runs. Model: `gemini-3.5-flash`. **See §6 for the managed-agents
+Locked demo sample: **"What happens if Stripe acquires Plaid?" → ~21 entities, 37
+edges, 3 seeds** at `--budget 0.1` (~$0.016, ~55s), with a **committed precomputed
+fallback** (`tools/genesis/examples/stripe-plaid.json` + cascade) so it never fails
+on camera. Loads and runs. Model: `gemini-3.5-flash`. **See §6 for the managed-agents
 nuance — this matters for a $5,000 prize and a required form field.**
 
 ---
@@ -190,10 +194,10 @@ From `final-push.md` / `critical-path.html`, these are *upgrades on a working fl
 |---|---|---|---|
 | **3a** | **Per-node live reasoning** ("watch it think") — stream who's thinking + each one-line rationale the instant its call returns | **THE centerpiece.** Converts tick latency into a live feed of reasoning; the moment the judge's "it's scripted" reflex dies | **done + verified** — kernel streams `tick-start`/`node-acted`; Agent 1 renders the live reasoning stream |
 | **3b** | **Same action, different world** — engineer's idea dies at the cautious manager pre-acquisition, escalates post-acquisition | The beat that separates "cool simulator" from "world model" | **done** — matched pre/post pair published; Agent 1 wired the two-worlds view (`1f7bdeb`) |
-| **3c** | **Generalization + a shareable URL** — flash to Anthropic; deploy the replay to Vercel | "They can touch it themselves" is disproportionately persuasive | Anthropic cascade done; Vercel deploy in progress (`.vercel/` present) |
-| **3e** | **Fan credibility re-tune** — from a too-clean 100%/50-50 to ~80% explained / uneven split | Integrity: a fake-looking fan retroactively makes the live cascade look scripted | landed (`L6` commits) |
-| **3f** | **Variant A/B + what the sweep settles on** — "we ran your announcement two ways; the pivotal variable points to 'independent'" | The decision-optimization wedge, phrased instrument-not-advisor | landed (`recommendation` field + copy) |
-| **3d** | **Genesis moonshot** — NL → world on demand | Turns the TAM from "a Notion simulator" into "any decision in any org" | working CLI; remote/managed-agent runner is the stretch |
+| **3c** | **Generalization + a shareable URL** — flash to Anthropic; deploy the replay to Vercel | "They can touch it themselves" is disproportionately persuasive | **done** — Anthropic cascade shipped; **live** at wake-web-zeta.vercel.app (QA'd green, env across all environments) |
+| **3e** | **Fan credibility re-tune** — from a too-clean 100%/50-50 to ~80% explained / uneven split | Integrity: a fake-looking fan retroactively makes the live cascade look scripted | **done** — 32-run live sweep, pivotal 58% (was a too-clean 100%), mock labels (`be625d6`) |
+| **3f** | **Variant A/B + what the sweep settles on** — "we ran your announcement two ways; the pivotal variable points to 'independent'" | The decision-optimization wedge, phrased instrument-not-advisor | **done** — instrument-register pivotal copy (reports the reading, points at the lever; never "recommends") |
+| **3d** | **Genesis moonshot** — NL → world on demand | Turns the TAM from "a Notion simulator" into "any decision in any org" | **done + camera-ready** — locked command, committed precomputed fallback, `DEMO.md`; Managed Agents API stays the (unwired) stretch — see §6 |
 
 **Freeze discipline:** app done + rehearsed by 4:00pm, hard fold-in cutoff ~3:40.
 The feature-complete demo is the safety net; reliability before flash; the escape
@@ -373,12 +377,12 @@ hit transient network/429s under concurrent load and had to add backoff + a sema
   Genesis call, and the live interp explanation.
 - **Notion world:** 208 nodes (41 Tier-1 named / 74 Tier-2 / 93 Tier-3), 346 edges, 5 seed actions.
 - **Anthropic world:** 57 nodes, 94 edges, 5 seeds (generalization).
-- **Cost (real):** a frontier-Flash call ≈ $0.002; a ~200-node cascade ≈ $0.19; a
-  16-run Monte Carlo fan ≈ $1; a Genesis world build ≈ $0.05 (the validating cascade
-  runs offline on the mock).
+- **Cost (real):** a frontier-Flash call ≈ $0.002; a ~200-node cascade ≈ $0.19; the
+  shipped **32-run Monte Carlo fan ≈ $3.19**; a Genesis world build ≈ $0.016 (the
+  validating cascade runs offline on the mock).
 - **Timing:** a full 16-tick-wave cascade ≈ 110s at concurrency 6 (why the live demo
   is seed-paced and the precomputed replay is the escape hatch).
-- **Genesis sample:** "Stripe acquires Plaid" → 31 nodes / 60 edges / 3 seeds, runnable.
+- **Genesis sample:** "Stripe acquires Plaid" → ~21 entities / 37 edges / 3 seeds at `--budget 0.1` (~$0.016, ~55s live); precomputed fallback committed.
 - **Determinism:** same seed → byte-identical run; streamed output == batch output (tested).
 - **Tests:** schema-validation tests for every contract artifact; kernel mechanics,
   node/edge/integration, sweep, analysis math, and web model tests all present.
