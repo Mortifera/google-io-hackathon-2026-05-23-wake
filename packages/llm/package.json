@@ -11,9 +11,14 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "smoke": "tsx --env-file-if-exists=../../.env src/gemini.smoke.ts"
   },
   "dependencies": {
-    "@wake/contracts": "workspace:*"
+    "@google/genai": "^2.6.0",
+    "@wake/contracts": "workspace:*",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.25.2"
   }
 }
