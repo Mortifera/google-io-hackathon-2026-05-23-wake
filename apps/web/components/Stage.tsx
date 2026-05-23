@@ -24,6 +24,7 @@ import MonteCarloFan from "./MonteCarloFan";
 import OperatorConsole from "./OperatorConsole";
 import ReasoningFeed from "./ReasoningFeed";
 import TwoBeat from "./TwoBeat";
+import ABTesting from "./ABTesting";
 import s from "./stage.module.css";
 
 interface ActiveTrace {
@@ -44,7 +45,7 @@ export interface ReasoningItem {
 }
 
 type Layer = "public" | "private";
-type View = "cascade" | "futures" | "twobeat";
+type View = "cascade" | "futures" | "twobeat" | "abtesting";
 type RunMode = "replay" | "live";
 export type LiveStatus = "idle" | "connecting" | "streaming" | "done" | "error";
 
@@ -450,6 +451,12 @@ export default function Stage({ world }: Props) {
             >
               Two worlds
             </button>
+            <button
+              data-active={view === "abtesting"}
+              onClick={() => setView("abtesting")}
+            >
+              A/B Testing
+            </button>
           </div>
         </div>
       </header>
@@ -547,6 +554,8 @@ export default function Stage({ world }: Props) {
             onTogglePlay={togglePlay}
           />
         </>
+      ) : view === "abtesting" ? (
+        <ABTesting world={world} />
       ) : view === "twobeat" ? (
         <TwoBeat world={world} />
       ) : mc ? (

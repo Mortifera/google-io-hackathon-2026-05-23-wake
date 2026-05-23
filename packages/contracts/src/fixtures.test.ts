@@ -53,4 +53,39 @@ describe("shared fixtures validate against the contracts", () => {
       if (e.causedBy !== null) expect(ids.has(e.causedBy)).toBe(true);
     }
   });
+
+  it("A/B variant: independent framing cascade conforms to CascadeSchema", () => {
+    expect(() =>
+      CascadeSchema.parse(load("fixtures/cascades/notion.variant-independent.json")),
+    ).not.toThrow();
+  });
+
+  it("A/B variant: integrated framing cascade conforms to CascadeSchema", () => {
+    expect(() =>
+      CascadeSchema.parse(load("fixtures/cascades/notion.variant-integrated.json")),
+    ).not.toThrow();
+  });
+
+  it("A/B variants have the expected perturbation metadata", () => {
+    const ind = CascadeSchema.parse(load("fixtures/cascades/notion.variant-independent.json"));
+    const int2 = CascadeSchema.parse(load("fixtures/cascades/notion.variant-integrated.json"));
+    expect(ind.meta.perturbation?.["acquisitionMessagingFraming"]).toBe("independent");
+    expect(int2.meta.perturbation?.["acquisitionMessagingFraming"]).toBe("integrated");
+  });
+
+  it("A/B variants show legible divergence: integrated is more negative", () => {
+    const ind = CascadeSchema.parse(load("fixtures/cascades/notion.variant-independent.json"));
+    const int2 = CascadeSchema.parse(load("fixtures/cascades/notion.variant-integrated.json"));
+
+    const meanSentiment = (c: typeof ind) => {
+      const vals = Object.values(c.finalState).map((st) => st.mood.sentiment);
+      return vals.reduce((a, b) => a + b, 0) / vals.length;
+    };
+
+    const indMean = meanSentiment(ind);
+    const intMean = meanSentiment(int2);
+
+    // Integrated framing should be meaningfully more negative (at least 0.1 gap).
+    expect(intMean).toBeLessThan(indMean - 0.1);
+  });
 });

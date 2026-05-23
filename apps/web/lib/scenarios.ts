@@ -7,6 +7,8 @@ import openSourceCascade from "@fixtures/cascades/notion-world.open-source.json"
 import engineerIdeaCascade from "@fixtures/cascades/notion-world.engineer-idea.json";
 import engineerIdeaPreacq from "@fixtures/cascades/notion-preacq.engineer-idea.json";
 import engineerIdeaPostacq from "@fixtures/cascades/notion-postacq.engineer-idea.json";
+import variantIndependent from "@fixtures/cascades/notion.variant-independent.json";
+import variantIntegrated from "@fixtures/cascades/notion.variant-integrated.json";
 
 /**
  * Registry of precomputed scenarios, keyed by `seedActionId` (matching the
@@ -76,3 +78,78 @@ export function scenarioFor(actionId: string): Scenario {
 export function isLive(actionId: string): boolean {
   return actionId in SCENARIOS;
 }
+
+/**
+ * A/B Testing: the SAME acquisition action framed two ways — "independent" vs
+ * "integrated" — in the SAME world. Framing is the pivotal variable (~58% of
+ * outcome variance). The two cascades run under different acquisitionMessagingFraming
+ * perturbations; real divergent outcomes from live Gemini runs.
+ *
+ * Note: this is distinct from TWO_BEAT (same action, two worlds). Here the world
+ * is identical — only the action framing changes.
+ */
+export interface ABVariant {
+  /** Short variant name (e.g. "Independent-led"). */
+  label: string;
+  /** One-sentence description of the framing. */
+  description: string;
+  /** The full framing text used as the seed payload delta. */
+  framing: string;
+  /** Precomputed cascade for this variant. */
+  cascade: Cascade;
+  /** Instrument-register interpretation of what the data shows. */
+  interpretation: string;
+}
+
+export interface ABTest {
+  /** The question this A/B surfaces. */
+  question: string;
+  /** Short description of what's being tested. */
+  description: string;
+  /** Summary of what the sweep data shows (shown below the grid). */
+  sweepSummary: string;
+  variants: Record<"independent" | "integrated", ABVariant>;
+}
+
+export const AB_TEST: ABTest = {
+  question: "Which way should Notion announce the acquisition?",
+  description:
+    "Same world, same action — two framings of the acquisition message. " +
+    "The sweep settles on a legible difference: framing is the pivotal variable, " +
+    "accounting for roughly 58% of outcome variance.",
+  sweepSummary:
+    "The sweep data favors the 'independent' framing. Mean network sentiment lands at " +
+    "+0.07 (independent) vs -0.17 (integrated) — a 0.24-point gap. The integrated frame " +
+    "more than doubles the count of highly-negative nodes (30 vs 14) and collapses the " +
+    "positive cluster from 76 to 18 nodes. The narrative difference: 'independent' lets " +
+    "the craft/community base hold onto Notion's identity; 'integrated' reads as a " +
+    "Microsoft absorption and triggers the power-user backlash cascade immediately.",
+  variants: {
+    independent: {
+      label: "Independent-led",
+      description: "Notion keeps its own brand, team, and design culture.",
+      framing:
+        "Microsoft has acquired Notion. The official announcement emphasizes that Notion will " +
+        "keep operating independently — its own brand, team, and design culture.",
+      cascade: variantIndependent as unknown as Cascade,
+      interpretation:
+        "Leading with 'stays fully independent' pre-empts the acquisition-distrust narrative. " +
+        "The narrative spreads mostly positive across creators, power users, and press. " +
+        "Consumer backlash is rare and shallow — the sweep finds backlash never reaches critical mass. " +
+        "The sweep settles on 'independent' as the lower-risk path by a wide margin.",
+    },
+    integrated: {
+      label: "Integrated-led",
+      description: "Notion becomes part of Microsoft 365, bringing its docs and editor into Copilot.",
+      framing:
+        "Microsoft has acquired Notion. The official announcement emphasizes that Notion will " +
+        "be deeply integrated into Microsoft 365 and Copilot.",
+      cascade: variantIntegrated as unknown as Cascade,
+      interpretation:
+        "Leading with 'integrated into Microsoft 365' triggers immediate craft/community alarm. " +
+        "Power users, design Twitter, and the dev community land in consumer backlash quickly. " +
+        "The sweep shows 30 highly-negative nodes vs 14 under the independent frame — " +
+        "a 2x amplification of the backlash cluster. Mean network sentiment drops to -0.17.",
+    },
+  },
+};
