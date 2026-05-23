@@ -99,19 +99,32 @@ interface Delivery {
 }
 
 /**
- * Run one cascade forward. Returns a schema-valid `Cascade` (the seam consumed
- * by the viz, interp, and analysis layers).
- *
- * Deterministic: given the same `seed` and a deterministic `tickFn`/`edgeTransform`
- * (e.g. the MockLLMClient), the same cascade is produced every time — which is
- * what makes Monte Carlo branching reproducible.
+ * A streamed cascade event: one "tick" per tick as it resolves (for live
+ * on-screen rendering), then a final "done" carrying the full validated
+ * Cascade. Consumed by the live SSE endpoint and by `runCascade` (batch path).
  */
-export async function runCascade(
+export type StreamEvent =
+  | {
+      type: "tick";
+      tick: Tick;
+      snapshot: StateSnapshot;
+      divergence: DivergencePoint;
+    }
+  | { type: "done"; cascade: Cascade };
+
+/**
+ * Run one cascade forward, **streaming each tick as it resolves**. This is the
+ * foundation of the live demo: a consumer can render each tick the moment it
+ * lands instead of waiting for the whole run.
+ *
+ * Deterministic: same `seed` + deterministic tickFn/edgeTransform → same cascade.
+ */
+export async function* runCascadeStream(
   world: World,
   seedActionId: string,
   deps: RunDeps,
   opts: RunOptions = {},
-): Promise<Cascade> {
+): AsyncGenerator<StreamEvent> {
   const { llm, tickFn, edgeTransform } = deps;
   const concurrency = opts.concurrency ?? 8;
   const maxTicks = opts.maxTicks ?? 40;
@@ -336,6 +349,14 @@ export async function runCascade(
     ticks.push({ clock, activeNodeIds, events: tickEvents });
     stateTimeline.push({ tick: tickIndex, states: snapStates });
 
+    // Stream this tick to live consumers (SSE endpoint / viz).
+    yield {
+      type: "tick",
+      tick: ticks[ticks.length - 1] as Tick,
+      snapshot: stateTimeline[stateTimeline.length - 1] as StateSnapshot,
+      divergence: divergence[divergence.length - 1] as DivergencePoint,
+    };
+
     tickIndex++;
     firstTick = false;
     if (eventDag.length > 2000) break; // safety
@@ -361,5 +382,24 @@ export async function runCascade(
     finalState,
   };
   // Validate our own output against the contract before handing it on.
-  return CascadeSchema.parse(cascade);
+  const validated = CascadeSchema.parse(cascade);
+  yield { type: "done", cascade: validated };
+}
+
+/**
+ * Run a cascade to completion (batch path). Thin consumer of `runCascadeStream`
+ * — the precompute, tests, and analysis use this; behaviour is unchanged.
+ */
+export async function runCascade(
+  world: World,
+  seedActionId: string,
+  deps: RunDeps,
+  opts: RunOptions = {},
+): Promise<Cascade> {
+  let cascade: Cascade | undefined;
+  for await (const ev of runCascadeStream(world, seedActionId, deps, opts)) {
+    if (ev.type === "done") cascade = ev.cascade;
+  }
+  if (!cascade) throw new Error("cascade produced no result");
+  return cascade;
 }
