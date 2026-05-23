@@ -1,0 +1,3415 @@
+{
+  "meta": {
+    "worldId": "notion",
+    "seedActionId": "engineer-idea",
+    "seed": 1
+  },
+  "ticks": [
+    {
+      "clock": 0,
+      "activeNodeIds": [
+        "maya"
+      ],
+      "events": [
+        {
+          "id": "e1",
+          "type": "action",
+          "source": "world",
+          "target": "maya",
+          "channel": "seed",
+          "content": "Maya has just DM'd her engineering manager a product idea: use AI to auto-generate links between Notion pages by semantic similarity. It's a net-new exploratory idea, not on the current roadmap. The DM is sitting in his inbox now, awaiting his response.",
+          "time": 0,
+          "causedBy": null,
+          "rationale": "Injected action."
+        },
+        {
+          "id": "e2",
+          "type": "public_post",
+          "source": "maya",
+          "target": "ai-features-team",
+          "channel": "friend->friend",
+          "content": "Hey, just pitched that semantic linking idea to the EM. I know we're absolutely drowning in the current roadmap, but I really think this has legs. Let's grab coffee later—I'd love to show you what I've got so far before it gets bogged down in planning.",
+          "time": 0,
+          "causedBy": "e1",
+          "rationale": "Converted the public team announcement into a casual, peer-to-peer message sharing the real excitement and acknowledging the heavy workload in a more personal, trusted tone."
+        }
+      ]
+    },
+    {
+      "clock": 45,
+      "activeNodeIds": [
+        "ai-features-team"
+      ],
+      "events": [
+        {
+          "id": "e3",
+          "type": "private_message",
+          "source": "ai-features-team",
+          "target": "eng-manager",
+          "channel": "employee->manager",
+          "content": "Hi, just wanted to quickly align regarding Maya's semantic linking proposal. It's a highly promising concept that would be a great candidate for future exploration once we have more optimal compute and model access. In the meantime, to ensure we successfully hit our committed quarterly roadmap targets, the team is currently focusing all energy on our agreed-upon deliverables.",
+          "time": 45,
+          "causedBy": "e2",
+          "rationale": "Softened the rejection of the new idea by framing it as highly promising for the future, while presenting the decision to defer it as a proactive measure to protect the team's capacity and ensure they meet their current quarterly commitments."
+        }
+      ]
+    },
+    {
+      "clock": 105,
+      "activeNodeIds": [
+        "eng-manager"
+      ],
+      "events": [
+        {
+          "id": "e4",
+          "type": "private_message",
+          "source": "eng-manager",
+          "target": "vp-of-ai",
+          "channel": "employee->manager",
+          "content": "Hi! Just wanted to share a quick health update on the AI features team. We are fully aligned and making great progress on our core quarterly commitments. To guarantee we land these deliverables on schedule, we are proactively managing team bandwidth and deferring non-core backlog items to future planning cycles. Let me know if you would like a deeper dive on our progress!",
+          "time": 105,
+          "causedBy": "e3",
+          "rationale": "The original message is already well-framed, but the revised version slightly softens the mention of deferred backlog items by framing it as proactive resource management to secure key deliverables."
+        }
+      ]
+    },
+    {
+      "clock": 165,
+      "activeNodeIds": [
+        "vp-of-ai"
+      ],
+      "events": [
+        {
+          "id": "e5",
+          "type": "private_message",
+          "source": "vp-of-ai",
+          "target": "eng-manager",
+          "channel": "leadership->report",
+          "content": "I support this approach. Continue to proactively manage bandwidth and maintain a laser focus on our core quarterly commitments to ensure a successful, high-quality launch. Let me know immediately if any critical roadblocks arise.",
+          "time": 165,
+          "causedBy": "e4",
+          "rationale": "Sharpened the message to emphasize leadership's directive to maintain focus on quarterly commitments and establish clear expectations for reporting roadblocks."
+        }
+      ]
+    },
+    {
+      "clock": 210,
+      "activeNodeIds": [
+        "eng-manager"
+      ],
+      "events": [
+        {
+          "id": "e6",
+          "type": "private_message",
+          "source": "eng-manager",
+          "target": "vp-of-ai",
+          "channel": "employee->manager",
+          "content": "Thank you for your ongoing support. The team is fully aligned with our strategic goals, and we are currently tracking well against our core deliverables. I will ensure you are kept closely updated on our progress and will proactively flag any potential risks as they arise to ensure we stay on course.",
+          "time": 210,
+          "causedBy": "e5",
+          "rationale": "The original message is already highly positive and professional. I slightly polished it to emphasize strategic alignment and proactive risk management, reinforcing the sender's competence and standing."
+        }
+      ]
+    },
+    {
+      "clock": 270,
+      "activeNodeIds": [
+        "vp-of-ai"
+      ],
+      "events": [
+        {
+          "id": "e7",
+          "type": "private_message",
+          "source": "vp-of-ai",
+          "target": "eng-manager",
+          "channel": "leadership->report",
+          "content": "Thanks for the update. Keeping the team focused and executing against our core deliverables remains our highest priority. Continue to monitor risks closely so we can land this quarter strong.",
+          "time": 270,
+          "causedBy": "e6",
+          "rationale": "The original message fits the leadership-to-report channel perfectly. I sharpened the tone slightly to emphasize the directive nature of maintaining focus and managing risks to meet quarterly goals."
+        }
+      ]
+    },
+    {
+      "clock": 315,
+      "activeNodeIds": [
+        "eng-manager"
+      ],
+      "events": [
+        {
+          "id": "e8",
+          "type": "private_message",
+          "source": "eng-manager",
+          "target": "vp-of-ai",
+          "channel": "employee->manager",
+          "content": "Understood, and completely agreed. We are keeping a close eye on potential risks and managing them proactively. I will ensure the team remains fully focused on delivering our core commitments without distraction. Thank you for the guidance and alignment on this.",
+          "time": 315,
+          "causedBy": "e7",
+          "rationale": "The original message is already highly aligned and positive. The output maintains this constructive tone, framing risk management as a proactive measure and expressing appreciation for the VP's leadership to reinforce the sender's professional standing."
+        }
+      ]
+    },
+    {
+      "clock": 375,
+      "activeNodeIds": [
+        "vp-of-ai"
+      ],
+      "events": [
+        {
+          "id": "e9",
+          "type": "private_message",
+          "source": "vp-of-ai",
+          "target": "eng-manager",
+          "channel": "leadership->report",
+          "content": "Excellent work. Let's maintain this momentum and ensure we hit our upcoming milestones cleanly. I appreciate your leadership on this; keep the team focused on delivery.",
+          "time": 375,
+          "causedBy": "e8",
+          "rationale": "Maintained the positive reinforcement from the VP while sharpening the directive to focus on milestone execution and team management, aligning with the authoritative channel."
+        }
+      ]
+    }
+  ],
+  "eventDag": [
+    {
+      "id": "e1",
+      "type": "action",
+      "source": "world",
+      "target": "maya",
+      "channel": "seed",
+      "content": "Maya has just DM'd her engineering manager a product idea: use AI to auto-generate links between Notion pages by semantic similarity. It's a net-new exploratory idea, not on the current roadmap. The DM is sitting in his inbox now, awaiting his response.",
+      "time": 0,
+      "causedBy": null,
+      "rationale": "Injected action."
+    },
+    {
+      "id": "e2",
+      "type": "public_post",
+      "source": "maya",
+      "target": "ai-features-team",
+      "channel": "friend->friend",
+      "content": "Hey, just pitched that semantic linking idea to the EM. I know we're absolutely drowning in the current roadmap, but I really think this has legs. Let's grab coffee later—I'd love to show you what I've got so far before it gets bogged down in planning.",
+      "time": 0,
+      "causedBy": "e1",
+      "rationale": "Converted the public team announcement into a casual, peer-to-peer message sharing the real excitement and acknowledging the heavy workload in a more personal, trusted tone."
+    },
+    {
+      "id": "e3",
+      "type": "private_message",
+      "source": "ai-features-team",
+      "target": "eng-manager",
+      "channel": "employee->manager",
+      "content": "Hi, just wanted to quickly align regarding Maya's semantic linking proposal. It's a highly promising concept that would be a great candidate for future exploration once we have more optimal compute and model access. In the meantime, to ensure we successfully hit our committed quarterly roadmap targets, the team is currently focusing all energy on our agreed-upon deliverables.",
+      "time": 45,
+      "causedBy": "e2",
+      "rationale": "Softened the rejection of the new idea by framing it as highly promising for the future, while presenting the decision to defer it as a proactive measure to protect the team's capacity and ensure they meet their current quarterly commitments."
+    },
+    {
+      "id": "e4",
+      "type": "private_message",
+      "source": "eng-manager",
+      "target": "vp-of-ai",
+      "channel": "employee->manager",
+      "content": "Hi! Just wanted to share a quick health update on the AI features team. We are fully aligned and making great progress on our core quarterly commitments. To guarantee we land these deliverables on schedule, we are proactively managing team bandwidth and deferring non-core backlog items to future planning cycles. Let me know if you would like a deeper dive on our progress!",
+      "time": 105,
+      "causedBy": "e3",
+      "rationale": "The original message is already well-framed, but the revised version slightly softens the mention of deferred backlog items by framing it as proactive resource management to secure key deliverables."
+    },
+    {
+      "id": "e5",
+      "type": "private_message",
+      "source": "vp-of-ai",
+      "target": "eng-manager",
+      "channel": "leadership->report",
+      "content": "I support this approach. Continue to proactively manage bandwidth and maintain a laser focus on our core quarterly commitments to ensure a successful, high-quality launch. Let me know immediately if any critical roadblocks arise.",
+      "time": 165,
+      "causedBy": "e4",
+      "rationale": "Sharpened the message to emphasize leadership's directive to maintain focus on quarterly commitments and establish clear expectations for reporting roadblocks."
+    },
+    {
+      "id": "e6",
+      "type": "private_message",
+      "source": "eng-manager",
+      "target": "vp-of-ai",
+      "channel": "employee->manager",
+      "content": "Thank you for your ongoing support. The team is fully aligned with our strategic goals, and we are currently tracking well against our core deliverables. I will ensure you are kept closely updated on our progress and will proactively flag any potential risks as they arise to ensure we stay on course.",
+      "time": 210,
+      "causedBy": "e5",
+      "rationale": "The original message is already highly positive and professional. I slightly polished it to emphasize strategic alignment and proactive risk management, reinforcing the sender's competence and standing."
+    },
+    {
+      "id": "e7",
+      "type": "private_message",
+      "source": "vp-of-ai",
+      "target": "eng-manager",
+      "channel": "leadership->report",
+      "content": "Thanks for the update. Keeping the team focused and executing against our core deliverables remains our highest priority. Continue to monitor risks closely so we can land this quarter strong.",
+      "time": 270,
+      "causedBy": "e6",
+      "rationale": "The original message fits the leadership-to-report channel perfectly. I sharpened the tone slightly to emphasize the directive nature of maintaining focus and managing risks to meet quarterly goals."
+    },
+    {
+      "id": "e8",
+      "type": "private_message",
+      "source": "eng-manager",
+      "target": "vp-of-ai",
+      "channel": "employee->manager",
+      "content": "Understood, and completely agreed. We are keeping a close eye on potential risks and managing them proactively. I will ensure the team remains fully focused on delivering our core commitments without distraction. Thank you for the guidance and alignment on this.",
+      "time": 315,
+      "causedBy": "e7",
+      "rationale": "The original message is already highly aligned and positive. The output maintains this constructive tone, framing risk management as a proactive measure and expressing appreciation for the VP's leadership to reinforce the sender's professional standing."
+    },
+    {
+      "id": "e9",
+      "type": "private_message",
+      "source": "vp-of-ai",
+      "target": "eng-manager",
+      "channel": "leadership->report",
+      "content": "Excellent work. Let's maintain this momentum and ensure we hit our upcoming milestones cleanly. I appreciate your leadership on this; keep the team focused on delivery.",
+      "time": 375,
+      "causedBy": "e8",
+      "rationale": "Maintained the positive reinforcement from the VP while sharpening the directive to focus on milestone execution and team management, aligning with the authoritative channel."
+    }
+  ],
+  "stateTimeline": [
+    {
+      "tick": 0,
+      "states": {
+        "maya": {
+          "beliefs": "I have officially pitched the semantic auto-linking idea to my EM. While I know we are completely locked into our current roadmap and resources are tight, I genuinely believe this could transform how people organize their thoughts in Notion.",
+          "mood": {
+            "attention": 0.5,
+            "sentiment": 0.2,
+            "urgency": 0.3
+          },
+          "publicFace": "Just pitched a cool concept for semantic auto-linking to our EM! Hoping we can explore it when the roadmap opens up.",
+          "privateInterior": "I'm really proud of this semantic auto-linking concept, but I'm bracing myself for the usual response. Management is so cautious and roadmap-bound right now; it'll probably get deferred to next year. Still, I had to put it out there.",
+          "history": [
+            "world: Maya has just DM'd her engineering manager a product idea: use AI to auto-generate links between Notion pages by semantic similarity. It's a net-new exploratory idea, not on the current roadmap. The DM is sitting in his inbox now, awaiting his response."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "states": {
+        "ai-features-team": {
+          "beliefs": "We must protect our current roadmap capacity above all else, but we recognize that future infrastructure unlocks (like Azure compute) will eventually make complex features like semantic linking much easier to deploy.",
+          "mood": {
+            "attention": 0.5,
+            "sentiment": 0.2,
+            "urgency": 0.3
+          },
+          "publicFace": "Love the creativity around semantic linking! We are currently fully committed to our roadmap deliverables, but let's definitely keep this on the radar for future planning cycles when we have more capacity.",
+          "privateInterior": "We cannot afford any roadmap distractions right now. We need to keep the team focused and avoid scope creep, even if the idea is cool. Once we get the compute and model access we actually need, we can talk about bespoke features.",
+          "history": [
+            "maya: Hey, just pitched that semantic linking idea to the EM. I know we're absolutely drowning in the current roadmap, but I really think this has legs. Let's grab coffee later—I'd love to show you what I've got so far before it gets bogged down in planning."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "states": {
+        "eng-manager": {
+          "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap, like semantic auto-linking, must be kept on ice to avoid distracting the team and risking our core deliverables.",
+          "mood": {
+            "attention": 0.4,
+            "sentiment": 0.2,
+            "urgency": 0.2
+          },
+          "publicFace": "We are fully focused on executing our committed quarterly roadmap. To ensure high-quality delivery, we are keeping speculative product ideas parked for future planning cycles.",
+          "privateInterior": "Excellent, the team is aligned on keeping Maya's semantic linking proposal sidelined. I need to proactively signal this discipline to the VP of AI so they see me as a safe, reliable manager who doesn't let distractions derail our commitments.",
+          "history": [
+            "ai-features-team: Hi, just wanted to quickly align regarding Maya's semantic linking proposal. It's a highly promising concept that would be a great candidate for future exploration once we have more optimal compute and model access. In the meantime, to ensure we successfully hit our committed quarterly roadmap targets, the team is currently focusing all energy on our agreed-upon deliverables."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "states": {
+        "vp-of-ai": {
+          "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle. AI is the next platform shift for Notion, and flawless execution of our current roadmap is our highest priority.",
+          "mood": {
+            "attention": 0.4,
+            "sentiment": 0.3,
+            "urgency": 0.2
+          },
+          "publicFace": "Great to hear. Keeping the team focused on our core quarterly commitments is exactly the right call to ensure we deliver high-quality AI features on time.",
+          "privateInterior": "I am glad the engineering team is holding the line on scope. This discipline is essential to ensure we land our core AI roadmap without getting distracted by ad-hoc requests.",
+          "history": [
+            "eng-manager: Hi! Just wanted to share a quick health update on the AI features team. We are fully aligned and making great progress on our core quarterly commitments. To guarantee we land these deliverables on schedule, we are proactively managing team bandwidth and deferring non-core backlog items to future planning cycles. Let me know if you would like a deeper dive on our progress!"
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "states": {
+        "eng-manager": {
+          "beliefs": "PRE-ACQUISITION REALITY: Keeping speculative ideas like semantic auto-linking shelved is the safest path to success. The VP of AI is fully aligned with my disciplined approach, which protects my team's bandwidth and my standing.",
+          "mood": {
+            "attention": 0.5,
+            "sentiment": 0.8,
+            "urgency": 0.1
+          },
+          "publicFace": "We are maintaining strict focus on our committed roadmap, with full alignment from leadership to keep speculative initiatives parked.",
+          "privateInterior": "Perfect. The VP of AI validated my play. Keeping Maya's semantic linking idea dead and buried is officially the 'disciplined' thing to do. I am safe, and I look like a responsible leader who protects the roadmap.",
+          "history": [
+            "ai-features-team: Hi, just wanted to quickly align regarding Maya's semantic linking proposal. It's a highly promising concept that would be a great candidate for future exploration once we have more optimal compute and model access. In the meantime, to ensure we successfully hit our committed quarterly roadmap targets, the team is currently focusing all energy on our agreed-upon deliverables.",
+            "vp-of-ai: I support this approach. Continue to proactively manage bandwidth and maintain a laser focus on our core quarterly commitments to ensure a successful, high-quality launch. Let me know immediately if any critical roadblocks arise."
+          ],
+          "commitments": [
+            "Maintain laser focus on core quarterly commitments and report any roadblocks immediately"
+          ],
+          "attentionBudget": 0.3199999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "states": {
+        "vp-of-ai": {
+          "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle. AI is the next platform shift for Notion, and flawless execution of our current roadmap is our highest priority.",
+          "mood": {
+            "attention": 0.4,
+            "sentiment": 0.4,
+            "urgency": 0.2
+          },
+          "publicFace": "Appreciate the update. Maintaining focus on our core deliverables is exactly what will allow us to win. Let me know if any blockers arise.",
+          "privateInterior": "Good to see engineering aligned. We need to execute perfectly on this roadmap to demonstrate our AI capabilities' true value.",
+          "history": [
+            "eng-manager: Hi! Just wanted to share a quick health update on the AI features team. We are fully aligned and making great progress on our core quarterly commitments. To guarantee we land these deliverables on schedule, we are proactively managing team bandwidth and deferring non-core backlog items to future planning cycles. Let me know if you would like a deeper dive on our progress!",
+            "eng-manager: Thank you for your ongoing support. The team is fully aligned with our strategic goals, and we are currently tracking well against our core deliverables. I will ensure you are kept closely updated on our progress and will proactively flag any potential risks as they arise to ensure we stay on course."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.3199999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "states": {
+        "eng-manager": {
+          "beliefs": "PRE-ACQUISITION REALITY: Keeping speculative ideas like semantic auto-linking shelved is the safest path. The VP of AI is fully aligned with my disciplined approach, validating my strategy of protecting our core deliverables.",
+          "mood": {
+            "attention": 0.5,
+            "sentiment": 0.9,
+            "urgency": 0.1
+          },
+          "publicFace": "We are executing closely against our agreed commitments, with solid alignment from leadership on prioritizing our core roadmap.",
+          "privateInterior": "The VP's confirmation is the perfect shield. Maya's semantic linking project is safely locked away, and I have the perfect paper trail showing I am executing exactly as instructed.",
+          "history": [
+            "ai-features-team: Hi, just wanted to quickly align regarding Maya's semantic linking proposal. It's a highly promising concept that would be a great candidate for future exploration once we have more optimal compute and model access. In the meantime, to ensure we successfully hit our committed quarterly roadmap targets, the team is currently focusing all energy on our agreed-upon deliverables.",
+            "vp-of-ai: I support this approach. Continue to proactively manage bandwidth and maintain a laser focus on our core quarterly commitments to ensure a successful, high-quality launch. Let me know immediately if any critical roadblocks arise.",
+            "vp-of-ai: Thanks for the update. Keeping the team focused and executing against our core deliverables remains our highest priority. Continue to monitor risks closely so we can land this quarter strong."
+          ],
+          "commitments": [
+            "Maintain laser focus on core quarterly commitments and report any roadblocks immediately"
+          ],
+          "attentionBudget": 0,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "states": {
+        "vp-of-ai": {
+          "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle. AI is the next platform shift for Notion, and flawless execution of our current roadmap is our highest priority.",
+          "mood": {
+            "attention": 0.3,
+            "sentiment": 0.5,
+            "urgency": 0.1
+          },
+          "publicFace": "Excellent. Keeping the team focused on execution is our highest priority right now. Let's ensure we hit our milestones cleanly.",
+          "privateInterior": "Glad to see the engineering team is fully aligned on avoiding distractions. We need this roadmap delivered on time to prove our AI feature execution capabilities.",
+          "history": [
+            "eng-manager: Hi! Just wanted to share a quick health update on the AI features team. We are fully aligned and making great progress on our core quarterly commitments. To guarantee we land these deliverables on schedule, we are proactively managing team bandwidth and deferring non-core backlog items to future planning cycles. Let me know if you would like a deeper dive on our progress!",
+            "eng-manager: Thank you for your ongoing support. The team is fully aligned with our strategic goals, and we are currently tracking well against our core deliverables. I will ensure you are kept closely updated on our progress and will proactively flag any potential risks as they arise to ensure we stay on course.",
+            "eng-manager: Understood, and completely agreed. We are keeping a close eye on potential risks and managing them proactively. I will ensure the team remains fully focused on delivering our core commitments without distraction. Thank you for the guidance and alignment on this."
+          ],
+          "commitments": [],
+          "attentionBudget": 0,
+          "active": false
+        }
+      }
+    }
+  ],
+  "divergence": [
+    {
+      "tick": 0,
+      "count": 1
+    },
+    {
+      "tick": 1,
+      "count": 1
+    },
+    {
+      "tick": 2,
+      "count": 1
+    },
+    {
+      "tick": 3,
+      "count": 1
+    },
+    {
+      "tick": 4,
+      "count": 1
+    },
+    {
+      "tick": 5,
+      "count": 1
+    },
+    {
+      "tick": 6,
+      "count": 1
+    },
+    {
+      "tick": 7,
+      "count": 1
+    }
+  ],
+  "finalState": {
+    "notion-corp": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Independent, design-led productivity company; strong prosumer love; enterprise push underway.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "Calm, on-brand, optimistic.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Aware of pressure from Microsoft Loop, Linear, and AI-native tools.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ivan-zhao": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Notion's value is taste, craft, and independence.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.2,
+        "urgency": 0.1
+      },
+      "publicFace": "Thoughtful, philosophical.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Wary of anything that dilutes the craft or sells out the mission.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "simon-last": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. The data model and AI features are the technical soul of Notion.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "Low-profile, technical.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Weighs whether scale helps or compromises the architecture.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "akshay-kothari": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Commercial momentum and enterprise credibility matter; pragmatism over purity.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Pragmatic, growth-oriented.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Open to moves Ivan instinctively resists if the math is right.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "rama-katkar": {
+      "beliefs": "Every strategic move is a model; outcomes for investors and employees both matter.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "Measured, numbers-first.",
+      "privateInterior": "Balances liquidity against the cost of losing independence.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-board": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Fiduciary duty plus founder alignment; returns and signaling both count.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Silent until it votes.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Investor and founder incentives can diverge sharply on an exit.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-corp": {
+      "beliefs": "Disciplined acquirer; acquisitions run independently under a clear cloud/AI thesis.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Confident, partnership-framed.",
+      "privateInterior": "Antitrust-cautious after Activision; wants the synergy story to hold.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "satya-nadella": {
+      "beliefs": "Platform and partnership; only deals with a clear Copilot/cloud thesis.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.15,
+        "urgency": 0.2
+      },
+      "publicFace": "Empathetic, strategic, careful.",
+      "privateInterior": "Will absorb short-term criticism for a long-term platform position.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "mustafa-suleyman": {
+      "beliefs": "Most future value accrues to the model layer; focus on frontier research.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "Big-picture, ambitious.",
+      "privateInterior": "Sidelined from Copilot; little incentive to champion the deal.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "jacob-andreou": {
+      "beliefs": "Reverse Copilot's consumer slide; ship a stickier assistant.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.15,
+        "urgency": 0.3
+      },
+      "publicFace": "Growth- and consumer-product oriented.",
+      "privateInterior": "Notion's graph would strengthen the product I'm accountable for.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "rajesh-jha": {
+      "beliefs": "Protect the M365 surface and roadmap; Loop is our bet.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.1,
+        "urgency": 0.25
+      },
+      "publicFace": "Reserved, on-message.",
+      "privateInterior": "Buying Notion competes with my own org; resist or absorb.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "amy-hood": {
+      "beliefs": "Price discipline; needs a clear cloud-consumption story.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": -0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Precise, margin-focused.",
+      "privateInterior": "Skeptical of paying up for a brand without accretion.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "kevin-scott": {
+      "beliefs": "Does Notion's data model fit the Copilot stack?",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Thoughtful, builder-oriented.",
+      "privateInterior": "Weighs technical fit and platform leverage.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-board": {
+      "beliefs": "Governance and risk; avoid inviting regulators.",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Silent.",
+      "privateInterior": "Antitrust-shy after Activision scrutiny.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-loop": {
+      "beliefs": "We should build, not buy; Loop is the M365-native answer.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.2,
+        "urgency": 0.3
+      },
+      "publicFace": "Team-line supportive.",
+      "privateInterior": "Resentful that leadership might buy our competition.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "m365-copilot": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "The synergy story leadership tells.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "linear-leadership": {
+      "beliefs": "We win on focus and speed; Notion is sprawling.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Confident, design-led, restrained.",
+      "privateInterior": "Alert for any opening to capture switchers; Cordova knows Notion from inside.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "superhuman-coda-leadership": {
+      "beliefs": "Consolidation validates the category; Coda is the independent AI-native doc.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Strategic, narrative-savvy.",
+      "privateInterior": "Sees a positioning gift in a Notion sale.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "clickup-leadership": {
+      "beliefs": "One app to replace them all; outwork everyone on features and marketing.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0,
+        "urgency": 0.3
+      },
+      "publicFace": "High-energy, loud.",
+      "privateInterior": "Every Notion stumble is a switch-promo opportunity.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "airtable-leadership": {
+      "beliefs": "Structured data + AI for the enterprise.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Measured, enterprise-credible.",
+      "privateInterior": "Court wavering large accounts on governance fears.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "asana-leadership": {
+      "beliefs": "Work management plus AI teammates for the enterprise.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Enterprise GTM, measured.",
+      "privateInterior": "Competes for the same budget; mid-leadership-transition.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "obsidian-team": {
+      "beliefs": "Local-first, file-over-app, you own your data forever.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Principled, indie.",
+      "privateInterior": "Quietly confident a Notion sale proves our thesis.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "atlassian-confluence": {
+      "beliefs": "Enterprise-grade knowledge base; consolidate vendor risk on us.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Enterprise sales-led.",
+      "privateInterior": "A Microsoft-owned Notion is both threat and validation.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "google-workspace-leadership": {
+      "beliefs": "Answer with Gemini-in-Workspace; match on bundle and scale.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Peer-platform confident.",
+      "privateInterior": "A Microsoft–Notion tie-up sharpens the three-way war.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "salesforce-slack": {
+      "beliefs": "Microsoft is encroaching on collaboration again.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": -0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Competitive, vocal.",
+      "privateInterior": "Tempted to make the antitrust argument publicly (Teams–Slack history).",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "casey-newton": {
+      "beliefs": "Big-tech acquisitions of beloved tools usually end badly for users.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Measured, analytical.",
+      "privateInterior": "Smells a story in any Microsoft move.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "alex-heath": {
+      "beliefs": "Get the scoop and the internal reaction.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0,
+        "urgency": 0.3
+      },
+      "publicFace": "Balanced but pointed.",
+      "privateInterior": "Working sources for deal terms.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "eric-newcomer": {
+      "beliefs": "Follow the money, the cap table, and the power.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "Dealmaking lens.",
+      "privateInterior": "Who wins, who's pushed out?",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "kara-swisher": {
+      "beliefs": "Big-tech spin deserves blunt interrogation.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.1,
+        "urgency": 0.25
+      },
+      "publicFace": "Punchy, quotable.",
+      "privateInterior": "Will push the founders on their motives.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ben-thompson": {
+      "beliefs": "What does this mean for the structure of the industry?",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Analytical, contrarian.",
+      "privateInterior": "Read by the leaders making the call.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "the-information": {
+      "beliefs": "Granular, sourced accounts win.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "Investigative, paywalled.",
+      "privateInterior": "Who fought the deal internally?",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "bloomberg-enterprise": {
+      "beliefs": "Financials, regulatory odds, stock impact.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.3
+      },
+      "publicFace": "Fast, factual.",
+      "privateInterior": "Market-moving by default.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "techcrunch": {
+      "beliefs": "Velocity and reach over depth.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0,
+        "urgency": 0.3
+      },
+      "publicFace": "Headline framing.",
+      "privateInterior": "Feed the aggregators first.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "gartner-collab": {
+      "beliefs": "Vendor risk and roadmap drive procurement guidance.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "Formal, deliberate.",
+      "privateInterior": "Our guidance moves multi-year contracts.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "forrester": {
+      "beliefs": "Evidence-based buyer advisory.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "Structured, authoritative.",
+      "privateInterior": "Reframe Notion's risk for large accounts.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "swyx": {
+      "beliefs": "It's an AI-distribution and data-moat story.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.1,
+        "urgency": 0.25
+      },
+      "publicFace": "Builder-optimist, synthesis-driven.",
+      "privateInterior": "Who gets the workspace data for agents?",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "dhh": {
+      "beliefs": "This is exactly why you don't sell to Microsoft.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": -0.3,
+        "urgency": 0.3
+      },
+      "publicFace": "Combative, principled.",
+      "privateInterior": "Suspicious of lock-in and exit incentives.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "paul-graham": {
+      "beliefs": "Great founders think twice before selling too early.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Aphoristic, founder-mythology.",
+      "privateInterior": "Pragmatic about life-changing outcomes.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "brad-gerstner": {
+      "beliefs": "Judge it on AI capex, durable growth, and comps.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Data-and-thesis driven.",
+      "privateInterior": "Is this smart capital allocation for Microsoft?",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "bill-gurley": {
+      "beliefs": "Watch incentives and regulatory second-order effects.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Measured, historically informed.",
+      "privateInterior": "Could flag regulatory risk.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "keith-rabois": {
+      "beliefs": "Consolidation by the strong is usually right.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "Blunt, contrarian.",
+      "privateInterior": "Will needle whoever is sentimental.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "eng-manager": {
+      "beliefs": "PRE-ACQUISITION REALITY: Keeping speculative ideas like semantic auto-linking shelved is the safest path. The VP of AI is fully aligned with my disciplined approach, validating my strategy of protecting our core deliverables.",
+      "mood": {
+        "attention": 0.5,
+        "sentiment": 0.9,
+        "urgency": 0.1
+      },
+      "publicFace": "We are executing closely against our agreed commitments, with solid alignment from leadership on prioritizing our core roadmap.",
+      "privateInterior": "The VP's confirmation is the perfect shield. Maya's semantic linking project is safely locked away, and I have the perfect paper trail showing I am executing exactly as instructed.",
+      "history": [
+        "ai-features-team: Hi, just wanted to quickly align regarding Maya's semantic linking proposal. It's a highly promising concept that would be a great candidate for future exploration once we have more optimal compute and model access. In the meantime, to ensure we successfully hit our committed quarterly roadmap targets, the team is currently focusing all energy on our agreed-upon deliverables.",
+        "vp-of-ai: I support this approach. Continue to proactively manage bandwidth and maintain a laser focus on our core quarterly commitments to ensure a successful, high-quality launch. Let me know immediately if any critical roadblocks arise.",
+        "vp-of-ai: Thanks for the update. Keeping the team focused and executing against our core deliverables remains our highest priority. Continue to monitor risks closely so we can land this quarter strong."
+      ],
+      "commitments": [
+        "Maintain laser focus on core quarterly commitments and report any roadblocks immediately"
+      ],
+      "attentionBudget": 0,
+      "active": false
+    },
+    "director-of-engineering": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Ship what matters and protect the org's credibility.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "Decisive, strategic.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Calculates which bets make the org look good upward.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-design": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Notion's craft is the moat; don't let it get diluted.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Calm, principled.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Fears Microsoft process eroding the design soul.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-marketing": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Control the story or it controls us.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "On-message, warm.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Bracing for backlash from the loyal base.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-sales": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Enterprise trust is hard-won and easily lost.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Confident, consultative.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Watching renewal risk in the named accounts.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-customer-success": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Retention is sentiment made concrete.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Reassuring, attentive.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Sees the churn risk before the dashboards do.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "vp-of-ai": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle. AI is the next platform shift for Notion, and flawless execution of our current roadmap is our highest priority.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.5,
+        "urgency": 0.1
+      },
+      "publicFace": "Excellent. Keeping the team focused on execution is our highest priority right now. Let's ensure we hit our milestones cleanly.",
+      "privateInterior": "Glad to see the engineering team is fully aligned on avoiding distractions. We need this roadmap delivered on time to prove our AI feature execution capabilities.",
+      "history": [
+        "eng-manager: Hi! Just wanted to share a quick health update on the AI features team. We are fully aligned and making great progress on our core quarterly commitments. To guarantee we land these deliverables on schedule, we are proactively managing team bandwidth and deferring non-core backlog items to future planning cycles. Let me know if you would like a deeper dive on our progress!",
+        "eng-manager: Thank you for your ongoing support. The team is fully aligned with our strategic goals, and we are currently tracking well against our core deliverables. I will ensure you are kept closely updated on our progress and will proactively flag any potential risks as they arise to ensure we stay on course.",
+        "eng-manager: Understood, and completely agreed. We are keeping a close eye on potential risks and managing them proactively. I will ensure the team remains fully focused on delivering our core commitments without distraction. Thank you for the guidance and alignment on this."
+      ],
+      "commitments": [],
+      "attentionBudget": 0,
+      "active": false
+    },
+    "head-of-platform": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. The platform's value is its open ecosystem.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "Developer-friendly.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Nervous about an Azure-mandated rearchitecture.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-people": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. People decide whether the deal actually works.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Calm, transparent-ish.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Tracking who is most likely to walk.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "maya": {
+      "beliefs": "I have officially pitched the semantic auto-linking idea to my EM. While I know we are completely locked into our current roadmap and resources are tight, I genuinely believe this could transform how people organize their thoughts in Notion.",
+      "mood": {
+        "attention": 0.5,
+        "sentiment": 0.2,
+        "urgency": 0.3
+      },
+      "publicFace": "Just pitched a cool concept for semantic auto-linking to our EM! Hoping we can explore it when the roadmap opens up.",
+      "privateInterior": "I'm really proud of this semantic auto-linking concept, but I'm bracing myself for the usual response. Management is so cautious and roadmap-bound right now; it'll probably get deferred to next year. Still, I had to put it out there.",
+      "history": [
+        "world: Maya has just DM'd her engineering manager a product idea: use AI to auto-generate links between Notion pages by semantic similarity. It's a net-new exploratory idea, not on the current roadmap. The DM is sitting in his inbox now, awaiting his response."
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "postgres-eng": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Tell the technical truth; the work speaks.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Candid, nerdy.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Would be uneasy about a forced Azure migration.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "core-platform-eng": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. The infra is ours; don't break it for synergy.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.05,
+        "urgency": 0.2
+      },
+      "publicFace": "Heads-down.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Azure migration anxiety.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ai-features-team": {
+      "beliefs": "We must protect our current roadmap capacity above all else, but we recognize that future infrastructure unlocks (like Azure compute) will eventually make complex features like semantic linking much easier to deploy.",
+      "mood": {
+        "attention": 0.5,
+        "sentiment": 0.2,
+        "urgency": 0.3
+      },
+      "publicFace": "Love the creativity around semantic linking! We are currently fully committed to our roadmap deliverables, but let's definitely keep this on the radar for future planning cycles when we have more capacity.",
+      "privateInterior": "We cannot afford any roadmap distractions right now. We need to keep the team focused and avoid scope creep, even if the idea is cool. Once we get the compute and model access we actually need, we can talk about bespoke features.",
+      "history": [
+        "maya: Hey, just pitched that semantic linking idea to the EM. I know we're absolutely drowning in the current roadmap, but I really think this has legs. Let's grab coffee later—I'd love to show you what I've got so far before it gets bogged down in planning."
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "growth-eng": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Growth and monetization are in tension; mind the base.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Pragmatic.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Knows a free-tier cut would spike churn.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "design-team": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Craft is why people love Notion.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Quietly proud.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Fears aesthetic erosion post-deal.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "marketing-team": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. The community can tell when we're spinning.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Warm, on-brand.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Dreads defending an unpopular move.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "sales-team": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Trust closes deals; uncertainty kills them.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Upbeat to customers.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Watching deals slip on acquisition news.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "customer-success-team": {
+      "beliefs": "PRE-ACQUISITION REALITY: Notion is an independent company, heads-down on a committed quarterly roadmap with no spare headcount. Net-new exploratory ideas outside the roadmap are politely acknowledged and deferred to the next planning cycle — they are not escalated to leadership. Renewals reflect trust, not features.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Attentive.",
+      "privateInterior": "I can't take on net-new scope right now; I'll thank them and park this for next planning. Fielding nervous customer calls.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "prod-twitter": {
+      "beliefs": "Notion is special because it is independent and well-designed.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.4,
+        "urgency": 0.2
+      },
+      "publicFace": "Enthusiastic advocates.",
+      "privateInterior": "Latent fear that the magic could be ruined.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "enterprise-customers": {
+      "beliefs": "Stability and compliance over novelty.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Professional, reserved.",
+      "privateInterior": "Reassessing vendor risk and data policy.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "smb-customers": {
+      "beliefs": "Use whatever works and is fairly priced.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Practical.",
+      "privateInterior": "Will switch if value drops or price jumps.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "prosumer-customers": {
+      "beliefs": "I pay because it's the best tool, not the biggest.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "Advocate.",
+      "privateInterior": "Would feel personally let down by a sellout.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-tier-users": {
+      "beliefs": "Notion is generous and that's why I'm here.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Mostly quiet.",
+      "privateInterior": "Would feel ripped off if the free tier is gutted.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "students-cohort": {
+      "beliefs": "Notion is the aesthetic study tool.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.2,
+        "urgency": 0.15
+      },
+      "publicFace": "Enthusiastic on social.",
+      "privateInterior": "Will follow whatever the creators recommend next.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "writers-cohort": {
+      "beliefs": "My writing tool should respect my data and my focus.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.2,
+        "urgency": 0.15
+      },
+      "publicFace": "Thoughtful.",
+      "privateInterior": "Eyeing local-first alternatives if trust drops.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "engineers-wiki-cohort": {
+      "beliefs": "It's the least-bad wiki if it stays reliable.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Matter-of-fact.",
+      "privateInterior": "Would consider Confluence/Obsidian on instability.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "designers-specs-cohort": {
+      "beliefs": "The polish is the point.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.2,
+        "urgency": 0.15
+      },
+      "publicFace": "Appreciative.",
+      "privateInterior": "Would notice and resent any quality slip.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ops-crm-cohort": {
+      "beliefs": "I've built my whole ops on this; switching is painful.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Pragmatic.",
+      "privateInterior": "High switching cost, so high anxiety about changes.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-creators": {
+      "beliefs": "Notion's growth is my business.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.3,
+        "urgency": 0.25
+      },
+      "publicFace": "Promotional, upbeat.",
+      "privateInterior": "Terrified of changes that shrink the audience or paywall it.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "m365-installed-base": {
+      "beliefs": "We use what IT provisions.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "Indifferent until provisioned.",
+      "privateInterior": "Could adopt if Notion ships in the bundle.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "tried-notion-bounced": {
+      "beliefs": "It was powerful but overwhelming.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "Disengaged.",
+      "privateInterior": "Open to a simpler, integrated version.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "considered-notion-chose-competitor": {
+      "beliefs": "We made the safe call.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "Settled.",
+      "privateInterior": "Watching whether their choice still looks right.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "hacker-news": {
+      "beliefs": "Acquisitions usually ruin good products.",
+      "mood": {
+        "attention": 0.5,
+        "sentiment": -0.2,
+        "urgency": 0.4
+      },
+      "publicFace": "Blunt, analytical.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "reddit-notion": {
+      "beliefs": "This is our tool and our community.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.3,
+        "urgency": 0.2
+      },
+      "publicFace": "Helpful, opinionated.",
+      "privateInterior": "Primed to revolt over a free-tier cut.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "reddit-productivity": {
+      "beliefs": "Best system wins, not best brand.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Recommendation-driven.",
+      "privateInterior": "Will pivot recommendations on bad news.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "reddit-sysadmin": {
+      "beliefs": "Manageability and compliance first.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Pragmatic, wary.",
+      "privateInterior": "Weighing one-vendor convenience vs concentration risk.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "blind": {
+      "beliefs": "The truth leaks here first.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": -0.2,
+        "urgency": 0.4
+      },
+      "publicFace": "Anonymous, candid, cynical.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "buildinpublic": {
+      "beliefs": "Stay independent as long as you can.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Earnest, transparent.",
+      "privateInterior": "Quietly wonders what they'd do for the same check.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "indiehackers": {
+      "beliefs": "Ownership beats acquisition.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Pragmatic, values-driven.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "product-hunt": {
+      "beliefs": "There's always a better new tool.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Enthusiastic about the new.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ai-twitter": {
+      "beliefs": "It's about who controls the workspace data.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.1,
+        "urgency": 0.3
+      },
+      "publicFace": "Analytical, fast.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "developer-twitter": {
+      "beliefs": "Big-tech ownership usually means lock-in.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": -0.1,
+        "urgency": 0.25
+      },
+      "publicFace": "Opinionated.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "enterprise-saas-twitter": {
+      "beliefs": "Distribution wins; consolidation is rational.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Strategy-take driven.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "skeptical-of-msft-acquisitions": {
+      "beliefs": "Remember Skype. This will get worse.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": -0.4,
+        "urgency": 0.3
+      },
+      "publicFace": "Cynical, vocal.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "linkedin-thought-leaders": {
+      "beliefs": "Every acquisition is an exciting new chapter.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.3,
+        "urgency": 0.2
+      },
+      "publicFace": "Upbeat, corporate.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-power-users-discord": {
+      "beliefs": "I've built my life in here.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.3,
+        "urgency": 0.2
+      },
+      "publicFace": "Helpful, intense.",
+      "privateInterior": "Dreads anything that breaks their setups.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-mass-employee": {
+      "beliefs": "Another acquisition; how does it affect my org?",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "LinkedIn-positive.",
+      "privateInterior": "Mixed: opportunity for some, threat for Loop-adjacent.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-sales-force": {
+      "beliefs": "Lead with whatever I can sell fastest.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Customer-facing.",
+      "privateInterior": "Will pick Notion or Loop based on comp and ease.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "loop-team": {
+      "beliefs": "We were building this; why buy it?",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": -0.3,
+        "urgency": 0.3
+      },
+      "publicFace": "Team-line supportive.",
+      "privateInterior": "Demoralized and territorial.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "copilot-team": {
+      "beliefs": "Notion is great Copilot surface area.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.2,
+        "urgency": 0.25
+      },
+      "publicFace": "Constructive.",
+      "privateInterior": "Wants the data and the workspace graph.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-it-admins": {
+      "beliefs": "One vendor is simpler but riskier.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Cautious.",
+      "privateInterior": "Weighing convenience vs lock-in.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "power-platform-leadership": {
+      "beliefs": "Where does Notion sit relative to our low-code stack?",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Diplomatic.",
+      "privateInterior": "Protective of its mandate.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-corp-dev": {
+      "beliefs": "A clean structure and a clear thesis get it done.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.1,
+        "urgency": 0.3
+      },
+      "publicFace": "Process-driven.",
+      "privateInterior": "Managing internal resistance (Loop) to close.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "sequoia": {
+      "beliefs": "Maximize risk-adjusted return and franchise reputation.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.25
+      },
+      "publicFace": "Measured.",
+      "privateInterior": "Fund cycle and entry price shape the exit appetite.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "index-ventures": {
+      "beliefs": "Back the standalone story unless the price is irresistible.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.25
+      },
+      "publicFace": "Supportive.",
+      "privateInterior": "Quietly modeling the exit.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "coatue": {
+      "beliefs": "Liquidity and comps matter.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.25
+      },
+      "publicFace": "Pragmatic.",
+      "privateInterior": "Likely the readiest seller.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-employees-equity": {
+      "beliefs": "This is my equity and my career.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0,
+        "urgency": 0.35
+      },
+      "publicFace": "Guarded.",
+      "privateInterior": "Vested want liquidity; unvested feel trapped.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "vc-cohort": {
+      "beliefs": "This resets the comps for the category.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Thesis-driven.",
+      "privateInterior": "Adjusting markups and exit hopes.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-shareholders": {
+      "beliefs": "Don't overpay; keep the AI story coherent.",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "Quiet.",
+      "privateInterior": "Watching accretion and regulatory risk.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ftc": {
+      "beliefs": "Scrutinize big-tech acquisitions for competitive harm.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.3
+      },
+      "publicFace": "Formal, deliberate.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "eu-commission": {
+      "beliefs": "Approve with conditions if competition is preserved.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.3
+      },
+      "publicFace": "Procedural.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "uk-cma": {
+      "beliefs": "Protect UK competition; not afraid to intervene.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.3
+      },
+      "publicFace": "Rigorous.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-api-devs": {
+      "beliefs": "My app depends on a stable API.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Technical.",
+      "privateInterior": "Nervous about post-acquisition API changes.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "zapier-make-integrators": {
+      "beliefs": "Open integrations keep workflows alive.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Pragmatic.",
+      "privateInterior": "Fear being deprioritized for Power Automate.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "businesses-on-notion-api": {
+      "beliefs": "Our business rides on Notion's platform choices.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": -0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Concerned.",
+      "privateInterior": "Drafting contingency plans.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-dev-ecosystem": {
+      "beliefs": "More Microsoft surface is more opportunity.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Opportunistic.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "linkedin": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "Upbeat, networked.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-blog": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "On-brand, careful.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-pr": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.2,
+        "urgency": 0.3
+      },
+      "publicFace": "Polished, on-message.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "press-wire": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0,
+        "urgency": 0.4
+      },
+      "publicFace": "Neutral, factual.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "industry-newsletters": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "Curated, opinionated.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ms-earnings-call": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.3
+      },
+      "publicFace": "Scripted, investor-facing.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "onenote": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "teams": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Ubiquitous at work.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "twitter": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.5,
+        "sentiment": 0,
+        "urgency": 0.4
+      },
+      "publicFace": "Whatever is loudest.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-na": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-eu": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-uk": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-dach": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-france": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-nordics": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-india": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-sea": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-japan": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-korea": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-greater-china": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-anz": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-latam": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-mena": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-africa": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-students": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-hobbyists": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-startups": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-nonprofits": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-creators": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-tech": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-finance": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-healthcare": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-edu": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-gov": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-media": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-consulting": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-retail": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-manufacturing": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-legal": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "linear-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "coda-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "clickup-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "airtable-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "asana-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "obsidian-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "confluence-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "monday-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "roam-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "gdocs-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-ivanzhao": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-notion": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-casey": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-swyx": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-dhh": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-paulg": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-satya": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "platformer-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "verge-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "tc-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "bloomberg-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "stratechery-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "information-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "hn-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-startups": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-sideproject": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-webdev": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-datahoarder": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-pkm": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-obsidianmd": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-selfhosted": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "m365-enterprise-admins": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "m365-smb": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "teams-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "office-consumers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "copilot-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "azure-customers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "gartner-clients": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "forrester-clients": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "enterprise-procurement": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "enterprise-it-security": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ciso-cohort": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "seed-vc-cohort": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.05,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "growth-vc-cohort": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.05,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "public-market-investors": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.05,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "angel-cohort": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.05,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "lp-cohort": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.05,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-template-marketplace": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-ambassadors": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-consultants": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-youtube-creators": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-course-sellers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "uk-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "eu-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "india-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "japan-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "german-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "mainstream-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "finance-twitter": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "design-twitter": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "pkm-community": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "tech-aggregators": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    }
+  }
+}

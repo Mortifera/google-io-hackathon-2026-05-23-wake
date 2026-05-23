@@ -19,6 +19,7 @@ import { makeIdGen } from "@wake/util";
 import { mapStream } from "@wake/util";
 
 export { loadWorld } from "./loadWorld";
+export { mutateWorldFromCascade } from "./mutate";
 
 export interface RunOptions {
   /** Deterministic seed; Monte Carlo passes base+i per branch. */
