@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: repoRoot,
   },
+  // Match turbopack.root so Vercel's build (which otherwise sets this to the
+  // project Root Directory, apps/web) still traces files outside apps/web —
+  // needed because we import fixtures/ and the workspace packages from root.
+  outputFileTracingRoot: repoRoot,
 };
 
 export default nextConfig;

@@ -1,0 +1,3 @@
+# Generated worlds — keep the one committed example, ignore future runs.
+out/*
+!out/stripe-acquires-plaid.json
