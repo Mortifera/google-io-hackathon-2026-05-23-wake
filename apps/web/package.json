@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@wake/contracts": "workspace:*",
+    "@wake/edges": "workspace:*",
     "@wake/interp": "workspace:*",
+    "@wake/kernel": "workspace:*",
     "@wake/llm": "workspace:*",
+    "@wake/nodes": "workspace:*",
     "d3-force": "^3.0.0",
     "next": "16.2.6",
     "react": "19.2.4",
