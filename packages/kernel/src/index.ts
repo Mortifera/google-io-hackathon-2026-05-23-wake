@@ -10,12 +10,13 @@ import {
   type DivergencePoint,
   type Cascade,
   type TickFn,
+  type TickOutput,
   type EdgeTransform,
   type LLMClient,
   type Neighbor,
 } from "@wake/contracts";
 import { makeIdGen } from "@wake/util";
-import { mapWithConcurrency } from "@wake/util";
+import { mapStream } from "@wake/util";
 
 export { loadWorld } from "./loadWorld";
 
@@ -104,6 +105,23 @@ interface Delivery {
  * Cascade. Consumed by the live SSE endpoint and by `runCascade` (batch path).
  */
 export type StreamEvent =
+  | {
+      /** Emitted at the start of a tick: the nodes about to reason. The viz
+       *  puts these into a "thinking" state (pulse) while the tick computes. */
+      type: "tick-start";
+      tick: number;
+      active: { id: string; label: string }[];
+    }
+  | {
+      /** Emitted the instant a node's tick call returns — its one-line reason.
+       *  Streamed one-by-one so the live run shows continuous reasoning. */
+      type: "node-acted";
+      tick: number;
+      nodeId: string;
+      label: string;
+      rationale: string;
+      outgoing: number;
+    }
   | {
       type: "tick";
       tick: Tick;
@@ -236,22 +254,45 @@ export async function* runCascadeStream(
       continue;
     }
 
-    // Fan out one tick call per active node, bounded by concurrency.
-    const outputs = await mapWithConcurrency(active, concurrency, async (node) => {
-      const st = states.get(node.id) as NodeState;
-      const box = inbox.get(node.id) ?? [];
-      const out = await tickFn(
-        {
-          node,
-          state: st,
-          inbox: box,
-          clock,
-          neighbors: outNeighbors.get(node.id) ?? [],
-        },
-        llm,
-      );
-      return { node, box, out };
-    });
+    // Announce who's reasoning this tick (live "what" — the viz pulses them).
+    yield {
+      type: "tick-start",
+      tick: tickIndex,
+      active: active.map((n) => ({ id: n.id, label: n.label })),
+    };
+
+    // Fan out one tick call per active node, bounded by concurrency, and stream
+    // each node's rationale the instant it returns (live "why"). Results are
+    // collected in INPUT order so the cascade output stays deterministic
+    // (stream == batch); only the live event ordering is completion-order.
+    const outputs = new Array<{ node: NodeDef; box: Event[]; out: TickOutput }>(
+      active.length,
+    );
+    for await (const { item: node, result: out, index } of mapStream(
+      active,
+      concurrency,
+      (node) =>
+        tickFn(
+          {
+            node,
+            state: states.get(node.id) as NodeState,
+            inbox: inbox.get(node.id) ?? [],
+            clock,
+            neighbors: outNeighbors.get(node.id) ?? [],
+          },
+          llm,
+        ),
+    )) {
+      outputs[index] = { node, box: inbox.get(node.id) ?? [], out };
+      yield {
+        type: "node-acted",
+        tick: tickIndex,
+        nodeId: node.id,
+        label: node.label,
+        rationale: out.rationale,
+        outgoing: out.outgoing.length,
+      };
+    }
 
     const tickEvents: Event[] = firstTick ? [...seedEvents] : [];
     const activeNodeIds: string[] = [];

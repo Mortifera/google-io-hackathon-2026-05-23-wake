@@ -54,14 +54,20 @@ for await (const ev of runCascadeStream(
   { seed: 1, concurrency, maxTicks },
 )) {
   const elapsed = (Date.now() - t0) / 1000;
-  if (ev.type === "tick") {
+  if (ev.type === "tick-start") {
+    console.log(
+      `  ┌ tick ${ev.tick} — thinking: ${ev.active.map((a) => a.label).join(", ")}`,
+    );
+  } else if (ev.type === "node-acted") {
+    console.log(`  │ ${ev.label}: ${ev.rationale}`);
+  } else if (ev.type === "tick") {
     n++;
     const gap = (elapsed - prev).toFixed(1);
     prev = elapsed;
     console.log(
-      `[tick ${n}] clock=${ev.tick.clock} active=${ev.tick.activeNodeIds.length} ` +
+      `  └ [tick ${n}] clock=${ev.tick.clock} active=${ev.tick.activeNodeIds.length} ` +
         `events=${ev.tick.events.length} divergence=${ev.divergence.count} ` +
-        `(+${gap}s, ${elapsed.toFixed(1)}s total)`,
+        `(+${gap}s, ${elapsed.toFixed(1)}s)`,
     );
   } else {
     console.log(

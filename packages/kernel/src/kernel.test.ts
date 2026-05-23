@@ -136,4 +136,32 @@ describe("kernel runCascadeStream", () => {
     const batch = await runCascade(world, "acquisition", deps, { seed: 5 });
     expect(JSON.stringify(streamed)).toBe(JSON.stringify(batch));
   });
+
+  it("streams per-node reasoning: tick-start (who) + node-acted (why)", async () => {
+    const events = [];
+    for await (const ev of runCascadeStream(world, "acquisition", deps, {
+      seed: 1,
+    })) {
+      events.push(ev);
+    }
+    const tickStarts = events.filter((e) => e.type === "tick-start");
+    const acted = events.filter((e) => e.type === "node-acted");
+    expect(tickStarts.length).toBeGreaterThan(0);
+    expect(acted.length).toBeGreaterThan(0);
+    // each tick-start names the nodes about to think
+    for (const ts of tickStarts) {
+      if (ts.type === "tick-start") expect(ts.active.length).toBeGreaterThan(0);
+    }
+    // each node-acted carries a rationale (the "why")
+    for (const a of acted) {
+      if (a.type === "node-acted") expect(typeof a.rationale).toBe("string");
+    }
+    // one node-acted per node that acted across all ticks
+    const cascade = events.find((e) => e.type === "done");
+    const totalActed =
+      cascade?.type === "done"
+        ? cascade.cascade.ticks.reduce((n, t) => n + t.activeNodeIds.length, 0)
+        : 0;
+    expect(acted.length).toBe(totalActed);
+  });
 });
