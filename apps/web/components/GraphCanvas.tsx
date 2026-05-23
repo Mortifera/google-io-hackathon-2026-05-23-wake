@@ -40,6 +40,16 @@ interface EventViz {
   offset: number;
 }
 
+/** An active causal trace to render cinematically over the graph. */
+export interface TraceViz {
+  /** Root→leaf causal chain (events), as returned by the DAG trace. */
+  chain: Event[];
+  /** The node the trace is anchored to (the one we asked "why" about). */
+  anchorId: string;
+  /** Bumped each time a new trace starts, to restart the reveal animation. */
+  nonce: number;
+}
+
 interface Props {
   graph: GraphModel;
   model: CascadeModel;
@@ -47,6 +57,7 @@ interface Props {
   layer: Layer;
   selectedNodeId: string | null;
   onSelectNode: (id: string | null) => void;
+  trace: TraceViz | null;
 }
 
 const TIER_RADIUS: Record<number, number> = { 1: 10, 2: 6.5, 3: 5 };
@@ -77,6 +88,7 @@ export default function GraphCanvas({
   layer,
   selectedNodeId,
   onSelectNode,
+  trace,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -85,8 +97,12 @@ export default function GraphCanvas({
   const layerRef = useRef(layer);
   const selectedRef = useRef(selectedNodeId);
   const hoverRef = useRef<string | null>(null);
+  const traceRef = useRef<TraceViz | null>(trace);
+  const traceStartRef = useRef(0);
+  const traceNonceRef = useRef(-1);
   layerRef.current = layer;
   selectedRef.current = selectedNodeId;
+  traceRef.current = trace;
 
   // Stable sim nodes/links + a fast id→node map, rebuilt only if graph changes.
   const sim = useMemo(() => {
@@ -255,6 +271,13 @@ export default function GraphCanvas({
       const hov = hoverRef.current;
       const breath = 0.5 + 0.5 * Math.sin(now / 1400);
 
+      // causal trace: restart the reveal animation when a new trace arrives
+      const tr = traceRef.current;
+      if (tr && tr.nonce !== traceNonceRef.current) {
+        traceNonceRef.current = tr.nonce;
+        traceStartRef.current = now;
+      }
+
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
 
@@ -263,6 +286,7 @@ export default function GraphCanvas({
 
       // ---------- edges (base constellation) ----------
       ctx.lineCap = "round";
+      const edgeStroke = tr ? "rgba(120,140,180,0.022)" : "rgba(120,140,180,0.07)";
       for (const e of graph.edges) {
         const s = sim.byId.get(e.source);
         const t = sim.byId.get(e.target);
@@ -273,10 +297,121 @@ export default function GraphCanvas({
         ctx.beginPath();
         ctx.moveTo(sp.x, sp.y);
         ctx.quadraticCurveTo(cx, cy, tp.x, tp.y);
-        ctx.strokeStyle = "rgba(120,140,180,0.07)";
+        ctx.strokeStyle = edgeStroke;
         ctx.lineWidth = 1;
         ctx.stroke();
       }
+
+      if (tr && tr.chain.length) {
+        // ============ cinematic causal trace ============
+        const chainNodeIds = new Set<string>();
+        for (const e of tr.chain) {
+          if (e.source !== "world") chainNodeIds.add(e.source);
+          chainNodeIds.add(e.target);
+        }
+        // dim every off-chain node to a faint dot
+        for (const n of sim.nodes) {
+          if (chainNodeIds.has(n.id)) continue;
+          const baseR = TIER_RADIUS[labelById.get(n.id)?.tier ?? 2] ?? 5;
+          ctx.fillStyle = "rgba(120,135,165,0.14)";
+          ctx.beginPath();
+          ctx.arc(n.x ?? 0, n.y ?? 0, Math.max(2, baseR * 0.6), 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        const elapsed = (now - traceStartRef.current) / 1000;
+        const perStep = 0.5;
+        const nHops = tr.chain.length;
+        const litNodes = new Map<string, number>();
+
+        // draw the chain backward (leaf → root), revealing one hop at a time
+        ctx.globalCompositeOperation = "lighter";
+        for (let k = 0; k < nHops; k++) {
+          const i = nHops - 1 - k;
+          const reveal = Math.max(0, Math.min(1, elapsed / perStep - k));
+          if (reveal <= 0) break;
+          const e = tr.chain[i];
+          const color = EVENT_COLOR[e.type] ?? "#8ea2c8";
+          const srcNode = e.source === "world" ? null : sim.byId.get(e.source);
+          const tgtNode = sim.byId.get(e.target);
+          if (!tgtNode) continue;
+          const tgtPt = { x: tgtNode.x ?? 0, y: tgtNode.y ?? 0 };
+          const srcPt = srcNode
+            ? { x: srcNode.x ?? 0, y: srcNode.y ?? 0 }
+            : { x: tgtPt.x, y: -50 };
+          const { cx, cy } = srcNode
+            ? controlPoint(srcPt, tgtPt, e.id)
+            : { cx: (srcPt.x + tgtPt.x) / 2, cy: (srcPt.y + tgtPt.y) / 2 };
+          // reveal from target back toward source
+          drawCurveSegment(ctx, tgtPt, srcPt, cx, cy, 0, reveal, color, e.type === "emergent");
+          if (reveal < 1) {
+            const head = quad(tgtPt, srcPt, cx, cy, reveal);
+            const glow = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, 17);
+            glow.addColorStop(0, withAlpha(color, 0.95));
+            glow.addColorStop(1, withAlpha(color, 0));
+            ctx.fillStyle = glow;
+            ctx.beginPath();
+            ctx.arc(head.x, head.y, 17, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = "#ffffff";
+            ctx.beginPath();
+            ctx.arc(head.x, head.y, 2.6, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          if (e.source !== "world")
+            litNodes.set(e.source, Math.max(litNodes.get(e.source) ?? 0, reveal));
+          litNodes.set(
+            e.target,
+            Math.max(litNodes.get(e.target) ?? 0, Math.min(1, reveal * 1.5)),
+          );
+        }
+        ctx.globalCompositeOperation = "source-over";
+
+        // chain nodes: bright affect colour, labels, anchor emphasised
+        for (const id of chainNodeIds) {
+          const n = sim.byId.get(id);
+          const lit = litNodes.get(id) ?? 0;
+          if (!n || lit <= 0) continue;
+          const meta = labelById.get(id);
+          const tier = meta?.tier ?? 2;
+          const baseR = (TIER_RADIUS[tier] ?? 5) + 1;
+          const { color } = stateAt(id, p);
+          const x = n.x ?? 0;
+          const y = n.y ?? 0;
+          const isAnchor = id === tr.anchorId;
+
+          ctx.globalCompositeOperation = "lighter";
+          const haloR = baseR * 2.4 + 10 * lit + (isAnchor ? 9 : 0) + breath * 3;
+          const halo = ctx.createRadialGradient(x, y, 0, x, y, haloR);
+          halo.addColorStop(0, withAlpha(color, 0.5 * lit + (isAnchor ? 0.22 : 0)));
+          halo.addColorStop(1, withAlpha(color, 0));
+          ctx.fillStyle = halo;
+          ctx.beginPath();
+          ctx.arc(x, y, haloR, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalCompositeOperation = "source-over";
+
+          ctx.beginPath();
+          ctx.arc(x, y, baseR + (isAnchor ? 2 : 0), 0, Math.PI * 2);
+          ctx.fillStyle = color;
+          ctx.fill();
+          ctx.lineWidth = isAnchor ? 2 : 1.2;
+          ctx.strokeStyle = isAnchor ? "#ffffff" : withAlpha("#ffffff", 0.5 * lit);
+          ctx.stroke();
+
+          if (lit > 0.4) {
+            const label = meta?.label ?? id;
+            ctx.font = `${isAnchor ? 600 : 500} ${isAnchor ? 13 : 11.5}px ${CANVAS_FONT}`;
+            const tw = ctx.measureText(label).width;
+            const lx = x - tw / 2;
+            const ly = y + baseR + 16;
+            ctx.fillStyle = "rgba(6,8,13,0.78)";
+            ctx.fillRect(lx - 5, ly - 11, tw + 10, 16);
+            ctx.fillStyle = isAnchor ? "#ffffff" : withAlpha("#e7ecf6", 0.85);
+            ctx.fillText(label, lx, ly);
+          }
+        }
+      } else {
 
       // ---------- event particles ----------
       ctx.globalCompositeOperation = "lighter";
@@ -436,6 +571,7 @@ export default function GraphCanvas({
           ctx.fillText(label, lx, ly);
         }
       }
+      } // end of normal (non-trace) render branch
     };
 
     raf = requestAnimationFrame(draw);

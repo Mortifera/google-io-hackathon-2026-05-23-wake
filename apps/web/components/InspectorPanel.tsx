@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import type { Event, NodeState } from "@wake/contracts";
 import type { CascadeModel, GraphModel } from "../lib/model";
 import { resolveFrame } from "../lib/model";
@@ -10,7 +9,7 @@ import {
   EVENT_LABEL,
   withAlpha,
 } from "../lib/palette";
-import { explainEvent, explainNode, type ExplanationResult } from "../lib/explain";
+import type { ExplanationResult } from "../lib/explain";
 import s from "./stage.module.css";
 
 type Layer = "public" | "private";
@@ -27,6 +26,10 @@ interface Props {
   layer: Layer;
   focus: Focus;
   setFocus: (f: Focus) => void;
+  /** The active causal trace's explanation (owned by Stage), if any. */
+  explanation: ExplanationResult | null;
+  /** Request a trace for the current focus (the "Ask why" gesture). */
+  onAskWhy: () => void;
 }
 
 function MoodCell({ k, v, color }: { k: string; v: number; color: string }) {
@@ -52,16 +55,19 @@ function NodeDetail({
   nodeId,
   layer,
   tick,
+  explanation,
+  onAskWhy,
 }: {
   graph: GraphModel;
   model: CascadeModel;
   nodeId: string;
   layer: Layer;
   tick: number;
+  explanation: ExplanationResult | null;
+  onAskWhy: () => void;
 }) {
   const node = graph.nodes.find((n) => n.id === nodeId);
   const st = model.resolvedStates[tick]?.[nodeId] as NodeState | undefined;
-  const [exp, setExp] = useState<ExplanationResult | null>(null);
 
   if (!node || !st) return null;
   const aff = affectStyle(st);
@@ -116,14 +122,11 @@ function NodeDetail({
         </div>
       ) : null}
 
-      <button
-        className={s.askBtn}
-        onClick={() => setExp(explainNode(model, graph, nodeId))}
-      >
-        Ask why this node ended up here →
+      <button className={s.askBtn} onClick={onAskWhy}>
+        {explanation ? "↻ Replay the causal trace" : "Ask why this node ended up here →"}
       </button>
 
-      {exp ? <ExplanationView graph={graph} exp={exp} /> : null}
+      {explanation ? <ExplanationView graph={graph} exp={explanation} /> : null}
     </div>
   );
 }
@@ -132,16 +135,14 @@ function EventDetail({
   graph,
   model,
   eventId,
+  explanation,
 }: {
   graph: GraphModel;
   model: CascadeModel;
   eventId: string;
+  explanation: ExplanationResult | null;
 }) {
   const ev = model.eventById.get(eventId);
-  const exp = useMemo(
-    () => explainEvent(model, graph, eventId),
-    [model, graph, eventId],
-  );
   if (!ev) return null;
   const color = EVENT_COLOR[ev.type] ?? "#8ea2c8";
   const srcL = graph.nodes.find((n) => n.id === ev.source)?.label ?? ev.source;
@@ -165,7 +166,7 @@ function EventDetail({
           <div className={`${s.fieldVal} dim`}>“{ev.rationale}”</div>
         </div>
       ) : null}
-      <ExplanationView graph={graph} exp={exp} />
+      {explanation ? <ExplanationView graph={graph} exp={explanation} /> : null}
     </div>
   );
 }
@@ -300,6 +301,8 @@ export default function InspectorPanel({
   layer,
   focus,
   setFocus,
+  explanation,
+  onAskWhy,
 }: Props) {
   const tick = resolveFrame(model, p).tick;
   return (
@@ -315,9 +318,16 @@ export default function InspectorPanel({
             nodeId={focus.id}
             layer={layer}
             tick={tick}
+            explanation={explanation}
+            onAskWhy={onAskWhy}
           />
         ) : focus.kind === "event" ? (
-          <EventDetail graph={graph} model={model} eventId={focus.id} />
+          <EventDetail
+            graph={graph}
+            model={model}
+            eventId={focus.id}
+            explanation={explanation}
+          />
         ) : (
           <div className={s.empty}>
             Click a node to inspect its public face, private interior, and mood —

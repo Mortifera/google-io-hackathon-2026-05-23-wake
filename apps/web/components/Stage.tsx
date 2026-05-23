@@ -1,21 +1,28 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { World } from "@wake/contracts";
 import {
   buildCascadeModel,
   buildGraphModel,
   resolveFrame,
 } from "../lib/model";
+import { explainEvent, explainNode, type ExplanationResult } from "../lib/explain";
 import { usePlayback } from "../lib/usePlayback";
 import { AFFECT_LEGEND } from "../lib/palette";
 import { DEFAULT_ACTION_ID, isLive, scenarioFor } from "../lib/scenarios";
-import GraphCanvas from "./GraphCanvas";
+import GraphCanvas, { type TraceViz } from "./GraphCanvas";
 import Transport from "./Transport";
 import InspectorPanel, { type Focus } from "./InspectorPanel";
 import MonteCarloFan from "./MonteCarloFan";
 import OperatorConsole from "./OperatorConsole";
 import s from "./stage.module.css";
+
+interface ActiveTrace {
+  exp: ExplanationResult;
+  anchorId: string;
+  nonce: number;
+}
 
 type Layer = "public" | "private";
 type View = "cascade" | "futures";
@@ -51,11 +58,51 @@ export default function Stage({ world }: Props) {
   const last = model.ticks.length;
 
   const pb = usePlayback(last);
-  const { setP, play } = pb;
+  const { setP, play, pause } = pb;
   const [view, setView] = useState<View>("cascade");
   const [layer, setLayer] = useState<Layer>("public");
   const [focus, setFocus] = useState<Focus>({ kind: "none" });
   const [consoleOpen, setConsoleOpen] = useState(false);
+  const [trace, setTrace] = useState<ActiveTrace | null>(null);
+  const nonceRef = useRef(0);
+
+  // Run the DAG trace-back and enter the cinematic "why" mode (pauses playback).
+  const runExplain = useCallback(
+    (f: Focus) => {
+      let exp: ExplanationResult | null = null;
+      let anchorId = "";
+      if (f.kind === "node") {
+        exp = explainNode(model, graph, f.id);
+        anchorId = f.id;
+      } else if (f.kind === "event") {
+        exp = explainEvent(model, graph, f.id);
+        anchorId = model.eventById.get(f.id)?.target ?? "";
+      }
+      if (!exp || !exp.chain.length) {
+        setTrace(null);
+        return;
+      }
+      nonceRef.current += 1;
+      setTrace({ exp, anchorId, nonce: nonceRef.current });
+      pause();
+    },
+    [model, graph, pause],
+  );
+
+  // Clicking an event is itself a "why" gesture → trace it. Selecting a node
+  // waits for the explicit "Ask why" button; deselecting clears the trace.
+  useEffect(() => {
+    if (focus.kind === "event") runExplain(focus);
+    else setTrace(null);
+  }, [focus, runExplain]);
+
+  // Pressing play exits the trace money-shot.
+  useEffect(() => {
+    if (pb.playing && trace) {
+      setTrace(null);
+      setFocus({ kind: "none" });
+    }
+  }, [pb.playing, trace]);
 
   // autoplay on mount and whenever the scenario changes (the cinematic open)
   useEffect(() => {
@@ -84,6 +131,11 @@ export default function Stage({ world }: Props) {
     const onKey = (e: KeyboardEvent) => {
       if (e.code === "KeyO") {
         setConsoleOpen((v) => !v);
+        return;
+      }
+      if (e.code === "Escape") {
+        setFocus({ kind: "none" });
+        setConsoleOpen(false);
         return;
       }
       // 1–5 inject the matching seed action (if precomputed)
@@ -167,9 +219,21 @@ export default function Stage({ world }: Props) {
                 onSelectNode={(id) =>
                   setFocus(id ? { kind: "node", id } : { kind: "none" })
                 }
+                trace={
+                  trace
+                    ? { chain: trace.exp.chain, anchorId: trace.anchorId, nonce: trace.nonce }
+                    : null
+                }
               />
 
-              {salient ? (
+              {trace ? (
+                <div className={s.caption} key={`trace-${trace.nonce}`}>
+                  <div className={s.captionKicker}>Causal trace</div>
+                  <div className={s.captionText}>
+                    {trace.exp.answer.split(/\.\s+Tracing/)[0]}.
+                  </div>
+                </div>
+              ) : salient ? (
                 <div className={s.caption} key={`${actionId}-${frame.act}`}>
                   <div className={s.captionKicker}>
                     Act {frame.act + 1} · {fmtClock(frame.clock)}
@@ -206,6 +270,8 @@ export default function Stage({ world }: Props) {
               layer={layer}
               focus={focus}
               setFocus={setFocus}
+              explanation={trace?.exp ?? null}
+              onAskWhy={() => runExplain(focus)}
             />
           </div>
 
