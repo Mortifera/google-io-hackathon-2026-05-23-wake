@@ -300,10 +300,11 @@ export async function runCascade(
         });
       }
 
-      // Emergent leak: private negativity under pressure surfaces publicly.
+      // Emergent leak: strong private negativity under pressure surfaces
+      // publicly. Threshold kept high so leaks are rare and dramatic.
       if (
-        merged.mood.sentiment <= -0.4 &&
-        merged.mood.urgency >= 0.4 &&
+        merged.mood.sentiment <= -0.6 &&
+        merged.mood.urgency >= 0.5 &&
         !leaked.has(node.id)
       ) {
         leaked.add(node.id);
