@@ -9,6 +9,7 @@ import {
   RealGeminiTransport,
   toJsonSchema,
   httpStatusOf,
+  withRetry,
   type GeminiTransport,
   type GeminiRawResponse,
   type GeminiGenerateRequest,
@@ -169,6 +170,18 @@ describe("GeminiLLMClient.complete — JSON validation", () => {
     await expect(client.complete(ARGS)).rejects.toBeInstanceOf(GeminiSchemaError);
     expect(calls).toHaveLength(2); // 1 + jsonRetries
   });
+
+  it("sets the native Error cause (not a shadowing field) on GeminiSchemaError", async () => {
+    const { transport } = makeTransport([ok({ not: "a decision" })]);
+    const client = new GeminiLLMClient({ transport, jsonRetries: 0, sleep: NO_SLEEP });
+    const err = (await client.complete(ARGS).catch((e) => e)) as GeminiSchemaError;
+    expect(err).toBeInstanceOf(GeminiSchemaError);
+    // `cause` is populated through the native super(message, { cause }) path
+    // (the underlying validation error), not a custom shadowing field.
+    expect(err.cause).toBeDefined();
+    expect(err.cause).toBe((err as unknown as { cause: unknown }).cause);
+    expect(err.lastText).toContain("not");
+  });
 });
 
 /* -------------------------------------------------------------------------- */
@@ -318,6 +331,78 @@ describe("GeminiLLMClient — explicit caching", () => {
     expect(res.data).toEqual(VALID);
     expect(calls[0]!.cachedContentName).toBeUndefined();
   });
+
+  it("recreates the cache when the local TTL has expired (no stale reuse)", async () => {
+    const { transport, created, calls } = cachingTransport();
+    const client = new GeminiLLMClient({
+      transport,
+      explicitCache: true,
+      minCacheTokens: 1,
+      cacheTtlSeconds: 0, // every call sees the handle as already expired
+    });
+    const args = { ...ARGS, system: bigSystem, cacheKey: "node:ceo" };
+    await client.complete(args);
+    await client.complete(args);
+
+    expect(created).toHaveLength(2); // TTL-evicted and recreated
+    expect(calls[0]!.cachedContentName).toBe("cache/1");
+    expect(calls[1]!.cachedContentName).toBe("cache/2");
+  });
+
+  /** Cache exists locally but the server 404s it (server-side TTL/eviction). */
+  function expiredCacheTransport() {
+    const created: GeminiCreateCacheRequest[] = [];
+    const calls: GeminiGenerateRequest[] = [];
+    const transport: GeminiTransport = {
+      async generate(req) {
+        calls.push({ ...req });
+        if (req.cachedContentName) throw status(404, "Cached content not found");
+        return ok(VALID); // inline fallback succeeds
+      },
+      async createCache(req): Promise<GeminiCacheHandle> {
+        created.push(req);
+        return { name: `cache/${created.length}`, tokens: 5000 };
+      },
+    };
+    return { transport, created, calls };
+  }
+
+  it("falls back to the inline prompt when the cached content 404s", async () => {
+    const { transport, calls } = expiredCacheTransport();
+    const client = new GeminiLLMClient({
+      transport,
+      explicitCache: true,
+      minCacheTokens: 1,
+      retries: 0,
+      sleep: NO_SLEEP,
+    });
+    const res = await client.complete<Decision>({
+      ...ARGS,
+      system: bigSystem,
+      cacheKey: "node:ceo",
+    });
+
+    expect(res.data).toEqual(VALID);
+    expect(calls).toHaveLength(2);
+    expect(calls[0]!.cachedContentName).toBe("cache/1"); // first try used the cache -> 404
+    expect(calls[1]!.cachedContentName).toBeUndefined(); // retried inline -> success
+  });
+
+  it("invalidates the 404'd handle so the next call regenerates it", async () => {
+    const { transport, created } = expiredCacheTransport();
+    const client = new GeminiLLMClient({
+      transport,
+      explicitCache: true,
+      minCacheTokens: 1,
+      retries: 0,
+      sleep: NO_SLEEP,
+    });
+    const args = { ...ARGS, system: bigSystem, cacheKey: "node:ceo" };
+    await client.complete(args);
+    expect(created).toHaveLength(1);
+    await client.complete(args); // handle was invalidated -> recreate
+    expect(created).toHaveLength(2);
+  });
 });
 
 /* -------------------------------------------------------------------------- */
@@ -376,5 +461,43 @@ describe("httpStatusOf", () => {
 describe("RealGeminiTransport", () => {
   it("constructs without throwing (no network until generate)", () => {
     expect(() => new RealGeminiTransport("test-key")).not.toThrow();
+  });
+});
+
+describe("withRetry — onError bound", () => {
+  const baseOpts = {
+    retries: 0,
+    baseDelayMs: 1,
+    maxDelayMs: 1,
+    sleep: NO_SLEEP,
+    isRetryable: () => false,
+  };
+
+  it("never loops forever even if onError always says 'retry'", async () => {
+    let calls = 0;
+    const fn = async () => {
+      calls++;
+      throw status(400, "always correctable in onError's eyes");
+    };
+    await expect(
+      withRetry(fn, { ...baseOpts, maxOnErrorRetries: 2, onError: () => "retry" }),
+    ).rejects.toThrow();
+    expect(calls).toBe(3); // maxOnErrorRetries (2) + 1 final attempt
+  });
+
+  it("retries via onError within the bound, then succeeds", async () => {
+    let calls = 0;
+    const fn = async () => {
+      calls++;
+      if (calls === 1) throw status(400, "correctable once");
+      return "ok";
+    };
+    const out = await withRetry(fn, {
+      ...baseOpts,
+      maxOnErrorRetries: 3,
+      onError: () => "retry",
+    });
+    expect(out).toBe("ok");
+    expect(calls).toBe(2);
   });
 });

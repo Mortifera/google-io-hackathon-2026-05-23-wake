@@ -96,6 +96,12 @@ export interface GeminiCacheHandle {
   tokens: number;
 }
 
+interface CacheEntry {
+  handle: Promise<GeminiCacheHandle | null>;
+  /** Local wall-clock ms after which we treat the server-side cache as gone. */
+  expiresAt: number;
+}
+
 /** The seam between the client's orchestration and the actual Gemini API. */
 export interface GeminiTransport {
   generate(req: GeminiGenerateRequest): Promise<GeminiRawResponse>;
@@ -163,9 +169,11 @@ export class GeminiSchemaError extends Error {
   constructor(
     message: string,
     readonly lastText: string,
-    readonly cause?: unknown,
+    cause?: unknown,
   ) {
-    super(message);
+    // Use the native ES2022 cause rather than a field that shadows
+    // Error.prototype.cause.
+    super(message, { cause });
     this.name = "GeminiSchemaError";
   }
 }
@@ -209,6 +217,12 @@ export interface GeminiOptions {
 
 const RETRYABLE_STATUS = new Set([429, 500, 502, 503, 504]);
 
+/** Treat an explicit cache as expired slightly before its server-side TTL. */
+const CACHE_EXPIRY_FACTOR = 0.9;
+
+/** Hard cap on `onError`-driven immediate retries, so they can't loop forever. */
+const MAX_ON_ERROR_RETRIES = 3;
+
 /* -------------------------------------------------------------------------- */
 /* Client                                                                      */
 /* -------------------------------------------------------------------------- */
@@ -226,8 +240,9 @@ export class GeminiLLMClient implements LLMClient {
   private readonly cacheTtlSeconds: number;
   private readonly sleep: (ms: number) => Promise<void>;
   private readonly sem: Semaphore;
-  /** cacheKey -> in-flight or resolved explicit cache handle. */
-  private readonly cacheHandles = new Map<string, Promise<GeminiCacheHandle | null>>();
+  /** cacheKey -> explicit cache handle, with a local expiry so we never reuse a
+   *  handle past its server-side TTL (which would 404). */
+  private readonly cacheHandles = new Map<string, CacheEntry>();
 
   constructor(opts: GeminiOptions = {}) {
     this.model = opts.model ?? process.env.GEMINI_MODEL ?? "gemini-3.5-flash";
@@ -260,7 +275,9 @@ export class GeminiLLMClient implements LLMClient {
   private async run<T>(args: CompleteArgs): Promise<LLMResult<T>> {
     const validator = asZodSchema(args.schema);
     let jsonSchema = toJsonSchema(args.schema);
-    const cachedContentName = await this.resolveCache(args);
+    // Mutable: a schema rejection drops `jsonSchema`; a stale-cache 404 drops
+    // `cachedContentName` back to inline. Both are correctable mid-flight.
+    let cachedContentName = await this.resolveCache(args);
 
     let lastText = "";
     let lastErr: unknown;
@@ -284,15 +301,26 @@ export class GeminiLLMClient implements LLMClient {
           baseDelayMs: this.baseDelayMs,
           maxDelayMs: this.maxDelayMs,
           sleep: this.sleep,
+          maxOnErrorRetries: MAX_ON_ERROR_RETRIES,
           isRetryable: (e) => {
             const status = httpStatusOf(e);
             return status !== undefined && RETRYABLE_STATUS.has(status);
           },
-          // If Gemini rejects the schema itself (400), drop it and fall back to
-          // plain JSON mode + zod validation rather than failing hard.
+          // Correctable, non-transient errors: rewrite request state and retry
+          // immediately (bounded by maxOnErrorRetries). Each guard is also self-
+          // limiting because it clears the state it keys on.
           onError: (e) => {
+            // Gemini rejects the schema (400): drop it and fall back to plain
+            // JSON mode + zod validation rather than failing hard.
             if (jsonSchema !== undefined && isSchemaRejection(e)) {
               jsonSchema = undefined;
+              return "retry";
+            }
+            // The explicit cache 404'd (server-side TTL expired or evicted):
+            // invalidate it and fall back to the inline system prompt.
+            if (cachedContentName && isCacheNotFound(e)) {
+              this.invalidateCache(args.cacheKey);
+              cachedContentName = undefined;
               return "retry";
             }
             return "throw";
@@ -334,7 +362,9 @@ export class GeminiLLMClient implements LLMClient {
    * Get-or-create an explicit cache handle for this call's system prompt. Returns
    * the cache name to reuse, or undefined to send the system prompt inline (which
    * still benefits from Gemini's implicit prefix caching). Never throws — caching
-   * is an optimization, so any failure falls back to inline.
+   * is an optimization, so any failure falls back to inline. Honors TTL: a handle
+   * past its local expiry is evicted and recreated rather than reused (a reused
+   * server-side-expired cache would 404).
    */
   private async resolveCache(args: CompleteArgs): Promise<string | undefined> {
     if (
@@ -345,20 +375,29 @@ export class GeminiLLMClient implements LLMClient {
     ) {
       return undefined;
     }
-    const key = args.cacheKey;
-    let pending = this.cacheHandles.get(key);
-    if (!pending) {
-      pending = this.transport
-        .createCache!({
-          model: this.model,
-          system: args.system,
-          ttlSeconds: this.cacheTtlSeconds,
-        })
-        .catch(() => null);
-      this.cacheHandles.set(key, pending);
-    }
-    const handle = await pending;
+    const handle = await this.getOrCreateCache(args.cacheKey, args.system);
     return handle?.name;
+  }
+
+  private getOrCreateCache(key: string, system: string): Promise<GeminiCacheHandle | null> {
+    const now = Date.now();
+    const existing = this.cacheHandles.get(key);
+    if (existing && existing.expiresAt > now) return existing.handle;
+    if (existing) this.cacheHandles.delete(key); // TTL-expired: evict before recreating
+
+    const handle = this.transport
+      .createCache!({ model: this.model, system, ttlSeconds: this.cacheTtlSeconds })
+      .catch(() => null);
+    // Expire our handle a little before the server-side TTL so we don't reach for
+    // a cache the server may have already dropped.
+    const expiresAt = now + this.cacheTtlSeconds * 1000 * CACHE_EXPIRY_FACTOR;
+    this.cacheHandles.set(key, { handle, expiresAt });
+    return handle;
+  }
+
+  /** Drop a cached handle so the next call recreates it (used on a 404). */
+  private invalidateCache(key?: string): void {
+    if (key) this.cacheHandles.delete(key);
   }
 }
 
@@ -446,7 +485,7 @@ function stripCodeFence(text: string): string {
 /* Retry / backoff                                                             */
 /* -------------------------------------------------------------------------- */
 
-interface RetryOpts {
+export interface RetryOpts {
   retries: number;
   baseDelayMs: number;
   maxDelayMs: number;
@@ -454,16 +493,23 @@ interface RetryOpts {
   isRetryable: (e: unknown) => boolean;
   /** Inspect an error before the retryable check; may rewrite state then retry. */
   onError?: (e: unknown) => "retry" | "throw";
+  /** Hard cap on `onError` "retry" decisions, so the fast path can't loop forever. */
+  maxOnErrorRetries?: number;
 }
 
-async function withRetry<T>(fn: () => Promise<T>, opts: RetryOpts): Promise<T> {
+/** Exported for unit testing the onError/backoff bounds. */
+export async function withRetry<T>(fn: () => Promise<T>, opts: RetryOpts): Promise<T> {
+  const maxOnErrorRetries = opts.maxOnErrorRetries ?? 0;
   let attempt = 0;
+  let onErrorRetries = 0;
   for (;;) {
     try {
       return await fn();
     } catch (e) {
-      if (opts.onError?.(e) === "retry") {
-        // A correctable error (e.g. bad schema dropped) — retry immediately.
+      // Correctable errors get an immediate retry, but only up to an explicit
+      // bound — otherwise a misbehaving onError could spin indefinitely.
+      if (opts.onError && onErrorRetries < maxOnErrorRetries && opts.onError(e) === "retry") {
+        onErrorRetries++;
         continue;
       }
       attempt++;
@@ -485,14 +531,26 @@ export function httpStatusOf(err: unknown): number | undefined {
   return m ? Number(m[1]) : undefined;
 }
 
+function errMessage(err: unknown): string {
+  return err && typeof err === "object" && typeof (err as { message?: unknown }).message === "string"
+    ? (err as { message: string }).message.toLowerCase()
+    : "";
+}
+
 /** Detect a 400 caused by an unacceptable response schema. */
 function isSchemaRejection(err: unknown): boolean {
   if (httpStatusOf(err) !== 400) return false;
-  const msg =
-    err && typeof err === "object" && typeof (err as { message?: unknown }).message === "string"
-      ? (err as { message: string }).message.toLowerCase()
-      : "";
-  return /schema|responsejsonschema|response_schema/.test(msg);
+  return /schema|responsejsonschema|response_schema/.test(errMessage(err));
+}
+
+/**
+ * Detect a "cached content not found" failure. A 404 while we're using an
+ * explicit cache means the server-side cache is gone (TTL expired or evicted);
+ * we also sniff the message in case the status isn't surfaced.
+ */
+function isCacheNotFound(err: unknown): boolean {
+  if (httpStatusOf(err) === 404) return true;
+  return /cached content (?:was )?not found|cachedcontent\b.*not found/.test(errMessage(err));
 }
 
 /* -------------------------------------------------------------------------- */
