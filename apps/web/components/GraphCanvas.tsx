@@ -227,6 +227,8 @@ export default function GraphCanvas({
 
     let raf = 0;
     const labelById = new Map(graph.nodes.map((n) => [n.id, n]));
+    const bigGraph = graph.nodes.length > 60;
+    const labelAll = graph.nodes.length <= 14;
 
     const stateAt = (id: string, p: number): { color: string; attn: number } => {
       const last = model.resolvedStates.length - 1;
@@ -355,20 +357,31 @@ export default function GraphCanvas({
         const burst = bursts.get(n.id) ?? 0;
         const isSel = sel === n.id;
         const isHov = hov === n.id;
+        const inActive = activeSet.has(n.id);
 
         const x = n.x!;
         const y = n.y!;
 
-        // soft glow halo (additive)
+        // soft glow halo (additive). On big graphs the full gradient is only
+        // drawn for "interesting" nodes; idle dots get a cheap flat glow so we
+        // keep 60fps with hundreds of nodes.
         ctx.globalCompositeOperation = "lighter";
-        const haloR = baseR * 2.4 + attn * 16 + (0.4 + 0.6 * breath) * (isActive ? 10 : 4);
-        const halo = ctx.createRadialGradient(x, y, 0, x, y, haloR);
-        halo.addColorStop(0, withAlpha(color, 0.42 + attn * 0.25));
-        halo.addColorStop(1, withAlpha(color, 0));
-        ctx.fillStyle = halo;
-        ctx.beginPath();
-        ctx.arc(x, y, haloR, 0, Math.PI * 2);
-        ctx.fill();
+        const lit = isActive || arrive > 0 || burst > 0 || isSel || isHov || attn > 0.5 || tier === 1;
+        if (!bigGraph || lit) {
+          const haloR = baseR * 2.4 + attn * 16 + (0.4 + 0.6 * breath) * (isActive ? 10 : 4);
+          const halo = ctx.createRadialGradient(x, y, 0, x, y, haloR);
+          halo.addColorStop(0, withAlpha(color, 0.42 + attn * 0.25));
+          halo.addColorStop(1, withAlpha(color, 0));
+          ctx.fillStyle = halo;
+          ctx.beginPath();
+          ctx.arc(x, y, haloR, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillStyle = withAlpha(color, 0.16);
+          ctx.beginPath();
+          ctx.arc(x, y, baseR * 2, 0, Math.PI * 2);
+          ctx.fill();
+        }
         ctx.globalCompositeOperation = "source-over";
 
         // expanding rings for activity / arrival / burst
@@ -408,8 +421,10 @@ export default function GraphCanvas({
         ctx.fillStyle = "rgba(255,255,255,0.35)";
         ctx.fill();
 
-        // label: tier-1 always; others on hover/select
-        if (tier === 1 || isSel || isHov) {
+        // labels: on a small world, tier-1 are always named; on a big world,
+        // labels follow the action — acting nodes plus hover/select — so the
+        // story stays readable without clutter.
+        if ((labelAll && tier === 1) || inActive || isSel || isHov) {
           const label = meta?.label ?? n.id;
           ctx.font = `${tier === 1 ? 600 : 500} ${tier === 1 ? 12.5 : 11}px ${CANVAS_FONT}`;
           const tw = ctx.measureText(label).width;
