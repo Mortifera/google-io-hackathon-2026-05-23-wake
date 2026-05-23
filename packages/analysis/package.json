@@ -11,7 +11,9 @@
     }
   },
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --root ../.. packages/analysis",
+    "analyze": "tsx src/demo.ts"
   },
   "dependencies": {
     "@wake/contracts": "workspace:*"

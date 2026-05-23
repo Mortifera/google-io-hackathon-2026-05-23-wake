@@ -1,18 +1,84 @@
-import type { Cascade, MonteCarloResult } from "@wake/contracts";
+import type {
+  Cascade,
+  MonteCarloResult,
+  MonteCarloRun,
+  OutcomeCluster,
+} from "@wake/contracts";
+import { fingerprint } from "./fingerprint";
+import { cluster, representativeMember } from "./cluster";
+import { describeCluster } from "./label";
+import { computePivotal } from "./pivotal";
+import { standardizeColumns } from "./stats";
+
+export type { Fingerprints } from "./fingerprint";
+export { fingerprint } from "./fingerprint";
 
 /**
- * Monte Carlo analysis. STUB — owned by L6 (see briefs/L6-analysis.md).
+ * Monte Carlo analysis (L6 — see briefs/L6-analysis.md). Turn N cascades into
+ * the fan-view payload:
+ *  1. fingerprint each run's finalState into a stable numeric outcome vector,
+ *  2. hierarchically cluster the (standardized) vectors into 3–4 outcome
+ *     clusters, each with a data-derived label + a representative run,
+ *  3. compute the pivotal variable — the perturbation dimension whose variation
+ *     best explains which cluster a run lands in.
  *
- * Turn N cascades into:
- *  - an outcome vector per run (fingerprint of finalState),
- *  - hierarchical clusters with labels + representative runs,
- *  - the pivotal variable (the perturbation dimension explaining the most
- *    cross-cluster variance).
- * Build against the fixture cascades — no kernel dependency required.
+ * No kernel dependency: this runs against fixture cascades just as well as real
+ * ones, because it only reads the frozen Cascade contract.
  */
 export function analyze(
-  _cascades: Cascade[],
-  _opts: { worldId: string; seedActionId: string },
+  cascades: Cascade[],
+  opts: { worldId: string; seedActionId: string },
 ): MonteCarloResult {
-  throw new Error("analyze not implemented yet (L6). See briefs/L6-analysis.md");
+  if (cascades.length === 0) {
+    throw new Error("analyze() needs at least one cascade");
+  }
+
+  const runIds = cascades.map((_, i) => `r${String(i + 1).padStart(2, "0")}`);
+
+  // 1. Outcome vectors (raw, for the viz/output) + standardized (for clustering).
+  const fp = fingerprint(cascades);
+  const standardized = standardizeColumns(fp.vectors);
+
+  // 2. Cluster.
+  const { k, assignment } = cluster(standardized);
+  const clusterIds = Array.from({ length: k }, (_, c) => `c${c + 1}`);
+
+  const membersByCluster: number[][] = Array.from({ length: k }, () => []);
+  assignment.forEach((c, i) => membersByCluster[c]!.push(i));
+
+  const clusterLabels: string[] = [];
+  const clusters: OutcomeCluster[] = membersByCluster.map((members, c) => {
+    const repIdx = representativeMember(standardized, members);
+    const copy = describeCluster({
+      memberVectors: members.map((i) => fp.vectors[i]!),
+      allVectors: fp.vectors,
+      featureNames: fp.featureNames,
+      share: members.length / cascades.length,
+    });
+    clusterLabels[c] = copy.label;
+    return {
+      id: clusterIds[c]!,
+      label: copy.label,
+      summary: copy.summary,
+      memberRunIds: members.map((i) => runIds[i]!),
+      representativeRunId: runIds[repIdx]!,
+    };
+  });
+
+  // 3. Pivotal variable.
+  const pivotal = computePivotal(cascades, assignment, clusterLabels, fp);
+
+  const runs: MonteCarloRun[] = cascades.map((_, i) => ({
+    id: runIds[i]!,
+    clusterId: clusterIds[assignment[i]!]!,
+    outcomeVector: fp.vectors[i]!,
+  }));
+
+  return {
+    worldId: opts.worldId,
+    seedActionId: opts.seedActionId,
+    runs,
+    clusters,
+    pivotal,
+  };
 }
