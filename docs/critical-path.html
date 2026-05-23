@@ -40,6 +40,20 @@ h2 {
 .chip-t { background:#16122a; color:#a78bfa; border:1px solid #a78bfa; }
 .chip-d { background:#200d14; color:#e0556b; border:1px solid #e0556b; }
 
+/* Headline banner */
+.headline-banner {
+  background: #0d1520;
+  border: 1.5px solid #1e3045;
+  border-left: 3px solid #5bd1a0;
+  border-radius: 7px;
+  padding: 11px 16px;
+  margin-bottom: 16px;
+  font-size: 12px;
+  color: #b0b6cc;
+  line-height: 1.7;
+}
+.headline-banner strong { color: #5bd1a0; }
+
 /* Gantt */
 .gantt-outer { overflow-x: auto; }
 .gantt-row {
@@ -197,6 +211,11 @@ h2 {
 </head>
 <body>
 
+<!-- HEADLINE BANNER -->
+<div class="headline-banner">
+  <strong>Checkpoint met</strong> &mdash; the real Monte Carlo fan is published. CP3 wiring in progress; the afternoon's big push is live tick-by-tick streaming. Safe demo lands ~2:15, big buffer to 4pm.
+</div>
+
 <!-- HEADER -->
 <div class="hdr">
   <div>
@@ -205,7 +224,7 @@ h2 {
   </div>
   <div class="chips">
     <span class="chip chip-s">BUILD START 10:40</span>
-    <span class="chip chip-n">NOW 1:08</span>
+    <span class="chip chip-n">NOW 1:35</span>
     <span class="chip chip-t">TARGET VIDEO 4:00</span>
     <span class="chip chip-d">SUBMIT 5:00</span>
   </div>
@@ -225,7 +244,7 @@ h2 {
 <div class="panel">
   <h2>Dependency / CPA Diagram &mdash; Phase A Critical Path (bold red) &rarr; Phase B Follow-on</h2>
   <div class="dep-wrap">
-    <svg id="dsv" width="1000" height="370" viewBox="0 0 1000 370"
+    <svg id="dsv" width="1000" height="390" viewBox="0 0 1000 390"
          style="display:block;margin:0 auto;overflow:visible;"></svg>
   </div>
 </div>
@@ -235,10 +254,16 @@ h2 {
   <h3>&#9888; Pacing Caveat &mdash; Phase B Live Streaming</h3>
   <ul>
     <li><strong style="color:#e6e9f0">A live full-world run is ~16 sequential tick-waves (~1&ndash;2 min).</strong> For a 90-second demo slot, pace carefully: narrate while ticks arrive, or seed-limit the live cascade.</li>
-    <li><strong style="color:#e6e9f0">Escape hatch stays hot:</strong> one-click fallback to the precomputed identical cascade if the live Gemini API stalls mid-demo. Lock the fallback binding at CP4.</li>
+    <li><strong style="color:#e6e9f0">Escape hatch stays hot:</strong> one-click fallback to the precomputed identical cascade (16-run fan, $1.06, committed) if the live Gemini API stalls mid-demo. Lock the fallback binding at CP4.</li>
     <li><strong style="color:#e6e9f0">Decision point at CP4 (~2:15pm):</strong> confirm Phase B is worth the remaining slot; abort to rehearsal mode if timing is tight.</li>
     <li><strong style="color:#e6e9f0">Float stretches (do not block):</strong> Live Wire exogenous injection, Anthropic generalization beat &mdash; only if rock-solid before 3:15pm.</li>
   </ul>
+</div>
+
+<!-- SCALE-UP NOTE -->
+<div style="background:#0d1218;border:1.5px solid #1e2838;border-left:3px solid #5bd1a0;border-radius:7px;padding:11px 16px;margin-bottom:16px;font-size:12px;color:#8090a8;line-height:1.7;">
+  <span style="color:#5bd1a0;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.6px;">Scale-Up Note</span>
+  &nbsp;&mdash;&nbsp;Real MC fan is published at 16 runs, $1.06/cascade, per-cascade concurrency 6. World size (208 Notion + 57 Anthropic nodes) is demo-ready. Live tick-by-tick streaming (Phase B) will demonstrate the full pipeline at interactive speed. Precomputed fan remains the escape hatch throughout.
 </div>
 
 <!-- REVIEWS PANEL -->
@@ -261,22 +286,28 @@ h2 {
       <div class="rv-check">&#10003;</div>
       <div class="rv-label">Analysis (Agent 4)</div>
       <div class="rv-status">PASS</div>
-      <div class="rv-note">Card labels + pivotal punchline &mdash; label dedup fix in progress</div>
+      <div class="rv-note">Card labels + pivotal punchline &mdash; cluster cleanup in progress (CP3 in-flight)</div>
     </div>
     <div class="review-row">
       <div class="rv-check">&#10003;</div>
       <div class="rv-label">LLM client (Agent 3)</div>
       <div class="rv-status">PASS</div>
-      <div class="rv-note">L2 Gemini client reviewed &amp; hardened &mdash; fact-check audit complete</div>
+      <div class="rv-note">L2 Gemini client reviewed &amp; hardened &mdash; network-retry (ECONNRESET) hardening shipped &#10003;</div>
     </div>
     <div class="review-row">
       <div class="rv-check">&#10003;</div>
       <div class="rv-label">Viz CP1 + interp + live-explain (Agent 1)</div>
       <div class="rv-status">PASS</div>
-      <div class="rv-note">L8 viz + operator console + captions &mdash; 1 caption truncation fix in progress</div>
+      <div class="rv-note">L8 viz + operator console + captions &mdash; fan swap + caption fix in progress (CP3 in-flight)</div>
+    </div>
+    <div class="review-row">
+      <div class="rv-check">&#10003;</div>
+      <div class="rv-label">Monte Carlo precompute</div>
+      <div class="rv-status">DONE &#10003;</div>
+      <div class="rv-note" style="color:#5bd1a0;">Real 16-run fan published, $1.06/cascade, committed &mdash; checkpoint goal complete</div>
     </div>
     <div class="rv-headline">
-      All lanes built + reviewed green. Safe demo lands ~2:15pm; the rest of the afternoon is the live-streaming upgrade.
+      All lanes built + reviewed green. MC fan published. CP3 in flight (fan swap + framing + cluster cleanup). Safe demo lands ~2:15pm; Phase B live-streaming is the afternoon's headline push.
     </div>
   </div>
 </div>
@@ -301,11 +332,11 @@ h2 {
     <div class="li"><span class="dot" style="background:#fb7185"></span>Agent 4 (Analysis)</div>
   </div>
   <div class="summary">
-    <span class="ok">Phase A critical path: precompute(done ~1:12) &rarr; T-pub(0.1h) &rarr; CP3(0.5h) &rarr; CP4(0.5h) &rarr; SAFE DEMO ~2:15pm</span>
+    <span class="ok">MC fan published &#10003; &rarr; CP3 in-flight (fan swap + framing + cluster cleanup) &rarr; CP4 rehearse ~2:00 &rarr; SAFE DEMO ~2:15pm</span>
     &nbsp;&mdash;&nbsp;
     <span class="warn">~1h 45min of slack before the 4:00pm record.</span>
     &nbsp;|&nbsp;
-    <span class="em">Phase B live-streaming fills the slack; escape hatch precompute stays hot throughout.</span>
+    <span class="em">Phase B live-streaming fills the slack; escape hatch precomputed fan stays hot throughout.</span>
   </div>
 </div>
 
@@ -316,14 +347,24 @@ h2 {
 const SH   = 10 + 40/60;   // 10:40 am
 const EH   = 17;            // 5:00 pm
 const SPAN = EH - SH;
-const NOH  = 13 + 8/60;    // 1:08 pm
+const NOH  = 13 + 35/60;   // 1:35 pm
 const TAH  = 16.0;
 const SUH  = 17.0;
 
-// Phase boundaries (wall-clock hours)
-const PHA_END = 13 + 8/60 + 0.10 + 0.50 + 0.50; // ~2:15pm — end of Phase A
-const PHB_END = 15 + 30/60;                        // ~3:30pm — end of Phase B
-const PHC_END = 16.0;                              // 4:00pm  — end of Phase C
+// Phase A ends when CP4 done (~2:15pm)
+// CP3 started ~1:30 ish, in-flight now, expected done ~2:00
+const CP3_S   = 13 + 25/60;           // ~1:25pm (started, in-flight)
+const CP3_E   = CP3_S + 0.50;         // ~1:55pm expected done
+const CP4_S   = CP3_E;                // ~1:55pm
+const CP4_E   = CP4_S + 0.35;         // ~2:16pm ≈ 2:15pm safe demo done
+
+const PHA_END = CP4_E;
+const PHB_END = 15 + 30/60;           // 3:30pm Phase B end
+const PHC_END = 16.0;                  // 4:00pm Phase C end
+
+// Phase B start
+const PHB_S   = CP4_E;               // ~2:15pm
+const RECORD_S = 15 + 30/60;         // 3:30pm
 
 function px(h, W) { return ((h - SH) / SPAN) * W; }
 
@@ -344,66 +385,53 @@ const OC = {
 };
 
 // ─── Task data ────────────────────────────────────────────────────────────────
-// COMPLETED — all green (10:40–12:50 band)
+// COMPLETED — all done (10:40–~1:25 band)
 const DONE = [
-  { label:'core sim + CP2 + MC sweep + prompt tuning', owner:'Orchestrator', s: SH,       e: NOH-0.30 },
-  { label:'viz + CP1 + operator console + interp + live-explain', owner:'Agent 1', s: SH+0.05, e: NOH-0.05 },
-  { label:'Notion world (208) + Anthropic world (57)', owner:'Agent 2', s: SH,       e: NOH-0.15 },
-  { label:'LLM client + dossier audit',                owner:'Agent 3', s: SH,       e: NOH-0.20 },
-  { label:'analysis demo-graded (labels + pivotal)',   owner:'Agent 4', s: SH,       e: NOH-0.10 },
+  { label:'core sim + CP2 + MC sweep + prompt tuning + framing (in progress)',  owner:'Orchestrator', s: SH,       e: NOH-0.10 },
+  { label:'viz + CP1 + operator console + interp + live-explain + fan swap',    owner:'Agent 1', s: SH+0.05, e: NOH },
+  { label:'Notion world (208) + Anthropic world (57)',                          owner:'Agent 2', s: SH,       e: NOH-0.20 },
+  { label:'LLM client + dossier audit + network-retry hardening (ECONNRESET)', owner:'Agent 3', s: SH,       e: NOH-0.15 },
+  { label:'analysis demo-graded + labels + pivotal + cluster cleanup',          owner:'Agent 4', s: SH,       e: NOH-0.05 },
+  { label:'MC precompute DONE — 16-run fan, $1.06, committed',                 owner:'Orchestrator', s: NOH-0.60, e: NOH-0.35 },
 ];
 
-// IN FLIGHT (at NOW 1:08 — two items)
+// IN FLIGHT (at NOW 1:35 — CP3 in progress across 3 agents + orchestrator framing)
 const INFLIGHT = [
-  { id:'precompute', label:'REAL MC precompute (balanced 16-run, per-cascade conc 6)',
-    owner:'Orchestrator', s: NOH - 0.25, e: NOH + 0.067,  // expected done ~1:12
-    tip: 'REAL Monte Carlo precompute\nOwner: Orchestrator | Started before NOW\nBalanced 16 runs, per-cascade concurrency 6\nProduces MonteCarloResult + fan + pivotal variable\nExpected done ~1:12pm — gates T-pub\nIN FLIGHT — CRITICAL PATH' },
-  { id:'caption-fix', label:'caption truncation fix (live-Gemini prose)',
-    owner:'Agent 1', s: NOH, e: NOH + 0.15,
-    tip: 'Caption truncation fix\nOwner: Agent 1\nFixes live-Gemini caption truncation on interp panel\nParallel to precompute — non-blocking\nIN FLIGHT' },
+  { id:'CP3-A1', label:'CP3 fan swap + caption fix (Agent 1)',
+    owner:'Agent 1', s: CP3_S, e: CP3_E,
+    tip: 'CP3 — fan swap + caption fix\nOwner: Agent 1 | Started ~1:25pm\nSwap precomputed fan into viz + fix caption truncation on real data\nIN FLIGHT — feeds CP3 completion\nCRITICAL PATH' },
+  { id:'CP3-A4', label:'CP3 cluster cleanup (Agent 4)',
+    owner:'Agent 4', s: CP3_S, e: CP3_E - 0.10,
+    tip: 'CP3 — cluster cleanup\nOwner: Agent 4 | Started ~1:25pm\nClean up cluster labels on real 16-run fan data\nIN FLIGHT — feeds CP3 completion' },
+  { id:'CP3-ORC', label:'framing refinement — make "framing" pivotal (Orchestrator)',
+    owner:'Orchestrator', s: NOH - 0.10, e: CP3_E,
+    tip: 'Framing refinement\nOwner: Orchestrator | Quick re-run\nRefinement to make "framing" the pivotal variable\nIN FLIGHT — non-blocking parallel' },
 ];
-
-// Phase A — critical path times
-const PC_END  = NOH + 0.067;          // ~1:12pm precompute done
-const TPUB_S  = PC_END;               // 1:12pm
-const TPUB_E  = TPUB_S + 0.10;       // 1:18pm
-const CP3_S   = TPUB_E;              // 1:18pm  (allow caption fix to fold in — starts ~1:15–1:18)
-const CP3_E   = CP3_S + 0.50;        // 1:48pm
-const CP4_S   = CP3_E;               // 1:48pm
-const CP4_E   = CP4_S + 0.50;        // 2:18pm ≈ 2:15pm safe demo done
-
-// Phase B start
-const PHB_S   = CP4_E;               // ~2:15–2:18pm
-const RECORD_S = 15 + 30/60;         // 3:30pm
 
 const REM = [
-  // ── Phase A critical path ──
-  { id:'T-pub',  label:'T-pub  publish fan fixtures',           owner:'Orchestrator', s: TPUB_S, d: 0.10, crit:true,  phase:'A', float:0,    ms:false,
-    tip:'T-pub — publish fan fixtures\nOwner: Orchestrator | 0.1h | ~1:12pm\nDeps: precompute\nPublishes MonteCarloResult + representative cascade reps\nCRITICAL PATH — Phase A' },
-  { id:'CP3',    label:'CP3  fan swap + label dedup + caption', owner:'Agent 1',      s: CP3_S,  d: 0.50, crit:true,  phase:'A', float:0,    ms:true,
-    tip:'CP3 — fan swap (~1 line) + A4 label dedup/tune on real data + caption fix\nOwner: Agent 1 | ~1:15–1:45pm\nDeps: T-pub + caption fix landing\nCRITICAL PATH — MILESTONE — Phase A' },
-  { id:'CP4',    label:'CP4  rehearse safe demo end-to-end',    owner:'Orchestrator', s: CP4_S,  d: 0.50, crit:true,  phase:'A', float:0,    ms:true,
-    tip:'CP4 — rehearse safe demo end-to-end\nOwner: Agent 1 lead, all QA\n~1:45–2:15pm\nDeps: CP3\nCRITICAL PATH — MILESTONE\nSafe demo complete + shippable at end of CP4\nPhase A lands ~2:15pm — 1h 45min slack to 4pm' },
+  // ── Phase A critical path milestone ──
+  { id:'CP3',    label:'CP3  fan swap + label dedup + caption + framing', owner:'Agent 1',      s: CP3_S,  d: 0.50, crit:true,  phase:'A', float:0,    ms:true,
+    tip:'CP3 — fan swap (~1 line) + A4 cluster cleanup on real data + caption fix + framing as pivotal\nOwner: Agent 1 lead | ~1:25–1:55pm\nCRITICAL PATH — MILESTONE — Phase A\nIn-flight NOW' },
+  { id:'CP4',    label:'CP4  rehearse safe demo end-to-end',    owner:'Agent 1',      s: CP4_S,  d: 0.35, crit:true,  phase:'A', float:0,    ms:true,
+    tip:'CP4 — rehearse safe demo end-to-end\nOwner: Agent 1 lead, all QA\n~1:55–2:15pm\nDeps: CP3\nCRITICAL PATH — MILESTONE\nSafe demo complete + shippable at end of CP4\nPhase A lands ~2:15pm — 1h 45min slack to 4pm' },
   // ── Phase A parallel non-critical ──
-  { id:'A4-dedup', label:'A4-dedup  label dedup / tune',        owner:'Agent 4',      s: NOH,    d: 0.25, crit:false, phase:'A', float:0.35, ms:false,
-    tip:'A4-dedup — label dedup + tune on real data\nOwner: Agent 4 | 0.25h | starts ~1:08pm\nFeeds CP3\nParallel to precompute — non-critical' },
-  { id:'A2-fix',   label:'A2-fix  soften 2 dossier claims',     owner:'Agent 2',      s: NOH,    d: 0.25, crit:false, phase:'A', float:0.50, ms:false,
-    tip:'A2-fix — soften Anthropic dossier claims\nOwner: Agent 2 | 0.25h | starts ~1:08pm\nMinor polish — float ~0.5h' },
+  { id:'A2-fix',   label:'A2-fix  soften 2 dossier claims',     owner:'Agent 2',      s: NOH - 0.20,    d: 0.25, crit:false, phase:'A', float:0.50, ms:false,
+    tip:'A2-fix — soften Anthropic dossier claims\nOwner: Agent 2 | 0.25h\nMinor polish — float ~0.5h' },
   // ── Phase B — Live Streaming Upgrade ──
-  { id:'B-kernel', label:'B: kernel streams ticks as they complete', owner:'Orchestrator', s: PHB_S,          d: 0.35, crit:false, phase:'B', float:0.20, ms:false,
-    tip:'Phase B — kernel tick streaming\nOwner: Orchestrator\nStreams tick results as each wave completes\nHero cascade runs tick-by-tick LIVE on screen\n~2:15–2:35pm' },
-  { id:'B-viz',    label:'B: viz renders per-tick as they arrive', owner:'Agent 1',       s: PHB_S + 0.10,   d: 0.40, crit:false, phase:'B', float:0.15, ms:false,
+  { id:'B-kernel', label:'B: Orch builds kernel tick streaming API', owner:'Orchestrator', s: PHB_S,          d: 0.35, crit:false, phase:'B', float:0.20, ms:false,
+    tip:'Phase B — kernel tick streaming API\nOwner: Orchestrator\nBuilds streaming API so hero cascade results arrive tick-by-tick\nBig push after CP4 rehearsal\n~2:15–2:35pm' },
+  { id:'B-sse',    label:'B: Agent 3 builds SSE endpoint',           owner:'Agent 3',       s: PHB_S,          d: 0.35, crit:false, phase:'B', float:0.20, ms:false,
+    tip:'Phase B — SSE streaming endpoint\nOwner: Agent 3\nBuilds Server-Sent Events endpoint for live Gemini tick resolution\nParallel to B-kernel\n~2:15–2:35pm' },
+  { id:'B-viz',    label:'B: Agent 1 renders per-tick as they arrive', owner:'Agent 1',      s: PHB_S + 0.10,   d: 0.40, crit:false, phase:'B', float:0.15, ms:false,
     tip:'Phase B — viz per-tick rendering\nOwner: Agent 1\nViz renders each tick wave as it arrives from kernel\nGemini resolving each tick onto the graph\n~2:25–3:00pm' },
-  { id:'B-stream', label:'B: streaming endpoint plumbing',         owner:'Agent 3',       s: PHB_S,          d: 0.35, crit:false, phase:'B', float:0.20, ms:false,
-    tip:'Phase B — streaming endpoint\nOwner: Agent 3\nPlumbs streaming endpoint for live Gemini tick resolution\n~2:15–2:35pm' },
-  { id:'B-wire',   label:'B-stretch: Live Wire (float)',            owner:'Orchestrator', s: PHB_S + 0.70,   d: 0.40, crit:false, phase:'B', float:0.20, ms:false,
+  { id:'B-wire',   label:'B-stretch: Live Wire (float)',              owner:'Orchestrator', s: PHB_S + 0.70,   d: 0.40, crit:false, phase:'B', float:0.20, ms:false,
     tip:'Live Wire — exogenous mid-cascade injection\nOwner: Orchestrator | FLOAT / STRETCH\nReal-time operator shock into a live cascade\nOnly if rock-solid before 3:15pm\nDo not block Phase C' },
-  { id:'B-anth',   label:'B-stretch: Anthropic generalization (float)', owner:'Agent 3',  s: PHB_S + 0.60,   d: 0.35, crit:false, phase:'B', float:0.20, ms:false,
+  { id:'B-anth',   label:'B-stretch: Anthropic generalization (float)', owner:'Agent 3',    s: PHB_S + 0.60,   d: 0.35, crit:false, phase:'B', float:0.20, ms:false,
     tip:'Anthropic generalization beat\nOwner: Agent 3 | FLOAT\nRun same sweep on 57-node Anthropic world\nDemonstrates model generalizes across org archetypes\nDo not block Phase C' },
   // ── Phase C — Final Rehearsal + Record ──
-  { id:'REHEARSE', label:'C: final rehearsal',                     owner:'Orchestrator', s: RECORD_S,        d: 0.17, crit:false, phase:'C', float:0,    ms:false,
+  { id:'REHEARSE', label:'C: final rehearsal',                         owner:'Orchestrator', s: RECORD_S,        d: 0.17, crit:false, phase:'C', float:0,    ms:false,
     tip:'Phase C — final rehearsal\n~3:30–3:40pm\nOwner: all\nLock live vs precompute decision\nEnsure escape hatch bound' },
-  { id:'RECORD',   label:'C: RECORD video',                        owner:'Orchestrator', s: TAH,             d: 0.20, crit:false, phase:'C', float:0,    ms:true,
+  { id:'RECORD',   label:'C: RECORD video',                            owner:'Orchestrator', s: TAH,             d: 0.20, crit:false, phase:'C', float:0,    ms:true,
     tip:'RECORD video\nTarget: 4:00pm\nPhase A safe demo done ~2:15pm\n~1h 45min to polish + Phase B upgrade\nSubmit by 5:00pm' },
 ];
 
@@ -449,7 +477,7 @@ let html = `<div style="position:relative;">
 <div style="position:absolute;top:26px;left:210px;width:${GW}px;height:calc(100% - 26px);pointer-events:none;z-index:8;">
   <!-- NOW line -->
   <div class="vl vl-n" style="left:${NOX.toFixed(1)}px;">
-    <div class="vll vll-n">NOW 1:08</div>
+    <div class="vll vll-n">NOW 1:35</div>
   </div>
   <!-- TARGET line -->
   <div class="vl vl-t" style="left:${TAX.toFixed(1)}px;">
@@ -488,8 +516,8 @@ for (const ow of ownerOrder) {
   </div>`;
 }
 
-// ── In-flight section ──
-html += `<div class="divrow"><div class="divlbl">in flight (now)</div><div class="divline"></div></div>`;
+// ── In-flight section (CP3 in progress) ──
+html += `<div class="divrow"><div class="divlbl crit-section">&#9632; CP3 in flight (now)</div><div class="divline crit-line"></div></div>`;
 for (const t of INFLIGHT) {
   const c = OC[t.owner];
   const x = px(t.s, GW), w = px(t.e, GW) - x;
@@ -500,7 +528,7 @@ for (const t of INFLIGHT) {
   </div>`;
 }
 
-// ── Phase A — Critical path ──
+// ── Phase A — Critical path remaining ──
 html += `<div class="divrow"><div class="divlbl crit-section">&#9632; Phase A &mdash; Critical</div><div class="divline crit-line"></div></div>`;
 const phaseA = REM.filter(t => t.crit && t.phase === 'A');
 for (const t of phaseA) {
@@ -577,58 +605,66 @@ const dsv = document.getElementById('dsv');
 // Layout: Phase A critical chain across top row; parallel feeders below; Phase B cluster right; Phase C far right
 const N = {
   // Done inputs (left col)
-  core:     { x:55,  y:55,  lns:['core sim','done'],             col:'#5bd1a0', done:true  },
-  world:    { x:55,  y:118, lns:['world','208+57','done'],        col:'#5bd1a0', done:true  },
-  viz:      { x:55,  y:180, lns:['viz+console','CP1 done'],       col:'#5bd1a0', done:true  },
-  L2:       { x:55,  y:242, lns:['L2 LLM','done'],               col:'#5bd1a0', done:true  },
+  core:     { x:55,  y:55,  lns:['core sim','MC sweep','done'],          col:'#5bd1a0', done:true  },
+  world:    { x:55,  y:125, lns:['world','208+57','done'],               col:'#5bd1a0', done:true  },
+  viz:      { x:55,  y:195, lns:['viz+console','CP1 done'],              col:'#5bd1a0', done:true  },
+  L2:       { x:55,  y:265, lns:['L2 LLM +','net-retry','done'],        col:'#5bd1a0', done:true  },
 
-  // In flight
-  precomp:  { x:215, y:55,  lns:['precompute','16-run','~1:12'],  col:'#e0a155', inflight:true },
-  captfix:  { x:215, y:200, lns:['caption fix','A1 inflight'],    col:'#38bdf8', inflight:true },
+  // Precompute DONE
+  precomp:  { x:215, y:55,  lns:['MC precompute','16-run fan','DONE ✓'], col:'#5bd1a0', done:true  },
 
-  // Phase A critical path (bold red)
-  tpub:     { x:370, y:55,  lns:['T-pub','0.1h','~1:12'],        col:'#e0556b', crit:true  },
-  cp3:      { x:520, y:55,  lns:['CP3','fan+interp','0.5h'],     col:'#e0556b', crit:true, ms:true  },
-  cp4:      { x:660, y:55,  lns:['CP4','rehearsal','0.5h'],      col:'#e0556b', crit:true, ms:true  },
-  safedemo: { x:790, y:55,  lns:['SAFE','DEMO','~2:15pm'],       col:'#5bd1a0', ms:true    },
+  // CP3 In flight (three agents + orch)
+  cp3a1:    { x:370, y:55,  lns:['CP3 A1','fan swap','caption'],        col:'#e0a155', inflight:true },
+  cp3a4:    { x:370, y:145, lns:['CP3 A4','cluster','cleanup'],         col:'#e0a155', inflight:true },
+  cp3orc:   { x:370, y:225, lns:['CP3 Orch','framing','pivotal'],       col:'#e0a155', inflight:true },
 
-  // Phase A parallel feeders
-  a4dedup:  { x:370, y:180, lns:['A4-dedup','0.25h'],            col:'#fb7185', crit:false },
-  a2fix:    { x:215, y:300, lns:['A2-fix','0.25h'],              col:'#5bd1a0', crit:false },
+  // CP3 milestone
+  cp3ms:    { x:510, y:90,  lns:['CP3','DONE','~1:55pm'],               col:'#e0556b', crit:true, ms:true  },
+
+  // Phase A critical path
+  cp4:      { x:645, y:90,  lns:['CP4','rehearse','~2:15'],             col:'#e0556b', crit:true, ms:true  },
+  safedemo: { x:790, y:90,  lns:['SAFE','DEMO','~2:15pm'],              col:'#5bd1a0', ms:true    },
+
+  // Phase A parallel non-critical
+  a2fix:    { x:215, y:330, lns:['A2-fix','0.25h'],                     col:'#5bd1a0', crit:false },
 
   // Phase B cluster
-  bkernel:  { x:790, y:155, lns:['B: kernel','tick stream'],     col:'#38bdf8', phaseB:true },
-  bviz:     { x:790, y:220, lns:['B: viz','per-tick'],           col:'#38bdf8', phaseB:true },
-  bstream:  { x:790, y:285, lns:['B: endpoint','stream'],        col:'#c084fc', phaseB:true },
-  bwire:    { x:930, y:190, lns:['LiveWire','STRETCH'],          col:'#4d6080', crit:false },
-  banth:    { x:930, y:270, lns:['Anthropic','gen beat'],        col:'#c084fc', crit:false },
+  bkernel:  { x:790, y:175, lns:['B: Orch','kernel','tick API'],        col:'#38bdf8', phaseB:true },
+  bsse:     { x:790, y:255, lns:['B: A3','SSE','endpoint'],             col:'#c084fc', phaseB:true },
+  bviz:     { x:790, y:330, lns:['B: A1 viz','per-tick','render'],      col:'#38bdf8', phaseB:true },
+  bwire:    { x:930, y:205, lns:['LiveWire','STRETCH'],                 col:'#4d6080', crit:false },
+  banth:    { x:930, y:290, lns:['Anthropic','gen beat'],               col:'#c084fc', crit:false },
 
   // Phase C
-  record:   { x:930, y:55,  lns:['RECORD','4:00pm'],            col:'#a78bfa', ms:true    },
+  record:   { x:930, y:90,  lns:['RECORD','4:00pm'],                   col:'#a78bfa', ms:true    },
 };
 
 const EDGES = [
-  // feeds into precompute (critical)
+  // feeds into precompute — all done
   ['core',    'precomp',  true ],
   ['world',   'precomp',  true ],
   ['L2',      'precomp',  true ],
-  // feeds into CP3
-  ['viz',     'cp3',      false],
-  ['captfix', 'cp3',      false],
+  // precompute done -> CP3 agents
+  ['precomp', 'cp3a1',    true ],
+  ['precomp', 'cp3a4',    false],
+  ['precomp', 'cp3orc',   false],
+  // viz feeds CP3-A1
+  ['viz',     'cp3a1',    false],
+  // CP3 agents -> CP3 milestone
+  ['cp3a1',   'cp3ms',    true ],
+  ['cp3a4',   'cp3ms',    false],
+  ['cp3orc',  'cp3ms',    false],
   // critical chain
-  ['precomp', 'tpub',     true ],
-  ['tpub',    'cp3',      true ],
-  ['cp3',     'cp4',      true ],
+  ['cp3ms',   'cp4',      true ],
   ['cp4',     'safedemo', true ],
-  // parallel into CP3
-  ['a4dedup', 'cp3',      false],
+  // a2fix parallel into CP4
   ['a2fix',   'cp4',      false],
   // safe demo to record (Phase C)
   ['safedemo','record',   true ],
   // Phase B from safe demo
   ['safedemo','bkernel',  false],
+  ['safedemo','bsse',     false],
   ['safedemo','bviz',     false],
-  ['safedemo','bstream',  false],
   // float
   ['bwire',   'record',   false],
   ['banth',   'record',   false],
@@ -647,23 +683,32 @@ let sv = `<defs>
   <marker id="ab"  markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
     <path d="M0,0 L7,3.5 L0,7 Z" fill="#38bdf8"/>
   </marker>
+  <marker id="aamb" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+    <path d="M0,0 L7,3.5 L0,7 Z" fill="#e0a155"/>
+  </marker>
 </defs>`;
 
 // Phase region labels
-sv += `<rect x="330" y="8" width="500" height="310" rx="6" fill="none" stroke="rgba(224,85,107,0.12)" stroke-width="1" stroke-dasharray="5 4"/>`;
+sv += `<rect x="330" y="8" width="510" height="120" rx="6" fill="none" stroke="rgba(224,85,107,0.12)" stroke-width="1" stroke-dasharray="5 4"/>`;
 sv += `<text x="336" y="22" font-family="-apple-system,system-ui,sans-serif" font-size="8" font-weight="700" fill="rgba(224,85,107,0.5)" letter-spacing="0.6">PHASE A — SAFE DEMO (CRITICAL)</text>`;
-sv += `<rect x="750" y="135" width="210" height="175" rx="6" fill="none" stroke="rgba(56,189,248,0.15)" stroke-width="1" stroke-dasharray="5 4"/>`;
-sv += `<text x="756" y="150" font-family="-apple-system,system-ui,sans-serif" font-size="8" font-weight="700" fill="rgba(56,189,248,0.4)" letter-spacing="0.6">PHASE B — LIVE STREAMING</text>`;
+sv += `<rect x="750" y="155" width="210" height="200" rx="6" fill="none" stroke="rgba(56,189,248,0.15)" stroke-width="1" stroke-dasharray="5 4"/>`;
+sv += `<text x="756" y="170" font-family="-apple-system,system-ui,sans-serif" font-size="8" font-weight="700" fill="rgba(56,189,248,0.4)" letter-spacing="0.6">PHASE B — LIVE STREAMING</text>`;
+
+// CP3 in-flight cluster box
+sv += `<rect x="330" y="128" width="210" height="126" rx="6" fill="none" stroke="rgba(224,161,85,0.25)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+sv += `<text x="336" y="142" font-family="-apple-system,system-ui,sans-serif" font-size="8" font-weight="700" fill="rgba(224,161,85,0.55)" letter-spacing="0.5">CP3 IN FLIGHT</text>`;
 
 for (const [f, t, cr] of EDGES) {
   const n1 = N[f], n2 = N[t];
   let col, sw, mark, dash;
-  if (cr && n2.ms && !n2.phaseB) {
+  if (n1.inflight || n2.inflight) {
+    col='rgba(224,161,85,0.6)'; sw=1.8; mark='url(#aamb)'; dash='stroke-dasharray="4 3"';
+  } else if (cr && n2.ms && !n2.phaseB) {
     col='#5bd1a0'; sw=2; mark='url(#agr)'; dash='';
   } else if (cr) {
     col='#e0556b'; sw=2.5; mark='url(#ar)'; dash='';
   } else if (n1.phaseB || n2.phaseB) {
-    col='#38bdf8'; sw=1.2; mark='url(#ab)'; dash='stroke-dasharray="5 3"'; col='rgba(56,189,248,0.5)';
+    col='rgba(56,189,248,0.5)'; sw=1.2; mark='url(#ab)'; dash='stroke-dasharray="5 3"';
   } else {
     col='#2e3550'; sw=1.2; mark='url(#ag)'; dash='stroke-dasharray="5 3"';
   }
@@ -713,8 +758,7 @@ for (const [id, n] of Object.entries(N)) {
 
 // Annotations
 sv += `<text x="370" y="16" font-family="-apple-system,system-ui,sans-serif" font-size="9" font-weight="700" fill="#e0556b" letter-spacing="0.5">CRITICAL PATH</text>`;
-sv += `<text x="370" y="27" font-family="-apple-system,system-ui,sans-serif" font-size="8" fill="#4a5070">precompute &#8594; T-pub(0.1h) &#8594; CP3(0.5h) &#8594; CP4(0.5h) &#8594; SAFE DEMO ~2:15pm &#8658; 1h 45min slack &#8594; Phase B + C</text>`;
-sv += `<text x="370" y="168" font-family="-apple-system,system-ui,sans-serif" font-size="8" fill="#4a5070">parallel feeders (start ~1:08, feed CP3)</text>`;
+sv += `<text x="370" y="27" font-family="-apple-system,system-ui,sans-serif" font-size="8" fill="#4a5070">MC fan DONE &#8594; CP3 in-flight(fan swap+framing+cluster) &#8594; CP4(0.35h) &#8594; SAFE DEMO ~2:15pm &#8658; 1h 45min slack &#8594; Phase B + C</text>`;
 
 dsv.innerHTML = sv;
 
