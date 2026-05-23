@@ -106,6 +106,36 @@ describe("analyze", () => {
     expect(result.pivotal.explainedVariance).toBeLessThanOrEqual(1);
   });
 
+  it("absorbs outlier singletons into well-populated clusters (clean fan)", () => {
+    // Reproduces the live 16-run shape: two real regimes (7 each) + two lone
+    // outliers. Without absorption these read as 4 clusters incl. 2 singletons.
+    const noiseDials = { seedTiming: [0, 24] as [number, number] };
+    const cascades = [
+      ...drawRegime(
+        real,
+        { count: 7, perturbation: { framing: "independent" }, sentimentBias: 0.3, divergence: 1, noiseDials },
+        700,
+      ),
+      ...drawRegime(
+        real,
+        { count: 7, perturbation: { framing: "integrated" }, sentimentBias: -0.3, divergence: 3, noiseDials },
+        800,
+      ),
+      perturbCascade(real, { count: 1, perturbation: { framing: "independent" }, sentimentBias: 0.95, divergence: 0, noiseDials }, 900),
+      perturbCascade(real, { count: 1, perturbation: { framing: "integrated" }, sentimentBias: -0.95, divergence: 6, noiseDials }, 901),
+    ];
+    expect(cascades.length).toBe(16);
+
+    const result = analyze(cascades, opts);
+    expect(() => MonteCarloResultSchema.parse(result)).not.toThrow();
+    expect(result.clusters.length).toBeGreaterThanOrEqual(2);
+    expect(result.clusters.length).toBeLessThanOrEqual(3);
+    // No singletons: every cluster is well-populated.
+    for (const c of result.clusters) expect(c.memberRunIds.length).toBeGreaterThanOrEqual(2);
+    // Runs are still fully partitioned.
+    expect(result.clusters.flatMap((c) => c.memberRunIds).length).toBe(16);
+  });
+
   it("picks a numeric dial via the η² (correlation-ratio) path", () => {
     const noiseDials = { seedTiming: [0, 24] as [number, number] };
     const cascades = [
