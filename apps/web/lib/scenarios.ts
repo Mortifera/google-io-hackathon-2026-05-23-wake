@@ -1,6 +1,6 @@
 import type { Cascade, MonteCarloResult } from "@wake/contracts";
 import acquisitionCascade from "@fixtures/cascades/notion-world.acquisition.json";
-import acquisitionMc from "@fixtures/montecarlo/notion-acquisition.json";
+import acquisitionMc from "@fixtures/montecarlo/notion-world.acquisition.json";
 
 /**
  * Registry of precomputed scenarios, keyed by `seedActionId` (matching the
@@ -18,7 +18,7 @@ export interface Scenario {
 export const SCENARIOS: Record<string, Scenario> = {
   acquisition: {
     cascade: acquisitionCascade as unknown as Cascade,
-    // Real analysis arrives at CP3; until then the fan reads the fixture.
+    // CP3: the real Monte Carlo analysis (16 runs → 4 clusters + pivotal).
     mc: acquisitionMc as unknown as MonteCarloResult,
   },
 };
