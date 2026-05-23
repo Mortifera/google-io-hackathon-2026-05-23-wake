@@ -232,12 +232,16 @@ export interface PlaybackFrame {
 }
 
 export function resolveFrame(model: CascadeModel, p: number): PlaybackFrame {
-  const last = model.ticks.length - 1;
-  const clamped = Math.max(0, Math.min(last, p));
-  const act = Math.min(last, Math.floor(clamped));
-  const sub = clamped - act;
-  const tick = Math.round(clamped);
+  // Playback runs across [0, nTicks] so every act — including the last — gets
+  // its full [i, i+1) animation window; p === nTicks parks on the final frame
+  // with the last act fully played.
+  const nTicks = model.ticks.length;
+  const lastIdx = Math.max(0, nTicks - 1);
+  const clamped = Math.max(0, Math.min(nTicks, p));
+  const act = Math.min(lastIdx, Math.floor(clamped));
+  const sub = Math.min(1, clamped - act);
+  const tick = Math.min(lastIdx, Math.round(clamped));
   const c0 = model.clocks[act] ?? 0;
-  const c1 = model.clocks[Math.min(last, act + 1)] ?? c0;
+  const c1 = model.clocks[Math.min(lastIdx, act + 1)] ?? c0;
   return { p: clamped, act, sub, tick, clock: c0 + (c1 - c0) * sub };
 }

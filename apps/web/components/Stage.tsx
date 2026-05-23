@@ -42,7 +42,8 @@ function fmtClock(min: number): string {
 export default function Stage({ cascade, mc, world }: Props) {
   const graph = useMemo(() => buildGraphModel(cascade, world), [cascade, world]);
   const model = useMemo(() => buildCascadeModel(cascade, graph), [cascade, graph]);
-  const last = Math.max(0, model.ticks.length - 1);
+  // Playback spans [0, nTicks] so the final act animates fully (see resolveFrame).
+  const last = model.ticks.length;
 
   const pb = usePlayback(last);
   const [view, setView] = useState<View>("cascade");
