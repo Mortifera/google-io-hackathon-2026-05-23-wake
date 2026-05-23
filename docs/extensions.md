@@ -59,6 +59,30 @@ on demand." Higher effort (cloud agent deploy).
 
 ---
 
+## 💡 5. Action-variant lab (decision optimization) — the killer product turn
+Today Wake shows the consequence space of *one* action. Make the **trigger action
+user-controllable** and runnable as live experiments across variants, so the
+question shifts from "what happens?" to "**which way should I do it?**":
+- **Variants of the same action:** reword the announcement 10 ways; joint
+  announcement vs. solo; choose the channel; choose the framing dial.
+- **Sequenced actions:** do community brand-work in the most-hostile cohorts
+  *first*, *then* launch — and measure whether it de-risks the outrage.
+- **Compare fans side by side** and surface **which variant** minimizes backlash /
+  maximizes the target outcome → a recommended variant.
+This turns Wake from "watch what happens" into "find the best way to do it" — a
+decision-optimization tool, the strongest product direction. **Backend already
+exists**: the Monte Carlo sweep engine (perturbation → fan); this exposes it as a
+user-facing variant/sequence explorer with side-by-side fan comparison.
+
+## 💡 6. Node & edge introspection (the reasoning, not just the trace)
+Open any node → read its actual **system prompt / dossier** (what's driving it) +
+its **per-tick rationale** ("why I did this"); open any edge → see its
+**channel-transform prompt** and how it distorted a message. Today the inspector
+shows the causal DAG trace; this shows the *reasoning behind* each decision.
+Mostly near-term: per-event `rationale` is already captured by the kernel and
+dossiers live in the world — largely a richer inspector panel (+ optionally a live
+"explain this node's reasoning" Flash call).
+
 ## ✅ Already shipped (were on the wishlist)
 - **Butterfly Trace** (interpretability causal chain) — the "ask why" money-shot:
   real `causedBy` DAG trace + cited ids + cinematic backward animation, with a
