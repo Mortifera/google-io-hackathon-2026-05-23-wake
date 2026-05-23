@@ -9,7 +9,7 @@ import {
 } from "../lib/model";
 import { explainEvent, explainNode, type ExplanationResult } from "../lib/explain";
 import { usePlayback } from "../lib/usePlayback";
-import { AFFECT_LEGEND } from "../lib/palette";
+import { AFFECT_LEGEND, affectStyle } from "../lib/palette";
 import { DEFAULT_ACTION_ID, isLive, scenarioFor } from "../lib/scenarios";
 import GraphCanvas, { type TraceViz } from "./GraphCanvas";
 import Transport from "./Transport";
@@ -67,26 +67,67 @@ export default function Stage({ world }: Props) {
   const nonceRef = useRef(0);
 
   // Run the DAG trace-back and enter the cinematic "why" mode (pauses playback).
+  // The local trace renders instantly; we then try to enrich the prose with the
+  // live @wake/interp explain() via the API route, falling back silently.
   const runExplain = useCallback(
     (f: Focus) => {
       let exp: ExplanationResult | null = null;
       let anchorId = "";
+      let question = "";
       if (f.kind === "node") {
         exp = explainNode(model, graph, f.id);
         anchorId = f.id;
+        const label = graph.nodes.find((n) => n.id === f.id)?.label ?? f.id;
+        const finalSt =
+          model.resolvedStates[model.resolvedStates.length - 1]?.[f.id];
+        const affect = finalSt ? affectStyle(finalSt).label.toLowerCase() : "";
+        question = `Why did ${label} end up ${affect}?`.trim();
       } else if (f.kind === "event") {
         exp = explainEvent(model, graph, f.id);
-        anchorId = model.eventById.get(f.id)?.target ?? "";
+        const ev = model.eventById.get(f.id);
+        anchorId = ev?.target ?? "";
+        question = ev ? `Why did this happen: "${ev.content}"?` : "";
       }
       if (!exp || !exp.chain.length) {
         setTrace(null);
         return;
       }
       nonceRef.current += 1;
-      setTrace({ exp, anchorId, nonce: nonceRef.current });
+      const myNonce = nonceRef.current;
+      setTrace({ exp, anchorId, nonce: myNonce });
       pause();
+
+      if (question) {
+        fetch("/api/explain", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ seedActionId: actionId, question }),
+        })
+          .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
+          .then((live: { answer?: string; citedEventIds?: string[] }) => {
+            if (!live?.answer) return;
+            setTrace((t) =>
+              t && t.nonce === myNonce
+                ? {
+                    ...t,
+                    exp: {
+                      ...t.exp,
+                      answer: live.answer as string,
+                      citedEventIds: live.citedEventIds?.length
+                        ? live.citedEventIds
+                        : t.exp.citedEventIds,
+                      source: "model",
+                    },
+                  }
+                : t,
+            );
+          })
+          .catch(() => {
+            /* keep the templated trace */
+          });
+      }
     },
-    [model, graph, pause],
+    [model, graph, pause, actionId],
   );
 
   // Clicking an event is itself a "why" gesture → trace it. Selecting a node

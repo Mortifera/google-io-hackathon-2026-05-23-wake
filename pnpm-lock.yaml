@@ -26,6 +26,12 @@ importers:
       '@wake/contracts':
         specifier: workspace:*
         version: link:../../packages/contracts
+      '@wake/interp':
+        specifier: workspace:*
+        version: link:../../packages/interp
+      '@wake/llm':
+        specifier: workspace:*
+        version: link:../../packages/llm
       d3-force:
         specifier: ^3.0.0
         version: 3.0.0

@@ -183,7 +183,7 @@ function ExplanationView({
       <div className={s.explainHead}>
         Interpretability
         <span className={s.explainBadge}>
-          {exp.source === "local-trace" ? "DAG trace · stub" : "live"}
+          {exp.source === "model" ? "live · Gemini" : "DAG trace"}
         </span>
       </div>
       <div className={s.explainText}>{exp.answer}</div>
