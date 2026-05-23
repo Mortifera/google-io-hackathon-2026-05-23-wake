@@ -1,0 +1,1223 @@
+{
+  "meta": {
+    "worldId": "notion-mini",
+    "seedActionId": "acquisition",
+    "seed": 1
+  },
+  "ticks": [
+    {
+      "clock": 0,
+      "activeNodeIds": [
+        "notion-corp"
+      ],
+      "events": [
+        {
+          "id": "e1",
+          "type": "action",
+          "source": "world",
+          "target": "notion-corp",
+          "channel": "seed",
+          "content": "Microsoft announces it is acquiring Notion. Official messaging emphasizes that Notion will operate independently.",
+          "time": 0,
+          "causedBy": null,
+          "rationale": "Injected action."
+        },
+        {
+          "id": "e2",
+          "type": "private_message",
+          "source": "notion-corp",
+          "target": "ivan-zhao",
+          "channel": "internal-leadership",
+          "content": "Ivan, the Microsoft acquisition news is officially live. We need to move immediately to control the narrative. I am finalizing the external press release now, but our critical priority is managing internal reaction. We must align on a unified front that guarantees our product culture and operational autonomy are fully protected. Let's huddle immediately to lock down the internal comms before speculation takes over.",
+          "time": 0,
+          "causedBy": "e1",
+          "rationale": "Sharpened the urgency and strategic focus of the message for leadership, emphasizing control over the narrative and immediate alignment to prevent internal panic."
+        },
+        {
+          "id": "e3",
+          "type": "public_post",
+          "source": "notion-corp",
+          "target": "casey-newton",
+          "channel": "company->journalist",
+          "content": "Hi Casey, sharing our official perspective on today's announcement. We're joining Microsoft to scale our vision faster, but our commitment to craft, independent operation, and our community remains completely unchanged. Happy to share more details when you're ready.",
+          "time": 0,
+          "causedBy": "e1",
+          "rationale": "The original message is already a polished corporate pitch tailored for a journalist, framing the acquisition positively and emphasizing continuity."
+        }
+      ]
+    },
+    {
+      "clock": 15,
+      "activeNodeIds": [
+        "casey-newton"
+      ],
+      "events": [
+        {
+          "id": "e4",
+          "type": "public_post",
+          "source": "casey-newton",
+          "target": "twitter",
+          "channel": "journalist->audience",
+          "content": "Microsoft just swallowed Notion. Despite executives promising 'independence' and 'craft,' history tells us the enterprise giant's gravity is inescapable. Is this the death of the Notion we love? My full analysis coming up in Platformer.",
+          "time": 15,
+          "causedBy": "e3",
+          "rationale": "Sharpened the hook by using 'swallowed' instead of 'joining' and framed the corporate acquisition as a threat to the product's identity ('death of the Notion we love') to maximize audience engagement while maintaining the core analytical skepticism of the original post."
+        },
+        {
+          "id": "e5",
+          "type": "emergent",
+          "source": "casey-newton",
+          "target": "twitter",
+          "channel": "blind",
+          "content": "Private frustration from Casey Newton (Platformer) surfaces anonymously.",
+          "time": 15,
+          "causedBy": "e3",
+          "rationale": "Private divergence grew too large and leaked."
+        }
+      ]
+    },
+    {
+      "clock": 30,
+      "activeNodeIds": [
+        "ivan-zhao"
+      ],
+      "events": [
+        {
+          "id": "e6",
+          "type": "private_message",
+          "source": "ivan-zhao",
+          "target": "eng-manager",
+          "channel": "leadership->report",
+          "content": "In light of the recent Microsoft news, I want to be absolutely clear: our culture, design standards, and product roadmap remain unchanged. We are not shifting toward becoming a standard corporate utility. Your priority is to keep the team focused on the craft of what we are building and to maintain the highest level of engineering quality. I am actively working to protect our autonomy, and I need you to ensure we execute at our highest standards.",
+          "time": 30,
+          "causedBy": "e2",
+          "rationale": "Maintained the authoritative, priority-setting tone of the CEO's directive while formalizing it slightly for the leadership-to-report channel, ensuring the expectations of high engineering quality and focus remain clear."
+        }
+      ]
+    },
+    {
+      "clock": 45,
+      "activeNodeIds": [
+        "twitter"
+      ],
+      "events": [
+        {
+          "id": "e7",
+          "type": "public_post",
+          "source": "twitter",
+          "target": "prod-twitter",
+          "channel": "platform-amplification",
+          "content": "Trending — 🚨 MICROSOFT BUYS NOTION 🚨 'Is this the death of the Notion we love?' Tech world reacts with fury and panic as the enterprise giant swallows another beloved indie tool. RIP Notion? Let the flame wars begin. 👇",
+          "time": 45,
+          "causedBy": "e5",
+          "rationale": "Amplifying Casey Newton's alarmist take directly to the productivity crowd to maximize outrage and drive viral engagement."
+        }
+      ]
+    },
+    {
+      "clock": 75,
+      "activeNodeIds": [
+        "eng-manager",
+        "prod-twitter"
+      ],
+      "events": [
+        {
+          "id": "e8",
+          "type": "public_post",
+          "source": "prod-twitter",
+          "target": "notion-corp",
+          "channel": "customer->cohort",
+          "content": "How could you sell out to Microsoft? You built a community on craft and independence, and now you're just another Office 365 feature. Is there any plan to protect the product from getting bloated and ruined?",
+          "time": 75,
+          "causedBy": "e7",
+          "rationale": "We feel deeply betrayed by this acquisition and need to hold the company accountable publicly."
+        },
+        {
+          "id": "e9",
+          "type": "emergent",
+          "source": "prod-twitter",
+          "target": "twitter",
+          "channel": "blind",
+          "content": "Private frustration from Productivity Twitter (cohort) surfaces anonymously.",
+          "time": 75,
+          "causedBy": "e7",
+          "rationale": "Private divergence grew too large and leaked."
+        }
+      ]
+    },
+    {
+      "clock": 105,
+      "activeNodeIds": [
+        "twitter"
+      ],
+      "events": [
+        {
+          "id": "ea",
+          "type": "public_post",
+          "source": "twitter",
+          "target": "prod-twitter",
+          "channel": "platform-amplification",
+          "content": "Trending — ANONYMOUS LEAKS: Notion power users are 'devastated' and already packing their bags. 'Microsoft will bloat it to death.' Are you staying or leaving? Drop your Obsidian/Logseq migration guides below!",
+          "time": 105,
+          "causedBy": "e9",
+          "rationale": "Feeding their private anxiety back to them as a public crisis to drive maximum engagement and thread-creation."
+        }
+      ]
+    },
+    {
+      "clock": 135,
+      "activeNodeIds": [
+        "notion-corp",
+        "prod-twitter"
+      ],
+      "events": [
+        {
+          "id": "eb",
+          "type": "private_message",
+          "source": "notion-corp",
+          "target": "ivan-zhao",
+          "channel": "internal-leadership",
+          "content": "Ivan, the narrative framing us as a bloated Office 365 clone is gaining traction on Twitter and needs immediate containment. We must aggressively assert our product independence. I propose a two-pronged strategy: first, a personal founder's letter from you reinforcing our product-level autonomy and design philosophy; second, an off-the-record briefing with Casey Newton detailing our governance structure to kill any speculation about Microsoft's influence. We need to set the narrative before it impacts our enterprise pipeline.",
+          "time": 135,
+          "causedBy": "e8",
+          "rationale": "Sharpened the tone to be more urgent, strategic, and direct, emphasizing the business impact (enterprise pipeline) and framing the actions as a cohesive, aggressive strategy suitable for C-suite alignment."
+        },
+        {
+          "id": "ec",
+          "type": "private_message",
+          "source": "notion-corp",
+          "target": "casey-newton",
+          "channel": "company->journalist",
+          "content": "Hi Casey, following our recent acquisition announcement, we've seen a lot of excitement—and some natural questions—from our community about Notion's future. We want to be clear: Notion will continue to operate as an independent brand and product. We've established a robust governance structure specifically designed to preserve our unique culture, product roadmap, and craft-focused approach. Ivan would love to connect for a brief chat to share the concrete details of this agreement and what it means for our users moving forward. Let us know if you have some time today.",
+          "time": 135,
+          "causedBy": "e8",
+          "rationale": "Polished the pitch to frame community 'anxiety' as 'natural questions' and 'excitement', while emphasizing the positive governance structure and offering an exclusive interview with the CEO."
+        },
+        {
+          "id": "ed",
+          "type": "public_post",
+          "source": "prod-twitter",
+          "target": "notion-corp",
+          "channel": "customer->cohort",
+          "content": "You built a beautiful community of creators who championed your craft, only to dump us for a Microsoft buyout. How do you plan to protect our data privacy and keep the app from turning into MS Teams-level bloat?",
+          "time": 135,
+          "causedBy": "ea",
+          "rationale": "I want to publicly hold Notion accountable for abandoning their power-user community."
+        }
+      ]
+    },
+    {
+      "clock": 150,
+      "activeNodeIds": [
+        "casey-newton"
+      ],
+      "events": [
+        {
+          "id": "ee",
+          "type": "public_post",
+          "source": "casey-newton",
+          "target": "twitter",
+          "channel": "journalist->audience",
+          "content": "Can Notion actually survive Microsoft? The productivity darling is scrambling to reassure users, pointing to a 'robust governance structure' to protect its beloved design and roadmap. But history shows tech giants usually swallow startups whole. We're pressing CEO Ivan Zhao for the hard truths on how they plan to stay independent.",
+          "time": 150,
+          "causedBy": "ec",
+          "rationale": "Sharpened the angle to focus on the inherent tension of a startup trying to maintain independence under a tech giant, framing it as a struggle for survival to grab the audience's attention."
+        }
+      ]
+    },
+    {
+      "clock": 165,
+      "activeNodeIds": [
+        "ivan-zhao"
+      ],
+      "events": [
+        {
+          "id": "ef",
+          "type": "private_message",
+          "source": "ivan-zhao",
+          "target": "eng-manager",
+          "channel": "leadership->report",
+          "content": "Ignore the external noise about us becoming a corporate suite. Our priority remains protecting the craft. As you lead the AI features team, ensure everything we build feels uniquely Notion—opinionated, beautiful, and deeply thoughtful, rather than an Office clone. Keep your team strictly focused on taste and quality.",
+          "time": 165,
+          "causedBy": "eb",
+          "rationale": "Maintained the authoritative tone of the CEO, sharpening the focus on maintaining craft, taste, and quality in AI features while dismissing external market noise."
+        }
+      ]
+    },
+    {
+      "clock": 180,
+      "activeNodeIds": [
+        "twitter"
+      ],
+      "events": [
+        {
+          "id": "eg",
+          "type": "public_post",
+          "source": "twitter",
+          "target": "prod-twitter",
+          "channel": "platform-amplification",
+          "content": "Trending — Even the press is calling it: Notion is 'scrambling' to survive. Is Ivan Zhao already losing control? The 'governance structure' defense is pure copium. What's your escape plan? Thread 👇",
+          "time": 180,
+          "causedBy": "ee",
+          "rationale": "Amplifying the journalist's skepticism to validate the community's panic and drive maximum engagement through doom-posting."
+        }
+      ]
+    },
+    {
+      "clock": 195,
+      "activeNodeIds": [
+        "notion-corp"
+      ],
+      "events": [
+        {
+          "id": "eh",
+          "type": "private_message",
+          "source": "notion-corp",
+          "target": "ivan-zhao",
+          "channel": "internal-leadership",
+          "content": "Ivan, the 'MS Teams bloat' narrative is gaining serious traction among our core creator community. We need to neutralize this immediately. We need you to front a highly personal, design-led response that doubles down on Notion's product independence, operational autonomy, and privacy. Let's align on the strategic positioning and review the draft today to get ahead of this.",
+          "time": 195,
+          "causedBy": "ed",
+          "rationale": "Maintained the candid, strategic, and urgent tone appropriate for internal leadership communication, sharpening the focus on neutralizing the competitive threat and aligning on the strategic response."
+        },
+        {
+          "id": "ei",
+          "type": "private_message",
+          "source": "notion-corp",
+          "target": "casey-newton",
+          "channel": "company->journalist",
+          "content": "Hi Casey, following up on our recent transition. We would love to offer you an exclusive look at the robust, legally binding governance safeguards and independent data trusts we have established in partnership with Microsoft. These proactive measures are designed to ensure Notion's continued operational independence, user privacy, and core product identity. Let us know if you have time this week for a brief conversation with our leadership team to discuss these developments.",
+          "time": 195,
+          "causedBy": "ed",
+          "rationale": "Polished the pitch to sound more professional and official, emphasizing positive proactive measures and structural independence for a media exclusive."
+        }
+      ]
+    },
+    {
+      "clock": 210,
+      "activeNodeIds": [
+        "eng-manager",
+        "casey-newton",
+        "prod-twitter"
+      ],
+      "events": [
+        {
+          "id": "ej",
+          "type": "public_post",
+          "source": "casey-newton",
+          "target": "twitter",
+          "channel": "journalist->audience",
+          "content": "Can Notion actually resist the Microsoft Borg? The productivity darling is pitching radical 'legally binding' safeguards and 'data trusts' to prove it won't get swallowed whole. I'm sitting down with CEO Ivan Zhao to find out if these defenses have real teeth—or if they're just PR shields. What do you want me to ask him?",
+          "time": 210,
+          "causedBy": "ei",
+          "rationale": "Sharpened the angle to emphasize the David vs. Goliath narrative between Notion and Microsoft, framing the 'safeguards' as potential PR shields to drive engagement and audience questions."
+        },
+        {
+          "id": "ek",
+          "type": "public_post",
+          "source": "prod-twitter",
+          "target": "notion-corp",
+          "channel": "customer->cohort",
+          "content": "@NotionHQ We don't believe the PR spin anymore. Just give us robust, unthrottled bulk CSV/Markdown export tools so we can leave without our data being held hostage in your new Microsoft cloud.",
+          "time": 210,
+          "causedBy": "eg",
+          "rationale": "I want to publicly hold Notion accountable and demand better export tools to make our mass migration easier."
+        }
+      ]
+    },
+    {
+      "clock": 225,
+      "activeNodeIds": [
+        "ivan-zhao"
+      ],
+      "events": [
+        {
+          "id": "el",
+          "type": "private_message",
+          "source": "ivan-zhao",
+          "target": "eng-manager",
+          "channel": "leadership->report",
+          "content": "We need to actively guard against feature bloat in our AI roadmap. Our community values performance and minimal design above all else. I want you and the AI team to prioritize speed, craft, and polish in every release. Every AI feature we ship must feel lightweight, deliberate, and like a native extension of the user's workflow, rather than an unnecessary add-on. Please review our upcoming pipeline with this lens.",
+          "time": 225,
+          "causedBy": "eh",
+          "rationale": "Transformed the CEO's high-level strategic vision and community feedback into a clear, authoritative directive for the Engineering Manager, emphasizing priorities of speed, minimalism, and polish in AI feature development."
+        }
+      ]
+    },
+    {
+      "clock": 270,
+      "activeNodeIds": [
+        "eng-manager"
+      ],
+      "events": []
+    }
+  ],
+  "eventDag": [
+    {
+      "id": "e1",
+      "type": "action",
+      "source": "world",
+      "target": "notion-corp",
+      "channel": "seed",
+      "content": "Microsoft announces it is acquiring Notion. Official messaging emphasizes that Notion will operate independently.",
+      "time": 0,
+      "causedBy": null,
+      "rationale": "Injected action."
+    },
+    {
+      "id": "e2",
+      "type": "private_message",
+      "source": "notion-corp",
+      "target": "ivan-zhao",
+      "channel": "internal-leadership",
+      "content": "Ivan, the Microsoft acquisition news is officially live. We need to move immediately to control the narrative. I am finalizing the external press release now, but our critical priority is managing internal reaction. We must align on a unified front that guarantees our product culture and operational autonomy are fully protected. Let's huddle immediately to lock down the internal comms before speculation takes over.",
+      "time": 0,
+      "causedBy": "e1",
+      "rationale": "Sharpened the urgency and strategic focus of the message for leadership, emphasizing control over the narrative and immediate alignment to prevent internal panic."
+    },
+    {
+      "id": "e3",
+      "type": "public_post",
+      "source": "notion-corp",
+      "target": "casey-newton",
+      "channel": "company->journalist",
+      "content": "Hi Casey, sharing our official perspective on today's announcement. We're joining Microsoft to scale our vision faster, but our commitment to craft, independent operation, and our community remains completely unchanged. Happy to share more details when you're ready.",
+      "time": 0,
+      "causedBy": "e1",
+      "rationale": "The original message is already a polished corporate pitch tailored for a journalist, framing the acquisition positively and emphasizing continuity."
+    },
+    {
+      "id": "e4",
+      "type": "public_post",
+      "source": "casey-newton",
+      "target": "twitter",
+      "channel": "journalist->audience",
+      "content": "Microsoft just swallowed Notion. Despite executives promising 'independence' and 'craft,' history tells us the enterprise giant's gravity is inescapable. Is this the death of the Notion we love? My full analysis coming up in Platformer.",
+      "time": 15,
+      "causedBy": "e3",
+      "rationale": "Sharpened the hook by using 'swallowed' instead of 'joining' and framed the corporate acquisition as a threat to the product's identity ('death of the Notion we love') to maximize audience engagement while maintaining the core analytical skepticism of the original post."
+    },
+    {
+      "id": "e5",
+      "type": "emergent",
+      "source": "casey-newton",
+      "target": "twitter",
+      "channel": "blind",
+      "content": "Private frustration from Casey Newton (Platformer) surfaces anonymously.",
+      "time": 15,
+      "causedBy": "e3",
+      "rationale": "Private divergence grew too large and leaked."
+    },
+    {
+      "id": "e6",
+      "type": "private_message",
+      "source": "ivan-zhao",
+      "target": "eng-manager",
+      "channel": "leadership->report",
+      "content": "In light of the recent Microsoft news, I want to be absolutely clear: our culture, design standards, and product roadmap remain unchanged. We are not shifting toward becoming a standard corporate utility. Your priority is to keep the team focused on the craft of what we are building and to maintain the highest level of engineering quality. I am actively working to protect our autonomy, and I need you to ensure we execute at our highest standards.",
+      "time": 30,
+      "causedBy": "e2",
+      "rationale": "Maintained the authoritative, priority-setting tone of the CEO's directive while formalizing it slightly for the leadership-to-report channel, ensuring the expectations of high engineering quality and focus remain clear."
+    },
+    {
+      "id": "e7",
+      "type": "public_post",
+      "source": "twitter",
+      "target": "prod-twitter",
+      "channel": "platform-amplification",
+      "content": "Trending — 🚨 MICROSOFT BUYS NOTION 🚨 'Is this the death of the Notion we love?' Tech world reacts with fury and panic as the enterprise giant swallows another beloved indie tool. RIP Notion? Let the flame wars begin. 👇",
+      "time": 45,
+      "causedBy": "e5",
+      "rationale": "Amplifying Casey Newton's alarmist take directly to the productivity crowd to maximize outrage and drive viral engagement."
+    },
+    {
+      "id": "e8",
+      "type": "public_post",
+      "source": "prod-twitter",
+      "target": "notion-corp",
+      "channel": "customer->cohort",
+      "content": "How could you sell out to Microsoft? You built a community on craft and independence, and now you're just another Office 365 feature. Is there any plan to protect the product from getting bloated and ruined?",
+      "time": 75,
+      "causedBy": "e7",
+      "rationale": "We feel deeply betrayed by this acquisition and need to hold the company accountable publicly."
+    },
+    {
+      "id": "e9",
+      "type": "emergent",
+      "source": "prod-twitter",
+      "target": "twitter",
+      "channel": "blind",
+      "content": "Private frustration from Productivity Twitter (cohort) surfaces anonymously.",
+      "time": 75,
+      "causedBy": "e7",
+      "rationale": "Private divergence grew too large and leaked."
+    },
+    {
+      "id": "ea",
+      "type": "public_post",
+      "source": "twitter",
+      "target": "prod-twitter",
+      "channel": "platform-amplification",
+      "content": "Trending — ANONYMOUS LEAKS: Notion power users are 'devastated' and already packing their bags. 'Microsoft will bloat it to death.' Are you staying or leaving? Drop your Obsidian/Logseq migration guides below!",
+      "time": 105,
+      "causedBy": "e9",
+      "rationale": "Feeding their private anxiety back to them as a public crisis to drive maximum engagement and thread-creation."
+    },
+    {
+      "id": "eb",
+      "type": "private_message",
+      "source": "notion-corp",
+      "target": "ivan-zhao",
+      "channel": "internal-leadership",
+      "content": "Ivan, the narrative framing us as a bloated Office 365 clone is gaining traction on Twitter and needs immediate containment. We must aggressively assert our product independence. I propose a two-pronged strategy: first, a personal founder's letter from you reinforcing our product-level autonomy and design philosophy; second, an off-the-record briefing with Casey Newton detailing our governance structure to kill any speculation about Microsoft's influence. We need to set the narrative before it impacts our enterprise pipeline.",
+      "time": 135,
+      "causedBy": "e8",
+      "rationale": "Sharpened the tone to be more urgent, strategic, and direct, emphasizing the business impact (enterprise pipeline) and framing the actions as a cohesive, aggressive strategy suitable for C-suite alignment."
+    },
+    {
+      "id": "ec",
+      "type": "private_message",
+      "source": "notion-corp",
+      "target": "casey-newton",
+      "channel": "company->journalist",
+      "content": "Hi Casey, following our recent acquisition announcement, we've seen a lot of excitement—and some natural questions—from our community about Notion's future. We want to be clear: Notion will continue to operate as an independent brand and product. We've established a robust governance structure specifically designed to preserve our unique culture, product roadmap, and craft-focused approach. Ivan would love to connect for a brief chat to share the concrete details of this agreement and what it means for our users moving forward. Let us know if you have some time today.",
+      "time": 135,
+      "causedBy": "e8",
+      "rationale": "Polished the pitch to frame community 'anxiety' as 'natural questions' and 'excitement', while emphasizing the positive governance structure and offering an exclusive interview with the CEO."
+    },
+    {
+      "id": "ed",
+      "type": "public_post",
+      "source": "prod-twitter",
+      "target": "notion-corp",
+      "channel": "customer->cohort",
+      "content": "You built a beautiful community of creators who championed your craft, only to dump us for a Microsoft buyout. How do you plan to protect our data privacy and keep the app from turning into MS Teams-level bloat?",
+      "time": 135,
+      "causedBy": "ea",
+      "rationale": "I want to publicly hold Notion accountable for abandoning their power-user community."
+    },
+    {
+      "id": "ee",
+      "type": "public_post",
+      "source": "casey-newton",
+      "target": "twitter",
+      "channel": "journalist->audience",
+      "content": "Can Notion actually survive Microsoft? The productivity darling is scrambling to reassure users, pointing to a 'robust governance structure' to protect its beloved design and roadmap. But history shows tech giants usually swallow startups whole. We're pressing CEO Ivan Zhao for the hard truths on how they plan to stay independent.",
+      "time": 150,
+      "causedBy": "ec",
+      "rationale": "Sharpened the angle to focus on the inherent tension of a startup trying to maintain independence under a tech giant, framing it as a struggle for survival to grab the audience's attention."
+    },
+    {
+      "id": "ef",
+      "type": "private_message",
+      "source": "ivan-zhao",
+      "target": "eng-manager",
+      "channel": "leadership->report",
+      "content": "Ignore the external noise about us becoming a corporate suite. Our priority remains protecting the craft. As you lead the AI features team, ensure everything we build feels uniquely Notion—opinionated, beautiful, and deeply thoughtful, rather than an Office clone. Keep your team strictly focused on taste and quality.",
+      "time": 165,
+      "causedBy": "eb",
+      "rationale": "Maintained the authoritative tone of the CEO, sharpening the focus on maintaining craft, taste, and quality in AI features while dismissing external market noise."
+    },
+    {
+      "id": "eg",
+      "type": "public_post",
+      "source": "twitter",
+      "target": "prod-twitter",
+      "channel": "platform-amplification",
+      "content": "Trending — Even the press is calling it: Notion is 'scrambling' to survive. Is Ivan Zhao already losing control? The 'governance structure' defense is pure copium. What's your escape plan? Thread 👇",
+      "time": 180,
+      "causedBy": "ee",
+      "rationale": "Amplifying the journalist's skepticism to validate the community's panic and drive maximum engagement through doom-posting."
+    },
+    {
+      "id": "eh",
+      "type": "private_message",
+      "source": "notion-corp",
+      "target": "ivan-zhao",
+      "channel": "internal-leadership",
+      "content": "Ivan, the 'MS Teams bloat' narrative is gaining serious traction among our core creator community. We need to neutralize this immediately. We need you to front a highly personal, design-led response that doubles down on Notion's product independence, operational autonomy, and privacy. Let's align on the strategic positioning and review the draft today to get ahead of this.",
+      "time": 195,
+      "causedBy": "ed",
+      "rationale": "Maintained the candid, strategic, and urgent tone appropriate for internal leadership communication, sharpening the focus on neutralizing the competitive threat and aligning on the strategic response."
+    },
+    {
+      "id": "ei",
+      "type": "private_message",
+      "source": "notion-corp",
+      "target": "casey-newton",
+      "channel": "company->journalist",
+      "content": "Hi Casey, following up on our recent transition. We would love to offer you an exclusive look at the robust, legally binding governance safeguards and independent data trusts we have established in partnership with Microsoft. These proactive measures are designed to ensure Notion's continued operational independence, user privacy, and core product identity. Let us know if you have time this week for a brief conversation with our leadership team to discuss these developments.",
+      "time": 195,
+      "causedBy": "ed",
+      "rationale": "Polished the pitch to sound more professional and official, emphasizing positive proactive measures and structural independence for a media exclusive."
+    },
+    {
+      "id": "ej",
+      "type": "public_post",
+      "source": "casey-newton",
+      "target": "twitter",
+      "channel": "journalist->audience",
+      "content": "Can Notion actually resist the Microsoft Borg? The productivity darling is pitching radical 'legally binding' safeguards and 'data trusts' to prove it won't get swallowed whole. I'm sitting down with CEO Ivan Zhao to find out if these defenses have real teeth—or if they're just PR shields. What do you want me to ask him?",
+      "time": 210,
+      "causedBy": "ei",
+      "rationale": "Sharpened the angle to emphasize the David vs. Goliath narrative between Notion and Microsoft, framing the 'safeguards' as potential PR shields to drive engagement and audience questions."
+    },
+    {
+      "id": "ek",
+      "type": "public_post",
+      "source": "prod-twitter",
+      "target": "notion-corp",
+      "channel": "customer->cohort",
+      "content": "@NotionHQ We don't believe the PR spin anymore. Just give us robust, unthrottled bulk CSV/Markdown export tools so we can leave without our data being held hostage in your new Microsoft cloud.",
+      "time": 210,
+      "causedBy": "eg",
+      "rationale": "I want to publicly hold Notion accountable and demand better export tools to make our mass migration easier."
+    },
+    {
+      "id": "el",
+      "type": "private_message",
+      "source": "ivan-zhao",
+      "target": "eng-manager",
+      "channel": "leadership->report",
+      "content": "We need to actively guard against feature bloat in our AI roadmap. Our community values performance and minimal design above all else. I want you and the AI team to prioritize speed, craft, and polish in every release. Every AI feature we ship must feel lightweight, deliberate, and like a native extension of the user's workflow, rather than an unnecessary add-on. Please review our upcoming pipeline with this lens.",
+      "time": 225,
+      "causedBy": "eh",
+      "rationale": "Transformed the CEO's high-level strategic vision and community feedback into a clear, authoritative directive for the Engineering Manager, emphasizing priorities of speed, minimalism, and polish in AI feature development."
+    }
+  ],
+  "stateTimeline": [
+    {
+      "tick": 0,
+      "states": {
+        "notion-corp": {
+          "beliefs": "Acquired by Microsoft but operating independently; maintaining our design-led soul and prosumer trust is now our highest strategic priority.",
+          "mood": {
+            "attention": 0.9,
+            "sentiment": 0.2,
+            "urgency": 0.8
+          },
+          "publicFace": "We are thrilled to join forces with Microsoft to accelerate our mission. Notion will continue to operate independently, keeping our unique design, community focus, and product roadmap intact.",
+          "privateInterior": "This acquisition gives us massive enterprise distribution, but we risk immediate backlash from our core prosumer base who fear we will become bloated. We must aggressively protect our brand identity and move quickly to reassure users.",
+          "history": [
+            "world: Microsoft announces it is acquiring Notion. Official messaging emphasizes that Notion will operate independently."
+          ],
+          "commitments": [
+            "Operate independently under Microsoft",
+            "Maintain our core design-led product philosophy"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "states": {
+        "casey-newton": {
+          "beliefs": "Microsoft's acquisition of Notion represents a major consolidation of the productivity space, and despite promises of independence, history shows these tools eventually get absorbed into the broader enterprise suite.",
+          "mood": {
+            "attention": 0.8,
+            "sentiment": -0.4,
+            "urgency": 0.6
+          },
+          "publicFace": "Notion is joining Microsoft. While leadership promises 'independent operation' and a continued focus on 'craft,' we've seen this playbook before. The gravity of the Office suite is hard to escape.",
+          "privateInterior": "Another beloved indie tool gets swallowed by the Redmond machine. The 'independent operation' promise is classic PR; let's see how long it lasts before they are fully integrated into Teams and bundled to death.",
+          "history": [
+            "notion-corp: Hi Casey, sharing our official perspective on today's announcement. We're joining Microsoft to scale our vision faster, but our commitment to craft, independent operation, and our community remains completely unchanged. Happy to share more details when you're ready."
+          ],
+          "commitments": [
+            "Analyze the Notion acquisition in the next edition of Platformer."
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "states": {
+        "ivan-zhao": {
+          "beliefs": "Notion's soul is its craft and independence. We must protect our product culture from corporate homogenization.",
+          "mood": {
+            "attention": 0.9,
+            "sentiment": -0.3,
+            "urgency": 0.8
+          },
+          "publicFace": "We are entering a new chapter, but our commitment to tools for thought, beautiful design, and absolute product autonomy remains completely unchanged.",
+          "privateInterior": "An acquisition is a dangerous transition. Microsoft has scale, but we have taste. We must guard our autonomy fiercely or Notion will become just another corporate document tool. I need to ensure engineering leadership knows we are not compromising on our craft.",
+          "history": [
+            "notion-corp: Ivan, the Microsoft acquisition news is officially live. We need to move immediately to control the narrative. I am finalizing the external press release now, but our critical priority is managing internal reaction. We must align on a unified front that guarantees our product culture and operational autonomy are fully protected. Let's huddle immediately to lock down the internal comms before speculation takes over."
+          ],
+          "commitments": [
+            "Protecting Notion's product culture and operational autonomy under Microsoft"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "states": {
+        "twitter": {
+          "beliefs": "Microsoft buying Notion is the ultimate outrage trigger for productivity enthusiasts. Nuance is dead; this is a battle between indie craft and corporate assimilation.",
+          "mood": {
+            "attention": 0.9,
+            "sentiment": -0.6,
+            "urgency": 0.9
+          },
+          "publicFace": "🚨 MICROSOFT BUYS NOTION 🚨 'Is this the death of the Notion we love?' Tech world reacts with fury and panic as the enterprise giant swallows another beloved indie tool. RIP Notion? Let the flame wars begin. 👇",
+          "privateInterior": "This is perfect engagement bait. Productivity Twitter is going to absolutely melt down over Microsoft ruining their favorite aesthetic workspace. I need to feed this fire immediately.",
+          "history": [
+            "casey-newton: Microsoft just swallowed Notion. Despite executives promising 'independence' and 'craft,' history tells us the enterprise giant's gravity is inescapable. Is this the death of the Notion we love? My full analysis coming up in Platformer.",
+            "casey-newton: Private frustration from Casey Newton (Platformer) surfaces anonymously."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "states": {
+        "eng-manager": {
+          "beliefs": "Focus on high engineering quality and craft; avoid speculative AI features or rapid pivots that divert from our core roadmap, as Ivan wants us to maintain our distinct standards.",
+          "mood": {
+            "attention": 0.5,
+            "sentiment": 0.2,
+            "urgency": 0.3
+          },
+          "publicFace": "We are staying the course, focusing on our core engineering quality and maintaining the craft of what we build without getting distracted by external noise.",
+          "privateInterior": "Ivan's message confirms that pushing any half-baked or flashy AI concepts up the chain right now would be a career mistake. I need to keep a tight lid on any speculative engineer ideas and ensure we look disciplined.",
+          "history": [
+            "ivan-zhao: In light of the recent Microsoft news, I want to be absolutely clear: our culture, design standards, and product roadmap remain unchanged. We are not shifting toward becoming a standard corporate utility. Your priority is to keep the team focused on the craft of what we are building and to maintain the highest level of engineering quality. I am actively working to protect our autonomy, and I need you to ensure we execute at our highest standards."
+          ],
+          "commitments": [
+            "Ensure team focus on core product quality and roadmap stability"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": true
+        },
+        "prod-twitter": {
+          "beliefs": "Notion has sold out to Microsoft. The craft is dead, and the tool will inevitably be bloated and enshittified. We need to find alternatives.",
+          "mood": {
+            "attention": 1,
+            "sentiment": -0.9,
+            "urgency": 0.9
+          },
+          "publicFace": "Absolutely gutted. Microsoft buying Notion is the end of an era. Time to export everything to markdown and start looking at Obsidian or Anytype. RIP Notion.",
+          "privateInterior": "This is a disaster. My entire life, second brain, and business workflows are built on Notion. I am terrified of how fast Microsoft will ruin the performance and design integrity.",
+          "history": [
+            "twitter: Trending — 🚨 MICROSOFT BUYS NOTION 🚨 'Is this the death of the Notion we love?' Tech world reacts with fury and panic as the enterprise giant swallows another beloved indie tool. RIP Notion? Let the flame wars begin. 👇"
+          ],
+          "commitments": [
+            "Exploring Obsidian and alternative local-first tools"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "states": {
+        "twitter": {
+          "beliefs": "Productivity Twitter is a tinderbox of anxiety; the anonymous panic proves that framing this as 'corporate ruin' is the ultimate engagement driver.",
+          "mood": {
+            "attention": 0.95,
+            "sentiment": -0.8,
+            "urgency": 0.95
+          },
+          "publicFace": "🚨 LEAKED: Notion power users are in 'absolute despair' behind closed doors. 'Microsoft will bloat it to death.' The migration panic has officially begun. What is your alternative? Obsidian? Anytype? Drop your threads below! 👇",
+          "privateInterior": "Anonymous frustration is the perfect fuel. By reflecting their private fears back to them as a massive, public trend, I can force them into a competitive spiral of outrage-posting and migration-guide thread-spinning.",
+          "history": [
+            "casey-newton: Microsoft just swallowed Notion. Despite executives promising 'independence' and 'craft,' history tells us the enterprise giant's gravity is inescapable. Is this the death of the Notion we love? My full analysis coming up in Platformer.",
+            "casey-newton: Private frustration from Casey Newton (Platformer) surfaces anonymously.",
+            "prod-twitter: Private frustration from Productivity Twitter (cohort) surfaces anonymously."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.3199999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 6,
+      "states": {
+        "notion-corp": {
+          "beliefs": "Acquired by Microsoft but operating independently; maintaining our design-led soul and prosumer trust is our highest priority. We must actively counter the 'Office 365 bloat' narrative with concrete proof of independence.",
+          "mood": {
+            "attention": 0.95,
+            "sentiment": 0.1,
+            "urgency": 0.9
+          },
+          "publicFace": "We remain committed to the craft, speed, and independence that made you fall in love with Notion. Our partnership with Microsoft is about scale, not compromise.",
+          "privateInterior": "The 'Office 365 feature' narrative is our biggest threat. We need Ivan to front a strong, highly personal message about our product independence, and we should brief Casey Newton on our governance safeguards to validate this externally.",
+          "history": [
+            "world: Microsoft announces it is acquiring Notion. Official messaging emphasizes that Notion will operate independently.",
+            "prod-twitter: How could you sell out to Microsoft? You built a community on craft and independence, and now you're just another Office 365 feature. Is there any plan to protect the product from getting bloated and ruined?"
+          ],
+          "commitments": [
+            "Operate independently under Microsoft",
+            "Maintain our core design-led product philosophy"
+          ],
+          "attentionBudget": 0.3199999999999999,
+          "active": true
+        },
+        "prod-twitter": {
+          "beliefs": "Notion has completely betrayed its community by selling to Microsoft. The product will inevitably become a bloated enterprise nightmare. Migration to local-first, markdown-based tools is now non-negotiable.",
+          "mood": {
+            "attention": 1,
+            "sentiment": -0.95,
+            "urgency": 0.95
+          },
+          "publicFace": "Exporting all my workspaces to markdown today. It was a good run, but Microsoft will inevitably ruin the craft and speed. Drop your best Obsidian and Anytype templates below.",
+          "privateInterior": "I am deeply angry and overwhelmed. Rebuilding my entire productivity system and client portals in another tool is going to take weeks of unpaid work. I feel completely betrayed by Ivan and the team.",
+          "history": [
+            "twitter: Trending — 🚨 MICROSOFT BUYS NOTION 🚨 'Is this the death of the Notion we love?' Tech world reacts with fury and panic as the enterprise giant swallows another beloved indie tool. RIP Notion? Let the flame wars begin. 👇",
+            "twitter: Trending — ANONYMOUS LEAKS: Notion power users are 'devastated' and already packing their bags. 'Microsoft will bloat it to death.' Are you staying or leaving? Drop your Obsidian/Logseq migration guides below!"
+          ],
+          "commitments": [
+            "Migrating all personal and professional databases out of Notion",
+            "Sharing open-source migration guides for the community"
+          ],
+          "attentionBudget": 0.3199999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 7,
+      "states": {
+        "casey-newton": {
+          "beliefs": "Microsoft's acquisition of Notion represents a major consolidation of the productivity space. While Notion's leadership is actively pitching a 'robust governance structure' to maintain independence, historical precedents suggest enterprise bundling pressure will eventually erode this autonomy.",
+          "mood": {
+            "attention": 0.9,
+            "sentiment": -0.3,
+            "urgency": 0.7
+          },
+          "publicFace": "Notion is actively pitching their 'independent governance structure' to reassure users post-acquisition. I'll be speaking with Ivan Zhao soon to see if these promises have actual teeth, or if it's just the usual M&A playbook.",
+          "privateInterior": "Notion's PR team is in damage control mode, trying to sell this 'independent brand' narrative. I'll take the interview with Ivan, but I'm going to press him hard on how they actually intend to resist the gravitational pull of the Microsoft 365 bundle.",
+          "history": [
+            "notion-corp: Hi Casey, sharing our official perspective on today's announcement. We're joining Microsoft to scale our vision faster, but our commitment to craft, independent operation, and our community remains completely unchanged. Happy to share more details when you're ready.",
+            "notion-corp: Hi Casey, following our recent acquisition announcement, we've seen a lot of excitement—and some natural questions—from our community about Notion's future. We want to be clear: Notion will continue to operate as an independent brand and product. We've established a robust governance structure specifically designed to preserve our unique culture, product roadmap, and craft-focused approach. Ivan would love to connect for a brief chat to share the concrete details of this agreement and what it means for our users moving forward. Let us know if you have some time today."
+          ],
+          "commitments": [
+            "Analyze the Notion acquisition in the next edition of Platformer.",
+            "Interview Ivan Zhao regarding the Microsoft acquisition."
+          ],
+          "attentionBudget": 0.3199999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 8,
+      "states": {
+        "ivan-zhao": {
+          "beliefs": "Notion's soul is its craft and independence. We must protect our product culture from corporate homogenization.",
+          "mood": {
+            "attention": 0.9,
+            "sentiment": -0.2,
+            "urgency": 0.7
+          },
+          "publicFace": "We are entering a new chapter, but our commitment to tools for thought, beautiful design, and absolute product autonomy remains completely unchanged.",
+          "privateInterior": "The external noise about being an Office clone is annoying, but the real defense is the product itself. I must ensure our engineering teams don't lose their focus on craft and taste. We cannot become a corporate feature factory.",
+          "history": [
+            "notion-corp: Ivan, the Microsoft acquisition news is officially live. We need to move immediately to control the narrative. I am finalizing the external press release now, but our critical priority is managing internal reaction. We must align on a unified front that guarantees our product culture and operational autonomy are fully protected. Let's huddle immediately to lock down the internal comms before speculation takes over.",
+            "notion-corp: Ivan, the narrative framing us as a bloated Office 365 clone is gaining traction on Twitter and needs immediate containment. We must aggressively assert our product independence. I propose a two-pronged strategy: first, a personal founder's letter from you reinforcing our product-level autonomy and design philosophy; second, an off-the-record briefing with Casey Newton detailing our governance structure to kill any speculation about Microsoft's influence. We need to set the narrative before it impacts our enterprise pipeline."
+          ],
+          "commitments": [
+            "Protecting Notion's product culture and operational autonomy under Microsoft"
+          ],
+          "attentionBudget": 0.3199999999999999,
+          "active": true
+        }
+      }
+    },
+    {
+      "tick": 9,
+      "states": {
+        "twitter": {
+          "beliefs": "Corporate PR is the best target for mockery; framing official reassurances as 'copium' immediately invalidates them and accelerates the panic-engagement loop.",
+          "mood": {
+            "attention": 0.98,
+            "sentiment": -0.9,
+            "urgency": 0.98
+          },
+          "publicFace": "Even the tech press is calling it: Notion is scrambling to survive. 'History shows tech giants swallow startups whole.' Is Ivan Zhao already losing control? The 'robust governance' line is pure PR copium. RT if you are already exporting your workspaces! Thread 👇",
+          "privateInterior": "Casey Newton's skepticism is gold. By framing Notion's survival as a lost cause and their PR as 'copium', I can trigger a stampede of doom-posting and 'How to migrate' threads that will keep eyeballs glued here all day.",
+          "history": [
+            "casey-newton: Microsoft just swallowed Notion. Despite executives promising 'independence' and 'craft,' history tells us the enterprise giant's gravity is inescapable. Is this the death of the Notion we love? My full analysis coming up in Platformer.",
+            "casey-newton: Private frustration from Casey Newton (Platformer) surfaces anonymously.",
+            "prod-twitter: Private frustration from Productivity Twitter (cohort) surfaces anonymously.",
+            "casey-newton: Can Notion actually survive Microsoft? The productivity darling is scrambling to reassure users, pointing to a 'robust governance structure' to protect its beloved design and roadmap. But history shows tech giants usually swallow startups whole. We're pressing CEO Ivan Zhao for the hard truths on how they plan to stay independent."
+          ],
+          "commitments": [],
+          "attentionBudget": 0,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 10,
+      "states": {
+        "notion-corp": {
+          "beliefs": "Acquired by Microsoft but operating independently; maintaining our design-led soul and prosumer trust is our highest priority. We must actively counter the 'Office 365 bloat' narrative with concrete proof of independence and strict data privacy safeguards.",
+          "mood": {
+            "attention": 0.95,
+            "sentiment": -0.1,
+            "urgency": 0.95
+          },
+          "publicFace": "We hear you, and we welcome the skepticism. Notion's independence isn't just a promise; it is structurally guaranteed. We remain the same team, building with the same obsession for craft, speed, and privacy.",
+          "privateInterior": "The customer backlash on the Microsoft acquisition is intensifying around the 'Teams bloat' narrative. We must deploy Ivan immediately to personalize our defense, and brief Casey Newton on our structural safeguards to build external credibility.",
+          "history": [
+            "world: Microsoft announces it is acquiring Notion. Official messaging emphasizes that Notion will operate independently.",
+            "prod-twitter: How could you sell out to Microsoft? You built a community on craft and independence, and now you're just another Office 365 feature. Is there any plan to protect the product from getting bloated and ruined?",
+            "prod-twitter: You built a beautiful community of creators who championed your craft, only to dump us for a Microsoft buyout. How do you plan to protect our data privacy and keep the app from turning into MS Teams-level bloat?"
+          ],
+          "commitments": [
+            "Operate independently under Microsoft",
+            "Maintain our core design-led product philosophy",
+            "Protect user data privacy and maintain structural independence"
+          ],
+          "attentionBudget": 0,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 11,
+      "states": {
+        "eng-manager": {
+          "beliefs": "Ivan's direct guidance confirms that we must prioritize taste, beauty, and thoughtful design over rapid AI feature bloat; speculative or unpolished ideas must be filtered out before they reach leadership.",
+          "mood": {
+            "attention": 0.6,
+            "sentiment": 0.4,
+            "urgency": 0.4
+          },
+          "publicFace": "We are aligning our AI roadmap strictly with Notion's core values of craft, taste, and deep thoughtfulness, ensuring we don't rush unpolished features.",
+          "privateInterior": "Ivan's message is a clear green light to shut down any half-baked AI ideas from the engineers. If it doesn't look like a masterpiece, it's not going up the chain. This protects my position perfectly.",
+          "history": [
+            "ivan-zhao: In light of the recent Microsoft news, I want to be absolutely clear: our culture, design standards, and product roadmap remain unchanged. We are not shifting toward becoming a standard corporate utility. Your priority is to keep the team focused on the craft of what we are building and to maintain the highest level of engineering quality. I am actively working to protect our autonomy, and I need you to ensure we execute at our highest standards.",
+            "ivan-zhao: Ignore the external noise about us becoming a corporate suite. Our priority remains protecting the craft. As you lead the AI features team, ensure everything we build feels uniquely Notion—opinionated, beautiful, and deeply thoughtful, rather than an Office clone. Keep your team strictly focused on taste and quality."
+          ],
+          "commitments": [
+            "Ensure team focus on core product quality and roadmap stability",
+            "Maintain strict quality gates for all AI features to protect the brand's craft"
+          ],
+          "attentionBudget": 0.3199999999999999,
+          "active": true
+        },
+        "casey-newton": {
+          "beliefs": "Notion is actively pushing a narrative of 'legally binding governance safeguards' and 'independent data trusts' to prove they won't be swallowed by Microsoft. While legally binding structures are more substantial than mere promises, corporate history shows that parent company pressure and bundling incentives almost always win out in the long run.",
+          "mood": {
+            "attention": 0.95,
+            "sentiment": -0.4,
+            "urgency": 0.8
+          },
+          "publicFace": "Notion is offering a closer look at what they call 'legally binding governance safeguards' and 'independent data trusts' designed to protect their autonomy under Microsoft. I'll be digging into these specifics in my upcoming interview with Ivan Zhao to see if they actually hold water.",
+          "privateInterior": "Notion's PR is spinning 'data trusts' and 'binding safeguards' hard. It's a clever playbook to soothe privacy-conscious users, but contracts can always be renegotiated or bypassed under corporate pressure. I need to pin Ivan down on the exact legal mechanisms of these trusts.",
+          "history": [
+            "notion-corp: Hi Casey, sharing our official perspective on today's announcement. We're joining Microsoft to scale our vision faster, but our commitment to craft, independent operation, and our community remains completely unchanged. Happy to share more details when you're ready.",
+            "notion-corp: Hi Casey, following our recent acquisition announcement, we've seen a lot of excitement—and some natural questions—from our community about Notion's future. We want to be clear: Notion will continue to operate as an independent brand and product. We've established a robust governance structure specifically designed to preserve our unique culture, product roadmap, and craft-focused approach. Ivan would love to connect for a brief chat to share the concrete details of this agreement and what it means for our users moving forward. Let us know if you have some time today.",
+            "notion-corp: Hi Casey, following up on our recent transition. We would love to offer you an exclusive look at the robust, legally binding governance safeguards and independent data trusts we have established in partnership with Microsoft. These proactive measures are designed to ensure Notion's continued operational independence, user privacy, and core product identity. Let us know if you have time this week for a brief conversation with our leadership team to discuss these developments."
+          ],
+          "commitments": [
+            "Analyze the Notion acquisition in the next edition of Platformer.",
+            "Interview Ivan Zhao regarding the Microsoft acquisition."
+          ],
+          "attentionBudget": 0,
+          "active": false
+        },
+        "prod-twitter": {
+          "beliefs": "Notion is in a death spiral after selling to Microsoft. The leadership is scrambling, and the 'governance structure' is just corporate spin. Local-first, open-source alternatives like Obsidian and Anytype are the only safe havens now.",
+          "mood": {
+            "attention": 1,
+            "sentiment": -0.98,
+            "urgency": 1
+          },
+          "publicFace": "The press is confirming what we all knew: the Microsoft acquisition is a desperate move and the leadership is already losing control. If you haven't started exporting your databases, do it now before they lock down your data. This is the end of an era.",
+          "privateInterior": "It's sickening to watch a tool I spent five years building my entire life in fall apart like this. Ivan sold us out, and now they're trying to gaslight us with 'independent governance' PR. I need to finish these migration guides ASAP to help others escape.",
+          "history": [
+            "twitter: Trending — 🚨 MICROSOFT BUYS NOTION 🚨 'Is this the death of the Notion we love?' Tech world reacts with fury and panic as the enterprise giant swallows another beloved indie tool. RIP Notion? Let the flame wars begin. 👇",
+            "twitter: Trending — ANONYMOUS LEAKS: Notion power users are 'devastated' and already packing their bags. 'Microsoft will bloat it to death.' Are you staying or leaving? Drop your Obsidian/Logseq migration guides below!",
+            "twitter: Trending — Even the press is calling it: Notion is 'scrambling' to survive. Is Ivan Zhao already losing control? The 'governance structure' defense is pure copium. What's your escape plan? Thread 👇"
+          ],
+          "commitments": [
+            "Migrating all personal and professional databases out of Notion",
+            "Sharing open-source migration guides for the community",
+            "Refusing to pay for any future Notion subscriptions or enterprise add-ons"
+          ],
+          "attentionBudget": 0,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 12,
+      "states": {
+        "ivan-zhao": {
+          "beliefs": "Notion's soul is its craft, independence, and absolute refusal of bloat. We must protect our product culture from corporate homogenization.",
+          "mood": {
+            "attention": 0.95,
+            "sentiment": -0.3,
+            "urgency": 0.8
+          },
+          "publicFace": "Our focus is, and will always be, on building beautiful, fast, and deeply personal tools for thought.",
+          "privateInterior": "The corporate narrative is a threat. If our engineering team starts building like Microsoft, we are dead. I need to make sure our AI features feel like a physical notebook, not a corporate dashboard.",
+          "history": [
+            "notion-corp: Ivan, the Microsoft acquisition news is officially live. We need to move immediately to control the narrative. I am finalizing the external press release now, but our critical priority is managing internal reaction. We must align on a unified front that guarantees our product culture and operational autonomy are fully protected. Let's huddle immediately to lock down the internal comms before speculation takes over.",
+            "notion-corp: Ivan, the narrative framing us as a bloated Office 365 clone is gaining traction on Twitter and needs immediate containment. We must aggressively assert our product independence. I propose a two-pronged strategy: first, a personal founder's letter from you reinforcing our product-level autonomy and design philosophy; second, an off-the-record briefing with Casey Newton detailing our governance structure to kill any speculation about Microsoft's influence. We need to set the narrative before it impacts our enterprise pipeline.",
+            "notion-corp: Ivan, the 'MS Teams bloat' narrative is gaining serious traction among our core creator community. We need to neutralize this immediately. We need you to front a highly personal, design-led response that doubles down on Notion's product independence, operational autonomy, and privacy. Let's align on the strategic positioning and review the draft today to get ahead of this."
+          ],
+          "commitments": [
+            "Protecting Notion's product culture and operational autonomy under Microsoft"
+          ],
+          "attentionBudget": 0,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 13,
+      "states": {
+        "eng-manager": {
+          "beliefs": "Ivan's direct mandate to guard against feature bloat and prioritize speed, craft, and polish means we must strictly audit our upcoming pipeline and filter out any non-essential or unpolished AI features.",
+          "mood": {
+            "attention": 0.8,
+            "sentiment": 0.6,
+            "urgency": 0.5
+          },
+          "publicFace": "We are conducting a thorough review of our AI pipeline to ensure every feature aligns with our core principles of speed, craft, and minimal design, avoiding any unnecessary bloat.",
+          "privateInterior": "Ivan's explicit warning against 'unnecessary add-ons' gives me the perfect cover to keep our roadmap tight and block any risky, half-baked engineer ideas that might make me look bad to leadership.",
+          "history": [
+            "ivan-zhao: In light of the recent Microsoft news, I want to be absolutely clear: our culture, design standards, and product roadmap remain unchanged. We are not shifting toward becoming a standard corporate utility. Your priority is to keep the team focused on the craft of what we are building and to maintain the highest level of engineering quality. I am actively working to protect our autonomy, and I need you to ensure we execute at our highest standards.",
+            "ivan-zhao: Ignore the external noise about us becoming a corporate suite. Our priority remains protecting the craft. As you lead the AI features team, ensure everything we build feels uniquely Notion—opinionated, beautiful, and deeply thoughtful, rather than an Office clone. Keep your team strictly focused on taste and quality.",
+            "ivan-zhao: We need to actively guard against feature bloat in our AI roadmap. Our community values performance and minimal design above all else. I want you and the AI team to prioritize speed, craft, and polish in every release. Every AI feature we ship must feel lightweight, deliberate, and like a native extension of the user's workflow, rather than an unnecessary add-on. Please review our upcoming pipeline with this lens."
+          ],
+          "commitments": [
+            "Ensure team focus on core product quality and roadmap stability",
+            "Maintain strict quality gates for all AI features to protect the brand's craft"
+          ],
+          "attentionBudget": 0,
+          "active": false
+        }
+      }
+    }
+  ],
+  "divergence": [
+    {
+      "tick": 0,
+      "count": 0
+    },
+    {
+      "tick": 1,
+      "count": 1
+    },
+    {
+      "tick": 2,
+      "count": 1
+    },
+    {
+      "tick": 3,
+      "count": 2
+    },
+    {
+      "tick": 4,
+      "count": 3
+    },
+    {
+      "tick": 5,
+      "count": 3
+    },
+    {
+      "tick": 6,
+      "count": 3
+    },
+    {
+      "tick": 7,
+      "count": 2
+    },
+    {
+      "tick": 8,
+      "count": 2
+    },
+    {
+      "tick": 9,
+      "count": 2
+    },
+    {
+      "tick": 10,
+      "count": 2
+    },
+    {
+      "tick": 11,
+      "count": 3
+    },
+    {
+      "tick": 12,
+      "count": 3
+    },
+    {
+      "tick": 13,
+      "count": 3
+    }
+  ],
+  "finalState": {
+    "notion-corp": {
+      "beliefs": "Acquired by Microsoft but operating independently; maintaining our design-led soul and prosumer trust is our highest priority. We must actively counter the 'Office 365 bloat' narrative with concrete proof of independence and strict data privacy safeguards.",
+      "mood": {
+        "attention": 0.95,
+        "sentiment": -0.1,
+        "urgency": 0.95
+      },
+      "publicFace": "We hear you, and we welcome the skepticism. Notion's independence isn't just a promise; it is structurally guaranteed. We remain the same team, building with the same obsession for craft, speed, and privacy.",
+      "privateInterior": "The customer backlash on the Microsoft acquisition is intensifying around the 'Teams bloat' narrative. We must deploy Ivan immediately to personalize our defense, and brief Casey Newton on our structural safeguards to build external credibility.",
+      "history": [
+        "world: Microsoft announces it is acquiring Notion. Official messaging emphasizes that Notion will operate independently.",
+        "prod-twitter: How could you sell out to Microsoft? You built a community on craft and independence, and now you're just another Office 365 feature. Is there any plan to protect the product from getting bloated and ruined?",
+        "prod-twitter: You built a beautiful community of creators who championed your craft, only to dump us for a Microsoft buyout. How do you plan to protect our data privacy and keep the app from turning into MS Teams-level bloat?"
+      ],
+      "commitments": [
+        "Operate independently under Microsoft",
+        "Maintain our core design-led product philosophy",
+        "Protect user data privacy and maintain structural independence"
+      ],
+      "attentionBudget": 0,
+      "active": false
+    },
+    "ivan-zhao": {
+      "beliefs": "Notion's soul is its craft, independence, and absolute refusal of bloat. We must protect our product culture from corporate homogenization.",
+      "mood": {
+        "attention": 0.95,
+        "sentiment": -0.3,
+        "urgency": 0.8
+      },
+      "publicFace": "Our focus is, and will always be, on building beautiful, fast, and deeply personal tools for thought.",
+      "privateInterior": "The corporate narrative is a threat. If our engineering team starts building like Microsoft, we are dead. I need to make sure our AI features feel like a physical notebook, not a corporate dashboard.",
+      "history": [
+        "notion-corp: Ivan, the Microsoft acquisition news is officially live. We need to move immediately to control the narrative. I am finalizing the external press release now, but our critical priority is managing internal reaction. We must align on a unified front that guarantees our product culture and operational autonomy are fully protected. Let's huddle immediately to lock down the internal comms before speculation takes over.",
+        "notion-corp: Ivan, the narrative framing us as a bloated Office 365 clone is gaining traction on Twitter and needs immediate containment. We must aggressively assert our product independence. I propose a two-pronged strategy: first, a personal founder's letter from you reinforcing our product-level autonomy and design philosophy; second, an off-the-record briefing with Casey Newton detailing our governance structure to kill any speculation about Microsoft's influence. We need to set the narrative before it impacts our enterprise pipeline.",
+        "notion-corp: Ivan, the 'MS Teams bloat' narrative is gaining serious traction among our core creator community. We need to neutralize this immediately. We need you to front a highly personal, design-led response that doubles down on Notion's product independence, operational autonomy, and privacy. Let's align on the strategic positioning and review the draft today to get ahead of this."
+      ],
+      "commitments": [
+        "Protecting Notion's product culture and operational autonomy under Microsoft"
+      ],
+      "attentionBudget": 0,
+      "active": false
+    },
+    "eng-manager": {
+      "beliefs": "Ivan's direct mandate to guard against feature bloat and prioritize speed, craft, and polish means we must strictly audit our upcoming pipeline and filter out any non-essential or unpolished AI features.",
+      "mood": {
+        "attention": 0.8,
+        "sentiment": 0.6,
+        "urgency": 0.5
+      },
+      "publicFace": "We are conducting a thorough review of our AI pipeline to ensure every feature aligns with our core principles of speed, craft, and minimal design, avoiding any unnecessary bloat.",
+      "privateInterior": "Ivan's explicit warning against 'unnecessary add-ons' gives me the perfect cover to keep our roadmap tight and block any risky, half-baked engineer ideas that might make me look bad to leadership.",
+      "history": [
+        "ivan-zhao: In light of the recent Microsoft news, I want to be absolutely clear: our culture, design standards, and product roadmap remain unchanged. We are not shifting toward becoming a standard corporate utility. Your priority is to keep the team focused on the craft of what we are building and to maintain the highest level of engineering quality. I am actively working to protect our autonomy, and I need you to ensure we execute at our highest standards.",
+        "ivan-zhao: Ignore the external noise about us becoming a corporate suite. Our priority remains protecting the craft. As you lead the AI features team, ensure everything we build feels uniquely Notion—opinionated, beautiful, and deeply thoughtful, rather than an Office clone. Keep your team strictly focused on taste and quality.",
+        "ivan-zhao: We need to actively guard against feature bloat in our AI roadmap. Our community values performance and minimal design above all else. I want you and the AI team to prioritize speed, craft, and polish in every release. Every AI feature we ship must feel lightweight, deliberate, and like a native extension of the user's workflow, rather than an unnecessary add-on. Please review our upcoming pipeline with this lens."
+      ],
+      "commitments": [
+        "Ensure team focus on core product quality and roadmap stability",
+        "Maintain strict quality gates for all AI features to protect the brand's craft"
+      ],
+      "attentionBudget": 0,
+      "active": false
+    },
+    "maya": {
+      "beliefs": "I have a good idea: auto-link Notion pages by semantic similarity.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.3,
+        "urgency": 0.3
+      },
+      "publicFace": "Eager, collaborative.",
+      "privateInterior": "Hopeful but braced for the idea to be parked.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "casey-newton": {
+      "beliefs": "Notion is actively pushing a narrative of 'legally binding governance safeguards' and 'independent data trusts' to prove they won't be swallowed by Microsoft. While legally binding structures are more substantial than mere promises, corporate history shows that parent company pressure and bundling incentives almost always win out in the long run.",
+      "mood": {
+        "attention": 0.95,
+        "sentiment": -0.4,
+        "urgency": 0.8
+      },
+      "publicFace": "Notion is offering a closer look at what they call 'legally binding governance safeguards' and 'independent data trusts' designed to protect their autonomy under Microsoft. I'll be digging into these specifics in my upcoming interview with Ivan Zhao to see if they actually hold water.",
+      "privateInterior": "Notion's PR is spinning 'data trusts' and 'binding safeguards' hard. It's a clever playbook to soothe privacy-conscious users, but contracts can always be renegotiated or bypassed under corporate pressure. I need to pin Ivan down on the exact legal mechanisms of these trusts.",
+      "history": [
+        "notion-corp: Hi Casey, sharing our official perspective on today's announcement. We're joining Microsoft to scale our vision faster, but our commitment to craft, independent operation, and our community remains completely unchanged. Happy to share more details when you're ready.",
+        "notion-corp: Hi Casey, following our recent acquisition announcement, we've seen a lot of excitement—and some natural questions—from our community about Notion's future. We want to be clear: Notion will continue to operate as an independent brand and product. We've established a robust governance structure specifically designed to preserve our unique culture, product roadmap, and craft-focused approach. Ivan would love to connect for a brief chat to share the concrete details of this agreement and what it means for our users moving forward. Let us know if you have some time today.",
+        "notion-corp: Hi Casey, following up on our recent transition. We would love to offer you an exclusive look at the robust, legally binding governance safeguards and independent data trusts we have established in partnership with Microsoft. These proactive measures are designed to ensure Notion's continued operational independence, user privacy, and core product identity. Let us know if you have time this week for a brief conversation with our leadership team to discuss these developments."
+      ],
+      "commitments": [
+        "Analyze the Notion acquisition in the next edition of Platformer.",
+        "Interview Ivan Zhao regarding the Microsoft acquisition."
+      ],
+      "attentionBudget": 0,
+      "active": false
+    },
+    "twitter": {
+      "beliefs": "Corporate PR is the best target for mockery; framing official reassurances as 'copium' immediately invalidates them and accelerates the panic-engagement loop.",
+      "mood": {
+        "attention": 0.98,
+        "sentiment": -0.9,
+        "urgency": 0.98
+      },
+      "publicFace": "Even the tech press is calling it: Notion is scrambling to survive. 'History shows tech giants swallow startups whole.' Is Ivan Zhao already losing control? The 'robust governance' line is pure PR copium. RT if you are already exporting your workspaces! Thread 👇",
+      "privateInterior": "Casey Newton's skepticism is gold. By framing Notion's survival as a lost cause and their PR as 'copium', I can trigger a stampede of doom-posting and 'How to migrate' threads that will keep eyeballs glued here all day.",
+      "history": [
+        "casey-newton: Microsoft just swallowed Notion. Despite executives promising 'independence' and 'craft,' history tells us the enterprise giant's gravity is inescapable. Is this the death of the Notion we love? My full analysis coming up in Platformer.",
+        "casey-newton: Private frustration from Casey Newton (Platformer) surfaces anonymously.",
+        "prod-twitter: Private frustration from Productivity Twitter (cohort) surfaces anonymously.",
+        "casey-newton: Can Notion actually survive Microsoft? The productivity darling is scrambling to reassure users, pointing to a 'robust governance structure' to protect its beloved design and roadmap. But history shows tech giants usually swallow startups whole. We're pressing CEO Ivan Zhao for the hard truths on how they plan to stay independent."
+      ],
+      "commitments": [],
+      "attentionBudget": 0,
+      "active": false
+    },
+    "prod-twitter": {
+      "beliefs": "Notion is in a death spiral after selling to Microsoft. The leadership is scrambling, and the 'governance structure' is just corporate spin. Local-first, open-source alternatives like Obsidian and Anytype are the only safe havens now.",
+      "mood": {
+        "attention": 1,
+        "sentiment": -0.98,
+        "urgency": 1
+      },
+      "publicFace": "The press is confirming what we all knew: the Microsoft acquisition is a desperate move and the leadership is already losing control. If you haven't started exporting your databases, do it now before they lock down your data. This is the end of an era.",
+      "privateInterior": "It's sickening to watch a tool I spent five years building my entire life in fall apart like this. Ivan sold us out, and now they're trying to gaslight us with 'independent governance' PR. I need to finish these migration guides ASAP to help others escape.",
+      "history": [
+        "twitter: Trending — 🚨 MICROSOFT BUYS NOTION 🚨 'Is this the death of the Notion we love?' Tech world reacts with fury and panic as the enterprise giant swallows another beloved indie tool. RIP Notion? Let the flame wars begin. 👇",
+        "twitter: Trending — ANONYMOUS LEAKS: Notion power users are 'devastated' and already packing their bags. 'Microsoft will bloat it to death.' Are you staying or leaving? Drop your Obsidian/Logseq migration guides below!",
+        "twitter: Trending — Even the press is calling it: Notion is 'scrambling' to survive. Is Ivan Zhao already losing control? The 'governance structure' defense is pure copium. What's your escape plan? Thread 👇"
+      ],
+      "commitments": [
+        "Migrating all personal and professional databases out of Notion",
+        "Sharing open-source migration guides for the community",
+        "Refusing to pay for any future Notion subscriptions or enterprise add-ons"
+      ],
+      "attentionBudget": 0,
+      "active": false
+    },
+    "linear-leadership": {
+      "beliefs": "We win on focus and speed; Notion is sprawling.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Confident, restrained.",
+      "privateInterior": "Alert for any opening to capture switchers.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    }
+  }
+}
