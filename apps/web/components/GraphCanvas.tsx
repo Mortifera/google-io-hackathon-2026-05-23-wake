@@ -417,6 +417,7 @@ export default function GraphCanvas({
       ctx.globalCompositeOperation = "lighter";
       const arrivals = new Map<string, number>(); // node id -> pulse strength 0..1
       const bursts = new Map<string, number>();
+      let leakFlash = 0; // dramatic emphasis when an emergent leak fires
 
       for (const ev of eventViz) {
         if (!visibleOnLayer(ev.type, lyr)) continue;
@@ -478,8 +479,36 @@ export default function GraphCanvas({
         ctx.beginPath();
         ctx.arc(head.x, head.y, ev.isLeak ? 2.4 : 1.8, 0, Math.PI * 2);
         ctx.fill();
+
+        // emergent leak: a shockwave off the source + a screen-wide flash beat
+        if (ev.isLeak && ep > 0 && ep < 1) {
+          const flash = Math.sin(ep * Math.PI);
+          leakFlash = Math.max(leakFlash, flash);
+          const rr = 8 + ep * 64;
+          ctx.strokeStyle = withAlpha(EVENT_COLOR.emergent, 0.55 * (1 - ep));
+          ctx.lineWidth = 2.4 * (1 - ep) + 0.4;
+          ctx.beginPath();
+          ctx.arc(srcPt.x, srcPt.y, rr, 0, Math.PI * 2);
+          ctx.stroke();
+        }
       }
       ctx.globalCompositeOperation = "source-over";
+
+      // emergent-leak vignette: the whole frame pulses in the leak colour
+      if (leakFlash > 0.02) {
+        const vg = ctx.createRadialGradient(
+          w / 2,
+          h / 2,
+          Math.min(w, h) * 0.28,
+          w / 2,
+          h / 2,
+          Math.max(w, h) * 0.72,
+        );
+        vg.addColorStop(0, "rgba(0,0,0,0)");
+        vg.addColorStop(1, withAlpha(EVENT_COLOR.emergent, 0.17 * leakFlash));
+        ctx.fillStyle = vg;
+        ctx.fillRect(0, 0, w, h);
+      }
 
       // ---------- nodes ----------
       for (const n of sim.nodes) {

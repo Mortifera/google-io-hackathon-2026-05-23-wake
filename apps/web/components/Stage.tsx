@@ -226,6 +226,8 @@ export default function Stage({ world }: Props) {
                 }
               />
 
+              <div className={s.layerTint} data-layer={layer} />
+
               {trace ? (
                 <div className={s.caption} key={`trace-${trace.nonce}`}>
                   <div className={s.captionKicker}>Causal trace</div>

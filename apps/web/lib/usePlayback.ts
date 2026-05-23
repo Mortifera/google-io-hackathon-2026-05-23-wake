@@ -70,7 +70,12 @@ export function usePlayback(last: number, initialSpeed = 0.62): Playback {
       tsRef.current = ts;
 
       if (!playingRef.current) return;
-      let next = pRef.current + speedRef.current * dt;
+      // Filmic cadence: ease the velocity so each act (integer position) breathes
+      // — slow at the boundaries, faster through the middle of a hop.
+      const cur = pRef.current;
+      const frac = cur - Math.floor(cur);
+      const ease = 0.55 + 0.85 * Math.sin(frac * Math.PI);
+      let next = cur + speedRef.current * ease * dt;
       if (next >= lastRef.current) {
         next = lastRef.current;
         playingRef.current = false;

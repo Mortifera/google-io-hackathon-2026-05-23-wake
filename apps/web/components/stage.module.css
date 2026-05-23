@@ -118,6 +118,35 @@
   border-radius: 9px;
 }
 
+/* dual-layer mood tint — shifts when toggling public/private */
+.layerTint {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  transition: background 0.6s var(--ease-out);
+}
+.layerTint[data-layer="public"] {
+  background: radial-gradient(
+    900px 620px at 50% 38%,
+    rgba(91, 156, 240, 0.04),
+    transparent 70%
+  );
+}
+.layerTint[data-layer="private"] {
+  background:
+    radial-gradient(
+      900px 620px at 50% 45%,
+      rgba(138, 123, 240, 0.08),
+      transparent 70%
+    ),
+    radial-gradient(
+      1200px 900px at 50% 122%,
+      rgba(255, 93, 143, 0.05),
+      transparent 60%
+    );
+}
+
 /* the act caption that narrates the film */
 .caption {
   position: absolute;
@@ -509,6 +538,20 @@
   color: var(--ev-emergent);
   min-width: 22px;
   text-align: center;
+}
+.divCount[data-active="true"] {
+  animation: leak-throb 1.7s ease-in-out infinite;
+}
+@keyframes leak-throb {
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 8px rgba(255, 93, 143, 0.5);
+  }
+  50% {
+    opacity: 0.6;
+    text-shadow: 0 0 2px rgba(255, 93, 143, 0.2);
+  }
 }
 
 /* layer toggle */

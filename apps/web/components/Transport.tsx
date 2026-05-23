@@ -164,7 +164,9 @@ export default function Transport({ model, pb, layer, setLayer }: Props) {
           <br />
           pressure
         </div>
-        <div className={s.divCount}>{div}</div>
+        <div className={s.divCount} data-active={div > 0}>
+          {div}
+        </div>
       </div>
 
       <div className={s.layer}>
