@@ -23,6 +23,7 @@ import InspectorPanel, { type Focus } from "./InspectorPanel";
 import MonteCarloFan from "./MonteCarloFan";
 import OperatorConsole from "./OperatorConsole";
 import ReasoningFeed from "./ReasoningFeed";
+import TwoBeat from "./TwoBeat";
 import s from "./stage.module.css";
 
 interface ActiveTrace {
@@ -43,7 +44,7 @@ export interface ReasoningItem {
 }
 
 type Layer = "public" | "private";
-type View = "cascade" | "futures";
+type View = "cascade" | "futures" | "twobeat";
 type RunMode = "replay" | "live";
 export type LiveStatus = "idle" | "connecting" | "streaming" | "done" | "error";
 
@@ -443,6 +444,12 @@ export default function Stage({ world }: Props) {
             >
               Futures
             </button>
+            <button
+              data-active={view === "twobeat"}
+              onClick={() => setView("twobeat")}
+            >
+              Two worlds
+            </button>
           </div>
         </div>
       </header>
@@ -540,6 +547,8 @@ export default function Stage({ world }: Props) {
             onTogglePlay={togglePlay}
           />
         </>
+      ) : view === "twobeat" ? (
+        <TwoBeat world={world} />
       ) : mc ? (
         <MonteCarloFan mc={mc} />
       ) : (
