@@ -7,6 +7,15 @@ import type { NodeState } from "./state";
 import type { Event } from "./event";
 import type { NodeDef } from "./world";
 
+/** A node this node can send an event to (derived from its out-edges). */
+export const NeighborSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  /** The edge's character, so the node can pick how/whether to address them. */
+  character: z.string(),
+});
+export type Neighbor = z.infer<typeof NeighborSchema>;
+
 /**
  * Per-node behaviour contract (implemented by `@wake/nodes`).
  * The kernel calls this by dependency injection — it never imports node code.
@@ -18,6 +27,8 @@ export const TickInputSchema = z.object({
   inbox: z.array(EventSchema),
   /** Current world-clock time. */
   clock: z.number(),
+  /** Whom this node can address (its out-edges); pick targets from here. */
+  neighbors: z.array(NeighborSchema),
 });
 export type TickInput = z.infer<typeof TickInputSchema>;
 

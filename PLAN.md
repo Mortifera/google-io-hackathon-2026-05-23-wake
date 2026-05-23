@@ -35,6 +35,34 @@ kernel never imports node/edge code):
 
 If these six are stable, the merge at the end is mechanical.
 
+## Live assignment (2026-05-23)
+
+- **Core agent** (owns `packages/kernel` + `packages/nodes` + `packages/edges`,
+  and stays contracts steward): the coupled simulation core that produces the
+  real `Cascade`. Picks up `packages/interp` after CP2 unless run separately.
+- **4 parallel agents**, one per Claude instance, each building only against the
+  committed contracts + fixtures (nobody blocks anyone):
+  - **L8** visualization — `apps/web`
+  - **L5** world data — `worlds/notion`
+  - **L2** llm client — `packages/llm/src/gemini.ts`
+  - **L6** analysis — `packages/analysis`
+- Kickoff is one line per agent → see `briefs/KICKOFF.md`.
+
+**Integration is git-mediated** (no live orchestration between instances): the
+core agent commits a real `Cascade` into `fixtures/` at CP1 (mock LLM + mini
+world) and again at CP2 (real Gemini + real Notion world); downstream agents
+re-point from the hand-authored fixture to the real one — a one-line change.
+Dependencies sequence those *swaps*, never the *start* of any lane.
+
+```
+contracts + fixtures + mock (DONE) ──► all lanes build in parallel NOW
+        core ─run(mock,mini)─► Cascade ──CP1──► L8 swaps in real cascade
+        core + L2 + L5 ─run(Gemini,Notion)─► Cascade ──CP2──┬─► L6 ─► MonteCarlo ─┐
+                                                            └─► L7 interp ────────┤
+                                                                      CP3 ► L8 wires fan + interp
+                                                                      CP4 ► operator + precompute + rehearsal ► DEMO
+```
+
 ## Stack (default)
 
 **TypeScript end-to-end**, because a single shared type system is the biggest
