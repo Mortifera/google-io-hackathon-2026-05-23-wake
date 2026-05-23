@@ -38,7 +38,7 @@ export default function OperatorConsole({
       <aside className={s.console} role="dialog" aria-label="Operator console">
         <div className={s.consoleHead}>
           <div className={s.consoleTitle}>
-            Operator console <span className={s.kbd}>press 1–5 · space</span>
+            Operator console <span className={s.kbd}>space · O</span>
           </div>
           <button className={s.closeBtn} onClick={onClose} aria-label="Close">
             ×
@@ -131,8 +131,8 @@ export default function OperatorConsole({
           <div className={s.opTip}>
             <strong>Run live</strong> streams the kernel tick-by-tick; if it stalls
             or errors it auto-falls-back to the precomputed run (the escape hatch
-            always works). Keys: <span className={s.kbd}>1</span>–
-            <span className={s.kbd}>5</span> scenario ·{" "}
+            always works). Number keys select a <strong>Live</strong> scenario —
+            Pending ones unlock when their cascade is precomputed. Also:{" "}
             <span className={s.kbd}>space</span> play/pause ·{" "}
             <span className={s.kbd}>←</span>/<span className={s.kbd}>→</span> step ·{" "}
             <span className={s.kbd}>O</span> console.

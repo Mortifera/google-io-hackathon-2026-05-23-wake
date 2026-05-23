@@ -169,10 +169,11 @@ export default function Transport({ model, pb, layer, setLayer }: Props) {
         </div>
       </div>
 
-      <div className={s.layer}>
+      <div className={s.layer} role="group" aria-label="Layer">
         <button
           data-kind="public"
           data-active={layer === "public"}
+          aria-pressed={layer === "public"}
           onClick={() => setLayer("public")}
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
@@ -183,6 +184,7 @@ export default function Transport({ model, pb, layer, setLayer }: Props) {
         <button
           data-kind="private"
           data-active={layer === "private"}
+          aria-pressed={layer === "private"}
           onClick={() => setLayer("private")}
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">

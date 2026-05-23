@@ -170,10 +170,11 @@ export default function Stage({ world }: Props) {
     [model, graph, pause, actionId],
   );
 
-  // Clicking an event is itself a "why" gesture → trace it. Selecting a node
-  // waits for the explicit "Ask why" button; deselecting clears the trace.
+  // Clicking a node OR an event is a "why" gesture → trace it immediately (the
+  // money-shot is one click on stage). Deselecting clears the trace. Nodes with
+  // no upstream cause simply select without dimming.
   useEffect(() => {
-    if (focus.kind === "event") runExplain(focus);
+    if (focus.kind === "node" || focus.kind === "event") runExplain(focus);
     else setTrace(null);
   }, [focus, runExplain]);
 

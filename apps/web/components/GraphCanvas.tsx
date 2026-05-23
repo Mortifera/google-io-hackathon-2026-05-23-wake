@@ -140,6 +140,19 @@ export default function GraphCanvas({
     });
   }, [model]);
 
+  // Nodes that any event touches — the only ones with a cause chain to trace.
+  // Clicks/hover snap to these so the interp money-shot always fires.
+  const involvedIds = useMemo(() => {
+    const s = new Set<string>();
+    for (const e of model.eventDag) {
+      if (e.source !== "world") s.add(e.source);
+      s.add(e.target);
+    }
+    return s;
+  }, [model]);
+  const involvedRef = useRef(involvedIds);
+  involvedRef.current = involvedIds;
+
   const sizeRef = useRef({ w: 800, h: 560 });
   const settledRef = useRef(false);
 
@@ -195,12 +208,16 @@ export default function GraphCanvas({
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    // Every node is hoverable/clickable — pick the nearest within a comfortable
+    // radius. The traceable "story" nodes are discoverable via their settled hint
+    // ring; clicking one fires the interp trace, clicking a bystander shows its
+    // state + a "no cause chain" note (see InspectorPanel).
     const pick = (clientX: number, clientY: number): string | null => {
       const r = canvas.getBoundingClientRect();
       const x = clientX - r.left;
       const y = clientY - r.top;
       let best: string | null = null;
-      let bestD = 26 * 26;
+      let bestD = 30 * 30;
       for (const n of sim.nodes) {
         const dx = (n.x ?? 0) - x;
         const dy = (n.y ?? 0) - y;
@@ -283,6 +300,9 @@ export default function GraphCanvas({
 
       // active node set for current act
       const activeSet = new Set(model.ticks[frame.act]?.activeNodeIds ?? []);
+      // once the film has settled, gently hint which nodes are clickable (the
+      // story nodes with a cause chain) so the interp money-shot is discoverable
+      const settled = p >= model.ticks.length - 0.5;
 
       // ---------- edges (base constellation) ----------
       ctx.lineCap = "round";
@@ -559,6 +579,16 @@ export default function GraphCanvas({
           ctx.lineWidth = 1.5;
           ctx.beginPath();
           ctx.arc(x, y, rr, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        // "clickable" hint: once settled, gently ring the traceable story nodes
+        if (settled && !isSel && !isHov && involvedRef.current.has(n.id)) {
+          const pulse = 0.5 + 0.5 * Math.sin(now / 750 + (x + y) * 0.012);
+          ctx.strokeStyle = withAlpha("#ffffff", 0.1 + 0.14 * pulse);
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.arc(x, y, baseR + 5, 0, Math.PI * 2);
           ctx.stroke();
         }
 

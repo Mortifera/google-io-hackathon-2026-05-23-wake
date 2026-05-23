@@ -68,6 +68,10 @@ function NodeDetail({
 }) {
   const node = graph.nodes.find((n) => n.id === nodeId);
   const st = model.resolvedStates[tick]?.[nodeId] as NodeState | undefined;
+  // Does any event touch this node? If not, there is no cause chain to trace.
+  const involved = model.eventDag.some(
+    (e) => e.source === nodeId || e.target === nodeId,
+  );
 
   if (!node || !st) return null;
   const aff = affectStyle(st);
@@ -122,9 +126,18 @@ function NodeDetail({
         </div>
       ) : null}
 
-      <button className={s.askBtn} onClick={onAskWhy}>
-        {explanation ? "↻ Replay the causal trace" : "Ask why this node ended up here →"}
-      </button>
+      {involved ? (
+        <button className={s.askBtn} onClick={onAskWhy}>
+          {explanation
+            ? "↻ Replay the causal trace"
+            : "Ask why this node ended up here →"}
+        </button>
+      ) : (
+        <div className={s.empty} style={{ marginTop: 16 }}>
+          No events reached <strong>{node.label}</strong> in this run — there’s no
+          cause chain to trace.
+        </div>
+      )}
 
       {explanation ? <ExplanationView graph={graph} exp={explanation} /> : null}
     </div>
@@ -330,9 +343,10 @@ export default function InspectorPanel({
           />
         ) : (
           <div className={s.empty}>
-            Click a node to inspect its public face, private interior, and mood —
-            then ask <strong>why</strong> it ended up there. Or click an event in
-            the log below to trace its cause.
+            Click any <strong>node</strong> (or an event in the log) and the graph
+            dims to trace <strong>why</strong> it happened — the cause chain lights
+            up backward through the cascade. Tier-1 nodes are labeled; hover to
+            reveal the rest.
           </div>
         )}
 
