@@ -1,0 +1,499 @@
+"use client";
+
+import { useEffect, useMemo, useRef } from "react";
+import {
+  forceCenter,
+  forceCollide,
+  forceLink,
+  forceManyBody,
+  forceSimulation,
+  forceX,
+  forceY,
+  type SimulationLinkDatum,
+  type SimulationNodeDatum,
+} from "d3-force";
+import type { Event, NodeState } from "@wake/contracts";
+import type { CascadeModel, GraphModel } from "../lib/model";
+import { resolveFrame } from "../lib/model";
+import { affectColor, classifyAffect, EVENT_COLOR, withAlpha } from "../lib/palette";
+
+type Layer = "public" | "private";
+
+interface SimNode extends SimulationNodeDatum {
+  id: string;
+  tier: number;
+}
+interface SimLink extends SimulationLinkDatum<SimNode> {
+  id: string;
+}
+
+interface EventViz {
+  id: string;
+  type: Event["type"];
+  source: string; // node id, or "world"
+  target: string;
+  act: number;
+  isSeed: boolean;
+  isLeak: boolean;
+  isSelf: boolean;
+  /** stagger offset within its act, 0..1 */
+  offset: number;
+}
+
+interface Props {
+  graph: GraphModel;
+  model: CascadeModel;
+  pRef: React.RefObject<number>;
+  layer: Layer;
+  selectedNodeId: string | null;
+  onSelectNode: (id: string | null) => void;
+}
+
+const TIER_RADIUS: Record<number, number> = { 1: 8.5, 2: 5.5, 3: 4 };
+
+function mixHex(a: string, b: string, t: number): string {
+  const pa = [1, 3, 5].map((i) => parseInt(a.slice(i, i + 2), 16));
+  const pb = [1, 3, 5].map((i) => parseInt(b.slice(i, i + 2), 16));
+  const r = pa.map((v, i) => Math.round(v + (pb[i] - v) * t));
+  return `rgb(${r[0]}, ${r[1]}, ${r[2]})`;
+}
+
+const easeInOut = (t: number) => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
+
+/** Which event types are visible on each layer. Emergent leaks show on both. */
+function visibleOnLayer(type: Event["type"], layer: Layer): boolean {
+  if (type === "emergent") return true;
+  if (layer === "public") return type === "public_post" || type === "action";
+  return type === "private_message" || type === "decision";
+}
+
+export default function GraphCanvas({
+  graph,
+  model,
+  pRef,
+  layer,
+  selectedNodeId,
+  onSelectNode,
+}: Props) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  // refs the rAF loop reads without re-subscribing
+  const layerRef = useRef(layer);
+  const selectedRef = useRef(selectedNodeId);
+  const hoverRef = useRef<string | null>(null);
+  layerRef.current = layer;
+  selectedRef.current = selectedNodeId;
+
+  // Stable sim nodes/links + a fast id→node map, rebuilt only if graph changes.
+  const sim = useMemo(() => {
+    const nodes: SimNode[] = graph.nodes.map((n, i) => {
+      const a = (i / Math.max(1, graph.nodes.length)) * Math.PI * 2;
+      return { id: n.id, tier: n.tier, x: Math.cos(a) * 160, y: Math.sin(a) * 160 };
+    });
+    const byId = new Map(nodes.map((n) => [n.id, n]));
+    const links: SimLink[] = graph.edges
+      .filter((e) => byId.has(e.source) && byId.has(e.target) && e.source !== e.target)
+      .map((e) => ({ id: e.id, source: e.source, target: e.target }));
+    return { nodes, byId, links };
+  }, [graph]);
+
+  // Per-event render metadata.
+  const eventViz: EventViz[] = useMemo(() => {
+    const actById = new Map<string, number>();
+    model.ticks.forEach((t, i) => t.events.forEach((e) => actById.set(e.id, i)));
+    const counts = new Map<number, number>();
+    return model.eventDag.map((e) => {
+      const act = actById.get(e.id) ?? 0;
+      const idx = counts.get(act) ?? 0;
+      counts.set(act, idx + 1);
+      return {
+        id: e.id,
+        type: e.type,
+        source: e.source,
+        target: e.target,
+        act,
+        isSeed: e.source === "world",
+        isLeak: e.type === "emergent",
+        isSelf: e.source === e.target,
+        offset: idx * 0.12,
+      };
+    });
+  }, [model]);
+
+  // --- force layout: settle once, then freeze (stable, readable) ---
+  const sizeRef = useRef({ w: 800, h: 560 });
+  useEffect(() => {
+    const settle = (w: number, h: number) => {
+      const f = forceSimulation(sim.nodes)
+        .force("charge", forceManyBody().strength(-420))
+        .force(
+          "link",
+          forceLink<SimNode, SimLink>(sim.links)
+            .id((d) => d.id)
+            .distance(118)
+            .strength(0.55),
+        )
+        .force("center", forceCenter(w / 2, h / 2))
+        .force("x", forceX(w / 2).strength(0.04))
+        .force("y", forceY(h / 2).strength(0.06))
+        .force("collide", forceCollide(34))
+        .stop();
+      for (let i = 0; i < 320; i++) f.tick();
+      // clamp into frame with margin
+      const m = 56;
+      for (const n of sim.nodes) {
+        n.x = Math.max(m, Math.min(w - m, n.x ?? w / 2));
+        n.y = Math.max(m, Math.min(h - m, n.y ?? h / 2));
+      }
+    };
+    settle(sizeRef.current.w, sizeRef.current.h);
+    settledRef.current = true;
+  }, [sim]);
+
+  const settledRef = useRef(false);
+
+  // --- resize handling ---
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    const canvas = canvasRef.current;
+    if (!wrap || !canvas) return;
+    const ro = new ResizeObserver(() => {
+      const r = wrap.getBoundingClientRect();
+      const w = Math.max(320, r.width);
+      const h = Math.max(360, r.height);
+      const prev = sizeRef.current;
+      sizeRef.current = { w, h };
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      canvas.style.width = `${w}px`;
+      canvas.style.height = `${h}px`;
+      // rescale settled positions to the new frame so the layout follows
+      if (settledRef.current && prev.w > 0) {
+        const sx = w / prev.w;
+        const sy = h / prev.h;
+        for (const n of sim.nodes) {
+          n.x = (n.x ?? w / 2) * sx;
+          n.y = (n.y ?? h / 2) * sy;
+        }
+      }
+    });
+    ro.observe(wrap);
+    return () => ro.disconnect();
+  }, [sim]);
+
+  // --- pointer interaction (hit test nearest node) ---
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const pick = (clientX: number, clientY: number): string | null => {
+      const r = canvas.getBoundingClientRect();
+      const x = clientX - r.left;
+      const y = clientY - r.top;
+      let best: string | null = null;
+      let bestD = 26 * 26;
+      for (const n of sim.nodes) {
+        const dx = (n.x ?? 0) - x;
+        const dy = (n.y ?? 0) - y;
+        const d = dx * dx + dy * dy;
+        if (d < bestD) {
+          bestD = d;
+          best = n.id;
+        }
+      }
+      return best;
+    };
+    const onMove = (e: MouseEvent) => {
+      const id = pick(e.clientX, e.clientY);
+      hoverRef.current = id;
+      canvas.style.cursor = id ? "pointer" : "default";
+    };
+    const onClick = (e: MouseEvent) => {
+      const id = pick(e.clientX, e.clientY);
+      onSelectNode(id === selectedRef.current ? null : id);
+    };
+    const onLeave = () => {
+      hoverRef.current = null;
+    };
+    canvas.addEventListener("mousemove", onMove);
+    canvas.addEventListener("click", onClick);
+    canvas.addEventListener("mouseleave", onLeave);
+    return () => {
+      canvas.removeEventListener("mousemove", onMove);
+      canvas.removeEventListener("click", onClick);
+      canvas.removeEventListener("mouseleave", onLeave);
+    };
+  }, [sim, onSelectNode]);
+
+  // --- the render loop ---
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let raf = 0;
+    const labelById = new Map(graph.nodes.map((n) => [n.id, n]));
+
+    const stateAt = (id: string, p: number): { color: string; attn: number } => {
+      const last = model.resolvedStates.length - 1;
+      const f = Math.max(0, Math.min(last, Math.floor(p)));
+      const c = Math.min(last, f + 1);
+      const t = p - f;
+      const sa = model.resolvedStates[f]?.[id] as NodeState | undefined;
+      const sb = model.resolvedStates[c]?.[id] as NodeState | undefined;
+      if (!sa) return { color: "#46506a", attn: 0.2 };
+      const ca = affectColor(classifyAffect(sa));
+      const cb = sb ? affectColor(classifyAffect(sb)) : ca;
+      const attn = sa.mood.attention + ((sb?.mood.attention ?? sa.mood.attention) - sa.mood.attention) * t;
+      return { color: mixHex(ca, cb, t), attn };
+    };
+
+    const draw = (now: number) => {
+      raf = requestAnimationFrame(draw);
+      const { w, h } = sizeRef.current;
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      const p = pRef.current ?? 0;
+      const frame = resolveFrame(model, p);
+      const lyr = layerRef.current;
+      const sel = selectedRef.current;
+      const hov = hoverRef.current;
+      const breath = 0.5 + 0.5 * Math.sin(now / 1400);
+
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+
+      // active node set for current act
+      const activeSet = new Set(model.ticks[frame.act]?.activeNodeIds ?? []);
+
+      // ---------- edges (base constellation) ----------
+      ctx.lineCap = "round";
+      for (const e of graph.edges) {
+        const s = sim.byId.get(e.source);
+        const t = sim.byId.get(e.target);
+        if (!s || !t || e.source === e.target) continue;
+        const sp = { x: s.x ?? 0, y: s.y ?? 0 };
+        const tp = { x: t.x ?? 0, y: t.y ?? 0 };
+        const { cx, cy } = controlPoint(sp, tp, e.id);
+        ctx.beginPath();
+        ctx.moveTo(sp.x, sp.y);
+        ctx.quadraticCurveTo(cx, cy, tp.x, tp.y);
+        ctx.strokeStyle = "rgba(120,140,180,0.07)";
+        ctx.lineWidth = 1;
+        ctx.stroke();
+      }
+
+      // ---------- event particles ----------
+      ctx.globalCompositeOperation = "lighter";
+      const arrivals = new Map<string, number>(); // node id -> pulse strength 0..1
+      const bursts = new Map<string, number>();
+
+      for (const ev of eventViz) {
+        if (!visibleOnLayer(ev.type, lyr)) continue;
+        const color = EVENT_COLOR[ev.type] ?? "#8ea2c8";
+        // local progress of this event
+        let prog: number;
+        if (ev.act < frame.act) prog = 1;
+        else if (ev.act > frame.act) prog = -1;
+        else {
+          const span = 1 - ev.offset;
+          prog = span > 0 ? (frame.sub - ev.offset) / span : 1;
+        }
+        if (prog < 0) continue; // not yet
+
+        // resolve endpoints as concrete points
+        const tgtNode = sim.byId.get(ev.target);
+        if (!tgtNode) continue;
+        const tgtPt = { x: tgtNode.x ?? w / 2, y: tgtNode.y ?? h / 2 };
+
+        if (ev.isSelf) {
+          // self event: a ring on the node itself
+          if (prog < 1) bursts.set(ev.target, Math.max(bursts.get(ev.target) ?? 0, 1 - prog));
+          continue;
+        }
+
+        const srcNode = ev.source === "world" ? null : sim.byId.get(ev.source);
+        if (ev.source !== "world" && !srcNode) continue;
+        const srcPt =
+          ev.source === "world"
+            ? { x: tgtPt.x, y: -50 }
+            : { x: srcNode!.x ?? w / 2, y: srcNode!.y ?? h / 2 };
+
+        const ep = Math.min(1, prog);
+        const eased = easeInOut(ep);
+        // emit burst at source as it fires
+        if (ep < 0.25) bursts.set(ev.source, Math.max(bursts.get(ev.source) ?? 0, 1 - ep / 0.25));
+        // arrival pulse at target near completion
+        if (ep > 0.8) arrivals.set(ev.target, Math.max(arrivals.get(ev.target) ?? 0, (ep - 0.8) / 0.2));
+
+        const { cx, cy } =
+          ev.source === "world"
+            ? { cx: (srcPt.x + tgtPt.x) / 2, cy: (srcPt.y + tgtPt.y) / 2 }
+            : controlPoint(srcPt, tgtPt, ev.id);
+
+        // lit trail up to the head
+        drawCurveSegment(ctx, srcPt, tgtPt, cx, cy, 0, eased, color, ev.isLeak);
+
+        // comet head
+        const head = quad(srcPt, tgtPt, cx, cy, eased);
+        const r = ev.isLeak ? 5.5 : 4;
+        const glow = ctx.createRadialGradient(head.x, head.y, 0, head.x, head.y, r * 4);
+        glow.addColorStop(0, withAlpha(color, 0.9));
+        glow.addColorStop(1, withAlpha(color, 0));
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(head.x, head.y, r * 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = "#ffffff";
+        ctx.beginPath();
+        ctx.arc(head.x, head.y, ev.isLeak ? 2.4 : 1.8, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalCompositeOperation = "source-over";
+
+      // ---------- nodes ----------
+      for (const n of sim.nodes) {
+        const meta = labelById.get(n.id);
+        const tier = meta?.tier ?? 2;
+        const baseR = TIER_RADIUS[tier] ?? 5;
+        const { color, attn } = stateAt(n.id, p);
+        const isActive = activeSet.has(n.id) && frame.sub < 0.85;
+        const arrive = arrivals.get(n.id) ?? 0;
+        const burst = bursts.get(n.id) ?? 0;
+        const isSel = sel === n.id;
+        const isHov = hov === n.id;
+
+        const x = n.x!;
+        const y = n.y!;
+
+        // soft glow halo (additive)
+        ctx.globalCompositeOperation = "lighter";
+        const haloR = baseR * 2.4 + attn * 16 + (0.4 + 0.6 * breath) * (isActive ? 10 : 4);
+        const halo = ctx.createRadialGradient(x, y, 0, x, y, haloR);
+        halo.addColorStop(0, withAlpha(color, 0.42 + attn * 0.25));
+        halo.addColorStop(1, withAlpha(color, 0));
+        ctx.fillStyle = halo;
+        ctx.beginPath();
+        ctx.arc(x, y, haloR, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalCompositeOperation = "source-over";
+
+        // expanding rings for activity / arrival / burst
+        const rings: Array<[number, number]> = [];
+        if (isActive) rings.push([1 - frame.sub, 0.5]);
+        if (arrive > 0) rings.push([1 - arrive, 0.7 * arrive]);
+        if (burst > 0) rings.push([1 - burst, 0.5 * burst]);
+        for (const [prog, alpha] of rings) {
+          const rr = baseR + 4 + (1 - prog) * 26;
+          ctx.strokeStyle = withAlpha(color, Math.max(0, alpha * prog));
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(x, y, rr, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        // selection / hover ring
+        if (isSel || isHov) {
+          ctx.strokeStyle = isSel ? "#e7ecf6" : withAlpha("#e7ecf6", 0.5);
+          ctx.lineWidth = isSel ? 2 : 1.2;
+          ctx.beginPath();
+          ctx.arc(x, y, baseR + 7, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        // core
+        ctx.beginPath();
+        ctx.arc(x, y, baseR + (isActive ? 1.5 : 0), 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = withAlpha("#04060a", 0.6);
+        ctx.stroke();
+        // inner highlight
+        ctx.beginPath();
+        ctx.arc(x - baseR * 0.3, y - baseR * 0.3, baseR * 0.4, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(255,255,255,0.35)";
+        ctx.fill();
+
+        // label: tier-1 always; others on hover/select
+        if (tier === 1 || isSel || isHov) {
+          const label = meta?.label ?? n.id;
+          ctx.font = `${tier === 1 ? 12 : 11}px var(--font-geist-sans), system-ui, sans-serif`;
+          const tw = ctx.measureText(label).width;
+          const lx = x - tw / 2;
+          const ly = y + baseR + 15;
+          ctx.fillStyle = "rgba(6,8,13,0.7)";
+          ctx.fillRect(lx - 5, ly - 11, tw + 10, 16);
+          ctx.fillStyle = isSel || isHov ? "#ffffff" : "rgba(231,236,246,0.82)";
+          ctx.fillText(label, lx, ly);
+        }
+      }
+    };
+
+    raf = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(raf);
+  }, [graph, model, eventViz, sim, pRef]);
+
+  return (
+    <div ref={wrapRef} style={{ position: "absolute", inset: 0 }}>
+      <canvas ref={canvasRef} style={{ display: "block" }} />
+    </div>
+  );
+}
+
+/* ---------------- canvas helpers ---------------- */
+
+function controlPoint(s: { x: number; y: number }, t: { x: number; y: number }, seed: string) {
+  const mx = (s.x + t.x) / 2;
+  const my = (s.y + t.y) / 2;
+  const dx = t.x - s.x;
+  const dy = t.y - s.y;
+  const len = Math.hypot(dx, dy) || 1;
+  // perpendicular offset, signed by a hash of the edge id for separation
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) hash = (hash * 31 + seed.charCodeAt(i)) | 0;
+  const sign = hash % 2 === 0 ? 1 : -1;
+  const k = 0.14 * sign;
+  return { cx: mx + (-dy / len) * len * k, cy: my + (dx / len) * len * k };
+}
+
+function quad(
+  s: { x: number; y: number },
+  t: { x: number; y: number },
+  cx: number,
+  cy: number,
+  u: number,
+) {
+  const mt = 1 - u;
+  return {
+    x: mt * mt * s.x + 2 * mt * u * cx + u * u * t.x,
+    y: mt * mt * s.y + 2 * mt * u * cy + u * u * t.y,
+  };
+}
+
+function drawCurveSegment(
+  ctx: CanvasRenderingContext2D,
+  s: { x: number; y: number },
+  t: { x: number; y: number },
+  cx: number,
+  cy: number,
+  from: number,
+  to: number,
+  color: string,
+  leak: boolean,
+) {
+  const steps = 22;
+  ctx.lineWidth = leak ? 2.4 : 1.8;
+  if (leak) ctx.setLineDash([5, 4]);
+  ctx.beginPath();
+  for (let i = 0; i <= steps; i++) {
+    const u = from + ((to - from) * i) / steps;
+    const pt = quad(s, t, cx, cy, u);
+    if (i === 0) ctx.moveTo(pt.x, pt.y);
+    else ctx.lineTo(pt.x, pt.y);
+  }
+  ctx.strokeStyle = withAlpha(color, leak ? 0.55 : 0.4);
+  ctx.stroke();
+  ctx.setLineDash([]);
+}

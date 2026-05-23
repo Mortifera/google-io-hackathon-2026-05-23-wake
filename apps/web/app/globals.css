@@ -1,17 +1,64 @@
+/* Wake — visualization design system.
+ * A dark "observatory" palette: near-black field, luminous affect colours,
+ * restrained chrome so the graph and motion carry the screen. */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* surfaces */
+  --bg: #06080d;
+  --bg-deep: #04060a;
+  --surface: #0c111b;
+  --surface-2: #111826;
+  --surface-3: #16202f;
+  --border: #1c2535;
+  --border-soft: #161e2b;
+
+  /* type */
+  --text: #e7ecf6;
+  --text-dim: #93a0b8;
+  --text-faint: #57637a;
+
+  /* brand / chrome accents */
+  --accent: #5bd1a0; /* mint — Wake signature */
+  --accent-sky: #5b9cf0;
+  --accent-glow: rgba(91, 209, 160, 0.55);
+
+  /* affect ramp (node state) */
+  --calm: #56c7d6;
+  --attentive: #5b9cf0;
+  --excited: #4fd18b;
+  --alarmed: #f2b450;
+  --hostile: #f0556b;
+  --churning: #b06bf0;
+
+  /* monte carlo cluster hues */
+  --cluster-a: #4fd18b; /* integration  */
+  --cluster-b: #f0556b; /* backlash     */
+  --cluster-c: #f2b450; /* competitor   */
+  --cluster-d: #5b9cf0; /* spare        */
+
+  /* event types */
+  --ev-public: #5b9cf0;
+  --ev-private: #8a7bf0;
+  --ev-decision: #f2b450;
+  --ev-action: #5bd1a0;
+  --ev-emergent: #ff5d8f;
+
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset,
+    0 8px 30px rgba(0, 0, 0, 0.45);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html {
   height: 100%;
+  color-scheme: dark;
 }
 
 html,
@@ -22,19 +69,23 @@ body {
 
 body {
   min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(
+      1200px 800px at 70% -10%,
+      rgba(91, 156, 240, 0.06),
+      transparent 60%
+    ),
+    radial-gradient(
+      1000px 700px at 10% 110%,
+      rgba(91, 209, 160, 0.05),
+      transparent 55%
+    ),
+    var(--bg);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+  font-feature-settings: "ss01", "cv01";
 }
 
 a {
@@ -42,8 +93,52 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+::selection {
+  background: var(--accent-glow);
+  color: #04130c;
+}
+
+/* thin, dark scrollbars to match the chrome */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mono {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes wake-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes wake-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--accent-glow);
+  }
+  100% {
+    box-shadow: 0 0 0 14px rgba(91, 209, 160, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
   }
 }
