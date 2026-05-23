@@ -62,9 +62,45 @@ Built for the Google DeepMind / AI Futures Fund hackathon (2026-05-23). The demo
 is the argument: a recognizable company's world reacts to a recognizable action,
 with named entities, visible cascades, and a punchline.
 
+## Getting started
+
+```bash
+pnpm install          # Node >= 22, pnpm 10
+pnpm test             # validates the fixtures against the contracts
+pnpm typecheck        # typechecks every package
+pnpm web              # runs the Next.js viz (renders the fixture cascade)
+```
+
+Copy `.env.example` to `.env` and add your Gemini key (the real `.env` is
+gitignored). The default `MockLLMClient` needs no key — the kernel runs offline.
+
+## Repo layout
+
+```
+packages/contracts   the six frozen seam contracts (zod + types) — source of truth
+packages/util        seeded RNG, bounded-concurrency map, id gen
+packages/llm         MockLLMClient (offline) + GeminiLLMClient (real)
+packages/kernel      simulation engine (tick loop, scheduler, Monte Carlo)
+packages/nodes       per-node behaviour (TickFn)
+packages/edges       per-edge behaviour (EdgeTransform)
+packages/analysis    Monte Carlo clustering + pivotal variable
+packages/interp      event-DAG trace-back ("why did X happen")
+worlds/notion        the graph data (mini.json toy; full world to come)
+apps/web             Next.js visualization
+fixtures/            golden Cascade + MonteCarloResult (unblock viz/interp/analysis)
+briefs/              one build brief per worker
+```
+
+## For AI workers
+
+Read **[`AGENTS.md`](./AGENTS.md)** (operating rules: what's pre-approved vs.
+needs coordination), **[`PLAN.md`](./PLAN.md)** (parallelization, seams, Gantt,
+checkpoints), and your **[`briefs/`](./briefs/README.md)** entry.
+
 ## Status
 
-Greenfield. Kernel, graphs, prompts, and visualization to come.
+Scaffold complete: contracts frozen, fixtures + mock shipped, `apps/web` builds,
+all green. L1–L8 are typed stubs ready to be picked up in parallel.
 
 ## Name
 
