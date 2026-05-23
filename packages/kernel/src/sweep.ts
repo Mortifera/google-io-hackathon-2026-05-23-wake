@@ -24,6 +24,8 @@ export interface SweepOptions {
   temperature?: number;
   /** Called after each cascade resolves — for progress visibility. */
   onProgress?: (done: number, total: number) => void;
+  /** Called when a single run fails; the sweep drops it and continues. */
+  onError?: (perturbation: Perturbation, error: unknown) => void;
 }
 
 function combos(dims: SweepDimension[]): Perturbation[] {
@@ -114,20 +116,30 @@ export async function sweep(
   }
   let done = 0;
   const total = tasks.length;
-  return mapWithConcurrency(tasks, opts.runConcurrency ?? 4, async (t) => {
-    const cascade = await runCascade(
-      applyPerturbation(world, seedId, t.p),
-      seedId,
-      deps,
-      {
-        seed: t.seed,
-        perturbation: t.p,
-        concurrency: opts.concurrency,
-        maxTicks: opts.maxTicks,
-        temperature: opts.temperature,
-      },
-    );
-    opts.onProgress?.(++done, total);
-    return cascade;
+  // Per-run resilience: a single failed cascade (e.g. a transient network
+  // ECONNRESET) is dropped, not allowed to abort the whole sweep. A few
+  // survivors fewer is fine for clustering; losing all N is not.
+  const results = await mapWithConcurrency(tasks, opts.runConcurrency ?? 4, async (t) => {
+    try {
+      const cascade = await runCascade(
+        applyPerturbation(world, seedId, t.p),
+        seedId,
+        deps,
+        {
+          seed: t.seed,
+          perturbation: t.p,
+          concurrency: opts.concurrency,
+          maxTicks: opts.maxTicks,
+          temperature: opts.temperature,
+        },
+      );
+      opts.onProgress?.(++done, total);
+      return cascade;
+    } catch (err) {
+      opts.onProgress?.(++done, total);
+      opts.onError?.(t.p, err);
+      return null;
+    }
   });
+  return results.filter((c): c is Cascade => c !== null);
 }

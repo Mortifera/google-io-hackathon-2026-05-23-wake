@@ -77,8 +77,13 @@ const cascades = await sweep(
       console.error(
         `  [${d}/${t}] runs done — $${costUsd.toFixed(2)}, ${((Date.now() - t0) / 1000).toFixed(0)}s`,
       ),
+    onError: (p, err) =>
+      console.error(
+        `  [run dropped] ${JSON.stringify(p)} — ${err instanceof Error ? err.message : String(err)}`,
+      ),
   },
 );
+console.error(`sweep produced ${cascades.length} surviving cascades`);
 const mc = analyze(cascades, { worldId: world.id, seedActionId: seedId });
 
 const outDir = path.join(repoRoot, "runs");
