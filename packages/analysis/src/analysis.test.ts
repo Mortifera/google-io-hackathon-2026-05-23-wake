@@ -25,6 +25,8 @@ const CLEAN_LABELS = new Set([
   "Full-blown backlash",
   "Competitors capitalize",
 ]);
+// On collision a label is suffixed (" · Qualifier"); the base must still be clean.
+const baseOf = (label: string): string => label.split(" · ")[0]!;
 
 describe("analyze on the real cascade (demo-grade)", () => {
   const result = analyze(framedScenario(real), opts);
@@ -42,8 +44,10 @@ describe("analyze on the real cascade (demo-grade)", () => {
     const membersFlat = result.clusters.flatMap((c) => c.memberRunIds);
     expect([...membersFlat].sort()).toEqual([...runIds].sort());
 
+    const labels = result.clusters.map((c) => c.label);
+    expect(new Set(labels).size).toBe(labels.length); // no duplicate card headings
     for (const c of result.clusters) {
-      expect(CLEAN_LABELS.has(c.label)).toBe(true); // card-ready label
+      expect(CLEAN_LABELS.has(baseOf(c.label))).toBe(true); // card-ready label
       expect(c.summary.length).toBeGreaterThan(0);
       expect(c.memberRunIds).toContain(c.representativeRunId);
     }
@@ -67,7 +71,39 @@ describe("analyze", () => {
     const result = analyze(framedScenario(mini), opts);
     expect(() => MonteCarloResultSchema.parse(result)).not.toThrow();
     expect(result.pivotal.dimension).toBe("framing");
-    for (const c of result.clusters) expect(CLEAN_LABELS.has(c.label)).toBe(true);
+    for (const c of result.clusters) expect(CLEAN_LABELS.has(baseOf(c.label))).toBe(true);
+  });
+
+  it("never emits duplicate cluster labels on a low-variance 48-run fan", () => {
+    // Structurally uniform: same base, no sentiment spread (no ±0.5 regimes),
+    // only per-run seed jitter + a framing tag. Clusters land in the same tier,
+    // so without the dedup guard their card labels would be identical.
+    const noiseDials = { seedTiming: [0, 24] as [number, number] };
+    const cascades = [
+      ...drawRegime(
+        real,
+        { count: 24, perturbation: { framing: "independent" }, sentimentBias: 0, divergence: 2, noiseDials },
+        500,
+      ),
+      ...drawRegime(
+        real,
+        { count: 24, perturbation: { framing: "integrated" }, sentimentBias: 0, divergence: 2, noiseDials },
+        600,
+      ),
+    ];
+    expect(cascades.length).toBe(48);
+
+    const result = analyze(cascades, opts);
+    expect(() => MonteCarloResultSchema.parse(result)).not.toThrow();
+
+    const labels = result.clusters.map((c) => c.label);
+    expect(new Set(labels).size).toBe(labels.length); // every card heading distinct
+    for (const c of result.clusters) expect(CLEAN_LABELS.has(baseOf(c.label))).toBe(true);
+
+    // A real, in-range pivotal is always produced.
+    expect(result.pivotal.dimension.length).toBeGreaterThan(0);
+    expect(result.pivotal.explainedVariance).toBeGreaterThanOrEqual(0);
+    expect(result.pivotal.explainedVariance).toBeLessThanOrEqual(1);
   });
 
   it("picks a numeric dial via the η² (correlation-ratio) path", () => {

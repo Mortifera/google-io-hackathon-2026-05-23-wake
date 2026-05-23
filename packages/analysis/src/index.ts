@@ -6,7 +6,7 @@ import type {
 } from "@wake/contracts";
 import { fingerprint } from "./fingerprint";
 import { cluster, representativeMember } from "./cluster";
-import { describeCluster } from "./label";
+import { describeClusters } from "./label";
 import { computePivotal } from "./pivotal";
 import { standardizeColumns } from "./stats";
 
@@ -46,16 +46,16 @@ export function analyze(
   const membersByCluster: number[][] = Array.from({ length: k }, () => []);
   assignment.forEach((c, i) => membersByCluster[c]!.push(i));
 
-  // Describe every cluster up front, in an explicit pass, so the labels are a
-  // fully-built array before anything (clusters *or* the pivotal description)
-  // reads them. A future parallel/reordered refactor then can't desync them.
-  const copies = membersByCluster.map((members) =>
-    describeCluster({
+  // Describe every cluster in one holistic pass — labels are guaranteed distinct
+  // (no two cards share a heading) and the array is fully built before anything
+  // (clusters *or* the pivotal description) reads it.
+  const copies = describeClusters(
+    membersByCluster.map((members) => ({
       memberVectors: members.map((i) => fp.vectors[i]!),
       allVectors: fp.vectors,
       featureNames: fp.featureNames,
       share: members.length / cascades.length,
-    }),
+    })),
   );
   const clusterLabels: string[] = copies.map((copy) => copy.label);
   const clusterSentiment: number[] = copies.map((copy) => copy.avgSentiment);

@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import type { Cascade } from "@wake/contracts";
 import { etaSquared, computePivotal } from "./pivotal";
 import { cluster, silhouette } from "./cluster";
+import { describeClusters, type LabelInput } from "./label";
 import type { Fingerprints } from "./fingerprint";
 
 describe("etaSquared (correlation ratio)", () => {
@@ -78,5 +79,37 @@ describe("computePivotal", () => {
     ];
     const piv = computePivotal(cascades, [0, 0, 1, 1], ["A", "B"], [0.5, -0.5], emptyFp);
     expect(piv.dimension).toBe("driver");
+  });
+});
+
+describe("describeClusters dedup guard", () => {
+  const featureNames = ["a.sentiment", "b.sentiment"];
+
+  it("gives same-tier clusters distinct labels with a clean base", () => {
+    // Two clusters, both deeply negative → both want "Full-blown backlash".
+    const all = [
+      [-0.6, -0.55],
+      [-0.7, -0.5],
+      [-0.5, -0.7],
+      [-0.55, -0.68],
+    ];
+    const c1: LabelInput = { memberVectors: [all[0]!, all[1]!], allVectors: all, featureNames, share: 0.5 };
+    const c2: LabelInput = { memberVectors: [all[2]!, all[3]!], allVectors: all, featureNames, share: 0.5 };
+
+    const copies = describeClusters([c1, c2]);
+    expect(copies[0]!.label).not.toBe(copies[1]!.label); // distinct headings
+    for (const c of copies) expect(c.label.startsWith("Full-blown backlash")).toBe(true);
+  });
+
+  it("guarantees uniqueness even when the qualifier node would also collide", () => {
+    // Identical clusters: same tier AND same distinctive node → numeric suffix.
+    const all = [
+      [-0.6, -0.6],
+      [-0.6, -0.6],
+      [-0.6, -0.6],
+    ];
+    const same: LabelInput = { memberVectors: [all[0]!], allVectors: all, featureNames, share: 1 / 3 };
+    const copies = describeClusters([same, { ...same }, { ...same }]);
+    expect(new Set(copies.map((c) => c.label)).size).toBe(3);
   });
 });
