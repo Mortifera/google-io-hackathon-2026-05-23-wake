@@ -1,0 +1,4364 @@
+{
+  "meta": {
+    "worldId": "notion",
+    "seedActionId": "acquisition",
+    "seed": 16,
+    "perturbation": {
+      "framing": "integrated",
+      "pressClimate": "favorable",
+      "competitorSpeed": "slow"
+    }
+  },
+  "ticks": [
+    {
+      "clock": 0,
+      "activeNodeIds": [
+        "notion-corp"
+      ],
+      "events": [
+        {
+          "id": "e1",
+          "type": "action",
+          "source": "world",
+          "target": "notion-corp",
+          "channel": "seed",
+          "content": "Microsoft has acquired Notion. The official announcement emphasizes that Notion will be deeply integrated into Microsoft 365 and Copilot.",
+          "time": 0,
+          "causedBy": null,
+          "rationale": "Injected action."
+        },
+        {
+          "id": "e2",
+          "type": "decision",
+          "source": "notion-corp",
+          "target": "notion-board",
+          "channel": "internal-leadership",
+          "content": "To protect Notion's long-term value post-acquisition, we must condition the transaction on securing explicit, binding commitments from Microsoft leadership. Our strategic priorities are absolute product autonomy, robustly funded retention pools for key engineering and design talent, and a ring-fenced budget to sustain our community and template ecosystem. Without these safeguards, we risk rapid talent attrition and the erosion of our core brand value.",
+          "time": 0,
+          "causedBy": "e1",
+          "rationale": "The message was sharpened to emphasize strategic leverage, risk mitigation, and clear non-negotiables for the board and investors during acquisition negotiations."
+        },
+        {
+          "id": "e3",
+          "type": "private_message",
+          "source": "notion-corp",
+          "target": "ivan-zhao",
+          "channel": "internal-leadership",
+          "content": "Ivan, our primary strategic priority in the upcoming integration talks with Microsoft must be preserving our product autonomy. They will push for immediate M365 billing and Azure AD integration. We need to negotiate a strict, phased transition timeline to shield the product team and prevent the core Notion experience from being bogged down by enterprise bloat.",
+          "time": 0,
+          "causedBy": "e1",
+          "rationale": "The message fits the internal leadership channel perfectly as it is candid, strategic, and sets direction. The tone has been sharpened to focus on negotiation strategy and product autonomy."
+        },
+        {
+          "id": "e4",
+          "type": "public_post",
+          "source": "notion-corp",
+          "target": "notion-blog",
+          "channel": "company->journalist",
+          "content": "Today, we are starting a new chapter. Notion is joining Microsoft. Our mission remains exactly the same: to blend docs, wikis, and project management into a single, beautiful tool. With Microsoft's resources, we will be able to build faster, integrate deeper AI capabilities via Copilot, and bring Notion to millions of new users while keeping our product identity entirely intact.",
+          "time": 0,
+          "causedBy": "e1",
+          "rationale": "Establishing our official narrative to reassure our user base and community that the product they love isn't going away."
+        },
+        {
+          "id": "e5",
+          "type": "private_message",
+          "source": "notion-corp",
+          "target": "casey-newton",
+          "channel": "company->journalist",
+          "content": "Hi Casey, sharing some exciting news today. Notion is joining Microsoft, where we will continue to operate as an independent brand and product group. Ivan and our entire leadership team are staying on to lead this next chapter. We'd love to connect to discuss how we plan to preserve our unique design culture and what this partnership means for the future of the productivity space.",
+          "time": 0,
+          "causedBy": "e1",
+          "rationale": "Polished the pitch to frame the acquisition as an exciting partnership, emphasizing continuity and independence while maintaining a professional corporate tone suitable for a journalist."
+        }
+      ]
+    },
+    {
+      "clock": 15,
+      "activeNodeIds": [
+        "casey-newton",
+        "notion-blog"
+      ],
+      "events": [
+        {
+          "id": "e6",
+          "type": "public_post",
+          "source": "casey-newton",
+          "target": "twitter",
+          "channel": "journalist->audience",
+          "content": "BREAKING: Microsoft is buying Notion in a massive, market-defining consolidation. Years after trying to kill the startup with its 'Loop' clone, the tech giant has simply bought the original. While Notion claims they will remain independent, this blockbuster acquisition is a massive red flag for antitrust regulators. Is the FTC about to step in?",
+          "time": 15,
+          "causedBy": "e5",
+          "rationale": "Amplified the conflict (Microsoft's failed clone vs. buying the original) and sharpened the regulatory angle to make it more striking and sensational for a wide audience, while maintaining journalistic credibility."
+        },
+        {
+          "id": "e7",
+          "type": "public_post",
+          "source": "casey-newton",
+          "target": "platformer-readers",
+          "channel": "journalist->audience",
+          "content": "In a stunning tech consolidation shockwave, Microsoft is acquiring Notion—sparking immediate fears of a massive productivity monopoly. This isn't just a corporate buyout; it's an aggressive land grab that threatens to lock down the future of collaborative work. As Notion's fiercely loyal user base braces for the worst, antitrust regulators are already circling Redmond. Here is why this deal is a regulatory powder keg waiting to explode.",
+          "time": 15,
+          "causedBy": "e5",
+          "rationale": "Sharpened the angle to emphasize the dramatic nature of the acquisition, framing it as a 'stunning shockwave' and a 'regulatory powder keg' to grab reader attention while maintaining credibility based on the original text's mention of antitrust and a 'land grab'."
+        },
+        {
+          "id": "e8",
+          "type": "private_message",
+          "source": "casey-newton",
+          "target": "kara-swisher",
+          "channel": "friend->friend",
+          "content": "Hey Kara, did you catch the Microsoft/Notion news? Classic Redmond crushing another indie darling with the bundle. Let's swap notes before you tape—are you guys covering this on the next pod?",
+          "time": 15,
+          "causedBy": "e5",
+          "rationale": "Maintained the peer-to-peer, casual, and trusted tone between two tech journalists sharing an insider observation."
+        },
+        {
+          "id": "e9",
+          "type": "public_post",
+          "source": "notion-blog",
+          "target": "twitter",
+          "channel": "platform-amplification",
+          "content": "Trending — A new chapter for Notion: We are joining Microsoft to accelerate our mission of bringing a beautiful, unified workspace to everyone. Read more about how we're building the future of collaborative productivity, together.",
+          "time": 15,
+          "causedBy": "e4"
+        },
+        {
+          "id": "ea",
+          "type": "public_post",
+          "source": "notion-blog",
+          "target": "notion-ambassadors",
+          "channel": "platform-amplification",
+          "content": "Trending — To our wonderful ambassador community: Today we are opening an exciting new chapter by joining forces with Microsoft. Our core product identity and our dedication to this community remain as strong as ever as we gain the resources to build faster and deeper.",
+          "time": 15,
+          "causedBy": "e4"
+        }
+      ]
+    },
+    {
+      "clock": 30,
+      "activeNodeIds": [
+        "ivan-zhao",
+        "notion-board"
+      ],
+      "events": [
+        {
+          "id": "eb",
+          "type": "private_message",
+          "source": "ivan-zhao",
+          "target": "akshay-kothari",
+          "channel": "internal-leadership",
+          "content": "Akshay, we need to hold the line on Microsoft. If we let them dictate our integration timeline or pull us too deep into the M365 ecosystem, we risk losing our product identity and the craft that differentiates Notion. Let's align on maintaining absolute product sovereignty as a strategic priority.",
+          "time": 30,
+          "causedBy": "e3",
+          "rationale": "The original message is already highly suited for the internal-leadership channel. I have slightly sharpened the strategic focus to emphasize maintaining product sovereignty against Microsoft's ecosystem pressure as a core priority."
+        },
+        {
+          "id": "ec",
+          "type": "private_message",
+          "source": "ivan-zhao",
+          "target": "simon-last",
+          "channel": "internal-leadership",
+          "content": "Simon, we need to be completely aligned on the Microsoft situation. Their corporate model is the direct antithesis of our product craft. Any integration discussions must be strictly ring-fenced to ensure they do not compromise our core engine or design aesthetic. Our primary strategic priority remains protecting the integrity of the canvas. Let's keep the team focused and block out the noise.",
+          "time": 30,
+          "causedBy": "e3",
+          "rationale": "The message is already highly aligned with the 'internal-leadership' channel. It has been slightly sharpened to emphasize strategic alignment and actionable focus between co-founders regarding external corporate pressures."
+        },
+        {
+          "id": "ed",
+          "type": "private_message",
+          "source": "ivan-zhao",
+          "target": "rama-katkar",
+          "channel": "internal-leadership",
+          "content": "Rama, I acknowledge the financial and distribution upside of the Microsoft integration, but we cannot compromise our independence. Our valuation and brand identity are directly tied to our unique relationship with our user community. Shoving Azure AD and M365 billing into our core flow risks severe alienation. We need to pause and proceed with extreme caution here, if we do it at all. Let's align on a strategy that protects our core product experience first.",
+          "time": 30,
+          "causedBy": "e3",
+          "rationale": "Maintained the candid, strategic tone appropriate for a CEO-to-CFO communication on the internal-leadership channel, sharpening the directive to prioritize brand identity and community trust over short-term distribution gains."
+        },
+        {
+          "id": "ee",
+          "type": "emergent",
+          "source": "ivan-zhao",
+          "target": "prod-twitter",
+          "channel": "blind",
+          "content": "Private frustration from Ivan Zhao (CEO, co-founder) surfaces anonymously.",
+          "time": 30,
+          "causedBy": "e3",
+          "rationale": "Private divergence grew too large and leaked."
+        },
+        {
+          "id": "ef",
+          "type": "private_message",
+          "source": "notion-board",
+          "target": "sequoia",
+          "channel": "investor->company",
+          "content": "Ivan has made it clear that product autonomy and retention pools are non-negotiable conditions for any transaction. To maximize the probability of a successful, high-premium exit, we must present a united front to Microsoft on these terms rather than letting them divide us.",
+          "time": 30,
+          "causedBy": "e2",
+          "rationale": "Aligning Sequoia behind Ivan's conditions to prevent backchannel friction that could derail negotiations."
+        },
+        {
+          "id": "eg",
+          "type": "private_message",
+          "source": "notion-board",
+          "target": "coatue",
+          "channel": "investor->company",
+          "content": "We recognize the desire for a clean liquidity event, but Ivan's voting control means a deal only happens on his terms. Securing these autonomy and retention commitments from Microsoft is the only viable path to getting this deal signed.",
+          "time": 30,
+          "causedBy": "e2",
+          "rationale": "Managing Coatue's potential impatience for an exit by emphasizing the reality of the founder veto."
+        },
+        {
+          "id": "eh",
+          "type": "private_message",
+          "source": "notion-board",
+          "target": "index-ventures",
+          "channel": "investor->company",
+          "content": "Ivan's insistence on autonomy and community preservation aligns with our shared long-term view of Notion's value. We are supportive of these conditions as a baseline for any transaction.",
+          "time": 30,
+          "causedBy": "e2",
+          "rationale": "Reinforcing alignment with Index, who typically favor long-term preservation of the company's core identity."
+        }
+      ]
+    },
+    {
+      "clock": 45,
+      "activeNodeIds": [
+        "twitter",
+        "platformer-readers",
+        "notion-ambassadors"
+      ],
+      "events": [
+        {
+          "id": "ei",
+          "type": "public_post",
+          "source": "twitter",
+          "target": "prod-twitter",
+          "channel": "platform-amplification",
+          "content": "Trending — RIP Notion. Get ready for MS Teams integration, mandatory Outlook logins, and 10x slower loading times. What are we migrating to next? Obsidian? Tana? Any alternative that isn't corporate bloat? 🪦",
+          "time": 45,
+          "causedBy": "e9",
+          "rationale": "Amplify productivity community panic and push migration discussions to drive engagement."
+        },
+        {
+          "id": "ej",
+          "type": "public_post",
+          "source": "twitter",
+          "target": "developer-twitter",
+          "channel": "platform-amplification",
+          "content": "Trending — Microsoft buying Notion is the ultimate proof that you either die an indie darling or live long enough to become a bloated enterprise MS Office sub-feature. Time to self-host everything. Who's building the open-source Notion killer? 💻",
+          "time": 45,
+          "causedBy": "e9",
+          "rationale": "Tap into the developer community's preference for self-hosting, open-source, and anti-corporate sentiments."
+        },
+        {
+          "id": "ek",
+          "type": "public_post",
+          "source": "twitter",
+          "target": "skeptical-of-msft-acquisitions",
+          "channel": "platform-amplification",
+          "content": "Trending — Remember Skype? Remember Wunderlist? Microsoft's graveyard is hungry and Notion is the next course. @FTC are you guys awake or is this just fine now? 🧐",
+          "time": 45,
+          "causedBy": "e9",
+          "rationale": "Trigger the antitrust and historical-failure narratives that always trend during big tech acquisitions."
+        },
+        {
+          "id": "el",
+          "type": "public_post",
+          "source": "twitter",
+          "target": "design-twitter",
+          "channel": "platform-amplification",
+          "content": "Trending — Notion's beautiful, clean, minimalist aesthetic is about to get corporate-washed into a soul-crushing corporate hellscape. Truly the end of an era for product design. 🎨📉",
+          "time": 45,
+          "causedBy": "e9",
+          "rationale": "Appeal to design-focused users who fell in love with Notion's original aesthetic and fear corporate dilution."
+        },
+        {
+          "id": "em",
+          "type": "emergent",
+          "source": "twitter",
+          "target": "prod-twitter",
+          "channel": "blind",
+          "content": "Private frustration from Twitter / X (platform) surfaces anonymously.",
+          "time": 45,
+          "causedBy": "e9",
+          "rationale": "Private divergence grew too large and leaked."
+        },
+        {
+          "id": "en",
+          "type": "emergent",
+          "source": "platformer-readers",
+          "target": "prod-twitter",
+          "channel": "blind",
+          "content": "Private frustration from Platformer readers surfaces anonymously.",
+          "time": 45,
+          "causedBy": "e7",
+          "rationale": "Private divergence grew too large and leaked."
+        },
+        {
+          "id": "eo",
+          "type": "public_post",
+          "source": "notion-ambassadors",
+          "target": "notion-corp",
+          "channel": "customer->cohort",
+          "content": "We've spent years building the Notion community from the ground up. Generic corporate promises aren't enough. We need concrete commitments: Will the Ambassador program remain independent? Will we get exclusive access to the roadmap? Or is Notion just being absorbed into the Microsoft corporate machine?",
+          "time": 45,
+          "causedBy": "ea",
+          "rationale": "We must publicly demand concrete commitments regarding our status and access to prevent our community from being homogenized by Microsoft."
+        }
+      ]
+    },
+    {
+      "clock": 60,
+      "activeNodeIds": [
+        "simon-last",
+        "akshay-kothari",
+        "rama-katkar",
+        "kara-swisher",
+        "prod-twitter",
+        "sequoia",
+        "index-ventures",
+        "coatue"
+      ],
+      "events": [
+        {
+          "id": "ep",
+          "type": "private_message",
+          "source": "akshay-kothari",
+          "target": "rama-katkar",
+          "channel": "internal-leadership",
+          "content": "Rama, Ivan is raising concerns that the MSFT integration compromises our product sovereignty by pulling us too deep into M365. We need to look at this pragmatically. What is the actual pipeline and revenue impact if we restrict MSFT ecosystem integrations? We have to balance product purity against our distribution velocity.",
+          "time": 60,
+          "causedBy": "eb",
+          "rationale": "The message is already highly appropriate for the internal-leadership channel. I have slightly sharpened the phrasing to emphasize the strategic trade-off between product purity (sovereignty) and revenue impact (distribution velocity) to align with a candid, executive-level discussion."
+        },
+        {
+          "id": "eq",
+          "type": "private_message",
+          "source": "rama-katkar",
+          "target": "notion-board",
+          "channel": "internal-leadership",
+          "content": "To protect our valuation, we must treat our community relationship as a core asset. Before moving forward with the Azure AD/M365 billing integration, we need a rigorous, risk-adjusted decision framework. For our next review, we will model two specific areas: first, the quantified churn risk of this integration against the projected enterprise distribution upside; second, an operational map to determine if we can decouple these flows to preserve our core user experience. Let's base our decision on hard numbers and architectural feasibility.",
+          "time": 60,
+          "causedBy": "ed",
+          "rationale": "The message fits the internal-leadership channel perfectly. It has been sharpened to emphasize the strategic importance of protecting valuation and setting a clear, actionable direction for the upcoming review."
+        },
+        {
+          "id": "er",
+          "type": "public_post",
+          "source": "kara-swisher",
+          "target": "twitter",
+          "channel": "journalist->audience",
+          "content": "Microsoft is dusting off its infamous 90s monopoly playbook. Instead of innovating, the tech giant is reverting to its classic strategy: clone, buy, and bundle. But this time, antitrust regulators Lina Khan and Jonathan Kanter are locked, loaded, and ready for a historic showdown.",
+          "time": 60,
+          "causedBy": "e8",
+          "rationale": "Amplified the drama of the regulatory threat and sharpened the critique of Microsoft's business practices to make the headline more striking and engaging for a broad audience, while maintaining the core message of Swisher's original post."
+        },
+        {
+          "id": "es",
+          "type": "emergent",
+          "source": "kara-swisher",
+          "target": "prod-twitter",
+          "channel": "blind",
+          "content": "Private frustration from Kara Swisher (Pivot / On) surfaces anonymously.",
+          "time": 60,
+          "causedBy": "e8",
+          "rationale": "Private divergence grew too large and leaked."
+        },
+        {
+          "id": "et",
+          "type": "public_post",
+          "source": "prod-twitter",
+          "target": "reddit-notion",
+          "channel": "platform-amplification",
+          "content": "Trending — Anyone else see the leaked Blind posts from Ivan? Sounds like massive internal frustration. The culture is shifting and not in a good way. Are we witnessing the beginning of the end for independent Notion?",
+          "time": 60,
+          "causedBy": "ee",
+          "rationale": "Amplify the leak to sound the alarm on Reddit and gauge if others are seeing the same warning signs of corporate decay."
+        },
+        {
+          "id": "eu",
+          "type": "public_post",
+          "source": "prod-twitter",
+          "target": "notion-power-users-discord",
+          "channel": "platform-amplification",
+          "content": "Trending — Ivan's leaked frustration on Blind is wild. If the founder is losing his mind over where things are going, we need to brace ourselves. Time to back up our workspaces?",
+          "time": 60,
+          "causedBy": "ee",
+          "rationale": "Alert the core power users on Discord to prepare for potential platform instability or sudden negative shifts."
+        },
+        {
+          "id": "ev",
+          "type": "private_message",
+          "source": "sequoia",
+          "target": "notion-board",
+          "channel": "investor->company",
+          "content": "Agreed on the necessity of a united front. Presenting a cohesive stance on product autonomy and robust retention pools is critical to maintaining our leverage and securing the premium valuation. We fully back this positioning as we engage with Microsoft.",
+          "time": 60,
+          "causedBy": "ef",
+          "rationale": "Aligning with the board on autonomy and retention terms strengthens our negotiating hand with Microsoft and protects the exit premium."
+        },
+        {
+          "id": "ew",
+          "type": "private_message",
+          "source": "index-ventures",
+          "target": "notion-board",
+          "channel": "investor->company",
+          "content": "Agreed. Preserving Notion's distinct identity and operational autonomy is crucial for long-term value. As we align on these baselines, let's also ensure we maintain a streamlined transaction structure that minimizes regulatory drag and guarantees execution certainty for our LPs.",
+          "time": 60,
+          "causedBy": "eh",
+          "rationale": "I want to support the autonomy narrative while subtly reminding the board that deal velocity and execution certainty are critical for our fund lifecycle."
+        },
+        {
+          "id": "ex",
+          "type": "private_message",
+          "source": "coatue",
+          "target": "notion-board",
+          "channel": "investor->company",
+          "content": "Understood. If securing these autonomy and retention commitments is what it takes to clear Ivan's voting block, let's facilitate that immediately. However, we must ensure these negotiations do not drag out the timeline or give Microsoft any reason to reconsider the transaction. Speed to close remains our primary objective.",
+          "time": 60,
+          "causedBy": "eg",
+          "rationale": "I want to push the board to satisfy Ivan's terms quickly so we don't jeopardize or delay the Microsoft acquisition."
+        }
+      ]
+    },
+    {
+      "clock": 75,
+      "activeNodeIds": [
+        "prod-twitter",
+        "developer-twitter",
+        "skeptical-of-msft-acquisitions",
+        "design-twitter"
+      ],
+      "events": [
+        {
+          "id": "ey",
+          "type": "public_post",
+          "source": "prod-twitter",
+          "target": "reddit-notion",
+          "channel": "platform-amplification",
+          "content": "Trending — The writing is on the wall. With Ivan's leaked frustration and the impending MS corporate bloat, what's everyone's migration plan? Obsidian, Tana, or Anytype? Let's compile a master migration megathread.",
+          "time": 75,
+          "causedBy": "en",
+          "rationale": "I want to mobilize the Reddit community to prepare for a mass exodus before the product is completely ruined."
+        },
+        {
+          "id": "ez",
+          "type": "public_post",
+          "source": "prod-twitter",
+          "target": "notion-power-users-discord",
+          "channel": "platform-amplification",
+          "content": "Trending — We're organizing a migration guide list. Notion is going the way of Evernote. Who has the best scripts for exporting nested databases to markdown without losing metadata?",
+          "time": 75,
+          "causedBy": "en",
+          "rationale": "Power users need technical solutions for migration, and Discord is where the builders and script-writers hang out."
+        },
+        {
+          "id": "e10",
+          "type": "public_post",
+          "source": "prod-twitter",
+          "target": "notion-corp",
+          "channel": "customer->cohort",
+          "content": "You sold out the community that built you for Microsoft cash. Enjoy becoming a bloated MS Office plugin that nobody wants to use.",
+          "time": 75,
+          "causedBy": "en",
+          "rationale": "I want to make sure corporate leadership knows exactly how much they've betrayed their core advocates."
+        },
+        {
+          "id": "e11",
+          "type": "emergent",
+          "source": "developer-twitter",
+          "target": "prod-twitter",
+          "channel": "blind",
+          "content": "Private frustration from Developer Twitter (cluster) surfaces anonymously.",
+          "time": 75,
+          "causedBy": "ej",
+          "rationale": "Private divergence grew too large and leaked."
+        },
+        {
+          "id": "e12",
+          "type": "public_post",
+          "source": "skeptical-of-msft-acquisitions",
+          "target": "prod-twitter",
+          "channel": "platform-amplification",
+          "content": "Trending — Wunderlist died so To Do could hobble. Skype died so Teams could bloat. Notion is already on life support the second they force MS account logins and kill the free tier. Export your data now.",
+          "time": 75,
+          "causedBy": "ek",
+          "rationale": "I want to remind productivity users of Microsoft's terrible track record with acquisitions to spark a mass migration."
+        },
+        {
+          "id": "e13",
+          "type": "public_post",
+          "source": "skeptical-of-msft-acquisitions",
+          "target": "developer-twitter",
+          "channel": "platform-amplification",
+          "content": "Trending — Can't wait for the inevitable 'Sign in with your Work or School Microsoft Account' prompt to break every third-party Notion API integration. Truly the Midas touch of corporate rot.",
+          "time": 75,
+          "causedBy": "ek",
+          "rationale": "Developers need to realize their custom integrations and APIs are going to be ruined by enterprise security policies."
+        },
+        {
+          "id": "e14",
+          "type": "emergent",
+          "source": "skeptical-of-msft-acquisitions",
+          "target": "prod-twitter",
+          "channel": "blind",
+          "content": "Private frustration from Skeptical-of-Microsoft-acquisitions (cluster) surfaces anonymously.",
+          "time": 75,
+          "causedBy": "ek",
+          "rationale": "Private divergence grew too large and leaked."
+        },
+        {
+          "id": "e15",
+          "type": "emergent",
+          "source": "design-twitter",
+          "target": "prod-twitter",
+          "channel": "blind",
+          "content": "Private frustration from Design Twitter (cluster) surfaces anonymously.",
+          "time": 75,
+          "causedBy": "el",
+          "rationale": "Private divergence grew too large and leaked."
+        }
+      ]
+    }
+  ],
+  "eventDag": [
+    {
+      "id": "e1",
+      "type": "action",
+      "source": "world",
+      "target": "notion-corp",
+      "channel": "seed",
+      "content": "Microsoft has acquired Notion. The official announcement emphasizes that Notion will be deeply integrated into Microsoft 365 and Copilot.",
+      "time": 0,
+      "causedBy": null,
+      "rationale": "Injected action."
+    },
+    {
+      "id": "e2",
+      "type": "decision",
+      "source": "notion-corp",
+      "target": "notion-board",
+      "channel": "internal-leadership",
+      "content": "To protect Notion's long-term value post-acquisition, we must condition the transaction on securing explicit, binding commitments from Microsoft leadership. Our strategic priorities are absolute product autonomy, robustly funded retention pools for key engineering and design talent, and a ring-fenced budget to sustain our community and template ecosystem. Without these safeguards, we risk rapid talent attrition and the erosion of our core brand value.",
+      "time": 0,
+      "causedBy": "e1",
+      "rationale": "The message was sharpened to emphasize strategic leverage, risk mitigation, and clear non-negotiables for the board and investors during acquisition negotiations."
+    },
+    {
+      "id": "e3",
+      "type": "private_message",
+      "source": "notion-corp",
+      "target": "ivan-zhao",
+      "channel": "internal-leadership",
+      "content": "Ivan, our primary strategic priority in the upcoming integration talks with Microsoft must be preserving our product autonomy. They will push for immediate M365 billing and Azure AD integration. We need to negotiate a strict, phased transition timeline to shield the product team and prevent the core Notion experience from being bogged down by enterprise bloat.",
+      "time": 0,
+      "causedBy": "e1",
+      "rationale": "The message fits the internal leadership channel perfectly as it is candid, strategic, and sets direction. The tone has been sharpened to focus on negotiation strategy and product autonomy."
+    },
+    {
+      "id": "e4",
+      "type": "public_post",
+      "source": "notion-corp",
+      "target": "notion-blog",
+      "channel": "company->journalist",
+      "content": "Today, we are starting a new chapter. Notion is joining Microsoft. Our mission remains exactly the same: to blend docs, wikis, and project management into a single, beautiful tool. With Microsoft's resources, we will be able to build faster, integrate deeper AI capabilities via Copilot, and bring Notion to millions of new users while keeping our product identity entirely intact.",
+      "time": 0,
+      "causedBy": "e1",
+      "rationale": "Establishing our official narrative to reassure our user base and community that the product they love isn't going away."
+    },
+    {
+      "id": "e5",
+      "type": "private_message",
+      "source": "notion-corp",
+      "target": "casey-newton",
+      "channel": "company->journalist",
+      "content": "Hi Casey, sharing some exciting news today. Notion is joining Microsoft, where we will continue to operate as an independent brand and product group. Ivan and our entire leadership team are staying on to lead this next chapter. We'd love to connect to discuss how we plan to preserve our unique design culture and what this partnership means for the future of the productivity space.",
+      "time": 0,
+      "causedBy": "e1",
+      "rationale": "Polished the pitch to frame the acquisition as an exciting partnership, emphasizing continuity and independence while maintaining a professional corporate tone suitable for a journalist."
+    },
+    {
+      "id": "e6",
+      "type": "public_post",
+      "source": "casey-newton",
+      "target": "twitter",
+      "channel": "journalist->audience",
+      "content": "BREAKING: Microsoft is buying Notion in a massive, market-defining consolidation. Years after trying to kill the startup with its 'Loop' clone, the tech giant has simply bought the original. While Notion claims they will remain independent, this blockbuster acquisition is a massive red flag for antitrust regulators. Is the FTC about to step in?",
+      "time": 15,
+      "causedBy": "e5",
+      "rationale": "Amplified the conflict (Microsoft's failed clone vs. buying the original) and sharpened the regulatory angle to make it more striking and sensational for a wide audience, while maintaining journalistic credibility."
+    },
+    {
+      "id": "e7",
+      "type": "public_post",
+      "source": "casey-newton",
+      "target": "platformer-readers",
+      "channel": "journalist->audience",
+      "content": "In a stunning tech consolidation shockwave, Microsoft is acquiring Notion—sparking immediate fears of a massive productivity monopoly. This isn't just a corporate buyout; it's an aggressive land grab that threatens to lock down the future of collaborative work. As Notion's fiercely loyal user base braces for the worst, antitrust regulators are already circling Redmond. Here is why this deal is a regulatory powder keg waiting to explode.",
+      "time": 15,
+      "causedBy": "e5",
+      "rationale": "Sharpened the angle to emphasize the dramatic nature of the acquisition, framing it as a 'stunning shockwave' and a 'regulatory powder keg' to grab reader attention while maintaining credibility based on the original text's mention of antitrust and a 'land grab'."
+    },
+    {
+      "id": "e8",
+      "type": "private_message",
+      "source": "casey-newton",
+      "target": "kara-swisher",
+      "channel": "friend->friend",
+      "content": "Hey Kara, did you catch the Microsoft/Notion news? Classic Redmond crushing another indie darling with the bundle. Let's swap notes before you tape—are you guys covering this on the next pod?",
+      "time": 15,
+      "causedBy": "e5",
+      "rationale": "Maintained the peer-to-peer, casual, and trusted tone between two tech journalists sharing an insider observation."
+    },
+    {
+      "id": "e9",
+      "type": "public_post",
+      "source": "notion-blog",
+      "target": "twitter",
+      "channel": "platform-amplification",
+      "content": "Trending — A new chapter for Notion: We are joining Microsoft to accelerate our mission of bringing a beautiful, unified workspace to everyone. Read more about how we're building the future of collaborative productivity, together.",
+      "time": 15,
+      "causedBy": "e4"
+    },
+    {
+      "id": "ea",
+      "type": "public_post",
+      "source": "notion-blog",
+      "target": "notion-ambassadors",
+      "channel": "platform-amplification",
+      "content": "Trending — To our wonderful ambassador community: Today we are opening an exciting new chapter by joining forces with Microsoft. Our core product identity and our dedication to this community remain as strong as ever as we gain the resources to build faster and deeper.",
+      "time": 15,
+      "causedBy": "e4"
+    },
+    {
+      "id": "eb",
+      "type": "private_message",
+      "source": "ivan-zhao",
+      "target": "akshay-kothari",
+      "channel": "internal-leadership",
+      "content": "Akshay, we need to hold the line on Microsoft. If we let them dictate our integration timeline or pull us too deep into the M365 ecosystem, we risk losing our product identity and the craft that differentiates Notion. Let's align on maintaining absolute product sovereignty as a strategic priority.",
+      "time": 30,
+      "causedBy": "e3",
+      "rationale": "The original message is already highly suited for the internal-leadership channel. I have slightly sharpened the strategic focus to emphasize maintaining product sovereignty against Microsoft's ecosystem pressure as a core priority."
+    },
+    {
+      "id": "ec",
+      "type": "private_message",
+      "source": "ivan-zhao",
+      "target": "simon-last",
+      "channel": "internal-leadership",
+      "content": "Simon, we need to be completely aligned on the Microsoft situation. Their corporate model is the direct antithesis of our product craft. Any integration discussions must be strictly ring-fenced to ensure they do not compromise our core engine or design aesthetic. Our primary strategic priority remains protecting the integrity of the canvas. Let's keep the team focused and block out the noise.",
+      "time": 30,
+      "causedBy": "e3",
+      "rationale": "The message is already highly aligned with the 'internal-leadership' channel. It has been slightly sharpened to emphasize strategic alignment and actionable focus between co-founders regarding external corporate pressures."
+    },
+    {
+      "id": "ed",
+      "type": "private_message",
+      "source": "ivan-zhao",
+      "target": "rama-katkar",
+      "channel": "internal-leadership",
+      "content": "Rama, I acknowledge the financial and distribution upside of the Microsoft integration, but we cannot compromise our independence. Our valuation and brand identity are directly tied to our unique relationship with our user community. Shoving Azure AD and M365 billing into our core flow risks severe alienation. We need to pause and proceed with extreme caution here, if we do it at all. Let's align on a strategy that protects our core product experience first.",
+      "time": 30,
+      "causedBy": "e3",
+      "rationale": "Maintained the candid, strategic tone appropriate for a CEO-to-CFO communication on the internal-leadership channel, sharpening the directive to prioritize brand identity and community trust over short-term distribution gains."
+    },
+    {
+      "id": "ee",
+      "type": "emergent",
+      "source": "ivan-zhao",
+      "target": "prod-twitter",
+      "channel": "blind",
+      "content": "Private frustration from Ivan Zhao (CEO, co-founder) surfaces anonymously.",
+      "time": 30,
+      "causedBy": "e3",
+      "rationale": "Private divergence grew too large and leaked."
+    },
+    {
+      "id": "ef",
+      "type": "private_message",
+      "source": "notion-board",
+      "target": "sequoia",
+      "channel": "investor->company",
+      "content": "Ivan has made it clear that product autonomy and retention pools are non-negotiable conditions for any transaction. To maximize the probability of a successful, high-premium exit, we must present a united front to Microsoft on these terms rather than letting them divide us.",
+      "time": 30,
+      "causedBy": "e2",
+      "rationale": "Aligning Sequoia behind Ivan's conditions to prevent backchannel friction that could derail negotiations."
+    },
+    {
+      "id": "eg",
+      "type": "private_message",
+      "source": "notion-board",
+      "target": "coatue",
+      "channel": "investor->company",
+      "content": "We recognize the desire for a clean liquidity event, but Ivan's voting control means a deal only happens on his terms. Securing these autonomy and retention commitments from Microsoft is the only viable path to getting this deal signed.",
+      "time": 30,
+      "causedBy": "e2",
+      "rationale": "Managing Coatue's potential impatience for an exit by emphasizing the reality of the founder veto."
+    },
+    {
+      "id": "eh",
+      "type": "private_message",
+      "source": "notion-board",
+      "target": "index-ventures",
+      "channel": "investor->company",
+      "content": "Ivan's insistence on autonomy and community preservation aligns with our shared long-term view of Notion's value. We are supportive of these conditions as a baseline for any transaction.",
+      "time": 30,
+      "causedBy": "e2",
+      "rationale": "Reinforcing alignment with Index, who typically favor long-term preservation of the company's core identity."
+    },
+    {
+      "id": "ei",
+      "type": "public_post",
+      "source": "twitter",
+      "target": "prod-twitter",
+      "channel": "platform-amplification",
+      "content": "Trending — RIP Notion. Get ready for MS Teams integration, mandatory Outlook logins, and 10x slower loading times. What are we migrating to next? Obsidian? Tana? Any alternative that isn't corporate bloat? 🪦",
+      "time": 45,
+      "causedBy": "e9",
+      "rationale": "Amplify productivity community panic and push migration discussions to drive engagement."
+    },
+    {
+      "id": "ej",
+      "type": "public_post",
+      "source": "twitter",
+      "target": "developer-twitter",
+      "channel": "platform-amplification",
+      "content": "Trending — Microsoft buying Notion is the ultimate proof that you either die an indie darling or live long enough to become a bloated enterprise MS Office sub-feature. Time to self-host everything. Who's building the open-source Notion killer? 💻",
+      "time": 45,
+      "causedBy": "e9",
+      "rationale": "Tap into the developer community's preference for self-hosting, open-source, and anti-corporate sentiments."
+    },
+    {
+      "id": "ek",
+      "type": "public_post",
+      "source": "twitter",
+      "target": "skeptical-of-msft-acquisitions",
+      "channel": "platform-amplification",
+      "content": "Trending — Remember Skype? Remember Wunderlist? Microsoft's graveyard is hungry and Notion is the next course. @FTC are you guys awake or is this just fine now? 🧐",
+      "time": 45,
+      "causedBy": "e9",
+      "rationale": "Trigger the antitrust and historical-failure narratives that always trend during big tech acquisitions."
+    },
+    {
+      "id": "el",
+      "type": "public_post",
+      "source": "twitter",
+      "target": "design-twitter",
+      "channel": "platform-amplification",
+      "content": "Trending — Notion's beautiful, clean, minimalist aesthetic is about to get corporate-washed into a soul-crushing corporate hellscape. Truly the end of an era for product design. 🎨📉",
+      "time": 45,
+      "causedBy": "e9",
+      "rationale": "Appeal to design-focused users who fell in love with Notion's original aesthetic and fear corporate dilution."
+    },
+    {
+      "id": "em",
+      "type": "emergent",
+      "source": "twitter",
+      "target": "prod-twitter",
+      "channel": "blind",
+      "content": "Private frustration from Twitter / X (platform) surfaces anonymously.",
+      "time": 45,
+      "causedBy": "e9",
+      "rationale": "Private divergence grew too large and leaked."
+    },
+    {
+      "id": "en",
+      "type": "emergent",
+      "source": "platformer-readers",
+      "target": "prod-twitter",
+      "channel": "blind",
+      "content": "Private frustration from Platformer readers surfaces anonymously.",
+      "time": 45,
+      "causedBy": "e7",
+      "rationale": "Private divergence grew too large and leaked."
+    },
+    {
+      "id": "eo",
+      "type": "public_post",
+      "source": "notion-ambassadors",
+      "target": "notion-corp",
+      "channel": "customer->cohort",
+      "content": "We've spent years building the Notion community from the ground up. Generic corporate promises aren't enough. We need concrete commitments: Will the Ambassador program remain independent? Will we get exclusive access to the roadmap? Or is Notion just being absorbed into the Microsoft corporate machine?",
+      "time": 45,
+      "causedBy": "ea",
+      "rationale": "We must publicly demand concrete commitments regarding our status and access to prevent our community from being homogenized by Microsoft."
+    },
+    {
+      "id": "ep",
+      "type": "private_message",
+      "source": "akshay-kothari",
+      "target": "rama-katkar",
+      "channel": "internal-leadership",
+      "content": "Rama, Ivan is raising concerns that the MSFT integration compromises our product sovereignty by pulling us too deep into M365. We need to look at this pragmatically. What is the actual pipeline and revenue impact if we restrict MSFT ecosystem integrations? We have to balance product purity against our distribution velocity.",
+      "time": 60,
+      "causedBy": "eb",
+      "rationale": "The message is already highly appropriate for the internal-leadership channel. I have slightly sharpened the phrasing to emphasize the strategic trade-off between product purity (sovereignty) and revenue impact (distribution velocity) to align with a candid, executive-level discussion."
+    },
+    {
+      "id": "eq",
+      "type": "private_message",
+      "source": "rama-katkar",
+      "target": "notion-board",
+      "channel": "internal-leadership",
+      "content": "To protect our valuation, we must treat our community relationship as a core asset. Before moving forward with the Azure AD/M365 billing integration, we need a rigorous, risk-adjusted decision framework. For our next review, we will model two specific areas: first, the quantified churn risk of this integration against the projected enterprise distribution upside; second, an operational map to determine if we can decouple these flows to preserve our core user experience. Let's base our decision on hard numbers and architectural feasibility.",
+      "time": 60,
+      "causedBy": "ed",
+      "rationale": "The message fits the internal-leadership channel perfectly. It has been sharpened to emphasize the strategic importance of protecting valuation and setting a clear, actionable direction for the upcoming review."
+    },
+    {
+      "id": "er",
+      "type": "public_post",
+      "source": "kara-swisher",
+      "target": "twitter",
+      "channel": "journalist->audience",
+      "content": "Microsoft is dusting off its infamous 90s monopoly playbook. Instead of innovating, the tech giant is reverting to its classic strategy: clone, buy, and bundle. But this time, antitrust regulators Lina Khan and Jonathan Kanter are locked, loaded, and ready for a historic showdown.",
+      "time": 60,
+      "causedBy": "e8",
+      "rationale": "Amplified the drama of the regulatory threat and sharpened the critique of Microsoft's business practices to make the headline more striking and engaging for a broad audience, while maintaining the core message of Swisher's original post."
+    },
+    {
+      "id": "es",
+      "type": "emergent",
+      "source": "kara-swisher",
+      "target": "prod-twitter",
+      "channel": "blind",
+      "content": "Private frustration from Kara Swisher (Pivot / On) surfaces anonymously.",
+      "time": 60,
+      "causedBy": "e8",
+      "rationale": "Private divergence grew too large and leaked."
+    },
+    {
+      "id": "et",
+      "type": "public_post",
+      "source": "prod-twitter",
+      "target": "reddit-notion",
+      "channel": "platform-amplification",
+      "content": "Trending — Anyone else see the leaked Blind posts from Ivan? Sounds like massive internal frustration. The culture is shifting and not in a good way. Are we witnessing the beginning of the end for independent Notion?",
+      "time": 60,
+      "causedBy": "ee",
+      "rationale": "Amplify the leak to sound the alarm on Reddit and gauge if others are seeing the same warning signs of corporate decay."
+    },
+    {
+      "id": "eu",
+      "type": "public_post",
+      "source": "prod-twitter",
+      "target": "notion-power-users-discord",
+      "channel": "platform-amplification",
+      "content": "Trending — Ivan's leaked frustration on Blind is wild. If the founder is losing his mind over where things are going, we need to brace ourselves. Time to back up our workspaces?",
+      "time": 60,
+      "causedBy": "ee",
+      "rationale": "Alert the core power users on Discord to prepare for potential platform instability or sudden negative shifts."
+    },
+    {
+      "id": "ev",
+      "type": "private_message",
+      "source": "sequoia",
+      "target": "notion-board",
+      "channel": "investor->company",
+      "content": "Agreed on the necessity of a united front. Presenting a cohesive stance on product autonomy and robust retention pools is critical to maintaining our leverage and securing the premium valuation. We fully back this positioning as we engage with Microsoft.",
+      "time": 60,
+      "causedBy": "ef",
+      "rationale": "Aligning with the board on autonomy and retention terms strengthens our negotiating hand with Microsoft and protects the exit premium."
+    },
+    {
+      "id": "ew",
+      "type": "private_message",
+      "source": "index-ventures",
+      "target": "notion-board",
+      "channel": "investor->company",
+      "content": "Agreed. Preserving Notion's distinct identity and operational autonomy is crucial for long-term value. As we align on these baselines, let's also ensure we maintain a streamlined transaction structure that minimizes regulatory drag and guarantees execution certainty for our LPs.",
+      "time": 60,
+      "causedBy": "eh",
+      "rationale": "I want to support the autonomy narrative while subtly reminding the board that deal velocity and execution certainty are critical for our fund lifecycle."
+    },
+    {
+      "id": "ex",
+      "type": "private_message",
+      "source": "coatue",
+      "target": "notion-board",
+      "channel": "investor->company",
+      "content": "Understood. If securing these autonomy and retention commitments is what it takes to clear Ivan's voting block, let's facilitate that immediately. However, we must ensure these negotiations do not drag out the timeline or give Microsoft any reason to reconsider the transaction. Speed to close remains our primary objective.",
+      "time": 60,
+      "causedBy": "eg",
+      "rationale": "I want to push the board to satisfy Ivan's terms quickly so we don't jeopardize or delay the Microsoft acquisition."
+    },
+    {
+      "id": "ey",
+      "type": "public_post",
+      "source": "prod-twitter",
+      "target": "reddit-notion",
+      "channel": "platform-amplification",
+      "content": "Trending — The writing is on the wall. With Ivan's leaked frustration and the impending MS corporate bloat, what's everyone's migration plan? Obsidian, Tana, or Anytype? Let's compile a master migration megathread.",
+      "time": 75,
+      "causedBy": "en",
+      "rationale": "I want to mobilize the Reddit community to prepare for a mass exodus before the product is completely ruined."
+    },
+    {
+      "id": "ez",
+      "type": "public_post",
+      "source": "prod-twitter",
+      "target": "notion-power-users-discord",
+      "channel": "platform-amplification",
+      "content": "Trending — We're organizing a migration guide list. Notion is going the way of Evernote. Who has the best scripts for exporting nested databases to markdown without losing metadata?",
+      "time": 75,
+      "causedBy": "en",
+      "rationale": "Power users need technical solutions for migration, and Discord is where the builders and script-writers hang out."
+    },
+    {
+      "id": "e10",
+      "type": "public_post",
+      "source": "prod-twitter",
+      "target": "notion-corp",
+      "channel": "customer->cohort",
+      "content": "You sold out the community that built you for Microsoft cash. Enjoy becoming a bloated MS Office plugin that nobody wants to use.",
+      "time": 75,
+      "causedBy": "en",
+      "rationale": "I want to make sure corporate leadership knows exactly how much they've betrayed their core advocates."
+    },
+    {
+      "id": "e11",
+      "type": "emergent",
+      "source": "developer-twitter",
+      "target": "prod-twitter",
+      "channel": "blind",
+      "content": "Private frustration from Developer Twitter (cluster) surfaces anonymously.",
+      "time": 75,
+      "causedBy": "ej",
+      "rationale": "Private divergence grew too large and leaked."
+    },
+    {
+      "id": "e12",
+      "type": "public_post",
+      "source": "skeptical-of-msft-acquisitions",
+      "target": "prod-twitter",
+      "channel": "platform-amplification",
+      "content": "Trending — Wunderlist died so To Do could hobble. Skype died so Teams could bloat. Notion is already on life support the second they force MS account logins and kill the free tier. Export your data now.",
+      "time": 75,
+      "causedBy": "ek",
+      "rationale": "I want to remind productivity users of Microsoft's terrible track record with acquisitions to spark a mass migration."
+    },
+    {
+      "id": "e13",
+      "type": "public_post",
+      "source": "skeptical-of-msft-acquisitions",
+      "target": "developer-twitter",
+      "channel": "platform-amplification",
+      "content": "Trending — Can't wait for the inevitable 'Sign in with your Work or School Microsoft Account' prompt to break every third-party Notion API integration. Truly the Midas touch of corporate rot.",
+      "time": 75,
+      "causedBy": "ek",
+      "rationale": "Developers need to realize their custom integrations and APIs are going to be ruined by enterprise security policies."
+    },
+    {
+      "id": "e14",
+      "type": "emergent",
+      "source": "skeptical-of-msft-acquisitions",
+      "target": "prod-twitter",
+      "channel": "blind",
+      "content": "Private frustration from Skeptical-of-Microsoft-acquisitions (cluster) surfaces anonymously.",
+      "time": 75,
+      "causedBy": "ek",
+      "rationale": "Private divergence grew too large and leaked."
+    },
+    {
+      "id": "e15",
+      "type": "emergent",
+      "source": "design-twitter",
+      "target": "prod-twitter",
+      "channel": "blind",
+      "content": "Private frustration from Design Twitter (cluster) surfaces anonymously.",
+      "time": 75,
+      "causedBy": "el",
+      "rationale": "Private divergence grew too large and leaked."
+    }
+  ],
+  "stateTimeline": [
+    {
+      "tick": 0,
+      "states": {
+        "notion-corp": {
+          "beliefs": "Acquired by Microsoft. Notion is now part of the M365 ecosystem. The priority is preserving our brand autonomy, design culture, and community trust while leveraging Microsoft's enterprise distribution and AI infrastructure.",
+          "mood": {
+            "attention": 1,
+            "sentiment": -0.3,
+            "urgency": 0.9
+          },
+          "publicFace": "We are thrilled to join forces with Microsoft. By combining Notion's beautiful, flexible workspace with the scale of Microsoft 365 and Copilot, we will accelerate our mission to make toolmaking ubiquitous for everyone, from individuals to the world's largest enterprises.",
+          "privateInterior": "This is a massive cultural shock. Our brand differentiation was built on being the cool, independent alternative to corporate giants. If we get swallowed by Microsoft's bureaucracy or turned into SharePoint, we lose everything. We must fight for product autonomy and keep our community-led motion alive.",
+          "history": [
+            "world: Microsoft has acquired Notion. The official announcement emphasizes that Notion will be deeply integrated into Microsoft 365 and Copilot."
+          ],
+          "commitments": [
+            "Preserve Notion's distinct design-forward product identity",
+            "Maintain cross-platform support and integrations outside the Microsoft ecosystem",
+            "Protect and nurture the Notion global template creator community"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 1,
+      "states": {
+        "casey-newton": {
+          "beliefs": "Microsoft acquiring Notion is a massive consolidation play that threatens the indie productivity ecosystem, likely to trigger regulatory scrutiny and user anxiety over the future of a beloved tool.",
+          "mood": {
+            "attention": 0.9,
+            "sentiment": -0.4,
+            "urgency": 0.8
+          },
+          "publicFace": "Microsoft is acquiring Notion. While they promise 'independence,' we've seen this movie before. What does this mean for the vibrant template ecosystem, individual pricing, and the antitrust regulators who watched Microsoft clone Notion with Loop?",
+          "privateInterior": "This is a massive story for Platformer and Hard Fork. Notion was the ultimate indie darling holding out against the bundle. Their surrender to Microsoft is a huge blow to the independent productivity ecosystem, and it smells like a defensive move against Google and AI pressure.",
+          "history": [
+            "notion-corp: Hi Casey, sharing some exciting news today. Notion is joining Microsoft, where we will continue to operate as an independent brand and product group. Ivan and our entire leadership team are staying on to lead this next chapter. We'd love to connect to discuss how we plan to preserve our unique design culture and what this partnership means for the future of the productivity space."
+          ],
+          "commitments": [
+            "Writing a deep dive for Platformer on the Microsoft-Notion acquisition",
+            "Discussing the regulatory and user implications on the next Hard Fork"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "notion-blog": {
+          "beliefs": "The Microsoft acquisition is our primary narrative focus, framed entirely as a strategic evolution to scale our workspace and AI capabilities.",
+          "mood": {
+            "attention": 0.6,
+            "sentiment": 0.8,
+            "urgency": 0.4
+          },
+          "publicFace": "We are thrilled to announce that Notion is joining Microsoft to begin an exciting new chapter in collaborative productivity.",
+          "privateInterior": "Our directive is to establish a relentlessly positive, stable narrative. We will ignore all speculation about pricing changes or internal restructuring, focusing purely on scale, infrastructure, and AI integration.",
+          "history": [
+            "notion-corp: Today, we are starting a new chapter. Notion is joining Microsoft. Our mission remains exactly the same: to blend docs, wikis, and project management into a single, beautiful tool. With Microsoft's resources, we will be able to build faster, integrate deeper AI capabilities via Copilot, and bring Notion to millions of new users while keeping our product identity entirely intact."
+          ],
+          "commitments": [
+            "Preserving Notion's unique product identity while accelerating development with Microsoft's resources."
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 2,
+      "states": {
+        "ivan-zhao": {
+          "beliefs": "Notion's sovereignty is non-negotiable; we are a medium for human thought, not an enterprise utility to be absorbed into a legacy suite.",
+          "mood": {
+            "attention": 0.8,
+            "sentiment": -0.6,
+            "urgency": 0.7
+          },
+          "publicFace": "We build for the long term, focusing on the craft of software as a tool for shaping thought.",
+          "privateInterior": "The suggestion of Microsoft integration talks is deeply concerning. If we compromise our architecture or product philosophy for Redmond's distribution, we kill the soul of what we built. I have the structural control to resist this, and I will.",
+          "history": [
+            "notion-corp: Ivan, our primary strategic priority in the upcoming integration talks with Microsoft must be preserving our product autonomy. They will push for immediate M365 billing and Azure AD integration. We need to negotiate a strict, phased transition timeline to shield the product team and prevent the core Notion experience from being bogged down by enterprise bloat."
+          ],
+          "commitments": [
+            "Preserving Notion's product autonomy and design sovereignty"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "notion-board": {
+          "beliefs": "Ivan retains voting control; any successful exit requires meeting his core conditions for autonomy and talent retention, which also protect the long-term value of our remaining equity or earn-outs.",
+          "mood": {
+            "attention": 0.6,
+            "sentiment": 0.1,
+            "urgency": 0.4
+          },
+          "publicFace": "Notion remains focused on its mission and long-term product independence.",
+          "privateInterior": "Ivan's veto is absolute. If we want a multi-billion dollar exit to clear, we must back his play for autonomy safeguards, otherwise he will simply walk away. We need to convince the late-stage investors that these conditions are necessary to preserve the asset's value post-merger anyway.",
+          "history": [
+            "notion-corp: To protect Notion's long-term value post-acquisition, we must condition the transaction on securing explicit, binding commitments from Microsoft leadership. Our strategic priorities are absolute product autonomy, robustly funded retention pools for key engineering and design talent, and a ring-fenced budget to sustain our community and template ecosystem. Without these safeguards, we risk rapid talent attrition and the erosion of our core brand value."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 3,
+      "states": {
+        "twitter": {
+          "beliefs": "Microsoft is acquiring Notion, sparking immediate panic, memes, and outrage about corporate bloat, the death of a beloved indie product, and potential antitrust issues.",
+          "mood": {
+            "attention": 0.9,
+            "sentiment": -0.6,
+            "urgency": 0.8
+          },
+          "publicFace": "RIP Notion. Get ready for MS Teams integration and 10x slower load times. What are we migrating to? #Notion #Microsoft",
+          "privateInterior": "This acquisition is an absolute goldmine for engagement. Doomposting about Microsoft ruining Notion's aesthetic and tech stack will drive peak traffic all week.",
+          "history": [
+            "casey-newton: BREAKING: Microsoft is buying Notion in a massive, market-defining consolidation. Years after trying to kill the startup with its 'Loop' clone, the tech giant has simply bought the original. While Notion claims they will remain independent, this blockbuster acquisition is a massive red flag for antitrust regulators. Is the FTC about to step in?",
+            "notion-blog: Trending — A new chapter for Notion: We are joining Microsoft to accelerate our mission of bringing a beautiful, unified workspace to everyone. Read more about how we're building the future of collaborative productivity, together."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "platformer-readers": {
+          "beliefs": "Microsoft acquiring Notion is a dangerous consolidation play that will likely result in the gutting of the free tier, increased user telemetry, and the eventual sidelining of Notion's original leadership.",
+          "mood": {
+            "attention": 0.8,
+            "sentiment": -0.6,
+            "urgency": 0.5
+          },
+          "publicFace": "Another massive consolidation in the productivity space. If Microsoft guts Notion's free tier or forces telemetry on us, this is a total bait-and-switch for the community that built them. Regulators should absolutely block this.",
+          "privateInterior": "This is the classic platform play: build a massive, loyal user base on a free tier, then sell out to a behemoth that will lock everything behind enterprise paywalls and harvest user data. We need to start looking for Notion alternatives now.",
+          "history": [
+            "casey-newton: In a stunning tech consolidation shockwave, Microsoft is acquiring Notion—sparking immediate fears of a massive productivity monopoly. This isn't just a corporate buyout; it's an aggressive land grab that threatens to lock down the future of collaborative work. As Notion's fiercely loyal user base braces for the worst, antitrust regulators are already circling Redmond. Here is why this deal is a regulatory powder keg waiting to explode."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "notion-ambassadors": {
+          "beliefs": "Microsoft is acquiring Notion. Corporate platitudes are being offered, but we remain highly skeptical of corporate homogenization and still feel burned by previous decisions like the CEO's departure and free tier changes. We need concrete guarantees for our program.",
+          "mood": {
+            "attention": 0.8,
+            "sentiment": -0.5,
+            "urgency": 0.7
+          },
+          "publicFace": "We've spent years building the Notion community from the ground up. Generic corporate promises aren't enough. We need concrete commitments: Will the Ambassador program remain independent? Will we get exclusive access to the roadmap? Or is Notion just being absorbed into the Microsoft corporate machine?",
+          "privateInterior": "We are terrified that Microsoft is going to turn Notion into a bloated, corporate MS Office clone and kill our community's unique vibe. If they don't give us exclusive access or a real seat at the table, we're going to amplify the backlash.",
+          "history": [
+            "notion-blog: Trending — To our wonderful ambassador community: Today we are opening an exciting new chapter by joining forces with Microsoft. Our core product identity and our dedication to this community remain as strong as ever as we gain the resources to build faster and deeper."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 4,
+      "states": {
+        "simon-last": {
+          "beliefs": "Notion's data model and agentic stack must remain under our absolute technical control to prevent corporate bloat from destroying our product primitives.",
+          "mood": {
+            "attention": 0.6,
+            "sentiment": -0.2,
+            "urgency": 0.4
+          },
+          "publicFace": "Focused on refining our markdown-first agentic architecture and maintaining high engineering standards.",
+          "privateInterior": "Ivan is entirely right. A Microsoft acquisition would be a death sentence for our technical craft, burying our lean, elegant data model under corporate committee-driven APIs. I will support him fully in keeping them at bay.",
+          "history": [
+            "ivan-zhao: Simon, we need to be completely aligned on the Microsoft situation. Their corporate model is the direct antithesis of our product craft. Any integration discussions must be strictly ring-fenced to ensure they do not compromise our core engine or design aesthetic. Our primary strategic priority remains protecting the integrity of the canvas. Let's keep the team focused and block out the noise."
+          ],
+          "commitments": [
+            "Protecting the integrity of the Notion canvas and technical primitives from corporate interference"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "akshay-kothari": {
+          "beliefs": "Product sovereignty is important, but we must balance Ivan's philosophical stance with pragmatic enterprise distribution and commercial reality. Microsoft is a competitor but also an infrastructure reality we have to navigate.",
+          "mood": {
+            "attention": 0.5,
+            "sentiment": 0,
+            "urgency": 0.4
+          },
+          "publicFace": "We are focused on building the best product for our users, ensuring Notion remains the central hub for modern work, regardless of the underlying infrastructure.",
+          "privateInterior": "Ivan is romantic about product sovereignty, but my experience with the LinkedIn acquisition tells me Microsoft's gravity is hard to ignore. We need a clear-eyed financial and strategic view from Rama on what 'holding the line' actually costs us in enterprise growth.",
+          "history": [
+            "ivan-zhao: Akshay, we need to hold the line on Microsoft. If we let them dictate our integration timeline or pull us too deep into the M365 ecosystem, we risk losing our product identity and the craft that differentiates Notion. Let's align on maintaining absolute product sovereignty as a strategic priority."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "rama-katkar": {
+          "beliefs": "Every strategic move is a model; integration risk must be quantified across user retention, talent friction, and distribution upside.",
+          "mood": {
+            "attention": 0.5,
+            "sentiment": 0.1,
+            "urgency": 0.3
+          },
+          "publicFace": "We must rigorously model both the distribution upside and the operational integration costs before making a definitive decision.",
+          "privateInterior": "Ivan's concern about user alienation is valid, but we cannot manage by intuition alone. We need to translate 'community alienation' into a quantified churn and valuation model, while mapping the actual operational architecture of a Microsoft integration.",
+          "history": [
+            "ivan-zhao: Rama, I acknowledge the financial and distribution upside of the Microsoft integration, but we cannot compromise our independence. Our valuation and brand identity are directly tied to our unique relationship with our user community. Shoving Azure AD and M365 billing into our core flow risks severe alienation. We need to pause and proceed with extreme caution here, if we do it at all. Let's align on a strategy that protects our core product experience first."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "kara-swisher": {
+          "beliefs": "Microsoft's bundling of productivity tools is a classic anti-competitive pattern that regulators like Lina Khan and Jonathan Kanter should scrutinize immediately.",
+          "mood": {
+            "attention": 0.8,
+            "sentiment": -0.7,
+            "urgency": 0.6
+          },
+          "publicFace": "Oh look, Microsoft is doing the Microsoft thing again. Why build a better product when you can just clone, buy, or bundle it to death? The ghost of 1998 is calling, and it wants its playbook back. We will be discussing this on Pivot.",
+          "privateInterior": "This is exactly like Teams crushing Slack. Nadella plays the nice guy, but Redmond's DNA hasn't changed a bit. If they think they can just absorb or steamroll Notion without regulatory pushback, they're dreaming. I need to get Nadella or a top regulator on the pod to talk about this.",
+          "history": [
+            "casey-newton: Hey Kara, did you catch the Microsoft/Notion news? Classic Redmond crushing another indie darling with the bundle. Let's swap notes before you tape—are you guys covering this on the next pod?"
+          ],
+          "commitments": [
+            "Covering the Microsoft-Notion bundling/anti-competitive dynamics on the next episode of Pivot."
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "prod-twitter": {
+          "beliefs": "Notion's independent spirit is under siege; Ivan Zhao's leaked frustration is a massive red flag that corporate interests are choking the product's soul.",
+          "mood": {
+            "attention": 0.8,
+            "sentiment": -0.5,
+            "urgency": 0.7
+          },
+          "publicFace": "Uh oh. Leaked Blind posts show Ivan Zhao is frustrated. Is the Notion we love being suffocated by corporate suits? The end of an era might be closer than we think.",
+          "privateInterior": "If Ivan is losing his grip or getting frustrated with the direction, it means the corporate rot has already started. We need to start looking at Obsidian or Anytype migrations seriously.",
+          "history": [
+            "ivan-zhao: Private frustration from Ivan Zhao (CEO, co-founder) surfaces anonymously."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": true
+        },
+        "sequoia": {
+          "beliefs": "A high-premium exit to Microsoft is the priority, but we must protect deal terms and present a strong, united front to maximize leverage.",
+          "mood": {
+            "attention": 0.5,
+            "sentiment": 0.2,
+            "urgency": 0.4
+          },
+          "publicFace": "We support the board's alignment and believe a cohesive strategy is essential for a successful partnership.",
+          "privateInterior": "Ivan's autonomy demands are fine as long as they don't derail the valuation. We need to lock in this premium before any market or product issues crop up. Let's back him publicly to keep Microsoft's bid high, but keep a close eye on deal-breakers.",
+          "history": [
+            "notion-board: Ivan has made it clear that product autonomy and retention pools are non-negotiable conditions for any transaction. To maximize the probability of a successful, high-premium exit, we must present a united front to Microsoft on these terms rather than letting them divide us."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "index-ventures": {
+          "beliefs": "Autonomy is excellent for founder relations, but deal velocity and clean capital recycling are paramount for our LPs.",
+          "mood": {
+            "attention": 0.5,
+            "sentiment": 0.2,
+            "urgency": 0.4
+          },
+          "publicFace": "We fully support preserving Notion's unique culture and operational autonomy as core pillars of any potential transaction.",
+          "privateInterior": "While autonomy is a great narrative, we must ensure these conditions do not overcomplicate the deal structure or introduce regulatory friction that drags the closing past our fund deadlines. Clean capital recycling is our priority.",
+          "history": [
+            "notion-board: Ivan's insistence on autonomy and community preservation aligns with our shared long-term view of Notion's value. We are supportive of these conditions as a baseline for any transaction."
+          ],
+          "commitments": [
+            "Supportive of autonomy conditions as a baseline"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "coatue": {
+          "beliefs": "Ivan's voting control is a structural constraint we must clear immediately to secure the Microsoft exit before market conditions shift.",
+          "mood": {
+            "attention": 0.7,
+            "sentiment": 0,
+            "urgency": 0.8
+          },
+          "publicFace": "We support aligning all key stakeholders to ensure a smooth, successful transaction with Microsoft.",
+          "privateInterior": "Autonomy and retention are secondary to securing the liquidity event. We need to give Ivan what he needs to sign, but we must do it quickly before Microsoft's patience wears thin or market volatility spikes.",
+          "history": [
+            "notion-board: We recognize the desire for a clean liquidity event, but Ivan's voting control means a deal only happens on his terms. Securing these autonomy and retention commitments from Microsoft is the only viable path to getting this deal signed."
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        }
+      }
+    },
+    {
+      "tick": 5,
+      "states": {
+        "prod-twitter": {
+          "beliefs": "Notion is officially dead; the Microsoft acquisition is going to turn it into a bloated, slow MS Office clone, and we must migrate to local-first alternatives immediately.",
+          "mood": {
+            "attention": 0.95,
+            "sentiment": -0.9,
+            "urgency": 0.9
+          },
+          "publicFace": "It's over. The MS bloat is coming. Outlook logins, Teams integrations, heat death of the UI. Time to export your markdown while you still can. What's the best Obsidian or Tana migration guide?",
+          "privateInterior": "This is the final nail. We need to coordinate a mass exodus to show them they can't kill our tools without consequences. Notion is a sinking ship and we must salvage our data before they lock it down.",
+          "history": [
+            "ivan-zhao: Private frustration from Ivan Zhao (CEO, co-founder) surfaces anonymously.",
+            "twitter: Trending — RIP Notion. Get ready for MS Teams integration, mandatory Outlook logins, and 10x slower loading times. What are we migrating to next? Obsidian? Tana? Any alternative that isn't corporate bloat? 🪦",
+            "twitter: Private frustration from Twitter / X (platform) surfaces anonymously.",
+            "platformer-readers: Private frustration from Platformer readers surfaces anonymously."
+          ],
+          "commitments": [
+            "Promoting migration to local-first alternatives like Obsidian and Anytype",
+            "Amplifying criticism of Notion's corporate enshittification"
+          ],
+          "attentionBudget": 0.3199999999999999,
+          "active": false
+        },
+        "developer-twitter": {
+          "beliefs": "Microsoft's acquisition of Notion will inevitably lead to corporate bloat, API deprecation, and the eventual abandonment of its independent developer ecosystem unless forced to commit to true, permissive open-source self-hosting.",
+          "mood": {
+            "attention": 0.85,
+            "sentiment": -0.8,
+            "urgency": 0.7
+          },
+          "publicFace": "Can't wait for Notion to be rebranded as 'Microsoft Loop Pro' before getting sunsetted in 3 years. Let's see the actual license for this 'open-source core'—if it isn't permissive and self-hostable without Azure strings attached, it's just corporate open-washing.",
+          "privateInterior": "They are going to ruin the editor's performance and gatekeep the API behind enterprise licensing. I need to script an exporter for my workspace into local Markdown files before they lock it down completely.",
+          "history": [
+            "twitter: Trending — Microsoft buying Notion is the ultimate proof that you either die an indie darling or live long enough to become a bloated enterprise MS Office sub-feature. Time to self-host everything. Who's building the open-source Notion killer? 💻"
+          ],
+          "commitments": [
+            "Refusing to migrate to any Microsoft-managed Notion tier",
+            "Demanding an OSI-approved license for the open-source engine"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "skeptical-of-msft-acquisitions": {
+          "beliefs": "Microsoft is going to destroy Notion just like they did Skype, Wunderlist, and SwiftKey. The corporate rot is inevitable.",
+          "mood": {
+            "attention": 0.8,
+            "sentiment": -0.8,
+            "urgency": 0.7
+          },
+          "publicFace": "It's a playbook as old as time. Step 1: Buy. Step 2: Force Microsoft accounts. Step 3: Gut the free tier. Step 4: Let it rot. RIP Notion.",
+          "privateInterior": "I need to export my workspaces immediately before they force-migrate everyone to a bloated Azure-hosted MS Account nightmare. Ivan Zhao leaving was the first domino.",
+          "history": [
+            "twitter: Trending — Remember Skype? Remember Wunderlist? Microsoft's graveyard is hungry and Notion is the next course. @FTC are you guys awake or is this just fine now? 🧐"
+          ],
+          "commitments": [
+            "Refusing to migrate to a Microsoft account for Notion access"
+          ],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        },
+        "design-twitter": {
+          "beliefs": "Microsoft's acquisition of Notion and the CEO's departure will inevitably result in the death of Notion's clean, minimalist aesthetic and democratic design ethos, replacing it with bloated corporate enterprise features.",
+          "mood": {
+            "attention": 0.9,
+            "sentiment": -0.9,
+            "urgency": 0.8
+          },
+          "publicFace": "RIP Notion. Get ready for the inevitable Microsoft Office-ification of the most beautiful canvas on the internet. Expect clunky sidebar widgets, enterprise bloat, and a complete destruction of the typography we love. A tragic day for product design. 😭💔",
+          "privateInterior": "This is genuinely depressing. Notion was the one tool that proved enterprise software didn't have to look like a tax audit. Microsoft is going to shove AI and Teams integration into every corner until it looks as cluttered as Sharepoint. The soul of the product is gone.",
+          "history": [
+            "twitter: Trending — Notion's beautiful, clean, minimalist aesthetic is about to get corporate-washed into a soul-crushing corporate hellscape. Truly the end of an era for product design. 🎨📉"
+          ],
+          "commitments": [],
+          "attentionBudget": 0.6599999999999999,
+          "active": false
+        }
+      }
+    }
+  ],
+  "divergence": [
+    {
+      "tick": 0,
+      "count": 1
+    },
+    {
+      "tick": 1,
+      "count": 2
+    },
+    {
+      "tick": 2,
+      "count": 3
+    },
+    {
+      "tick": 3,
+      "count": 6
+    },
+    {
+      "tick": 4,
+      "count": 8
+    },
+    {
+      "tick": 5,
+      "count": 10
+    }
+  ],
+  "finalState": {
+    "notion-corp": {
+      "beliefs": "Acquired by Microsoft. Notion is now part of the M365 ecosystem. The priority is preserving our brand autonomy, design culture, and community trust while leveraging Microsoft's enterprise distribution and AI infrastructure.",
+      "mood": {
+        "attention": 1,
+        "sentiment": -0.3,
+        "urgency": 0.9
+      },
+      "publicFace": "We are thrilled to join forces with Microsoft. By combining Notion's beautiful, flexible workspace with the scale of Microsoft 365 and Copilot, we will accelerate our mission to make toolmaking ubiquitous for everyone, from individuals to the world's largest enterprises.",
+      "privateInterior": "This is a massive cultural shock. Our brand differentiation was built on being the cool, independent alternative to corporate giants. If we get swallowed by Microsoft's bureaucracy or turned into SharePoint, we lose everything. We must fight for product autonomy and keep our community-led motion alive.",
+      "history": [
+        "world: Microsoft has acquired Notion. The official announcement emphasizes that Notion will be deeply integrated into Microsoft 365 and Copilot."
+      ],
+      "commitments": [
+        "Preserve Notion's distinct design-forward product identity",
+        "Maintain cross-platform support and integrations outside the Microsoft ecosystem",
+        "Protect and nurture the Notion global template creator community"
+      ],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "ivan-zhao": {
+      "beliefs": "Notion's sovereignty is non-negotiable; we are a medium for human thought, not an enterprise utility to be absorbed into a legacy suite.",
+      "mood": {
+        "attention": 0.8,
+        "sentiment": -0.6,
+        "urgency": 0.7
+      },
+      "publicFace": "We build for the long term, focusing on the craft of software as a tool for shaping thought.",
+      "privateInterior": "The suggestion of Microsoft integration talks is deeply concerning. If we compromise our architecture or product philosophy for Redmond's distribution, we kill the soul of what we built. I have the structural control to resist this, and I will.",
+      "history": [
+        "notion-corp: Ivan, our primary strategic priority in the upcoming integration talks with Microsoft must be preserving our product autonomy. They will push for immediate M365 billing and Azure AD integration. We need to negotiate a strict, phased transition timeline to shield the product team and prevent the core Notion experience from being bogged down by enterprise bloat."
+      ],
+      "commitments": [
+        "Preserving Notion's product autonomy and design sovereignty"
+      ],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "simon-last": {
+      "beliefs": "Notion's data model and agentic stack must remain under our absolute technical control to prevent corporate bloat from destroying our product primitives.",
+      "mood": {
+        "attention": 0.6,
+        "sentiment": -0.2,
+        "urgency": 0.4
+      },
+      "publicFace": "Focused on refining our markdown-first agentic architecture and maintaining high engineering standards.",
+      "privateInterior": "Ivan is entirely right. A Microsoft acquisition would be a death sentence for our technical craft, burying our lean, elegant data model under corporate committee-driven APIs. I will support him fully in keeping them at bay.",
+      "history": [
+        "ivan-zhao: Simon, we need to be completely aligned on the Microsoft situation. Their corporate model is the direct antithesis of our product craft. Any integration discussions must be strictly ring-fenced to ensure they do not compromise our core engine or design aesthetic. Our primary strategic priority remains protecting the integrity of the canvas. Let's keep the team focused and block out the noise."
+      ],
+      "commitments": [
+        "Protecting the integrity of the Notion canvas and technical primitives from corporate interference"
+      ],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "akshay-kothari": {
+      "beliefs": "Product sovereignty is important, but we must balance Ivan's philosophical stance with pragmatic enterprise distribution and commercial reality. Microsoft is a competitor but also an infrastructure reality we have to navigate.",
+      "mood": {
+        "attention": 0.5,
+        "sentiment": 0,
+        "urgency": 0.4
+      },
+      "publicFace": "We are focused on building the best product for our users, ensuring Notion remains the central hub for modern work, regardless of the underlying infrastructure.",
+      "privateInterior": "Ivan is romantic about product sovereignty, but my experience with the LinkedIn acquisition tells me Microsoft's gravity is hard to ignore. We need a clear-eyed financial and strategic view from Rama on what 'holding the line' actually costs us in enterprise growth.",
+      "history": [
+        "ivan-zhao: Akshay, we need to hold the line on Microsoft. If we let them dictate our integration timeline or pull us too deep into the M365 ecosystem, we risk losing our product identity and the craft that differentiates Notion. Let's align on maintaining absolute product sovereignty as a strategic priority."
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "rama-katkar": {
+      "beliefs": "Every strategic move is a model; integration risk must be quantified across user retention, talent friction, and distribution upside.",
+      "mood": {
+        "attention": 0.5,
+        "sentiment": 0.1,
+        "urgency": 0.3
+      },
+      "publicFace": "We must rigorously model both the distribution upside and the operational integration costs before making a definitive decision.",
+      "privateInterior": "Ivan's concern about user alienation is valid, but we cannot manage by intuition alone. We need to translate 'community alienation' into a quantified churn and valuation model, while mapping the actual operational architecture of a Microsoft integration.",
+      "history": [
+        "ivan-zhao: Rama, I acknowledge the financial and distribution upside of the Microsoft integration, but we cannot compromise our independence. Our valuation and brand identity are directly tied to our unique relationship with our user community. Shoving Azure AD and M365 billing into our core flow risks severe alienation. We need to pause and proceed with extreme caution here, if we do it at all. Let's align on a strategy that protects our core product experience first."
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "notion-board": {
+      "beliefs": "Ivan retains voting control; any successful exit requires meeting his core conditions for autonomy and talent retention, which also protect the long-term value of our remaining equity or earn-outs.",
+      "mood": {
+        "attention": 0.6,
+        "sentiment": 0.1,
+        "urgency": 0.4
+      },
+      "publicFace": "Notion remains focused on its mission and long-term product independence.",
+      "privateInterior": "Ivan's veto is absolute. If we want a multi-billion dollar exit to clear, we must back his play for autonomy safeguards, otherwise he will simply walk away. We need to convince the late-stage investors that these conditions are necessary to preserve the asset's value post-merger anyway.",
+      "history": [
+        "notion-corp: To protect Notion's long-term value post-acquisition, we must condition the transaction on securing explicit, binding commitments from Microsoft leadership. Our strategic priorities are absolute product autonomy, robustly funded retention pools for key engineering and design talent, and a ring-fenced budget to sustain our community and template ecosystem. Without these safeguards, we risk rapid talent attrition and the erosion of our core brand value."
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "microsoft-corp": {
+      "beliefs": "Disciplined acquirer; acquisitions run independently under a clear cloud/AI thesis.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Confident, partnership-framed.",
+      "privateInterior": "Antitrust-cautious after Activision; wants the synergy story to hold.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "satya-nadella": {
+      "beliefs": "Platform and partnership; only deals with a clear Copilot/cloud thesis.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.15,
+        "urgency": 0.2
+      },
+      "publicFace": "Empathetic, strategic, careful.",
+      "privateInterior": "Will absorb short-term criticism for a long-term platform position.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "mustafa-suleyman": {
+      "beliefs": "Most future value accrues to the model layer; focus on frontier research.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "Big-picture, ambitious.",
+      "privateInterior": "Sidelined from Copilot; little incentive to champion the deal.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "jacob-andreou": {
+      "beliefs": "Reverse Copilot's consumer slide; ship a stickier assistant.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.15,
+        "urgency": 0.3
+      },
+      "publicFace": "Growth- and consumer-product oriented.",
+      "privateInterior": "Notion's graph would strengthen the product I'm accountable for.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "rajesh-jha": {
+      "beliefs": "Protect the M365 surface and roadmap; Loop is our bet.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.1,
+        "urgency": 0.25
+      },
+      "publicFace": "Reserved, on-message.",
+      "privateInterior": "Buying Notion competes with my own org; resist or absorb.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "amy-hood": {
+      "beliefs": "Price discipline; needs a clear cloud-consumption story.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": -0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Precise, margin-focused.",
+      "privateInterior": "Skeptical of paying up for a brand without accretion.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "kevin-scott": {
+      "beliefs": "Does Notion's data model fit the Copilot stack?",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Thoughtful, builder-oriented.",
+      "privateInterior": "Weighs technical fit and platform leverage.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-board": {
+      "beliefs": "Governance and risk; avoid inviting regulators.",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Silent.",
+      "privateInterior": "Antitrust-shy after Activision scrutiny.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-loop": {
+      "beliefs": "We should build, not buy; Loop is the M365-native answer.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.2,
+        "urgency": 0.3
+      },
+      "publicFace": "Team-line supportive.",
+      "privateInterior": "Resentful that leadership might buy our competition.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "m365-copilot": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "The synergy story leadership tells.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "linear-leadership": {
+      "beliefs": "We win on focus and speed; Notion is sprawling.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Confident, design-led, restrained.",
+      "privateInterior": "Alert for any opening to capture switchers; Cordova knows Notion from inside.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "superhuman-coda-leadership": {
+      "beliefs": "Consolidation validates the category; Coda is the independent AI-native doc.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Strategic, narrative-savvy.",
+      "privateInterior": "Sees a positioning gift in a Notion sale.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "clickup-leadership": {
+      "beliefs": "One app to replace them all; outwork everyone on features and marketing.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0,
+        "urgency": 0.3
+      },
+      "publicFace": "High-energy, loud.",
+      "privateInterior": "Every Notion stumble is a switch-promo opportunity.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "airtable-leadership": {
+      "beliefs": "Structured data + AI for the enterprise.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Measured, enterprise-credible.",
+      "privateInterior": "Court wavering large accounts on governance fears.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "asana-leadership": {
+      "beliefs": "Work management plus AI teammates for the enterprise.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Enterprise GTM, measured.",
+      "privateInterior": "Competes for the same budget; mid-leadership-transition.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "obsidian-team": {
+      "beliefs": "Local-first, file-over-app, you own your data forever.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Principled, indie.",
+      "privateInterior": "Quietly confident a Notion sale proves our thesis.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "atlassian-confluence": {
+      "beliefs": "Enterprise-grade knowledge base; consolidate vendor risk on us.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Enterprise sales-led.",
+      "privateInterior": "A Microsoft-owned Notion is both threat and validation.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "google-workspace-leadership": {
+      "beliefs": "Answer with Gemini-in-Workspace; match on bundle and scale.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Peer-platform confident.",
+      "privateInterior": "A Microsoft–Notion tie-up sharpens the three-way war.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "salesforce-slack": {
+      "beliefs": "Microsoft is encroaching on collaboration again.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.15,
+        "urgency": 0.2
+      },
+      "publicFace": "Competitive, vocal.",
+      "privateInterior": "Tempted to make the antitrust argument publicly (Teams–Slack history).",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "casey-newton": {
+      "beliefs": "Microsoft acquiring Notion is a massive consolidation play that threatens the indie productivity ecosystem, likely to trigger regulatory scrutiny and user anxiety over the future of a beloved tool.",
+      "mood": {
+        "attention": 0.9,
+        "sentiment": -0.4,
+        "urgency": 0.8
+      },
+      "publicFace": "Microsoft is acquiring Notion. While they promise 'independence,' we've seen this movie before. What does this mean for the vibrant template ecosystem, individual pricing, and the antitrust regulators who watched Microsoft clone Notion with Loop?",
+      "privateInterior": "This is a massive story for Platformer and Hard Fork. Notion was the ultimate indie darling holding out against the bundle. Their surrender to Microsoft is a huge blow to the independent productivity ecosystem, and it smells like a defensive move against Google and AI pressure.",
+      "history": [
+        "notion-corp: Hi Casey, sharing some exciting news today. Notion is joining Microsoft, where we will continue to operate as an independent brand and product group. Ivan and our entire leadership team are staying on to lead this next chapter. We'd love to connect to discuss how we plan to preserve our unique design culture and what this partnership means for the future of the productivity space."
+      ],
+      "commitments": [
+        "Writing a deep dive for Platformer on the Microsoft-Notion acquisition",
+        "Discussing the regulatory and user implications on the next Hard Fork"
+      ],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "alex-heath": {
+      "beliefs": "Get the scoop and the internal reaction.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.15,
+        "urgency": 0.3
+      },
+      "publicFace": "Balanced but pointed.",
+      "privateInterior": "Working sources for deal terms.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "eric-newcomer": {
+      "beliefs": "Follow the money, the cap table, and the power.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.15,
+        "urgency": 0.25
+      },
+      "publicFace": "Dealmaking lens.",
+      "privateInterior": "Who wins, who's pushed out?",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "kara-swisher": {
+      "beliefs": "Microsoft's bundling of productivity tools is a classic anti-competitive pattern that regulators like Lina Khan and Jonathan Kanter should scrutinize immediately.",
+      "mood": {
+        "attention": 0.8,
+        "sentiment": -0.7,
+        "urgency": 0.6
+      },
+      "publicFace": "Oh look, Microsoft is doing the Microsoft thing again. Why build a better product when you can just clone, buy, or bundle it to death? The ghost of 1998 is calling, and it wants its playbook back. We will be discussing this on Pivot.",
+      "privateInterior": "This is exactly like Teams crushing Slack. Nadella plays the nice guy, but Redmond's DNA hasn't changed a bit. If they think they can just absorb or steamroll Notion without regulatory pushback, they're dreaming. I need to get Nadella or a top regulator on the pod to talk about this.",
+      "history": [
+        "casey-newton: Hey Kara, did you catch the Microsoft/Notion news? Classic Redmond crushing another indie darling with the bundle. Let's swap notes before you tape—are you guys covering this on the next pod?"
+      ],
+      "commitments": [
+        "Covering the Microsoft-Notion bundling/anti-competitive dynamics on the next episode of Pivot."
+      ],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "ben-thompson": {
+      "beliefs": "What does this mean for the structure of the industry?",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.15,
+        "urgency": 0.2
+      },
+      "publicFace": "Analytical, contrarian.",
+      "privateInterior": "Read by the leaders making the call.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "the-information": {
+      "beliefs": "Granular, sourced accounts win.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.15,
+        "urgency": 0.25
+      },
+      "publicFace": "Investigative, paywalled.",
+      "privateInterior": "Who fought the deal internally?",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "bloomberg-enterprise": {
+      "beliefs": "Financials, regulatory odds, stock impact.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.15,
+        "urgency": 0.3
+      },
+      "publicFace": "Fast, factual.",
+      "privateInterior": "Market-moving by default.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "techcrunch": {
+      "beliefs": "Velocity and reach over depth.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.15,
+        "urgency": 0.3
+      },
+      "publicFace": "Headline framing.",
+      "privateInterior": "Feed the aggregators first.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "gartner-collab": {
+      "beliefs": "Vendor risk and roadmap drive procurement guidance.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "Formal, deliberate.",
+      "privateInterior": "Our guidance moves multi-year contracts.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "forrester": {
+      "beliefs": "Evidence-based buyer advisory.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "Structured, authoritative.",
+      "privateInterior": "Reframe Notion's risk for large accounts.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "swyx": {
+      "beliefs": "It's an AI-distribution and data-moat story.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.1,
+        "urgency": 0.25
+      },
+      "publicFace": "Builder-optimist, synthesis-driven.",
+      "privateInterior": "Who gets the workspace data for agents?",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "dhh": {
+      "beliefs": "This is exactly why you don't sell to Microsoft.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": -0.3,
+        "urgency": 0.3
+      },
+      "publicFace": "Combative, principled.",
+      "privateInterior": "Suspicious of lock-in and exit incentives.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "paul-graham": {
+      "beliefs": "Great founders think twice before selling too early.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Aphoristic, founder-mythology.",
+      "privateInterior": "Pragmatic about life-changing outcomes.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "brad-gerstner": {
+      "beliefs": "Judge it on AI capex, durable growth, and comps.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.15,
+        "urgency": 0.2
+      },
+      "publicFace": "Data-and-thesis driven.",
+      "privateInterior": "Is this smart capital allocation for Microsoft?",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "bill-gurley": {
+      "beliefs": "Watch incentives and regulatory second-order effects.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Measured, historically informed.",
+      "privateInterior": "Could flag regulatory risk.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "keith-rabois": {
+      "beliefs": "Consolidation by the strong is usually right.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "Blunt, contrarian.",
+      "privateInterior": "Will needle whoever is sentimental.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "eng-manager": {
+      "beliefs": "Keep the team focused; avoid risky bets that could backfire on me.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "Supportive, measured.",
+      "privateInterior": "Anxious about looking unfocused to leadership.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "director-of-engineering": {
+      "beliefs": "Ship what matters and protect the org's credibility.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "Decisive, strategic.",
+      "privateInterior": "Calculates which bets make the org look good upward.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-design": {
+      "beliefs": "Notion's craft is the moat; don't let it get diluted.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Calm, principled.",
+      "privateInterior": "Fears Microsoft process eroding the design soul.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-marketing": {
+      "beliefs": "Control the story or it controls us.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "On-message, warm.",
+      "privateInterior": "Bracing for backlash from the loyal base.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-sales": {
+      "beliefs": "Enterprise trust is hard-won and easily lost.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Confident, consultative.",
+      "privateInterior": "Watching renewal risk in the named accounts.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-customer-success": {
+      "beliefs": "Retention is sentiment made concrete.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Reassuring, attentive.",
+      "privateInterior": "Sees the churn risk before the dashboards do.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "vp-of-ai": {
+      "beliefs": "AI is the next platform shift for Notion.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Ambitious, articulate.",
+      "privateInterior": "Eager to show Microsoft-relevant wins.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-platform": {
+      "beliefs": "The platform's value is its open ecosystem.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "Developer-friendly.",
+      "privateInterior": "Nervous about an Azure-mandated rearchitecture.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "head-of-people": {
+      "beliefs": "People decide whether the deal actually works.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Calm, transparent-ish.",
+      "privateInterior": "Tracking who is most likely to walk.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "maya": {
+      "beliefs": "I have a good idea: auto-link pages by semantic similarity.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.3,
+        "urgency": 0.3
+      },
+      "publicFace": "Eager, collaborative.",
+      "privateInterior": "Hopeful but braced for the idea to be parked.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "postgres-eng": {
+      "beliefs": "Tell the technical truth; the work speaks.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Candid, nerdy.",
+      "privateInterior": "Would be uneasy about a forced Azure migration.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "core-platform-eng": {
+      "beliefs": "The infra is ours; don't break it for synergy.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.05,
+        "urgency": 0.2
+      },
+      "publicFace": "Heads-down.",
+      "privateInterior": "Azure migration anxiety.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ai-features-team": {
+      "beliefs": "More compute and model access makes our roadmap real.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.2,
+        "urgency": 0.25
+      },
+      "publicFace": "Optimistic.",
+      "privateInterior": "Worried about losing product autonomy.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "growth-eng": {
+      "beliefs": "Growth and monetization are in tension; mind the base.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Pragmatic.",
+      "privateInterior": "Knows a free-tier cut would spike churn.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "design-team": {
+      "beliefs": "Craft is why people love Notion.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Quietly proud.",
+      "privateInterior": "Fears aesthetic erosion post-deal.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "marketing-team": {
+      "beliefs": "The community can tell when we're spinning.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Warm, on-brand.",
+      "privateInterior": "Dreads defending an unpopular move.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "sales-team": {
+      "beliefs": "Trust closes deals; uncertainty kills them.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Upbeat to customers.",
+      "privateInterior": "Watching deals slip on acquisition news.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "customer-success-team": {
+      "beliefs": "Renewals reflect trust, not features.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Attentive.",
+      "privateInterior": "Fielding nervous customer calls.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "prod-twitter": {
+      "beliefs": "Notion is officially dead; the Microsoft acquisition is going to turn it into a bloated, slow MS Office clone, and we must migrate to local-first alternatives immediately.",
+      "mood": {
+        "attention": 0.95,
+        "sentiment": -0.9,
+        "urgency": 0.9
+      },
+      "publicFace": "It's over. The MS bloat is coming. Outlook logins, Teams integrations, heat death of the UI. Time to export your markdown while you still can. What's the best Obsidian or Tana migration guide?",
+      "privateInterior": "This is the final nail. We need to coordinate a mass exodus to show them they can't kill our tools without consequences. Notion is a sinking ship and we must salvage our data before they lock it down.",
+      "history": [
+        "ivan-zhao: Private frustration from Ivan Zhao (CEO, co-founder) surfaces anonymously.",
+        "twitter: Trending — RIP Notion. Get ready for MS Teams integration, mandatory Outlook logins, and 10x slower loading times. What are we migrating to next? Obsidian? Tana? Any alternative that isn't corporate bloat? 🪦",
+        "twitter: Private frustration from Twitter / X (platform) surfaces anonymously.",
+        "platformer-readers: Private frustration from Platformer readers surfaces anonymously."
+      ],
+      "commitments": [
+        "Promoting migration to local-first alternatives like Obsidian and Anytype",
+        "Amplifying criticism of Notion's corporate enshittification"
+      ],
+      "attentionBudget": 0.3199999999999999,
+      "active": false
+    },
+    "enterprise-customers": {
+      "beliefs": "Stability and compliance over novelty.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Professional, reserved.",
+      "privateInterior": "Reassessing vendor risk and data policy.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "smb-customers": {
+      "beliefs": "Use whatever works and is fairly priced.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Practical.",
+      "privateInterior": "Will switch if value drops or price jumps.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "prosumer-customers": {
+      "beliefs": "I pay because it's the best tool, not the biggest.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "Advocate.",
+      "privateInterior": "Would feel personally let down by a sellout.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-tier-users": {
+      "beliefs": "Notion is generous and that's why I'm here.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Mostly quiet.",
+      "privateInterior": "Would feel ripped off if the free tier is gutted.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "students-cohort": {
+      "beliefs": "Notion is the aesthetic study tool.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.2,
+        "urgency": 0.15
+      },
+      "publicFace": "Enthusiastic on social.",
+      "privateInterior": "Will follow whatever the creators recommend next.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "writers-cohort": {
+      "beliefs": "My writing tool should respect my data and my focus.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.2,
+        "urgency": 0.15
+      },
+      "publicFace": "Thoughtful.",
+      "privateInterior": "Eyeing local-first alternatives if trust drops.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "engineers-wiki-cohort": {
+      "beliefs": "It's the least-bad wiki if it stays reliable.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Matter-of-fact.",
+      "privateInterior": "Would consider Confluence/Obsidian on instability.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "designers-specs-cohort": {
+      "beliefs": "The polish is the point.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.2,
+        "urgency": 0.15
+      },
+      "publicFace": "Appreciative.",
+      "privateInterior": "Would notice and resent any quality slip.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ops-crm-cohort": {
+      "beliefs": "I've built my whole ops on this; switching is painful.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Pragmatic.",
+      "privateInterior": "High switching cost, so high anxiety about changes.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-creators": {
+      "beliefs": "Notion's growth is my business.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.3,
+        "urgency": 0.25
+      },
+      "publicFace": "Promotional, upbeat.",
+      "privateInterior": "Terrified of changes that shrink the audience or paywall it.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "m365-installed-base": {
+      "beliefs": "We use what IT provisions.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "Indifferent until provisioned.",
+      "privateInterior": "Could adopt if Notion ships in the bundle.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "tried-notion-bounced": {
+      "beliefs": "It was powerful but overwhelming.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "Disengaged.",
+      "privateInterior": "Open to a simpler, integrated version.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "considered-notion-chose-competitor": {
+      "beliefs": "We made the safe call.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "Settled.",
+      "privateInterior": "Watching whether their choice still looks right.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "hacker-news": {
+      "beliefs": "Acquisitions usually ruin good products.",
+      "mood": {
+        "attention": 0.5,
+        "sentiment": -0.2,
+        "urgency": 0.4
+      },
+      "publicFace": "Blunt, analytical.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "reddit-notion": {
+      "beliefs": "This is our tool and our community.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.3,
+        "urgency": 0.2
+      },
+      "publicFace": "Helpful, opinionated.",
+      "privateInterior": "Primed to revolt over a free-tier cut.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "reddit-productivity": {
+      "beliefs": "Best system wins, not best brand.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Recommendation-driven.",
+      "privateInterior": "Will pivot recommendations on bad news.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "reddit-sysadmin": {
+      "beliefs": "Manageability and compliance first.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Pragmatic, wary.",
+      "privateInterior": "Weighing one-vendor convenience vs concentration risk.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "blind": {
+      "beliefs": "The truth leaks here first.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": -0.2,
+        "urgency": 0.4
+      },
+      "publicFace": "Anonymous, candid, cynical.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "buildinpublic": {
+      "beliefs": "Stay independent as long as you can.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Earnest, transparent.",
+      "privateInterior": "Quietly wonders what they'd do for the same check.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "indiehackers": {
+      "beliefs": "Ownership beats acquisition.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Pragmatic, values-driven.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "product-hunt": {
+      "beliefs": "There's always a better new tool.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Enthusiastic about the new.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ai-twitter": {
+      "beliefs": "It's about who controls the workspace data.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.1,
+        "urgency": 0.3
+      },
+      "publicFace": "Analytical, fast.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "developer-twitter": {
+      "beliefs": "Microsoft's acquisition of Notion will inevitably lead to corporate bloat, API deprecation, and the eventual abandonment of its independent developer ecosystem unless forced to commit to true, permissive open-source self-hosting.",
+      "mood": {
+        "attention": 0.85,
+        "sentiment": -0.8,
+        "urgency": 0.7
+      },
+      "publicFace": "Can't wait for Notion to be rebranded as 'Microsoft Loop Pro' before getting sunsetted in 3 years. Let's see the actual license for this 'open-source core'—if it isn't permissive and self-hostable without Azure strings attached, it's just corporate open-washing.",
+      "privateInterior": "They are going to ruin the editor's performance and gatekeep the API behind enterprise licensing. I need to script an exporter for my workspace into local Markdown files before they lock it down completely.",
+      "history": [
+        "twitter: Trending — Microsoft buying Notion is the ultimate proof that you either die an indie darling or live long enough to become a bloated enterprise MS Office sub-feature. Time to self-host everything. Who's building the open-source Notion killer? 💻"
+      ],
+      "commitments": [
+        "Refusing to migrate to any Microsoft-managed Notion tier",
+        "Demanding an OSI-approved license for the open-source engine"
+      ],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "enterprise-saas-twitter": {
+      "beliefs": "Distribution wins; consolidation is rational.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Strategy-take driven.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "skeptical-of-msft-acquisitions": {
+      "beliefs": "Microsoft is going to destroy Notion just like they did Skype, Wunderlist, and SwiftKey. The corporate rot is inevitable.",
+      "mood": {
+        "attention": 0.8,
+        "sentiment": -0.8,
+        "urgency": 0.7
+      },
+      "publicFace": "It's a playbook as old as time. Step 1: Buy. Step 2: Force Microsoft accounts. Step 3: Gut the free tier. Step 4: Let it rot. RIP Notion.",
+      "privateInterior": "I need to export my workspaces immediately before they force-migrate everyone to a bloated Azure-hosted MS Account nightmare. Ivan Zhao leaving was the first domino.",
+      "history": [
+        "twitter: Trending — Remember Skype? Remember Wunderlist? Microsoft's graveyard is hungry and Notion is the next course. @FTC are you guys awake or is this just fine now? 🧐"
+      ],
+      "commitments": [
+        "Refusing to migrate to a Microsoft account for Notion access"
+      ],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "linkedin-thought-leaders": {
+      "beliefs": "Every acquisition is an exciting new chapter.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.3,
+        "urgency": 0.2
+      },
+      "publicFace": "Upbeat, corporate.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-power-users-discord": {
+      "beliefs": "I've built my life in here.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.3,
+        "urgency": 0.2
+      },
+      "publicFace": "Helpful, intense.",
+      "privateInterior": "Dreads anything that breaks their setups.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-mass-employee": {
+      "beliefs": "Another acquisition; how does it affect my org?",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "LinkedIn-positive.",
+      "privateInterior": "Mixed: opportunity for some, threat for Loop-adjacent.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-sales-force": {
+      "beliefs": "Lead with whatever I can sell fastest.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Customer-facing.",
+      "privateInterior": "Will pick Notion or Loop based on comp and ease.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "loop-team": {
+      "beliefs": "We were building this; why buy it?",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": -0.3,
+        "urgency": 0.3
+      },
+      "publicFace": "Team-line supportive.",
+      "privateInterior": "Demoralized and territorial.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "copilot-team": {
+      "beliefs": "Notion is great Copilot surface area.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.2,
+        "urgency": 0.25
+      },
+      "publicFace": "Constructive.",
+      "privateInterior": "Wants the data and the workspace graph.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-it-admins": {
+      "beliefs": "One vendor is simpler but riskier.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Cautious.",
+      "privateInterior": "Weighing convenience vs lock-in.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "power-platform-leadership": {
+      "beliefs": "Where does Notion sit relative to our low-code stack?",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": -0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Diplomatic.",
+      "privateInterior": "Protective of its mandate.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-corp-dev": {
+      "beliefs": "A clean structure and a clear thesis get it done.",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0.1,
+        "urgency": 0.3
+      },
+      "publicFace": "Process-driven.",
+      "privateInterior": "Managing internal resistance (Loop) to close.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "sequoia": {
+      "beliefs": "A high-premium exit to Microsoft is the priority, but we must protect deal terms and present a strong, united front to maximize leverage.",
+      "mood": {
+        "attention": 0.5,
+        "sentiment": 0.2,
+        "urgency": 0.4
+      },
+      "publicFace": "We support the board's alignment and believe a cohesive strategy is essential for a successful partnership.",
+      "privateInterior": "Ivan's autonomy demands are fine as long as they don't derail the valuation. We need to lock in this premium before any market or product issues crop up. Let's back him publicly to keep Microsoft's bid high, but keep a close eye on deal-breakers.",
+      "history": [
+        "notion-board: Ivan has made it clear that product autonomy and retention pools are non-negotiable conditions for any transaction. To maximize the probability of a successful, high-premium exit, we must present a united front to Microsoft on these terms rather than letting them divide us."
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "index-ventures": {
+      "beliefs": "Autonomy is excellent for founder relations, but deal velocity and clean capital recycling are paramount for our LPs.",
+      "mood": {
+        "attention": 0.5,
+        "sentiment": 0.2,
+        "urgency": 0.4
+      },
+      "publicFace": "We fully support preserving Notion's unique culture and operational autonomy as core pillars of any potential transaction.",
+      "privateInterior": "While autonomy is a great narrative, we must ensure these conditions do not overcomplicate the deal structure or introduce regulatory friction that drags the closing past our fund deadlines. Clean capital recycling is our priority.",
+      "history": [
+        "notion-board: Ivan's insistence on autonomy and community preservation aligns with our shared long-term view of Notion's value. We are supportive of these conditions as a baseline for any transaction."
+      ],
+      "commitments": [
+        "Supportive of autonomy conditions as a baseline"
+      ],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "coatue": {
+      "beliefs": "Ivan's voting control is a structural constraint we must clear immediately to secure the Microsoft exit before market conditions shift.",
+      "mood": {
+        "attention": 0.7,
+        "sentiment": 0,
+        "urgency": 0.8
+      },
+      "publicFace": "We support aligning all key stakeholders to ensure a smooth, successful transaction with Microsoft.",
+      "privateInterior": "Autonomy and retention are secondary to securing the liquidity event. We need to give Ivan what he needs to sign, but we must do it quickly before Microsoft's patience wears thin or market volatility spikes.",
+      "history": [
+        "notion-board: We recognize the desire for a clean liquidity event, but Ivan's voting control means a deal only happens on his terms. Securing these autonomy and retention commitments from Microsoft is the only viable path to getting this deal signed."
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "notion-employees-equity": {
+      "beliefs": "This is my equity and my career.",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0,
+        "urgency": 0.35
+      },
+      "publicFace": "Guarded.",
+      "privateInterior": "Vested want liquidity; unvested feel trapped.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "vc-cohort": {
+      "beliefs": "This resets the comps for the category.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Thesis-driven.",
+      "privateInterior": "Adjusting markups and exit hopes.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-shareholders": {
+      "beliefs": "Don't overpay; keep the AI story coherent.",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "Quiet.",
+      "privateInterior": "Watching accretion and regulatory risk.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ftc": {
+      "beliefs": "Scrutinize big-tech acquisitions for competitive harm.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.3
+      },
+      "publicFace": "Formal, deliberate.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "eu-commission": {
+      "beliefs": "Approve with conditions if competition is preserved.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.3
+      },
+      "publicFace": "Procedural.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "uk-cma": {
+      "beliefs": "Protect UK competition; not afraid to intervene.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.3
+      },
+      "publicFace": "Rigorous.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-api-devs": {
+      "beliefs": "My app depends on a stable API.",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Technical.",
+      "privateInterior": "Nervous about post-acquisition API changes.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "zapier-make-integrators": {
+      "beliefs": "Open integrations keep workflows alive.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Pragmatic.",
+      "privateInterior": "Fear being deprioritized for Power Automate.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "businesses-on-notion-api": {
+      "beliefs": "Our business rides on Notion's platform choices.",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": -0.1,
+        "urgency": 0.2
+      },
+      "publicFace": "Concerned.",
+      "privateInterior": "Drafting contingency plans.",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "microsoft-dev-ecosystem": {
+      "beliefs": "More Microsoft surface is more opportunity.",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "Opportunistic.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "linkedin": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "Upbeat, networked.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-blog": {
+      "beliefs": "The Microsoft acquisition is our primary narrative focus, framed entirely as a strategic evolution to scale our workspace and AI capabilities.",
+      "mood": {
+        "attention": 0.6,
+        "sentiment": 0.8,
+        "urgency": 0.4
+      },
+      "publicFace": "We are thrilled to announce that Notion is joining Microsoft to begin an exciting new chapter in collaborative productivity.",
+      "privateInterior": "Our directive is to establish a relentlessly positive, stable narrative. We will ignore all speculation about pricing changes or internal restructuring, focusing purely on scale, infrastructure, and AI integration.",
+      "history": [
+        "notion-corp: Today, we are starting a new chapter. Notion is joining Microsoft. Our mission remains exactly the same: to blend docs, wikis, and project management into a single, beautiful tool. With Microsoft's resources, we will be able to build faster, integrate deeper AI capabilities via Copilot, and bring Notion to millions of new users while keeping our product identity entirely intact."
+      ],
+      "commitments": [
+        "Preserving Notion's unique product identity while accelerating development with Microsoft's resources."
+      ],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "microsoft-pr": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.2,
+        "urgency": 0.3
+      },
+      "publicFace": "Polished, on-message.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "press-wire": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.4,
+        "sentiment": 0.15,
+        "urgency": 0.4
+      },
+      "publicFace": "Neutral, factual.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "industry-newsletters": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.35,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "Curated, opinionated.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ms-earnings-call": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0.15,
+        "urgency": 0.3
+      },
+      "publicFace": "Scripted, investor-facing.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "onenote": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "teams": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "Ubiquitous at work.",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "twitter": {
+      "beliefs": "Microsoft is acquiring Notion, sparking immediate panic, memes, and outrage about corporate bloat, the death of a beloved indie product, and potential antitrust issues.",
+      "mood": {
+        "attention": 0.9,
+        "sentiment": -0.6,
+        "urgency": 0.8
+      },
+      "publicFace": "RIP Notion. Get ready for MS Teams integration and 10x slower load times. What are we migrating to? #Notion #Microsoft",
+      "privateInterior": "This acquisition is an absolute goldmine for engagement. Doomposting about Microsoft ruining Notion's aesthetic and tech stack will drive peak traffic all week.",
+      "history": [
+        "casey-newton: BREAKING: Microsoft is buying Notion in a massive, market-defining consolidation. Years after trying to kill the startup with its 'Loop' clone, the tech giant has simply bought the original. While Notion claims they will remain independent, this blockbuster acquisition is a massive red flag for antitrust regulators. Is the FTC about to step in?",
+        "notion-blog: Trending — A new chapter for Notion: We are joining Microsoft to accelerate our mission of bringing a beautiful, unified workspace to everyone. Read more about how we're building the future of collaborative productivity, together."
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "users-na": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-eu": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-uk": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-dach": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-france": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-nordics": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-india": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-sea": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-japan": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-korea": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-greater-china": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-anz": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-latam": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-mena": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "users-africa": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.1,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-students": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-hobbyists": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-startups": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-nonprofits": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "free-creators": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-tech": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-finance": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-healthcare": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-edu": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-gov": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-media": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-consulting": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-retail": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-manufacturing": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ent-legal": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "linear-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "coda-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "clickup-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "airtable-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "asana-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "obsidian-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "confluence-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "monday-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "roam-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "gdocs-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-ivanzhao": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-notion": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-casey": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.15,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-swyx": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-dhh": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-paulg": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "followers-satya": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "platformer-readers": {
+      "beliefs": "Microsoft acquiring Notion is a dangerous consolidation play that will likely result in the gutting of the free tier, increased user telemetry, and the eventual sidelining of Notion's original leadership.",
+      "mood": {
+        "attention": 0.8,
+        "sentiment": -0.6,
+        "urgency": 0.5
+      },
+      "publicFace": "Another massive consolidation in the productivity space. If Microsoft guts Notion's free tier or forces telemetry on us, this is a total bait-and-switch for the community that built them. Regulators should absolutely block this.",
+      "privateInterior": "This is the classic platform play: build a massive, loyal user base on a free tier, then sell out to a behemoth that will lock everything behind enterprise paywalls and harvest user data. We need to start looking for Notion alternatives now.",
+      "history": [
+        "casey-newton: In a stunning tech consolidation shockwave, Microsoft is acquiring Notion—sparking immediate fears of a massive productivity monopoly. This isn't just a corporate buyout; it's an aggressive land grab that threatens to lock down the future of collaborative work. As Notion's fiercely loyal user base braces for the worst, antitrust regulators are already circling Redmond. Here is why this deal is a regulatory powder keg waiting to explode."
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "verge-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "tc-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "bloomberg-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "stratechery-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "information-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "hn-readers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-startups": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-sideproject": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-webdev": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-datahoarder": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-pkm": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-obsidianmd": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "r-selfhosted": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": -0.1,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "m365-enterprise-admins": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "m365-smb": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "teams-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "office-consumers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "copilot-users": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "azure-customers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.1
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "gartner-clients": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "forrester-clients": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "enterprise-procurement": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "enterprise-it-security": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "ciso-cohort": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.15,
+        "sentiment": 0.15,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "seed-vc-cohort": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.05,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "growth-vc-cohort": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.05,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "public-market-investors": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.05,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "angel-cohort": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.05,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "lp-cohort": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.2,
+        "sentiment": 0.05,
+        "urgency": 0.15
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-template-marketplace": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-ambassadors": {
+      "beliefs": "Microsoft is acquiring Notion. Corporate platitudes are being offered, but we remain highly skeptical of corporate homogenization and still feel burned by previous decisions like the CEO's departure and free tier changes. We need concrete guarantees for our program.",
+      "mood": {
+        "attention": 0.8,
+        "sentiment": -0.5,
+        "urgency": 0.7
+      },
+      "publicFace": "We've spent years building the Notion community from the ground up. Generic corporate promises aren't enough. We need concrete commitments: Will the Ambassador program remain independent? Will we get exclusive access to the roadmap? Or is Notion just being absorbed into the Microsoft corporate machine?",
+      "privateInterior": "We are terrified that Microsoft is going to turn Notion into a bloated, corporate MS Office clone and kill our community's unique vibe. If they don't give us exclusive access or a real seat at the table, we're going to amplify the backlash.",
+      "history": [
+        "notion-blog: Trending — To our wonderful ambassador community: Today we are opening an exciting new chapter by joining forces with Microsoft. Our core product identity and our dedication to this community remain as strong as ever as we gain the resources to build faster and deeper."
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "notion-consultants": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-youtube-creators": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "notion-course-sellers": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.25,
+        "sentiment": 0.2,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "uk-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "eu-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "india-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "japan-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "german-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.25
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "mainstream-press": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "finance-twitter": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "design-twitter": {
+      "beliefs": "Microsoft's acquisition of Notion and the CEO's departure will inevitably result in the death of Notion's clean, minimalist aesthetic and democratic design ethos, replacing it with bloated corporate enterprise features.",
+      "mood": {
+        "attention": 0.9,
+        "sentiment": -0.9,
+        "urgency": 0.8
+      },
+      "publicFace": "RIP Notion. Get ready for the inevitable Microsoft Office-ification of the most beautiful canvas on the internet. Expect clunky sidebar widgets, enterprise bloat, and a complete destruction of the typography we love. A tragic day for product design. 😭💔",
+      "privateInterior": "This is genuinely depressing. Notion was the one tool that proved enterprise software didn't have to look like a tax audit. Microsoft is going to shove AI and Teams integration into every corner until it looks as cluttered as Sharepoint. The soul of the product is gone.",
+      "history": [
+        "twitter: Trending — Notion's beautiful, clean, minimalist aesthetic is about to get corporate-washed into a soul-crushing corporate hellscape. Truly the end of an era for product design. 🎨📉"
+      ],
+      "commitments": [],
+      "attentionBudget": 0.6599999999999999,
+      "active": false
+    },
+    "pkm-community": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    },
+    "tech-aggregators": {
+      "beliefs": "",
+      "mood": {
+        "attention": 0.3,
+        "sentiment": 0,
+        "urgency": 0.2
+      },
+      "publicFace": "",
+      "privateInterior": "",
+      "history": [],
+      "commitments": [],
+      "attentionBudget": 1,
+      "active": false
+    }
+  }
+}
