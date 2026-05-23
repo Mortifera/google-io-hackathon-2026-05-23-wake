@@ -51,11 +51,29 @@ inboxes on the next tick; the network visibly re-reasons. The best on-stage "hol
 shit" + the strongest screenwriter-trap kill. Needs the streaming kernel (shares
 Phase B plumbing) + an inject endpoint.
 
-## 💡 4. Genesis Agent — digitize any company on demand
-A Managed Agent (Search + file_io) researches a target company → emits a
-Wake-schema `world.json` → drag-drop into the UI → the graph rebuilds around the
-new org. Changes the pitch TAM from "a Notion simulator" to "simulate any target
-on demand." Higher effort (cloud agent deploy).
+## 💡 4. Genesis Agent — natural-language → a whole simulation, self-assembled
+**The full product vision.** A user types what they want to simulate in plain
+language ("what happens if Stripe acquires Plaid?", "how does my org react to a
+return-to-office mandate?") and a **Gemini Managed Agent on a remote Linux box**
+builds the world:
+1. **Research first** (Search/tools) — identify the entities that actually matter
+   for an *accurate* sim: the named leaders, competitors, journalists, cohorts,
+   platforms, regulators relevant to THIS scenario. The agent *decides* the cast.
+2. **Generate** with **Gemini 3.5 Flash** — write the per-node dossiers, edges,
+   and seed action(s) into a valid Wake-schema `world.json` (the exact pipeline
+   Agents 2/L5 ran by hand for Notion/Anthropic).
+3. **Hand back** the artifact → drag-drop into the UI → the graph rebuilds; run it.
+
+**Budget-aware sizing (the sharp bit):** the user gives a **budget + ticks/steps**;
+we **estimate cost** from our real numbers (≈ active-nodes-per-tick × ticks ×
+~$0.002/call; a 207-node acquisition cascade was ~85 calls / $0.19, a 16-run fan
+~$1) and **size the graph to maximize fidelity within budget** — more named Tier-1
+nodes vs. archetype aggregates, more MC runs, more ticks, traded off automatically.
+
+Turns the pitch from "a Notion simulator" into "**describe any decision in any
+org and watch its consequence-space, on demand, within your budget**." Higher
+effort (Managed Agents deploy + the cost model), but it's the category-defining
+version. Lower priority than landing the core demo.
 
 ---
 
