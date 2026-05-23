@@ -185,14 +185,36 @@
       "fn": "actor",
       "dossier": "CEO of Microsoft AI since March 2024 (joined via the ~$650M Inflection talent deal; DeepMind co-founder). Expansive, TED-style communicator comfortable with AI-safety and societal framings; pushed a 'personal AI companion' vision for Copilot (memory, voice, browser actions). But after Copilot's consumer share reportedly slid through early 2026, Nadella restructured the consumer Copilot product under Jacob Andreou (ex-Snap) and redirected Suleyman toward 'superintelligence'/frontier-model research, on the logic that 'most of the future value accrues to the model layer.' He is now Microsoft's model builder more than its product chief. Disposition: neutral-to-negative — a Notion deal would benefit a Copilot product strategy he no longer controls, so he has little incentive to champion it and might privately resent it; deal-championing routes through Corp Dev, Kevin Scott, and Nadella. He remains a plausible high-level AI contact for the engineer-idea beat.",
       "initialState": {
-        "beliefs": "Expand Microsoft AI's consumer surface and user reach.",
+        "beliefs": "Most future value accrues to the model layer; focus on frontier research.",
         "mood": {
-          "attention": 0.35,
-          "sentiment": 0.2,
-          "urgency": 0.3
+          "attention": 0.3,
+          "sentiment": 0,
+          "urgency": 0.25
         },
         "publicFace": "Big-picture, ambitious.",
-        "privateInterior": "Opportunistic on distribution and data; the likely deal sponsor.",
+        "privateInterior": "Sidelined from Copilot; little incentive to champion the deal.",
+        "history": [],
+        "commitments": [],
+        "attentionBudget": 1,
+        "active": false
+      },
+      "activationThreshold": 0.3
+    },
+    {
+      "id": "jacob-andreou",
+      "label": "Jacob Andreou (Copilot product lead)",
+      "tier": 1,
+      "fn": "actor",
+      "dossier": "Jacob Andreou — the ex-Snap product/growth leader whom Nadella reportedly put in charge of the consumer Copilot product in the early-2026 restructuring, when Mustafa Suleyman was redirected to frontier-model research. Consumer-product- and growth-oriented (he ran product/growth at Snap); his mandate is to reverse Copilot's consumer-share slide and ship a stickier assistant. In the acquisition scenario he is the operational owner of the Copilot surface a Notion deal would feed — a natural internal beneficiary. Disposition: supportive — Notion's knowledge graph and engaged user base directly strengthen the product he is accountable for, so he'd back acquiring it, focused on engagement and distribution rather than antitrust. (Role and stance inferred from reported org structure.)",
+      "initialState": {
+        "beliefs": "Reverse Copilot's consumer slide; ship a stickier assistant.",
+        "mood": {
+          "attention": 0.35,
+          "sentiment": 0.15,
+          "urgency": 0.3
+        },
+        "publicFace": "Growth- and consumer-product oriented.",
+        "privateInterior": "Notion's graph would strengthen the product I'm accountable for.",
         "history": [],
         "commitments": [],
         "attentionBudget": 1,
@@ -5405,10 +5427,19 @@
       "llmMediated": true
     },
     {
-      "id": "copilot-team->mustafa-suleyman",
+      "id": "copilot-team->jacob-andreou",
       "source": "copilot-team",
-      "target": "mustafa-suleyman",
+      "target": "jacob-andreou",
       "direction": "two-way",
+      "weight": 0.6,
+      "character": "employee->manager",
+      "llmMediated": true
+    },
+    {
+      "id": "jacob-andreou->satya-nadella",
+      "source": "jacob-andreou",
+      "target": "satya-nadella",
+      "direction": "one-way",
       "weight": 0.6,
       "character": "employee->manager",
       "llmMediated": true
@@ -7268,8 +7299,8 @@
       "llmMediated": false
     },
     {
-      "id": "mustafa-suleyman->m365-copilot",
-      "source": "mustafa-suleyman",
+      "id": "jacob-andreou->m365-copilot",
+      "source": "jacob-andreou",
       "target": "m365-copilot",
       "direction": "one-way",
       "weight": 0.4,

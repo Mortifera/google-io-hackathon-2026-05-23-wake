@@ -197,7 +197,8 @@ add({ id: "notion-board", label: "Notion board (founders + investors)", tier: 1,
 // Microsoft leadership ------------------------------------------------------
 add({ id: "microsoft-corp", label: "Microsoft (corporate)", tier: 1, fn: "actor", dossier: dossier("microsoft-corp"), activationThreshold: 0.1, mood: mood(0.3, 0.1, 0.2), beliefs: "Disciplined acquirer; acquisitions run independently under a clear cloud/AI thesis.", publicFace: "Confident, partnership-framed.", privateInterior: "Antitrust-cautious after Activision; wants the synergy story to hold." });
 add({ id: "satya-nadella", label: "Satya Nadella (CEO, Microsoft)", tier: 1, fn: "actor", dossier: dossier("satya-nadella"), activationThreshold: 0.3, mood: mood(0.3, 0.15, 0.2), beliefs: "Platform and partnership; only deals with a clear Copilot/cloud thesis.", publicFace: "Empathetic, strategic, careful.", privateInterior: "Will absorb short-term criticism for a long-term platform position." });
-add({ id: "mustafa-suleyman", label: "Mustafa Suleyman (CEO, Microsoft AI)", tier: 1, fn: "actor", dossier: dossier("mustafa-suleyman"), activationThreshold: 0.3, mood: mood(0.35, 0.2, 0.3), beliefs: "Expand Microsoft AI's consumer surface and user reach.", publicFace: "Big-picture, ambitious.", privateInterior: "Opportunistic on distribution and data; the likely deal sponsor." });
+add({ id: "mustafa-suleyman", label: "Mustafa Suleyman (CEO, Microsoft AI)", tier: 1, fn: "actor", dossier: dossier("mustafa-suleyman"), activationThreshold: 0.3, mood: mood(0.3, 0.0, 0.25), beliefs: "Most future value accrues to the model layer; focus on frontier research.", publicFace: "Big-picture, ambitious.", privateInterior: "Sidelined from Copilot; little incentive to champion the deal." });
+add({ id: "jacob-andreou", label: "Jacob Andreou (Copilot product lead)", tier: 1, fn: "actor", dossier: dossier("jacob-andreou"), activationThreshold: 0.3, mood: mood(0.35, 0.15, 0.3), beliefs: "Reverse Copilot's consumer slide; ship a stickier assistant.", publicFace: "Growth- and consumer-product oriented.", privateInterior: "Notion's graph would strengthen the product I'm accountable for." });
 add({ id: "rajesh-jha", label: "Rajesh Jha (EVP, Experiences & Devices)", tier: 1, fn: "actor", dossier: dossier("rajesh-jha"), activationThreshold: 0.35, mood: mood(0.3, -0.1, 0.25), beliefs: "Protect the M365 surface and roadmap; Loop is our bet.", publicFace: "Reserved, on-message.", privateInterior: "Buying Notion competes with my own org; resist or absorb." });
 add({ id: "amy-hood", label: "Amy Hood (CFO, Microsoft)", tier: 1, fn: "actor", dossier: dossier("amy-hood"), activationThreshold: 0.4, mood: mood(0.25, -0.1, 0.2), beliefs: "Price discipline; needs a clear cloud-consumption story.", publicFace: "Precise, margin-focused.", privateInterior: "Skeptical of paying up for a brand without accretion." });
 add({ id: "kevin-scott", label: "Kevin Scott (CTO, Microsoft)", tier: 1, fn: "actor", dossier: dossier("kevin-scott"), activationThreshold: 0.4, mood: mood(0.25, 0.1, 0.15), beliefs: "Does Notion's data model fit the Copilot stack?", publicFace: "Thoughtful, builder-oriented.", privateInterior: "Weighs technical fit and platform leverage." });
@@ -779,7 +780,8 @@ fanOut("satya-nadella", ["mustafa-suleyman", "rajesh-jha", "amy-hood", "kevin-sc
 pushEdge("microsoft-corp-dev", "satya-nadella", "one-way", 0.6, "employee->manager", true);
 pushEdge("microsoft-corp-dev", "amy-hood", "one-way", 0.6, "employee->manager", true);
 pushEdge("loop-team", "rajesh-jha", "two-way", 0.6, "employee->manager", true);
-pushEdge("copilot-team", "mustafa-suleyman", "two-way", 0.6, "employee->manager", true);
+pushEdge("copilot-team", "jacob-andreou", "two-way", 0.6, "employee->manager", true); // Copilot product now under Andreou, not Suleyman
+pushEdge("jacob-andreou", "satya-nadella", "one-way", 0.6, "employee->manager", true);
 pushEdge("power-platform-leadership", "rajesh-jha", "one-way", 0.5, "employee->manager", true);
 pushEdge("microsoft-sales-force", "rajesh-jha", "one-way", 0.5, "employee->manager", true);
 pushEdge("rajesh-jha", "microsoft-loop", "two-way", 0.7, "leadership->report", true);
@@ -922,7 +924,7 @@ fanOut("linkedin-thought-leaders", ["enterprise-customers", "m365-installed-base
 // inbound path so the cascade can reach it (not just feed upward).
 fanOut("microsoft-corp", ["m365-copilot", "microsoft-pr", "microsoft-corp-dev", "microsoft-dev-ecosystem", "microsoft-sales-force"], "one-way", 0.6, "leadership->report", false);
 fanOut("rajesh-jha", ["teams", "onenote", "power-platform-leadership"], "one-way", 0.5, "leadership->report", false);
-pushEdge("mustafa-suleyman", "m365-copilot", "one-way", 0.4, "leadership->report", false);
+pushEdge("jacob-andreou", "m365-copilot", "one-way", 0.4, "leadership->report", false);
 pushEdge("notion-corp", "notion-blog", "one-way", 0.7, "company->journalist", false);
 pushEdge("director-of-engineering", "postgres-eng", "one-way", 0.5, "leadership->report", false);
 fanOut("notion-corp", ["gartner-collab", "forrester"], "one-way", 0.5, "company->journalist", false);
