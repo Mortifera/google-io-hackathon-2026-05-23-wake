@@ -39,20 +39,48 @@ h2 {
 .chip-n { background:#201808; color:#e0a155; border:1px solid #e0a155; }
 .chip-t { background:#16122a; color:#a78bfa; border:1px solid #a78bfa; }
 .chip-d { background:#200d14; color:#e0556b; border:1px solid #e0556b; }
+.chip-fc { background:#0a1a0f; color:#5bd1a0; border:1.5px solid #5bd1a0; font-size:12px; padding:5px 14px; }
 
 /* Headline banner */
 .headline-banner {
-  background: #0d1520;
-  border: 1.5px solid #1e3045;
-  border-left: 3px solid #5bd1a0;
+  background: #091a10;
+  border: 1.5px solid #1a3628;
+  border-left: 4px solid #5bd1a0;
   border-radius: 7px;
-  padding: 11px 16px;
+  padding: 14px 18px;
   margin-bottom: 16px;
-  font-size: 12px;
-  color: #b0b6cc;
-  line-height: 1.7;
+  font-size: 13px;
+  color: #c0c8dc;
+  line-height: 1.8;
 }
-.headline-banner strong { color: #5bd1a0; }
+.headline-banner .hl-title {
+  font-size: 15px; font-weight: 700; color: #5bd1a0; display: block; margin-bottom: 4px;
+}
+.headline-banner strong { color: #e6e9f0; }
+.headline-banner .hl-sub { color: #6a7a90; font-size: 11px; }
+
+/* Done mega-block */
+.done-mega {
+  background: #091510;
+  border: 1.5px solid #1c3525;
+  border-left: 4px solid #5bd1a0;
+  border-radius: 8px;
+  padding: 18px 22px;
+  margin-bottom: 16px;
+}
+.done-mega h3 {
+  font-size: 12px; font-weight: 700; color: #5bd1a0;
+  text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px;
+}
+.done-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 24px; }
+.done-item { display: flex; align-items: flex-start; gap: 8px; font-size: 11.5px; line-height: 1.55; }
+.done-check { color: #5bd1a0; font-weight: 700; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+.done-text { color: #b8c0d4; }
+.done-text strong { color: #e6e9f0; font-weight: 600; }
+.done-e2e {
+  margin-top: 12px; padding-top: 10px; border-top: 1px solid #1e3525;
+  font-size: 12px; color: #5bd1a0; font-weight: 600; line-height: 1.6;
+}
 
 /* Gantt */
 .gantt-outer { overflow-x: auto; }
@@ -78,14 +106,19 @@ h2 {
   border-radius: 4px; cursor: default; transition: opacity 0.1s;
 }
 .gb:hover { opacity: 0.85; }
-.gb.done     { background: #5bd1a0; opacity: 0.82; }
+.gb.done     { background: #5bd1a0; opacity: 0.85; }
+.gb.done-big { background: linear-gradient(90deg,#2a6b4a 0%,#3d8f62 60%,#5bd1a0 100%); opacity: 0.9; }
 .gb.crit     { background: #e0556b; }
 .gb.planned  { background: #4d6080; }
 .gb.floatb   { background: transparent; border: 1.5px dashed #4d6080; opacity: 0.5; }
 .gb.msbar    { background: transparent; border: 2px solid #a78bfa; opacity: 0.7; }
 .gb.inflight { background: #e0a155; opacity: 0.9; }
-.gb.phaseb   { background: #38bdf8; opacity: 0.7; }
 .gb.phasec   { background: #a78bfa; opacity: 0.7; }
+.gb.p1bar    { background: #e0a155; opacity: 0.9; }
+.gb.p2bar    { background: #38bdf8; opacity: 0.75; }
+.gb.p3bar    { background: #38bdf8; opacity: 0.75; }
+.gb.p4bar    { background: #c084fc; opacity: 0.75; }
+.gb.p5bar    { background: #a78bfa; opacity: 0.8; }
 .gbl {
   position: absolute; top: 50%; transform: translateY(-50%);
   font-size: 9px; font-weight: 700; color: rgba(255,255,255,0.9);
@@ -93,10 +126,6 @@ h2 {
 }
 
 /* Phase band labels */
-.phase-band {
-  position: absolute; top: 0; height: 100%;
-  border-radius: 4px; pointer-events: none;
-}
 .phase-label {
   position: absolute; top: -18px; font-size: 9px; font-weight: 700;
   letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap;
@@ -132,12 +161,12 @@ h2 {
   width: 210px; min-width: 210px; font-size: 9px; color: #3a4060;
   text-transform: uppercase; letter-spacing: 0.8px; text-align: right; padding-right: 12px;
 }
-.divlbl.crit-section { color: #e0556b; }
-.divlbl.phase-b-section { color: #38bdf8; }
+.divlbl.done-section  { color: #5bd1a0; }
+.divlbl.crit-section  { color: #e0a155; }
 .divlbl.phase-c-section { color: #a78bfa; }
 .divline { flex: 1; height: 1px; background: #1e2235; }
-.divline.crit-line { background: rgba(224,85,107,0.3); }
-.divline.phase-b-line { background: rgba(56,189,248,0.25); }
+.divline.done-line  { background: rgba(91,209,160,0.3); }
+.divline.crit-line  { background: rgba(224,161,85,0.3); }
 .divline.phase-c-line { background: rgba(167,139,250,0.25); }
 
 /* Phase badge */
@@ -145,9 +174,9 @@ h2 {
   display: inline-block; padding: 1px 7px; border-radius: 3px; font-size: 9px;
   font-weight: 700; letter-spacing: 0.5px; margin-left: 8px; vertical-align: middle;
 }
-.pb-a { background: rgba(224,85,107,0.18); color: #e0556b; border: 1px solid rgba(224,85,107,0.35); }
-.pb-b { background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3); }
-.pb-c { background: rgba(167,139,250,0.15); color: #a78bfa; border: 1px solid rgba(167,139,250,0.3); }
+.pb-done { background: rgba(91,209,160,0.15); color: #5bd1a0; border: 1px solid rgba(91,209,160,0.35); }
+.pb-p  { background: rgba(224,161,85,0.15); color: #e0a155; border: 1px solid rgba(224,161,85,0.3); }
+.pb-c  { background: rgba(167,139,250,0.15); color: #a78bfa; border: 1px solid rgba(167,139,250,0.3); }
 
 /* Dependency SVG */
 .dep-wrap { overflow-x: auto; }
@@ -169,23 +198,53 @@ h2 {
 .reviews-grid { display: flex; flex-direction: column; gap: 8px; }
 .review-row { display: flex; align-items: center; gap: 10px; font-size: 12px; }
 .rv-check { color: #5bd1a0; font-size: 14px; font-weight: 700; flex-shrink: 0; }
-.rv-label { color: #e6e9f0; font-weight: 600; min-width: 160px; }
-.rv-status { color: #5bd1a0; font-weight: 700; font-size: 11px; min-width: 55px; }
+.rv-label { color: #e6e9f0; font-weight: 600; min-width: 220px; }
+.rv-status { color: #5bd1a0; font-weight: 700; font-size: 11px; min-width: 90px; }
 .rv-note { color: #6a7090; font-size: 11px; }
 .rv-headline {
   margin-top: 14px; padding-top: 12px; border-top: 1px solid #1e2235;
   font-size: 12px; color: #5bd1a0; font-weight: 600; line-height: 1.6;
 }
 
+/* Polish items */
+.polish-grid { display: flex; flex-direction: column; gap: 10px; }
+.polish-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: #0e1018; border: 1px solid #1e2235; border-radius: 6px;
+  padding: 10px 14px;
+}
+.polish-badge {
+  padding: 2px 8px; border-radius: 3px; font-size: 10px; font-weight: 700;
+  letter-spacing: 0.4px; flex-shrink: 0; margin-top: 1px;
+}
+.pb-p1 { background: rgba(224,85,107,0.18); color: #e0556b; border: 1px solid rgba(224,85,107,0.35); }
+.pb-p2 { background: rgba(56,189,248,0.12); color: #38bdf8; border: 1px solid rgba(56,189,248,0.28); }
+.pb-p3 { background: rgba(56,189,248,0.12); color: #38bdf8; border: 1px solid rgba(56,189,248,0.28); }
+.pb-p4 { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.28); }
+.pb-p5 { background: rgba(91,209,160,0.1); color: #5bd1a0; border: 1px solid rgba(91,209,160,0.25); }
+.polish-body { flex: 1; }
+.polish-title { font-size: 12px; font-weight: 600; color: #e6e9f0; margin-bottom: 3px; }
+.polish-detail { font-size: 11px; color: #6a7090; line-height: 1.55; }
+.polish-detail strong { color: #b0b8cc; }
+.polish-owner { font-size: 10px; color: #4a5270; margin-top: 2px; }
+.polish-time { font-size: 10px; color: #e0a155; font-weight: 600; flex-shrink: 0; margin-top: 1px; }
+
+/* Extensions parked */
+.ext-parked {
+  background: #0d0f18; border: 1px solid #1c1e30; border-left: 3px solid #2e3550;
+  border-radius: 7px; padding: 11px 16px; margin-bottom: 16px;
+  font-size: 11px; color: #4a5270; line-height: 1.7;
+}
+.ext-parked strong { color: #5a6080; }
+
 /* Legend */
 .legend { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
 .li { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #6a7090; }
 .sw { width: 16px; height: 10px; border-radius: 3px; flex-shrink: 0; }
 .sw-done  { background: #5bd1a0; }
-.sw-ifl   { background: #e0a155; }
-.sw-crit  { background: #e0556b; }
-.sw-pb    { background: #38bdf8; opacity: 0.75; }
-.sw-pc    { background: #a78bfa; opacity: 0.75; }
+.sw-p1    { background: #e0a155; }
+.sw-p25   { background: #38bdf8; opacity: 0.75; }
+.sw-p5    { background: #a78bfa; opacity: 0.8; }
 .sw-nc    { background: #4d6080; }
 .sw-fl    { background: transparent; border: 1.5px dashed #4d6080; }
 .sw-ms    { background: transparent; border: 2px solid #a78bfa; width: 10px; height: 10px; transform: rotate(45deg); }
@@ -213,114 +272,210 @@ h2 {
 
 <!-- HEADLINE BANNER -->
 <div class="headline-banner">
-  <strong>Checkpoint met</strong> &mdash; the real Monte Carlo fan is published. CP3 wiring in progress; the afternoon's big push is live tick-by-tick streaming. Safe demo lands ~2:15, big buffer to 4pm.
+  <span class="hl-title">&#10003; Feature-complete — both safe demo and live streaming work.</span>
+  <strong>Safe replay demo, live SSE streaming, real Monte Carlo fan, operator console, and causal interp are all end-to-end verified.</strong>
+  Remaining: make live mode feel alive (per-node thinking pulse + reasoning ticker) and rehearse.
+  <span class="hl-sub">Big buffer to 4pm. The demo is already shippable — CP4 is pure polish + rehearsal.</span>
 </div>
 
 <!-- HEADER -->
 <div class="hdr">
   <div>
-    <h1>Wake &mdash; Critical Path <span style="color:#e0a155;font-size:14px;font-weight:500">(live)</span></h1>
+    <h1>Wake &mdash; Critical Path <span style="color:#5bd1a0;font-size:14px;font-weight:500">(feature-complete)</span></h1>
     <div style="color:#3a4060;font-size:11px;margin-top:3px;">google-io-hackathon &middot; 2026-05-23 &middot; build started 10:40am</div>
   </div>
   <div class="chips">
     <span class="chip chip-s">BUILD START 10:40</span>
-    <span class="chip chip-n">NOW 1:35</span>
+    <span class="chip chip-n">NOW &#8776;2:30</span>
     <span class="chip chip-t">TARGET VIDEO 4:00</span>
     <span class="chip chip-d">SUBMIT 5:00</span>
+    <span class="chip chip-fc">FEATURE-COMPLETE &#10003;</span>
+  </div>
+</div>
+
+<!-- DONE MEGA BLOCK -->
+<div class="done-mega">
+  <h3>&#9646; All Completed &amp; Shipped &mdash; 10:40 &ndash; 2:30 &nbsp; &#10003;</h3>
+  <div class="done-grid">
+    <div class="done-item">
+      <div class="done-check">&#10003;</div>
+      <div class="done-text"><strong>Orchestrator</strong> &mdash; core sim (kernel / nodes / edges / interp), CP2 real cascade, Monte Carlo sweep engine, kernel streaming API (runCascadeStream)</div>
+    </div>
+    <div class="done-item">
+      <div class="done-check">&#10003;</div>
+      <div class="done-text"><strong>Agent 2</strong> &mdash; Notion world (208 nodes) + Anthropic world (57) &mdash; reviewed</div>
+    </div>
+    <div class="done-item">
+      <div class="done-check">&#10003;</div>
+      <div class="done-text"><strong>Agent 3</strong> &mdash; Gemini LLM client + network-retry hardening + live SSE endpoint (/api/stream-cascade)</div>
+    </div>
+    <div class="done-item">
+      <div class="done-check">&#10003;</div>
+      <div class="done-text"><strong>Agent 4</strong> &mdash; Monte Carlo analysis (framing-pivotal, clean 2-cluster fork) &mdash; reviewed</div>
+    </div>
+    <div class="done-item">
+      <div class="done-check">&#10003;</div>
+      <div class="done-text"><strong>Agent 1</strong> &mdash; visualization, CP1, operator console + 5-action menu, Phase B live tick-by-tick render, interp money-shot fixed (click node &rarr; causal trace), dogfood polish (a11y, copy, single server)</div>
+    </div>
+    <div class="done-item">
+      <div class="done-check">&#10003;</div>
+      <div class="done-text"><strong>End-to-end verified</strong> &mdash; clicked "Run live" &rarr; SSE 200 &rarr; graph resolves tick-by-tick, event log grew incrementally, emergent leak rendered, zero console errors. Both safe replay and live streaming work.</div>
+    </div>
+  </div>
+  <div class="done-e2e">
+    End-to-end smoke test passed. Safe replay demo: &#10003; &nbsp;&mdash;&nbsp; Live streaming (SSE): &#10003; &nbsp;&mdash;&nbsp; Monte Carlo fan 16-run: &#10003; &nbsp;&mdash;&nbsp; Interp causal trace: &#10003; &nbsp;&mdash;&nbsp; Escape hatch: &#10003;
   </div>
 </div>
 
 <!-- GANTT -->
 <div class="panel">
   <h2>Gantt &mdash; Real Wall Clock (10:40am &rarr; 5:00pm) &nbsp;&middot;&nbsp;
-    <span class="phase-badge pb-a">Phase A: Safe Demo</span>
-    <span class="phase-badge pb-b">Phase B: Live Streaming</span>
-    <span class="phase-badge pb-c">Phase C: Record</span>
+    <span class="phase-badge pb-done">DONE block 10:40&ndash;2:30</span>
+    <span class="phase-badge pb-p">CP4 Polish 2:30&ndash;3:45</span>
+    <span class="phase-badge pb-c">Record &amp; Submit</span>
   </h2>
   <div class="gantt-outer" id="go"></div>
 </div>
 
+<!-- REMAINING POLISH ITEMS -->
+<div class="panel">
+  <h2>CP4 Remaining &mdash; Polish + Rehearsal (NOW &rarr; 4:00)</h2>
+  <div class="polish-grid">
+
+    <div class="polish-row">
+      <div class="polish-badge pb-p1">P1 &mdash; CRIT</div>
+      <div class="polish-body">
+        <div class="polish-title">Per-node streaming: tick-start + node-acted{rationale} events</div>
+        <div class="polish-detail"><strong>Owner: Orchestrator.</strong> Emit per-node events so live mode shows who is thinking + WHY. Fixes the "16s feels slow" gap by making progress visible every tick.</div>
+        <div class="polish-owner">Orchestrator &rarr; Agent 1 renders</div>
+      </div>
+      <div class="polish-time">~0.4h</div>
+    </div>
+
+    <div class="polish-row">
+      <div class="polish-badge pb-p2">P2</div>
+      <div class="polish-body">
+        <div class="polish-title">Duplicate-SSE fix: one EventSource per live run, close on stop</div>
+        <div class="polish-detail"><strong>Owner: Agent 1.</strong> Guard against stale EventSource instances accumulating across multiple "Run live" presses.</div>
+        <div class="polish-owner">Agent 1</div>
+      </div>
+      <div class="polish-time">~0.3h</div>
+    </div>
+
+    <div class="polish-row">
+      <div class="polish-badge pb-p3">P3</div>
+      <div class="polish-body">
+        <div class="polish-title">Render per-node events: thinking pulse + reasoning ticker</div>
+        <div class="polish-detail"><strong>Owner: Agent 1</strong> (depends on P1). Visual pulse on each node while Gemini is resolving it; reasoning string ticks into the event log line by line. This is the live-moment "feels alive" beat.</div>
+        <div class="polish-owner">Agent 1 (after P1)</div>
+      </div>
+      <div class="polish-time">~0.4h</div>
+    </div>
+
+    <div class="polish-row">
+      <div class="polish-badge pb-p4">P4</div>
+      <div class="polish-body">
+        <div class="polish-title">Pacing decision: seed-limit or faster for the 90s demo slot</div>
+        <div class="polish-detail">Full-world live run is ~3 min. Lock at rehearsal: seed-limit the cascade, or use a faster timing shim. Decide and commit before P5 rehearsal.</div>
+        <div class="polish-owner">All (decision call)</div>
+      </div>
+      <div class="polish-time">lock at P5</div>
+    </div>
+
+    <div class="polish-row">
+      <div class="polish-badge pb-p5">P5 &mdash; REHEARSAL</div>
+      <div class="polish-body">
+        <div class="polish-title">CP4 rehearsal: drive the full ~90s arc end-to-end &#215;N</div>
+        <div class="polish-detail"><strong>Agent 1 lead, all participate.</strong> Run the full demo arc: open operator console &rarr; run fan &rarr; click node (interp money-shot) &rarr; escape-hatch fallback if needed. Repeat until clean. Lock escape-hatch key binding.</div>
+        <div class="polish-owner">Agent 1 lead</div>
+      </div>
+      <div class="polish-time">~0.5h</div>
+    </div>
+
+  </div>
+</div>
+
 <!-- DEPENDENCY DIAGRAM -->
 <div class="panel">
-  <h2>Dependency / CPA Diagram &mdash; Phase A Critical Path (bold red) &rarr; Phase B Follow-on</h2>
+  <h2>CP4 Dependency View &mdash; Polish Items (P1 &rarr; P3 is the short critical chain)</h2>
   <div class="dep-wrap">
-    <svg id="dsv" width="1000" height="390" viewBox="0 0 1000 390"
+    <svg id="dsv" width="960" height="260" viewBox="0 0 960 260"
          style="display:block;margin:0 auto;overflow:visible;"></svg>
   </div>
 </div>
 
 <!-- PACING CAVEAT -->
 <div class="callout-pacing">
-  <h3>&#9888; Pacing Caveat &mdash; Phase B Live Streaming</h3>
+  <h3>&#9888; Pacing Decision &mdash; Lock at Rehearsal (P4)</h3>
   <ul>
-    <li><strong style="color:#e6e9f0">A live full-world run is ~16 sequential tick-waves (~1&ndash;2 min).</strong> For a 90-second demo slot, pace carefully: narrate while ticks arrive, or seed-limit the live cascade.</li>
-    <li><strong style="color:#e6e9f0">Escape hatch stays hot:</strong> one-click fallback to the precomputed identical cascade (16-run fan, $1.06, committed) if the live Gemini API stalls mid-demo. Lock the fallback binding at CP4.</li>
-    <li><strong style="color:#e6e9f0">Decision point at CP4 (~2:15pm):</strong> confirm Phase B is worth the remaining slot; abort to rehearsal mode if timing is tight.</li>
-    <li><strong style="color:#e6e9f0">Float stretches (do not block):</strong> Live Wire exogenous injection, Anthropic generalization beat &mdash; only if rock-solid before 3:15pm.</li>
+    <li><strong style="color:#e6e9f0">Full-world live run is ~3 min.</strong> For a 90-second demo slot: either seed-limit the live cascade (e.g. 30-node subgraph) or use a timing shim. Lock the choice at rehearsal before recording.</li>
+    <li><strong style="color:#e6e9f0">Escape hatch stays hot:</strong> one-click fallback to the precomputed identical cascade (16-run fan, $1.06, committed) if the live Gemini API stalls mid-demo. Bind the key before P5.</li>
+    <li><strong style="color:#e6e9f0">Demo is already shippable today:</strong> safe replay + fan + interp + live streaming all work. CP4 polish makes the live moment feel alive, not rescue-mode.</li>
+    <li><strong style="color:#e6e9f0">Big buffer:</strong> 1h 30min from now (2:30pm) to the 4:00pm record target. P1+P2+P3+P5 total ~1.6h &mdash; run P2 in parallel to P1 to land by ~3:30pm with 30min rehearsal buffer.</li>
   </ul>
-</div>
-
-<!-- SCALE-UP NOTE -->
-<div style="background:#0d1218;border:1.5px solid #1e2838;border-left:3px solid #5bd1a0;border-radius:7px;padding:11px 16px;margin-bottom:16px;font-size:12px;color:#8090a8;line-height:1.7;">
-  <span style="color:#5bd1a0;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:0.6px;">Scale-Up Note</span>
-  &nbsp;&mdash;&nbsp;Real MC fan is published at 16 runs, $1.06/cascade, per-cascade concurrency 6. World size (208 Notion + 57 Anthropic nodes) is demo-ready. Live tick-by-tick streaming (Phase B) will demonstrate the full pipeline at interactive speed. Precomputed fan remains the escape hatch throughout.
 </div>
 
 <!-- REVIEWS PANEL -->
 <div class="panel">
-  <h2>Reviews &mdash; Lane Status</h2>
+  <h2>Reviews &mdash; All Lanes Green &#10003; (Feature-Complete)</h2>
   <div class="reviews-grid">
     <div class="review-row">
       <div class="rv-check">&#10003;</div>
-      <div class="rv-label">Notion world</div>
-      <div class="rv-status">PASS</div>
-      <div class="rv-note">208 nodes &mdash; demo-ready</div>
+      <div class="rv-label">Orchestrator &mdash; core + streaming</div>
+      <div class="rv-status" style="color:#5bd1a0;">DONE &#10003;</div>
+      <div class="rv-note">runCascadeStream, SSE endpoint wired, end-to-end smoke test passed</div>
     </div>
     <div class="review-row">
       <div class="rv-check">&#10003;</div>
-      <div class="rv-label">Anthropic world</div>
-      <div class="rv-status">PASS</div>
-      <div class="rv-note">57 nodes &mdash; 2 minor dossier softens pending (non-critical)</div>
+      <div class="rv-label">Agent 2 &mdash; Notion + Anthropic world</div>
+      <div class="rv-status" style="color:#5bd1a0;">DONE &#10003;</div>
+      <div class="rv-note">208 nodes (Notion) + 57 (Anthropic) &mdash; reviewed, demo-ready</div>
     </div>
     <div class="review-row">
       <div class="rv-check">&#10003;</div>
-      <div class="rv-label">Analysis (Agent 4)</div>
-      <div class="rv-status">PASS</div>
-      <div class="rv-note">Card labels + pivotal punchline &mdash; cluster cleanup in progress (CP3 in-flight)</div>
+      <div class="rv-label">Agent 3 &mdash; LLM client + SSE</div>
+      <div class="rv-status" style="color:#5bd1a0;">DONE &#10003;</div>
+      <div class="rv-note">Gemini client, network-retry (ECONNRESET), /api/stream-cascade live &#10003;</div>
     </div>
     <div class="review-row">
       <div class="rv-check">&#10003;</div>
-      <div class="rv-label">LLM client (Agent 3)</div>
-      <div class="rv-status">PASS</div>
-      <div class="rv-note">L2 Gemini client reviewed &amp; hardened &mdash; network-retry (ECONNRESET) hardening shipped &#10003;</div>
+      <div class="rv-label">Agent 4 &mdash; Monte Carlo analysis</div>
+      <div class="rv-status" style="color:#5bd1a0;">DONE &#10003;</div>
+      <div class="rv-note">framing-pivotal, clean 2-cluster fork, reviewed &#10003;</div>
     </div>
     <div class="review-row">
       <div class="rv-check">&#10003;</div>
-      <div class="rv-label">Viz CP1 + interp + live-explain (Agent 1)</div>
-      <div class="rv-status">PASS</div>
-      <div class="rv-note">L8 viz + operator console + captions &mdash; fan swap + caption fix in progress (CP3 in-flight)</div>
+      <div class="rv-label">Agent 1 &mdash; viz + live tick + interp</div>
+      <div class="rv-status" style="color:#5bd1a0;">DONE &#10003;</div>
+      <div class="rv-note">Console, 5-action menu, tick-by-tick render, interp money-shot, dogfood polish &#10003;</div>
     </div>
     <div class="review-row">
       <div class="rv-check">&#10003;</div>
-      <div class="rv-label">Monte Carlo precompute</div>
-      <div class="rv-status">DONE &#10003;</div>
-      <div class="rv-note" style="color:#5bd1a0;">Real 16-run fan published, $1.06/cascade, committed &mdash; checkpoint goal complete</div>
+      <div class="rv-label">End-to-end integration</div>
+      <div class="rv-status" style="color:#5bd1a0;">VERIFIED &#10003;</div>
+      <div class="rv-note" style="color:#5bd1a0;">Clicked "Run live" &rarr; SSE 200 &rarr; graph resolves live &rarr; event log incremental &rarr; emergent leak rendered &rarr; zero console errors</div>
     </div>
     <div class="rv-headline">
-      All lanes built + reviewed green. MC fan published. CP3 in flight (fan swap + framing + cluster cleanup). Safe demo lands ~2:15pm; Phase B live-streaming is the afternoon's headline push.
+      All lanes built, reviewed, and integration-verified green. Feature-complete as of ~2:30pm. Remaining: CP4 polish (per-node pulse + SSE guard + rehearsal) to make live mode feel alive. Record at 4:00pm. Submit by 5:00pm.
     </div>
   </div>
+</div>
+
+<!-- EXTENSIONS PARKED -->
+<div class="ext-parked">
+  <strong>Extensions parked (docs/extensions.md) &mdash; do not block record:</strong>
+  &nbsp;fan credibility re-tune &middot; full menu-seed registration &middot; Anthropic generalization beat &middot; variant lab &middot; Vercel deploy &middot; Genesis.
+  Only pull from this list if P1&ndash;P5 complete and &gt;30min remains before 4:00pm.
 </div>
 
 <!-- LEGEND + SUMMARY -->
 <div class="panel">
   <h2>Legend</h2>
   <div class="legend">
-    <div class="li"><div class="sw sw-done"></div> Completed</div>
-    <div class="li"><div class="sw sw-ifl"></div> In flight</div>
-    <div class="li"><div class="sw sw-crit"></div> Phase A &mdash; Critical path</div>
-    <div class="li"><div class="sw sw-pb"></div> Phase B &mdash; Live streaming</div>
-    <div class="li"><div class="sw sw-pc"></div> Phase C &mdash; Record</div>
+    <div class="li"><div class="sw sw-done"></div> Completed / shipped</div>
+    <div class="li"><div class="sw sw-p1"></div> P1 &mdash; Critical (per-node stream)</div>
+    <div class="li"><div class="sw sw-p25"></div> P2/P3 &mdash; SSE fix / pulse render</div>
+    <div class="li"><div class="sw sw-p5"></div> P5 &mdash; Rehearsal</div>
     <div class="li"><div class="sw sw-nc"></div> Parallel / non-critical</div>
     <div class="li"><div class="sw sw-fl"></div> Float / slack</div>
     <div class="li"><div class="sw sw-ms"></div> Milestone</div>
@@ -332,39 +487,43 @@ h2 {
     <div class="li"><span class="dot" style="background:#fb7185"></span>Agent 4 (Analysis)</div>
   </div>
   <div class="summary">
-    <span class="ok">MC fan published &#10003; &rarr; CP3 in-flight (fan swap + framing + cluster cleanup) &rarr; CP4 rehearse ~2:00 &rarr; SAFE DEMO ~2:15pm</span>
-    &nbsp;&mdash;&nbsp;
-    <span class="warn">~1h 45min of slack before the 4:00pm record.</span>
+    <span class="ok">FEATURE-COMPLETE &#10003; &mdash; both safe replay and live streaming verified.</span>
     &nbsp;|&nbsp;
-    <span class="em">Phase B live-streaming fills the slack; escape hatch precomputed fan stays hot throughout.</span>
+    <span class="warn">P1 &rarr; P3 &rarr; P5 critical chain: ~1.3h parallel-optimized.</span>
+    &nbsp;|&nbsp;
+    <span class="em">Record 4:00pm &rarr; Submit 5:00pm. Big buffer. Ship it.</span>
   </div>
 </div>
 
 <div id="tt"></div>
 
 <script>
-// ─── Time helpers ─────────────────────────────────────────────────────────────
+// ─── Time helpers ──────────────────────────────────────────────────────────────
 const SH   = 10 + 40/60;   // 10:40 am
 const EH   = 17;            // 5:00 pm
 const SPAN = EH - SH;
-const NOH  = 13 + 35/60;   // 1:35 pm
-const TAH  = 16.0;
-const SUH  = 17.0;
+const NOH  = 14 + 30/60;   // NOW ~2:30pm
+const TAH  = 16.0;          // 4:00pm target
+const SUH  = 17.0;          // 5:00pm submit
 
-// Phase A ends when CP4 done (~2:15pm)
-// CP3 started ~1:30 ish, in-flight now, expected done ~2:00
-const CP3_S   = 13 + 25/60;           // ~1:25pm (started, in-flight)
-const CP3_E   = CP3_S + 0.50;         // ~1:55pm expected done
-const CP4_S   = CP3_E;                // ~1:55pm
-const CP4_E   = CP4_S + 0.35;         // ~2:16pm ≈ 2:15pm safe demo done
+// Done block spans 10:40 → 2:30
+const DONE_END = NOH;
 
-const PHA_END = CP4_E;
-const PHB_END = 15 + 30/60;           // 3:30pm Phase B end
-const PHC_END = 16.0;                  // 4:00pm Phase C end
-
-// Phase B start
-const PHB_S   = CP4_E;               // ~2:15pm
-const RECORD_S = 15 + 30/60;         // 3:30pm
+// CP4 polish items (parallel where possible)
+// P1: Orch  2:30 → 2:54  (~0.4h)
+// P2: A1    2:30 → 2:48  (~0.3h, parallel to P1)
+// P3: A1    2:54 → 3:18  (~0.4h, after P1)
+// P4: all   decision baked into P5
+// P5: all   3:18 → 3:48  (~0.5h rehearsal)
+const P1_S  = NOH;
+const P1_E  = P1_S + 0.40;
+const P2_S  = NOH;
+const P2_E  = P2_S + 0.30;
+const P3_S  = P1_E;         // depends on P1
+const P3_E  = P3_S + 0.40;
+const P5_S  = P3_E;
+const P5_E  = P5_S + 0.50; // ~3:44pm
+const RECORD_S = TAH;
 
 function px(h, W) { return ((h - SH) / SPAN) * W; }
 
@@ -384,58 +543,34 @@ const OC = {
   'Agent 4':      '#fb7185',
 };
 
-// ─── Task data ────────────────────────────────────────────────────────────────
-// COMPLETED — all done (10:40–~1:25 band)
-const DONE = [
-  { label:'core sim + CP2 + MC sweep + prompt tuning + framing (in progress)',  owner:'Orchestrator', s: SH,       e: NOH-0.10 },
-  { label:'viz + CP1 + operator console + interp + live-explain + fan swap',    owner:'Agent 1', s: SH+0.05, e: NOH },
-  { label:'Notion world (208) + Anthropic world (57)',                          owner:'Agent 2', s: SH,       e: NOH-0.20 },
-  { label:'LLM client + dossier audit + network-retry hardening (ECONNRESET)', owner:'Agent 3', s: SH,       e: NOH-0.15 },
-  { label:'analysis demo-graded + labels + pivotal + cluster cleanup',          owner:'Agent 4', s: SH,       e: NOH-0.05 },
-  { label:'MC precompute DONE — 16-run fan, $1.06, committed',                 owner:'Orchestrator', s: NOH-0.60, e: NOH-0.35 },
+// ─── Task data ─────────────────────────────────────────────────────────────────
+const DONE_ROWS = [
+  { label:'core sim + CP2 + MC sweep + runCascadeStream + end-to-end verified', owner:'Orchestrator', s: SH,       e: DONE_END },
+  { label:'viz + CP1 + console + tick render + interp money-shot + dogfood',    owner:'Agent 1',      s: SH+0.05,  e: DONE_END },
+  { label:'Notion world (208) + Anthropic world (57) — reviewed',               owner:'Agent 2',      s: SH,       e: DONE_END - 0.30 },
+  { label:'Gemini LLM client + retry + /api/stream-cascade live ✓',            owner:'Agent 3',      s: SH,       e: DONE_END - 0.20 },
+  { label:'MC analysis (framing-pivotal, 2-cluster fork) — reviewed',           owner:'Agent 4',      s: SH,       e: DONE_END - 0.25 },
 ];
 
-// IN FLIGHT (at NOW 1:35 — CP3 in progress across 3 agents + orchestrator framing)
-const INFLIGHT = [
-  { id:'CP3-A1', label:'CP3 fan swap + caption fix (Agent 1)',
-    owner:'Agent 1', s: CP3_S, e: CP3_E,
-    tip: 'CP3 — fan swap + caption fix\nOwner: Agent 1 | Started ~1:25pm\nSwap precomputed fan into viz + fix caption truncation on real data\nIN FLIGHT — feeds CP3 completion\nCRITICAL PATH' },
-  { id:'CP3-A4', label:'CP3 cluster cleanup (Agent 4)',
-    owner:'Agent 4', s: CP3_S, e: CP3_E - 0.10,
-    tip: 'CP3 — cluster cleanup\nOwner: Agent 4 | Started ~1:25pm\nClean up cluster labels on real 16-run fan data\nIN FLIGHT — feeds CP3 completion' },
-  { id:'CP3-ORC', label:'framing refinement — make "framing" pivotal (Orchestrator)',
-    owner:'Orchestrator', s: NOH - 0.10, e: CP3_E,
-    tip: 'Framing refinement\nOwner: Orchestrator | Quick re-run\nRefinement to make "framing" the pivotal variable\nIN FLIGHT — non-blocking parallel' },
+const POLISH_ROWS = [
+  { id:'P1', label:'per-node stream: tick-start + node-acted{rationale}', owner:'Orchestrator',
+    s: P1_S, e: P1_E, cls:'p1bar',
+    tip:'P1 — per-node streaming\nOwner: Orchestrator\n~2:30–2:54pm (~0.4h)\nEmit tick-start + node-acted{rationale} events\nFixes "16s feels slow" gap — makes progress visible every tick\nCRITICAL — P3 depends on this' },
+  { id:'P2', label:'SSE guard: one EventSource, close on stop', owner:'Agent 1',
+    s: P2_S, e: P2_E, cls:'p2bar',
+    tip:'P2 — duplicate-SSE fix\nOwner: Agent 1\n~2:30–2:48pm (~0.3h)\nGuard against stale EventSource accumulating\nParallel to P1' },
+  { id:'P3', label:'render per-node events: pulse + reasoning ticker', owner:'Agent 1',
+    s: P3_S, e: P3_E, cls:'p3bar',
+    tip:'P3 — per-node pulse + reasoning ticker\nOwner: Agent 1\n~2:54–3:18pm (~0.4h)\nDepends on P1\nPulse each node while Gemini resolves it\nReasoning ticks into event log — "feels alive" beat' },
+  { id:'P5', label:'rehearsal: full ~90s arc end-to-end ×N', owner:'Agent 1',
+    s: P5_S, e: P5_E, cls:'p5bar',
+    tip:'P5 — CP4 rehearsal\nOwner: Agent 1 lead, all\n~3:18–3:48pm (~0.5h)\nDeps: P3, P2\nDrive full arc: console → live run → interp money-shot → escape-hatch\nRepeat until clean. Lock pacing (P4 baked here). Lock escape-hatch binding.' },
+  { id:'RECORD', label:'RECORD video', owner:'Orchestrator',
+    s: RECORD_S, e: RECORD_S + 0.25, cls:'p5bar', ms:true,
+    tip:'RECORD\nTarget: 4:00pm\nFeature-complete + rehearsed\nSubmit by 5:00pm' },
 ];
 
-const REM = [
-  // ── Phase A critical path milestone ──
-  { id:'CP3',    label:'CP3  fan swap + label dedup + caption + framing', owner:'Agent 1',      s: CP3_S,  d: 0.50, crit:true,  phase:'A', float:0,    ms:true,
-    tip:'CP3 — fan swap (~1 line) + A4 cluster cleanup on real data + caption fix + framing as pivotal\nOwner: Agent 1 lead | ~1:25–1:55pm\nCRITICAL PATH — MILESTONE — Phase A\nIn-flight NOW' },
-  { id:'CP4',    label:'CP4  rehearse safe demo end-to-end',    owner:'Agent 1',      s: CP4_S,  d: 0.35, crit:true,  phase:'A', float:0,    ms:true,
-    tip:'CP4 — rehearse safe demo end-to-end\nOwner: Agent 1 lead, all QA\n~1:55–2:15pm\nDeps: CP3\nCRITICAL PATH — MILESTONE\nSafe demo complete + shippable at end of CP4\nPhase A lands ~2:15pm — 1h 45min slack to 4pm' },
-  // ── Phase A parallel non-critical ──
-  { id:'A2-fix',   label:'A2-fix  soften 2 dossier claims',     owner:'Agent 2',      s: NOH - 0.20,    d: 0.25, crit:false, phase:'A', float:0.50, ms:false,
-    tip:'A2-fix — soften Anthropic dossier claims\nOwner: Agent 2 | 0.25h\nMinor polish — float ~0.5h' },
-  // ── Phase B — Live Streaming Upgrade ──
-  { id:'B-kernel', label:'B: Orch builds kernel tick streaming API', owner:'Orchestrator', s: PHB_S,          d: 0.35, crit:false, phase:'B', float:0.20, ms:false,
-    tip:'Phase B — kernel tick streaming API\nOwner: Orchestrator\nBuilds streaming API so hero cascade results arrive tick-by-tick\nBig push after CP4 rehearsal\n~2:15–2:35pm' },
-  { id:'B-sse',    label:'B: Agent 3 builds SSE endpoint',           owner:'Agent 3',       s: PHB_S,          d: 0.35, crit:false, phase:'B', float:0.20, ms:false,
-    tip:'Phase B — SSE streaming endpoint\nOwner: Agent 3\nBuilds Server-Sent Events endpoint for live Gemini tick resolution\nParallel to B-kernel\n~2:15–2:35pm' },
-  { id:'B-viz',    label:'B: Agent 1 renders per-tick as they arrive', owner:'Agent 1',      s: PHB_S + 0.10,   d: 0.40, crit:false, phase:'B', float:0.15, ms:false,
-    tip:'Phase B — viz per-tick rendering\nOwner: Agent 1\nViz renders each tick wave as it arrives from kernel\nGemini resolving each tick onto the graph\n~2:25–3:00pm' },
-  { id:'B-wire',   label:'B-stretch: Live Wire (float)',              owner:'Orchestrator', s: PHB_S + 0.70,   d: 0.40, crit:false, phase:'B', float:0.20, ms:false,
-    tip:'Live Wire — exogenous mid-cascade injection\nOwner: Orchestrator | FLOAT / STRETCH\nReal-time operator shock into a live cascade\nOnly if rock-solid before 3:15pm\nDo not block Phase C' },
-  { id:'B-anth',   label:'B-stretch: Anthropic generalization (float)', owner:'Agent 3',    s: PHB_S + 0.60,   d: 0.35, crit:false, phase:'B', float:0.20, ms:false,
-    tip:'Anthropic generalization beat\nOwner: Agent 3 | FLOAT\nRun same sweep on 57-node Anthropic world\nDemonstrates model generalizes across org archetypes\nDo not block Phase C' },
-  // ── Phase C — Final Rehearsal + Record ──
-  { id:'REHEARSE', label:'C: final rehearsal',                         owner:'Orchestrator', s: RECORD_S,        d: 0.17, crit:false, phase:'C', float:0,    ms:false,
-    tip:'Phase C — final rehearsal\n~3:30–3:40pm\nOwner: all\nLock live vs precompute decision\nEnsure escape hatch bound' },
-  { id:'RECORD',   label:'C: RECORD video',                            owner:'Orchestrator', s: TAH,             d: 0.20, crit:false, phase:'C', float:0,    ms:true,
-    tip:'RECORD video\nTarget: 4:00pm\nPhase A safe demo done ~2:15pm\n~1h 45min to polish + Phase B upgrade\nSubmit by 5:00pm' },
-];
-
-// ─── Build Gantt ──────────────────────────────────────────────────────────────
+// ─── Build Gantt ───────────────────────────────────────────────────────────────
 const go = document.getElementById('go');
 const GW = Math.max(go.getBoundingClientRect().width - 220, 700);
 
@@ -455,29 +590,26 @@ axisH += `<div class="aline"></div></div>`;
 const NOX  = px(NOH,  GW);
 const TAX  = px(TAH,  GW);
 const SUX  = px(SUH,  GW);
-const PHAX = px(CP4_E, GW);  // ~2:15pm Phase A end
-const PHBX = px(PHB_END, GW);// 3:30pm Phase B end
+const P5EX = px(P5_E, GW);
 
 let html = `<div style="position:relative;">
 <div style="position:absolute;top:26px;left:210px;width:${GW}px;height:calc(100% - 26px);pointer-events:none;z-index:2;">
-  <!-- done shading -->
-  <div style="position:absolute;top:0;left:0;width:${NOX.toFixed(1)}px;height:100%;background:rgba(91,209,160,0.028);"></div>
-  <!-- Phase A shading -->
-  <div style="position:absolute;top:0;left:${NOX.toFixed(1)}px;width:${(PHAX-NOX).toFixed(1)}px;height:100%;background:rgba(224,85,107,0.04);"></div>
-  <!-- Phase B shading -->
-  <div style="position:absolute;top:0;left:${PHAX.toFixed(1)}px;width:${(PHBX-PHAX).toFixed(1)}px;height:100%;background:rgba(56,189,248,0.04);"></div>
-  <!-- Phase C shading -->
-  <div style="position:absolute;top:0;left:${PHBX.toFixed(1)}px;width:${(TAX-PHBX).toFixed(1)}px;height:100%;background:rgba(167,139,250,0.04);"></div>
+  <!-- done block shading -->
+  <div style="position:absolute;top:0;left:0;width:${NOX.toFixed(1)}px;height:100%;background:rgba(91,209,160,0.04);"></div>
+  <!-- polish block shading -->
+  <div style="position:absolute;top:0;left:${NOX.toFixed(1)}px;width:${(P5EX-NOX).toFixed(1)}px;height:100%;background:rgba(224,161,85,0.04);"></div>
+  <!-- record/submit shading -->
+  <div style="position:absolute;top:0;left:${P5EX.toFixed(1)}px;width:${(SUX-P5EX).toFixed(1)}px;height:100%;background:rgba(167,139,250,0.03);"></div>
 </div>
 <div style="position:absolute;top:0;left:210px;width:${GW}px;height:26px;pointer-events:none;z-index:3;">
-  <div style="position:absolute;left:${((NOX+PHAX)/2).toFixed(1)}px;top:2px;transform:translateX(-50%);font-size:8px;font-weight:700;letter-spacing:0.6px;color:rgba(224,85,107,0.6);text-transform:uppercase;">PHASE A &mdash; SAFE DEMO</div>
-  <div style="position:absolute;left:${((PHAX+PHBX)/2).toFixed(1)}px;top:2px;transform:translateX(-50%);font-size:8px;font-weight:700;letter-spacing:0.6px;color:rgba(56,189,248,0.5);text-transform:uppercase;">PHASE B &mdash; LIVE STREAMING</div>
-  <div style="position:absolute;left:${((PHBX+TAX)/2).toFixed(1)}px;top:2px;transform:translateX(-50%);font-size:8px;font-weight:700;letter-spacing:0.6px;color:rgba(167,139,250,0.5);text-transform:uppercase;">PHASE C</div>
+  <div style="position:absolute;left:${(NOX/2).toFixed(1)}px;top:2px;transform:translateX(-50%);font-size:8px;font-weight:700;letter-spacing:0.6px;color:rgba(91,209,160,0.7);text-transform:uppercase;">DONE &mdash; 10:40&ndash;2:30</div>
+  <div style="position:absolute;left:${((NOX+P5EX)/2).toFixed(1)}px;top:2px;transform:translateX(-50%);font-size:8px;font-weight:700;letter-spacing:0.6px;color:rgba(224,161,85,0.6);text-transform:uppercase;">CP4 POLISH + REHEARSAL</div>
+  <div style="position:absolute;left:${((P5EX+SUX)/2).toFixed(1)}px;top:2px;transform:translateX(-50%);font-size:8px;font-weight:700;letter-spacing:0.6px;color:rgba(167,139,250,0.5);text-transform:uppercase;">RECORD &amp; SUBMIT</div>
 </div>
 <div style="position:absolute;top:26px;left:210px;width:${GW}px;height:calc(100% - 26px);pointer-events:none;z-index:8;">
   <!-- NOW line -->
   <div class="vl vl-n" style="left:${NOX.toFixed(1)}px;">
-    <div class="vll vll-n">NOW 1:35</div>
+    <div class="vll vll-n">NOW ~2:30</div>
   </div>
   <!-- TARGET line -->
   <div class="vl vl-t" style="left:${TAX.toFixed(1)}px;">
@@ -487,28 +619,22 @@ let html = `<div style="position:relative;">
   <div class="vl vl-d" style="left:${SUX.toFixed(1)}px;">
     <div class="vll vll-d">SUBMIT 5:00</div>
   </div>
-  <!-- Phase A boundary -->
-  <div style="position:absolute;top:0;left:${PHAX.toFixed(1)}px;width:1px;height:100%;background:rgba(224,85,107,0.25);z-index:4;border-left:1px dashed rgba(224,85,107,0.3);"></div>
-  <!-- Phase B boundary -->
-  <div style="position:absolute;top:0;left:${PHBX.toFixed(1)}px;width:1px;height:100%;background:rgba(56,189,248,0.2);z-index:4;border-left:1px dashed rgba(56,189,248,0.25);"></div>
+  <!-- done/polish boundary -->
+  <div style="position:absolute;top:0;left:${NOX.toFixed(1)}px;width:1px;height:100%;border-left:1.5px solid rgba(91,209,160,0.3);z-index:4;"></div>
 </div>
 ${axisH}`;
 
-// ── Completed section ──
-html += `<div class="divrow"><div class="divlbl">completed &amp; reviewed</div><div class="divline"></div></div>`;
+// ── Completed (big DONE block) ──
+html += `<div class="divrow"><div class="divlbl done-section">&#9646; DONE 10:40&ndash;2:30</div><div class="divline done-line"></div></div>`;
 const ownerOrder = ['Orchestrator','Agent 1','Agent 2','Agent 3','Agent 4'];
-const doneByOwner = {};
-for (const t of DONE) {
-  (doneByOwner[t.owner] = doneByOwner[t.owner] || []).push(t);
-}
 for (const ow of ownerOrder) {
-  const tasks = doneByOwner[ow];
-  if (!tasks) continue;
+  const tasks = DONE_ROWS.filter(t => t.owner === ow);
+  if (!tasks.length) continue;
   const c = OC[ow];
   let bars = '';
   for (const t of tasks) {
     const x = px(t.s, GW), w = px(t.e, GW) - x;
-    bars += buildBar('done', x, w, '', null);
+    bars += buildBar('done-big', x, w, '', null);
   }
   html += `<div class="gantt-row">
     <div class="gantt-lbl"><span class="dot" style="background:${c}"></span>${ow} &#10003;</div>
@@ -516,78 +642,14 @@ for (const ow of ownerOrder) {
   </div>`;
 }
 
-// ── In-flight section (CP3 in progress) ──
-html += `<div class="divrow"><div class="divlbl crit-section">&#9632; CP3 in flight (now)</div><div class="divline crit-line"></div></div>`;
-for (const t of INFLIGHT) {
-  const c = OC[t.owner];
+// ── CP4 Polish items ──
+html += `<div class="divrow"><div class="divlbl crit-section">&#9632; CP4 Polish &amp; Rehearsal</div><div class="divline crit-line"></div></div>`;
+for (const t of POLISH_ROWS) {
+  const c = t.owner === 'Orchestrator' ? OC['Orchestrator'] : OC['Agent 1'];
   const x = px(t.s, GW), w = px(t.e, GW) - x;
-  let bars = buildBar('inflight', x, w, `&#9679; ${t.label}`, t.tip);
-  html += `<div class="gantt-row">
-    <div class="gantt-lbl"><span class="dot" style="background:${c}"></span>${t.id}</div>
-    <div class="gcw" style="width:${GW}px">${bars}</div>
-  </div>`;
-}
-
-// ── Phase A — Critical path remaining ──
-html += `<div class="divrow"><div class="divlbl crit-section">&#9632; Phase A &mdash; Critical</div><div class="divline crit-line"></div></div>`;
-const phaseA = REM.filter(t => t.crit && t.phase === 'A');
-for (const t of phaseA) {
-  const c = OC[t.owner];
-  const x = px(t.s, GW), w = px(t.s + t.d, GW) - x;
-  let bars = buildBar('crit', x, w, t.id, t.tip || null);
+  let bars = buildBar(t.cls, x, w, t.id, t.tip || null);
   if (t.ms) {
-    const mx = px(t.s + t.d, GW) - 6;
-    bars += `<div class="gb msbar" style="left:${mx.toFixed(1)}px;width:12px;top:8px;height:16px;border-radius:2px;transform:rotate(45deg);"></div>`;
-  }
-  html += `<div class="gantt-row">
-    <div class="gantt-lbl"><span class="dot" style="background:${c}"></span>${t.id}</div>
-    <div class="gcw" style="width:${GW}px">${bars}</div>
-  </div>`;
-}
-
-// ── Phase A — Parallel non-critical ──
-html += `<div class="divrow"><div class="divlbl">Phase A &mdash; parallel</div><div class="divline"></div></div>`;
-const phaseAParallel = REM.filter(t => !t.crit && t.phase === 'A');
-for (const t of phaseAParallel) {
-  const c = OC[t.owner];
-  const x = px(t.s, GW), w = px(t.s + t.d, GW) - x;
-  let bars = buildBar('planned', x, w, t.id, t.tip || null);
-  if (t.float > 0) {
-    const fx = px(t.s + t.d, GW), fw = px(t.s + t.d + t.float, GW) - fx;
-    bars += buildBar('floatb', fx, fw, '', null);
-  }
-  html += `<div class="gantt-row">
-    <div class="gantt-lbl"><span class="dot" style="background:${c}"></span>${t.id}</div>
-    <div class="gcw" style="width:${GW}px">${bars}</div>
-  </div>`;
-}
-
-// ── Phase B — Live Streaming Upgrade ──
-html += `<div class="divrow"><div class="divlbl phase-b-section">Phase B &mdash; Live Streaming</div><div class="divline phase-b-line"></div></div>`;
-const phaseB = REM.filter(t => t.phase === 'B');
-for (const t of phaseB) {
-  const c = OC[t.owner];
-  const x = px(t.s, GW), w = px(t.s + t.d, GW) - x;
-  let bars = buildBar('phaseb', x, w, t.id, t.tip || null);
-  if (t.float > 0) {
-    const fx = px(t.s + t.d, GW), fw = px(t.s + t.d + t.float, GW) - fx;
-    bars += buildBar('floatb', fx, fw, '', null);
-  }
-  html += `<div class="gantt-row">
-    <div class="gantt-lbl"><span class="dot" style="background:${c}"></span>${t.id}</div>
-    <div class="gcw" style="width:${GW}px">${bars}</div>
-  </div>`;
-}
-
-// ── Phase C — Final Rehearsal + Record ──
-html += `<div class="divrow"><div class="divlbl phase-c-section">Phase C &mdash; Record</div><div class="divline phase-c-line"></div></div>`;
-const phaseC = REM.filter(t => t.phase === 'C');
-for (const t of phaseC) {
-  const c = OC[t.owner];
-  const x = px(t.s, GW), w = px(t.s + t.d, GW) - x;
-  let bars = buildBar('phasec', x, w, t.id, t.tip || null);
-  if (t.ms) {
-    const mx = px(t.s + t.d, GW) - 6;
+    const mx = px(t.e, GW) - 6;
     bars += `<div class="gb msbar" style="left:${mx.toFixed(1)}px;width:12px;top:8px;height:16px;border-radius:2px;transform:rotate(45deg);"></div>`;
   }
   html += `<div class="gantt-row">
@@ -599,75 +661,36 @@ for (const t of phaseC) {
 html += '</div>';
 go.innerHTML = html;
 
-// ─── Dependency diagram ───────────────────────────────────────────────────────
+// ─── Dependency diagram ────────────────────────────────────────────────────────
 const dsv = document.getElementById('dsv');
 
-// Layout: Phase A critical chain across top row; parallel feeders below; Phase B cluster right; Phase C far right
 const N = {
-  // Done inputs (left col)
-  core:     { x:55,  y:55,  lns:['core sim','MC sweep','done'],          col:'#5bd1a0', done:true  },
-  world:    { x:55,  y:125, lns:['world','208+57','done'],               col:'#5bd1a0', done:true  },
-  viz:      { x:55,  y:195, lns:['viz+console','CP1 done'],              col:'#5bd1a0', done:true  },
-  L2:       { x:55,  y:265, lns:['L2 LLM +','net-retry','done'],        col:'#5bd1a0', done:true  },
+  // Done block (left)
+  done:     { x:80,  y:130, lns:['ALL DONE','10:40–2:30','✓'],            col:'#5bd1a0', done:true  },
 
-  // Precompute DONE
-  precomp:  { x:215, y:55,  lns:['MC precompute','16-run fan','DONE ✓'], col:'#5bd1a0', done:true  },
+  // Polish items
+  p1:       { x:280, y:70,  lns:['P1','per-node','stream'],               col:'#e0a155', crit:true  },
+  p2:       { x:280, y:190, lns:['P2','SSE guard','~0.3h'],               col:'#38bdf8', parallel:true },
+  p3:       { x:460, y:70,  lns:['P3','pulse +','reasoning'],             col:'#38bdf8', crit:true  },
+  p4:       { x:460, y:190, lns:['P4 pacing','decision','at rehearsal'],  col:'#a78bfa', parallel:true },
+  p5:       { x:640, y:130, lns:['P5','rehearsal','×N'],                  col:'#a78bfa', crit:true, ms:true },
 
-  // CP3 In flight (three agents + orch)
-  cp3a1:    { x:370, y:55,  lns:['CP3 A1','fan swap','caption'],        col:'#e0a155', inflight:true },
-  cp3a4:    { x:370, y:145, lns:['CP3 A4','cluster','cleanup'],         col:'#e0a155', inflight:true },
-  cp3orc:   { x:370, y:225, lns:['CP3 Orch','framing','pivotal'],       col:'#e0a155', inflight:true },
-
-  // CP3 milestone
-  cp3ms:    { x:510, y:90,  lns:['CP3','DONE','~1:55pm'],               col:'#e0556b', crit:true, ms:true  },
-
-  // Phase A critical path
-  cp4:      { x:645, y:90,  lns:['CP4','rehearse','~2:15'],             col:'#e0556b', crit:true, ms:true  },
-  safedemo: { x:790, y:90,  lns:['SAFE','DEMO','~2:15pm'],              col:'#5bd1a0', ms:true    },
-
-  // Phase A parallel non-critical
-  a2fix:    { x:215, y:330, lns:['A2-fix','0.25h'],                     col:'#5bd1a0', crit:false },
-
-  // Phase B cluster
-  bkernel:  { x:790, y:175, lns:['B: Orch','kernel','tick API'],        col:'#38bdf8', phaseB:true },
-  bsse:     { x:790, y:255, lns:['B: A3','SSE','endpoint'],             col:'#c084fc', phaseB:true },
-  bviz:     { x:790, y:330, lns:['B: A1 viz','per-tick','render'],      col:'#38bdf8', phaseB:true },
-  bwire:    { x:930, y:205, lns:['LiveWire','STRETCH'],                 col:'#4d6080', crit:false },
-  banth:    { x:930, y:290, lns:['Anthropic','gen beat'],               col:'#c084fc', crit:false },
-
-  // Phase C
-  record:   { x:930, y:90,  lns:['RECORD','4:00pm'],                   col:'#a78bfa', ms:true    },
+  // Milestones
+  escape:   { x:640, y:215, lns:['escape hatch','key bound'],             col:'#5bd1a0', done:false },
+  record:   { x:830, y:130, lns:['RECORD','4:00pm'],                      col:'#a78bfa', ms:true    },
+  submit:   { x:930, y:130, lns:['SUBMIT','5:00pm'],                      col:'#e0556b', ms:true    },
 };
 
 const EDGES = [
-  // feeds into precompute — all done
-  ['core',    'precomp',  true ],
-  ['world',   'precomp',  true ],
-  ['L2',      'precomp',  true ],
-  // precompute done -> CP3 agents
-  ['precomp', 'cp3a1',    true ],
-  ['precomp', 'cp3a4',    false],
-  ['precomp', 'cp3orc',   false],
-  // viz feeds CP3-A1
-  ['viz',     'cp3a1',    false],
-  // CP3 agents -> CP3 milestone
-  ['cp3a1',   'cp3ms',    true ],
-  ['cp3a4',   'cp3ms',    false],
-  ['cp3orc',  'cp3ms',    false],
-  // critical chain
-  ['cp3ms',   'cp4',      true ],
-  ['cp4',     'safedemo', true ],
-  // a2fix parallel into CP4
-  ['a2fix',   'cp4',      false],
-  // safe demo to record (Phase C)
-  ['safedemo','record',   true ],
-  // Phase B from safe demo
-  ['safedemo','bkernel',  false],
-  ['safedemo','bsse',     false],
-  ['safedemo','bviz',     false],
-  // float
-  ['bwire',   'record',   false],
-  ['banth',   'record',   false],
+  ['done',    'p1',    true ],
+  ['done',    'p2',    false],
+  ['p1',      'p3',    true ],
+  ['p2',      'p5',    false],
+  ['p3',      'p5',    true ],
+  ['p4',      'p5',    false],
+  ['escape',  'p5',    false],
+  ['p5',      'record',true ],
+  ['record',  'submit',true ],
 ];
 
 let sv = `<defs>
@@ -686,29 +709,22 @@ let sv = `<defs>
   <marker id="aamb" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
     <path d="M0,0 L7,3.5 L0,7 Z" fill="#e0a155"/>
   </marker>
+  <marker id="apur" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+    <path d="M0,0 L7,3.5 L0,7 Z" fill="#a78bfa"/>
+  </marker>
 </defs>`;
 
-// Phase region labels
-sv += `<rect x="330" y="8" width="510" height="120" rx="6" fill="none" stroke="rgba(224,85,107,0.12)" stroke-width="1" stroke-dasharray="5 4"/>`;
-sv += `<text x="336" y="22" font-family="-apple-system,system-ui,sans-serif" font-size="8" font-weight="700" fill="rgba(224,85,107,0.5)" letter-spacing="0.6">PHASE A — SAFE DEMO (CRITICAL)</text>`;
-sv += `<rect x="750" y="155" width="210" height="200" rx="6" fill="none" stroke="rgba(56,189,248,0.15)" stroke-width="1" stroke-dasharray="5 4"/>`;
-sv += `<text x="756" y="170" font-family="-apple-system,system-ui,sans-serif" font-size="8" font-weight="700" fill="rgba(56,189,248,0.4)" letter-spacing="0.6">PHASE B — LIVE STREAMING</text>`;
-
-// CP3 in-flight cluster box
-sv += `<rect x="330" y="128" width="210" height="126" rx="6" fill="none" stroke="rgba(224,161,85,0.25)" stroke-width="1.5" stroke-dasharray="4 3"/>`;
-sv += `<text x="336" y="142" font-family="-apple-system,system-ui,sans-serif" font-size="8" font-weight="700" fill="rgba(224,161,85,0.55)" letter-spacing="0.5">CP3 IN FLIGHT</text>`;
+// Region: critical chain
+sv += `<rect x="240" y="22" width="450" height="106" rx="6" fill="none" stroke="rgba(224,161,85,0.15)" stroke-width="1" stroke-dasharray="5 4"/>`;
+sv += `<text x="246" y="36" font-family="-apple-system,system-ui,sans-serif" font-size="8" font-weight="700" fill="rgba(224,161,85,0.5)" letter-spacing="0.6">CRITICAL CHAIN — P1 &rarr; P3 &rarr; P5</text>`;
 
 for (const [f, t, cr] of EDGES) {
   const n1 = N[f], n2 = N[t];
   let col, sw, mark, dash;
-  if (n1.inflight || n2.inflight) {
-    col='rgba(224,161,85,0.6)'; sw=1.8; mark='url(#aamb)'; dash='stroke-dasharray="4 3"';
-  } else if (cr && n2.ms && !n2.phaseB) {
-    col='#5bd1a0'; sw=2; mark='url(#agr)'; dash='';
+  if (cr && (n2.ms || n2.crit)) {
+    col='#e0a155'; sw=2.5; mark='url(#aamb)'; dash='';
   } else if (cr) {
-    col='#e0556b'; sw=2.5; mark='url(#ar)'; dash='';
-  } else if (n1.phaseB || n2.phaseB) {
-    col='rgba(56,189,248,0.5)'; sw=1.2; mark='url(#ab)'; dash='stroke-dasharray="5 3"';
+    col='#5bd1a0'; sw=2; mark='url(#agr)'; dash='';
   } else {
     col='#2e3550'; sw=1.2; mark='url(#ag)'; dash='stroke-dasharray="5 3"';
   }
@@ -717,7 +733,6 @@ for (const [f, t, cr] of EDGES) {
     fill="none" stroke="${col}" stroke-width="${sw}" ${dash} marker-end="${mark}" opacity="0.9"/>`;
 }
 
-// Nodes
 for (const [id, n] of Object.entries(N)) {
   const lh = 13, lns = n.lns;
   const bh = lns.length * lh + 14;
@@ -727,17 +742,16 @@ for (const [id, n] of Object.entries(N)) {
 
   let fill, stroke, sw2;
   if (n.done)     { fill='#0d1a12'; stroke=n.col; sw2='1.5'; }
-  else if (n.inflight){ fill='#1e140a'; stroke=n.col; sw2='2.5'; }
-  else if (n.crit){ fill='#1a080c'; stroke=n.col; sw2='2';   }
-  else if (n.phaseB){ fill='#0a1520'; stroke=n.col; sw2='1.5'; }
+  else if (n.crit){ fill='#1a100a'; stroke=n.col; sw2='2.5'; }
   else if (n.ms)  { fill='#14122a'; stroke=n.col; sw2='2';   }
+  else if (n.parallel) { fill='#0a1520'; stroke=n.col; sw2='1.5'; }
   else            { fill='#12151d'; stroke=n.col; sw2='1.5'; }
 
   sv += `<rect x="${bx.toFixed(1)}" y="${by.toFixed(1)}" width="${bw.toFixed(1)}" height="${bh.toFixed(1)}"
     rx="4" fill="${fill}" stroke="${stroke}" stroke-width="${sw2}"/>`;
 
-  const tc = n.done ? '#5bd1a0' : (n.inflight ? '#e0a155' : (n.crit ? '#e0556b' : (n.ms && !n.phaseB ? '#a78bfa' : (n.phaseB ? '#38bdf8' : '#8b91a8'))));
-  const fw = (n.crit || n.ms || n.inflight) ? '700' : '500';
+  const tc = n.done ? '#5bd1a0' : (n.crit ? '#e0a155' : (n.ms ? '#a78bfa' : (n.parallel ? '#38bdf8' : '#8b91a8')));
+  const fw = (n.crit || n.ms) ? '700' : '500';
   lns.forEach((line, i) => {
     const ty = n.y - (lns.length - 1) * lh/2 + i * lh;
     sv += `<text x="${n.x}" y="${ty}" text-anchor="middle" dominant-baseline="middle"
@@ -750,19 +764,15 @@ for (const [id, n] of Object.entries(N)) {
     sv += `<polygon points="${n.x},${dy-6} ${n.x+5},${dy} ${n.x},${dy+6} ${n.x-5},${dy}"
       fill="${n.col}" opacity="0.35"/>`;
   }
-  if (n.inflight) {
-    sv += `<rect x="${(bx-3).toFixed(1)}" y="${(by-3).toFixed(1)}" width="${(bw+6).toFixed(1)}" height="${(bh+6).toFixed(1)}"
-      rx="6" fill="none" stroke="#e0a155" stroke-width="1" opacity="0.3" stroke-dasharray="4 3"/>`;
-  }
 }
 
-// Annotations
-sv += `<text x="370" y="16" font-family="-apple-system,system-ui,sans-serif" font-size="9" font-weight="700" fill="#e0556b" letter-spacing="0.5">CRITICAL PATH</text>`;
-sv += `<text x="370" y="27" font-family="-apple-system,system-ui,sans-serif" font-size="8" fill="#4a5070">MC fan DONE &#8594; CP3 in-flight(fan swap+framing+cluster) &#8594; CP4(0.35h) &#8594; SAFE DEMO ~2:15pm &#8658; 1h 45min slack &#8594; Phase B + C</text>`;
+// Annotation
+sv += `<text x="32" y="14" font-family="-apple-system,system-ui,sans-serif" font-size="9" font-weight="700" fill="#5bd1a0" letter-spacing="0.5">FEATURE-COMPLETE &#10003;</text>`;
+sv += `<text x="32" y="26" font-family="-apple-system,system-ui,sans-serif" font-size="8" fill="#4a5070">DONE block &rarr; P1(Orch 0.4h) &#8741; P2(A1 0.3h) &rarr; P3(A1 0.4h) &rarr; P5 rehearsal(0.5h) &rarr; RECORD 4pm &rarr; SUBMIT 5pm &nbsp;&mdash;&nbsp; big buffer &#10003;</text>`;
 
 dsv.innerHTML = sv;
 
-// ─── Tooltip ──────────────────────────────────────────────────────────────────
+// ─── Tooltip ───────────────────────────────────────────────────────────────────
 const tt = document.getElementById('tt');
 document.addEventListener('mouseover', e => {
   const el = e.target.closest('[data-tip]');
