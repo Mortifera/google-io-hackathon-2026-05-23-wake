@@ -38,12 +38,26 @@ async function makeLLM(): Promise<LLMClient> {
 }
 
 const world = loadWorld(worldPath);
-const llm = await makeLLM();
+const base = await makeLLM();
+
+// Wrap the client to count calls + sum cost (visibility for paid runs).
+let calls = 0;
+let costUsd = 0;
+const llm: LLMClient = {
+  async complete<T>(args) {
+    const r = await base.complete<T>(args);
+    calls++;
+    costUsd += r.usage.costUsd;
+    return r;
+  },
+};
+
+const concurrency = Number(process.env.WAKE_CONCURRENCY ?? 6);
 const cascade = await runCascade(
   world,
   seedId,
   { llm, tickFn, edgeTransform },
-  { seed: 1, concurrency: 6 },
+  { seed: 1, concurrency },
 );
 
 const outDir = path.join(repoRoot, "runs");
@@ -51,7 +65,9 @@ mkdirSync(outDir, { recursive: true });
 const outPath = path.join(outDir, `${world.id}.${seedId}.json`);
 writeFileSync(outPath, JSON.stringify(cascade, null, 2));
 
+const mode = process.env.WAKE_LLM === "gemini" ? "gemini" : "mock";
 console.log(
-  `[${process.env.WAKE_LLM === "gemini" ? "gemini" : "mock"}] ${world.id}/${seedId}: ` +
-    `${cascade.ticks.length} ticks, ${cascade.eventDag.length} events → ${path.relative(repoRoot, outPath)}`,
+  `[${mode}] ${world.id}/${seedId}: ${cascade.ticks.length} ticks, ` +
+    `${cascade.eventDag.length} events, ${calls} llm calls, $${costUsd.toFixed(4)} ` +
+    `→ ${path.relative(repoRoot, outPath)}`,
 );
