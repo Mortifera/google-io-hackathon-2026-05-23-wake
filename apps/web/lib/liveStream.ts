@@ -3,12 +3,30 @@ import type { Cascade, StateSnapshot, Tick } from "@wake/contracts";
 /** Divergence on the wire may be a bare count or a {tick,count} point. */
 export type StreamDivergence = number | { tick: number; count: number };
 
+/** A node about to think this tick. */
+export interface ActiveNode {
+  id: string;
+  label: string;
+}
+
 /**
  * One Server-Sent Event from /api/stream-cascade (built by the kernel/streaming
- * worker). Either an incremental tick (apply it like one replay step) or the
- * terminal full cascade (for scrubbing + interp once the run completes).
+ * worker). Additive protocol:
+ *  - `tick-start`: the nodes about to think this tick (→ "thinking" state).
+ *  - `node-acted`: one node's Gemini call returned (→ flash + stream rationale).
+ *  - `tick`: the resolved tick — apply it like one replay step.
+ *  - `done`: the terminal full cascade (for scrubbing + interp).
  */
 export type StreamEvent =
+  | { type: "tick-start"; tick: number; active: ActiveNode[] }
+  | {
+      type: "node-acted";
+      tick: number;
+      nodeId: string;
+      label: string;
+      rationale: string;
+      outgoing: number;
+    }
   | {
       type: "tick";
       tick: Tick;
@@ -26,6 +44,16 @@ interface Handlers {
     tick: Tick,
     snapshot: StateSnapshot,
     divergence: StreamDivergence,
+  ) => void;
+  /** Nodes about to think this tick. */
+  onTickStart?: (tick: number, active: ActiveNode[]) => void;
+  /** One node's reasoning returned (fires one-by-one through a tick). */
+  onNodeActed?: (
+    tick: number,
+    nodeId: string,
+    label: string,
+    rationale: string,
+    outgoing: number,
   ) => void;
   onDone: (cascade: Cascade) => void;
   /** Connection error or stall — caller falls back to the precomputed run. */
@@ -82,6 +110,16 @@ export function openCascadeStream(
     }
     if (msg.type === "tick") {
       handlers.onTick(msg.tick, msg.snapshot, msg.divergence);
+    } else if (msg.type === "tick-start") {
+      handlers.onTickStart?.(msg.tick, msg.active);
+    } else if (msg.type === "node-acted") {
+      handlers.onNodeActed?.(
+        msg.tick,
+        msg.nodeId,
+        msg.label,
+        msg.rationale,
+        msg.outgoing,
+      );
     } else if (msg.type === "done") {
       handlers.onDone(msg.cascade);
       cleanup();

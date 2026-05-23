@@ -58,6 +58,10 @@ interface Props {
   selectedNodeId: string | null;
   onSelectNode: (id: string | null) => void;
   trace: TraceViz | null;
+  /** Live mode: node ids currently "thinking" (Gemini call in flight). */
+  thinking?: Set<string>;
+  /** Live mode: the node that just acted — flashes once; nonce bumps each time. */
+  flash?: { id: string; nonce: number } | null;
 }
 
 const TIER_RADIUS: Record<number, number> = { 1: 10, 2: 6.5, 3: 5 };
@@ -89,6 +93,8 @@ export default function GraphCanvas({
   selectedNodeId,
   onSelectNode,
   trace,
+  thinking,
+  flash,
 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -100,9 +106,15 @@ export default function GraphCanvas({
   const traceRef = useRef<TraceViz | null>(trace);
   const traceStartRef = useRef(0);
   const traceNonceRef = useRef(-1);
+  const thinkingRef = useRef<Set<string> | undefined>(thinking);
+  const flashRef = useRef(flash);
+  const flashStartsRef = useRef<Map<string, number>>(new Map());
+  const flashNonceRef = useRef(-1);
   layerRef.current = layer;
   selectedRef.current = selectedNodeId;
   traceRef.current = trace;
+  thinkingRef.current = thinking;
+  flashRef.current = flash;
 
   // Stable sim nodes/links + a fast id→node map, rebuilt only if graph changes.
   const sim = useMemo(() => {
@@ -294,6 +306,14 @@ export default function GraphCanvas({
         traceNonceRef.current = tr.nonce;
         traceStartRef.current = now;
       }
+
+      // live reasoning: record the moment a node acts (for a one-shot flash)
+      const fl = flashRef.current;
+      if (fl && fl.nonce !== flashNonceRef.current) {
+        flashNonceRef.current = fl.nonce;
+        flashStartsRef.current.set(fl.id, now);
+      }
+      const thinkingNow = thinkingRef.current;
 
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
@@ -582,6 +602,57 @@ export default function GraphCanvas({
           ctx.stroke();
         }
 
+        // live "thinking": nodes whose Gemini call is in flight pulse with a
+        // cool computing halo + rotating dashed ring (fills the per-tick gap).
+        if (thinkingNow?.has(n.id)) {
+          const tp = 0.5 + 0.5 * Math.sin(now / 320);
+          ctx.globalCompositeOperation = "lighter";
+          const tr2 = baseR * 2.6 + 8 + tp * 6;
+          const tg = ctx.createRadialGradient(x, y, 0, x, y, tr2);
+          tg.addColorStop(0, withAlpha("#bcd2ff", 0.45 + 0.2 * tp));
+          tg.addColorStop(1, withAlpha("#bcd2ff", 0));
+          ctx.fillStyle = tg;
+          ctx.beginPath();
+          ctx.arc(x, y, tr2, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalCompositeOperation = "source-over";
+          ctx.strokeStyle = withAlpha("#dbe6ff", 0.7);
+          ctx.lineWidth = 1.4;
+          ctx.setLineDash([3, 4]);
+          ctx.lineDashOffset = -now / 70;
+          ctx.beginPath();
+          ctx.arc(x, y, baseR + 6, 0, Math.PI * 2);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.lineDashOffset = 0;
+        }
+
+        // live "acted" flash: a bright one-shot burst when a node returns
+        const flashStart = flashStartsRef.current.get(n.id);
+        if (flashStart != null) {
+          const fp = (now - flashStart) / 700;
+          if (fp >= 1) {
+            flashStartsRef.current.delete(n.id);
+          } else {
+            const e = 1 - (1 - fp) * (1 - fp);
+            ctx.globalCompositeOperation = "lighter";
+            const fr = baseR + 4 + e * 30;
+            ctx.strokeStyle = withAlpha("#ffffff", 0.8 * (1 - fp));
+            ctx.lineWidth = 2 * (1 - fp) + 0.5;
+            ctx.beginPath();
+            ctx.arc(x, y, fr, 0, Math.PI * 2);
+            ctx.stroke();
+            const fg = ctx.createRadialGradient(x, y, 0, x, y, baseR * 3);
+            fg.addColorStop(0, withAlpha("#ffffff", 0.5 * (1 - fp)));
+            fg.addColorStop(1, withAlpha("#ffffff", 0));
+            ctx.fillStyle = fg;
+            ctx.beginPath();
+            ctx.arc(x, y, baseR * 3, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalCompositeOperation = "source-over";
+          }
+        }
+
         // "clickable" hint: once settled, gently ring the traceable story nodes
         if (settled && !isSel && !isHov && involvedRef.current.has(n.id)) {
           const pulse = 0.5 + 0.5 * Math.sin(now / 750 + (x + y) * 0.012);
@@ -615,10 +686,10 @@ export default function GraphCanvas({
         ctx.fillStyle = "rgba(255,255,255,0.35)";
         ctx.fill();
 
-        // labels: on a small world, tier-1 are always named; on a big world,
-        // labels follow the action — acting nodes plus hover/select — so the
-        // story stays readable without clutter.
-        if ((labelAll && tier === 1) || inActive || isSel || isHov) {
+        // labels: small world → tier-1 always; big world → follow the action
+        // (acting/thinking nodes + hover/select) so the story stays readable.
+        const isThinking = thinkingNow?.has(n.id) ?? false;
+        if ((labelAll && tier === 1) || inActive || isSel || isHov || isThinking) {
           const label = meta?.label ?? n.id;
           ctx.font = `${tier === 1 ? 600 : 500} ${tier === 1 ? 12.5 : 11}px ${CANVAS_FONT}`;
           const tw = ctx.measureText(label).width;

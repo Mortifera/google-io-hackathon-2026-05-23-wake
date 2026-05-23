@@ -13,12 +13,7 @@ import {
   shortHeadline,
   type ExplanationResult,
 } from "../lib/explain";
-import {
-  appendTick,
-  emptyCascade,
-  openCascadeStream,
-  type LiveHandle,
-} from "../lib/liveStream";
+import { appendTick, emptyCascade, openCascadeStream } from "../lib/liveStream";
 import { usePlayback } from "../lib/usePlayback";
 import { AFFECT_LEGEND, affectStyle } from "../lib/palette";
 import { DEFAULT_ACTION_ID, isLive, scenarioFor } from "../lib/scenarios";
@@ -27,12 +22,22 @@ import Transport from "./Transport";
 import InspectorPanel, { type Focus } from "./InspectorPanel";
 import MonteCarloFan from "./MonteCarloFan";
 import OperatorConsole from "./OperatorConsole";
+import ReasoningFeed from "./ReasoningFeed";
 import s from "./stage.module.css";
 
 interface ActiveTrace {
   exp: ExplanationResult;
   anchorId: string;
   nonce: number;
+}
+
+export interface ReasoningItem {
+  key: string;
+  nodeId: string;
+  label: string;
+  rationale: string;
+  tick: number;
+  outgoing: number;
 }
 
 type Layer = "public" | "private";
@@ -70,7 +75,21 @@ export default function Stage({ world }: Props) {
   const [mode, setMode] = useState<RunMode>("replay");
   const [liveStatus, setLiveStatus] = useState<LiveStatus>("idle");
   const [liveCascade, setLiveCascade] = useState<Cascade | null>(null);
-  const liveHandleRef = useRef<LiveHandle | null>(null);
+  // Stream lifecycle is owned by a single effect (StrictMode-safe). `streamOpen`
+  // gates whether a connection should exist; `liveToken` forces a fresh run.
+  const [streamOpen, setStreamOpen] = useState(false);
+  const [liveToken, setLiveToken] = useState(0);
+  const actionIdRef = useRef(actionId);
+  actionIdRef.current = actionId;
+
+  // Centerpiece: per-node live reasoning. `thinking` = nodes computing this tick;
+  // `reasoning` = the streaming feed of returned rationales (newest first);
+  // `flash` = the node that just acted (graph flash, nonce bumps each time).
+  const [thinking, setThinking] = useState<Set<string>>(() => new Set());
+  const [activeThisTick, setActiveThisTick] = useState(0);
+  const [reasoning, setReasoning] = useState<ReasoningItem[]>([]);
+  const [flash, setFlash] = useState<{ id: string; nonce: number } | null>(null);
+  const flashSeq = useRef(0);
 
   const graph = useMemo(
     () => buildGraphModel(scenario.cascade, world),
@@ -97,6 +116,8 @@ export default function Stage({ world }: Props) {
   const [replayNonce, setReplayNonce] = useState(0);
   const modeRef = useRef(mode);
   modeRef.current = mode;
+  const streamOpenRef = useRef(streamOpen);
+  streamOpenRef.current = streamOpen;
 
   // Run the DAG trace-back and enter the cinematic "why" mode (pauses playback).
   // The local trace renders instantly; we then try to enrich the prose with the
@@ -196,54 +217,97 @@ export default function Stage({ world }: Props) {
     return () => clearTimeout(t);
   }, [replayNonce, actionId, setP, play]);
 
-  const stopLive = useCallback(() => {
-    liveHandleRef.current?.close();
-    liveHandleRef.current = null;
-    setMode("replay");
-    setLiveCascade(null);
-  }, []);
-
-  // Escape hatch / live fallback: always returns to the canonical precomputed run.
-  const goReplay = useCallback(
-    (id: string) => {
-      stopLive();
-      setActionId(id);
-      setView("cascade");
-      setConsoleOpen(false);
-      setReplayNonce((n) => n + 1);
-    },
-    [stopLive],
-  );
-
-  const startLive = useCallback(() => {
-    liveHandleRef.current?.close();
-    setFocus({ kind: "none" });
-    setView("cascade");
-    setConsoleOpen(false);
-    setLiveCascade(emptyCascade(world.id, actionId));
-    setMode("live");
-    setLiveStatus("connecting");
-    setP(0);
-    liveHandleRef.current = openCascadeStream(actionId, {
+  // THE single source of truth for the SSE connection. Opening/closing happens
+  // only here, so React (incl. StrictMode double-mount + Fast Refresh) guarantees
+  // exactly one live connection, and its cleanup always closes the server run.
+  useEffect(() => {
+    if (!streamOpen) return;
+    const handle = openCascadeStream(actionIdRef.current, {
+      onTickStart: (_tick, active) => {
+        setLiveStatus("streaming");
+        setThinking(new Set(active.map((a) => a.id)));
+        setActiveThisTick(active.length);
+      },
+      onNodeActed: (tick, nodeId, label, rationale, outgoing) => {
+        flashSeq.current += 1;
+        setFlash({ id: nodeId, nonce: flashSeq.current });
+        setThinking((prev) => {
+          const n = new Set(prev);
+          n.delete(nodeId);
+          return n;
+        });
+        setReasoning((prev) =>
+          [
+            { key: `${tick}-${nodeId}-${flashSeq.current}`, nodeId, label, rationale, tick, outgoing },
+            ...prev,
+          ].slice(0, 60),
+        );
+      },
       onTick: (tick, snapshot, divergence) => {
         setLiveStatus("streaming");
+        setThinking(new Set());
         setLiveCascade((prev) =>
           prev ? appendTick(prev, tick, snapshot, divergence) : prev,
         );
       },
       onDone: (full) => {
-        liveHandleRef.current = null;
         setLiveStatus("done");
+        setThinking(new Set());
         setLiveCascade(full);
+        setStreamOpen(false);
       },
       onError: () => {
         // stream failed/stalled → fall back to the precomputed run
-        liveHandleRef.current = null;
         setLiveStatus("error");
-        goReplay(DEFAULT_ACTION_ID);
+        setStreamOpen(false);
+        setMode("replay");
+        setActionId(DEFAULT_ACTION_ID);
+        setReplayNonce((n) => n + 1);
       },
     });
-  }, [world.id, actionId, setP, goReplay]);
+    return () => handle.close();
+  }, [streamOpen, liveToken]);
+
+  const startLive = useCallback(() => {
+    setFocus({ kind: "none" });
+    setView("cascade");
+    setConsoleOpen(false);
+    setLiveCascade(emptyCascade(world.id, actionIdRef.current));
+    setThinking(new Set());
+    setActiveThisTick(0);
+    setReasoning([]);
+    setFlash(null);
+    setMode("live");
+    setLiveStatus("connecting");
+    setP(0);
+    setStreamOpen(false); // ensure the lifecycle effect fully restarts
+    setLiveToken((t) => t + 1);
+    setStreamOpen(true);
+  }, [world.id, setP]);
+
+  // Stop the live stream (Pause during a live run) but keep the streamed-so-far
+  // cascade frozen for scrubbing. Closing the connection aborts the server run.
+  const stopLiveStream = useCallback(() => {
+    setStreamOpen(false);
+    setLiveStatus("done");
+    setThinking(new Set());
+    pause();
+  }, [pause]);
+
+  // Escape hatch / Replay / scenario select: close the stream + return to a
+  // precomputed run. Closing the connection (streamOpen=false) aborts the server.
+  const goReplay = useCallback((id: string) => {
+    setStreamOpen(false);
+    setMode("replay");
+    setLiveCascade(null);
+    setThinking(new Set());
+    setActiveThisTick(0);
+    setReasoning([]);
+    setActionId(id);
+    setView("cascade");
+    setConsoleOpen(false);
+    setReplayNonce((n) => n + 1);
+  }, []);
 
   const selectAction = (id: string) => {
     if (!isLive(id)) return;
@@ -251,14 +315,17 @@ export default function Stage({ world }: Props) {
   };
   const escapeHatch = () => goReplay(DEFAULT_ACTION_ID);
 
+  // Play/pause that's live-aware: during a live run, "pause" aborts the stream.
+  const togglePlay = useCallback(() => {
+    if (streamOpen) stopLiveStream();
+    else pb.toggle();
+  }, [streamOpen, stopLiveStream, pb]);
+
   // Live mode: chase the streaming edge — each new tick extends `last`, so resume
   // playback toward it (idles when caught up, resumes when the next tick lands).
   useEffect(() => {
-    if (mode === "live" && last > 0) play();
-  }, [mode, last, play]);
-
-  // Tear down any open stream on unmount.
-  useEffect(() => () => liveHandleRef.current?.close(), []);
+    if (mode === "live" && streamOpen && last > 0) play();
+  }, [mode, streamOpen, last, play]);
 
   // Auto-clear the "stream unavailable" notice after a few seconds.
   useEffect(() => {
@@ -288,7 +355,8 @@ export default function Stage({ world }: Props) {
       if (view !== "cascade") return;
       if (e.code === "Space") {
         e.preventDefault();
-        pb.toggle();
+        if (streamOpenRef.current) stopLiveStream();
+        else pb.toggle();
       } else if (e.code === "ArrowRight") {
         setP(Math.min(last, Math.round(pb.pRef.current ?? 0) + 1));
       } else if (e.code === "ArrowLeft") {
@@ -299,6 +367,16 @@ export default function Stage({ world }: Props) {
     return () => window.removeEventListener("keydown", onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pb, last, view, world]);
+
+  // Affect colour for a node (latest known state) — drives the reasoning-feed dots.
+  const colorOf = useCallback(
+    (nodeId: string) => {
+      const states = model.resolvedStates[model.resolvedStates.length - 1];
+      const st = states?.[nodeId];
+      return st ? affectStyle(st).color : "#5b9cf0";
+    },
+    [model],
+  );
 
   const frame = resolveFrame(model, pb.p);
   const actEvents = model.ticks[frame.act]?.events ?? [];
@@ -327,7 +405,7 @@ export default function Stage({ world }: Props) {
               {liveStatus === "connecting"
                 ? "LIVE · connecting…"
                 : liveStatus === "streaming"
-                  ? "LIVE · streaming…"
+                  ? "LIVE · Gemini & Flash"
                   : liveStatus === "done"
                     ? "LIVE · complete"
                     : "LIVE"}
@@ -379,6 +457,8 @@ export default function Stage({ world }: Props) {
                     ? { chain: trace.exp.chain, anchorId: trace.anchorId, nonce: trace.nonce }
                     : null
                 }
+                thinking={mode === "live" ? thinking : undefined}
+                flash={mode === "live" ? flash : null}
               />
 
               <div className={s.layerTint} data-layer={layer} />
@@ -421,19 +501,35 @@ export default function Stage({ world }: Props) {
               ) : null}
             </div>
 
-            <InspectorPanel
-              graph={graph}
-              model={model}
-              p={pb.p}
-              layer={layer}
-              focus={focus}
-              setFocus={setFocus}
-              explanation={trace?.exp ?? null}
-              onAskWhy={() => runExplain(focus)}
-            />
+            {mode === "live" ? (
+              <ReasoningFeed
+                reasoning={reasoning}
+                thinkingCount={thinking.size}
+                activeThisTick={activeThisTick}
+                liveStatus={liveStatus}
+                colorOf={colorOf}
+              />
+            ) : (
+              <InspectorPanel
+                graph={graph}
+                model={model}
+                p={pb.p}
+                layer={layer}
+                focus={focus}
+                setFocus={setFocus}
+                explanation={trace?.exp ?? null}
+                onAskWhy={() => runExplain(focus)}
+              />
+            )}
           </div>
 
-          <Transport model={model} pb={pb} layer={layer} setLayer={setLayer} />
+          <Transport
+            model={model}
+            pb={pb}
+            layer={layer}
+            setLayer={setLayer}
+            onTogglePlay={togglePlay}
+          />
         </>
       ) : mc ? (
         <MonteCarloFan mc={mc} />

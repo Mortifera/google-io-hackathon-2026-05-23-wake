@@ -14,6 +14,8 @@ interface Props {
   pb: Playback;
   layer: Layer;
   setLayer: (l: Layer) => void;
+  /** Live-aware play/pause (aborts the stream when a live run is in progress). */
+  onTogglePlay: () => void;
 }
 
 const SPEEDS = [
@@ -29,7 +31,13 @@ function fmtClock(min: number): string {
   return m ? `t+${h}h ${m}m` : `t+${h}h`;
 }
 
-export default function Transport({ model, pb, layer, setLayer }: Props) {
+export default function Transport({
+  model,
+  pb,
+  layer,
+  setLayer,
+  onTogglePlay,
+}: Props) {
   const trackRef = useRef<HTMLDivElement>(null);
   const last = pb.last;
   const frame = resolveFrame(model, pb.p);
@@ -90,7 +98,7 @@ export default function Transport({ model, pb, layer, setLayer }: Props) {
         </button>
         <button
           className={`${s.iconBtn} ${s.playBtn}`}
-          onClick={pb.toggle}
+          onClick={onTogglePlay}
           title={pb.playing ? "Pause" : "Play"}
           aria-label={pb.playing ? "Pause" : "Play"}
         >

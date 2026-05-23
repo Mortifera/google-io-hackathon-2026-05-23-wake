@@ -1,6 +1,10 @@
 import type { Cascade, MonteCarloResult } from "@wake/contracts";
 import acquisitionCascade from "@fixtures/cascades/notion-world.acquisition.json";
 import acquisitionMc from "@fixtures/montecarlo/notion-world.acquisition.json";
+import freeTierCascade from "@fixtures/cascades/notion-world.free-tier-removal.json";
+import ceoStepsDownCascade from "@fixtures/cascades/notion-world.ceo-steps-down.json";
+import openSourceCascade from "@fixtures/cascades/notion-world.open-source.json";
+import engineerIdeaCascade from "@fixtures/cascades/notion-world.engineer-idea.json";
 
 /**
  * Registry of precomputed scenarios, keyed by `seedActionId` (matching the
@@ -18,8 +22,25 @@ export interface Scenario {
 export const SCENARIOS: Record<string, Scenario> = {
   acquisition: {
     cascade: acquisitionCascade as unknown as Cascade,
-    // CP3: the real Monte Carlo analysis (16 runs → 4 clusters + pivotal).
+    // CP3: the real Monte Carlo analysis (16 runs → clusters + pivotal).
     mc: acquisitionMc as unknown as MonteCarloResult,
+  },
+  // The four menu seeds — each a precomputed Cascade replay (no fan yet).
+  "free-tier-removal": {
+    cascade: freeTierCascade as unknown as Cascade,
+    mc: null,
+  },
+  "ceo-steps-down": {
+    cascade: ceoStepsDownCascade as unknown as Cascade,
+    mc: null,
+  },
+  "open-source": {
+    cascade: openSourceCascade as unknown as Cascade,
+    mc: null,
+  },
+  "engineer-idea": {
+    cascade: engineerIdeaCascade as unknown as Cascade,
+    mc: null,
   },
 };
 
