@@ -51,21 +51,23 @@ One continuous arc, ~90 seconds of breathtaking material, then conversational de
    engineer's idea that **dies at her cautious manager pre-acquisition** *escalates
    to leadership post-acquisition* — because the world changed shape, and the same
    action means different things in different worlds. Nobody has to explain it.
-5. **The thousand futures + the recommendation.** Pull back: the single run
+5. **The thousand futures + what the sweep settles on.** Pull back: the single run
    becomes a sheaf of futures, two clean regimes. We frame it as *"we ran your
-   announcement two ways"* and the card that travels surfaces the dial **and the
-   call**: *"the single thing that decides your fate is whether you lead with
-   'independent' or 'integrated' — so lead with 'independent.'"* That's not a
-   prediction; it's a **decision made legible, and a recommendation made.**
+   announcement two ways,"* and the card that travels surfaces the dial **and where
+   the math lands**: *"integrated framing falls into the backlash regime four times
+   in five — the pivotal variable points to 'independent.'"* Not a prediction, not
+   advice — a **decision made legible, and the sweep pointing one way.**
 6. **It generalizes.** Flash to Anthropic — same engine, a different world.
 7. **You can touch it.** A shareable URL the judges open themselves afterward.
 8. **The moonshot (if it lands).** Type *any* company in plain language → an agent
    researches it and **builds the world on the spot.**
 
-The closing line is the whole thesis: *"We didn't predict the future. We made the
-consequence space legible — so you can watch your decision before you make it.
-It's only possible because Flash makes a thousand parallel reasoners cheap enough
-to actually run."*
+The closing line is the whole thesis — now about *seeing* **and choosing**: *"We
+didn't predict the future. We made the consequence space legible — so you can watch
+your decision before you make it, and pick the version that survives. Flash is what
+makes a thousand parallel reasoners cheap enough to actually run."* (The Flash line
+lands at the end as the answer to "why now" — the demo already sold it; the judges'
+job is to recognize that, not be told.)
 
 ---
 
@@ -102,14 +104,23 @@ diverge — is the softer, truer, un-disprovable claim.
 Each is a meaty, independent, *droppable* piece. The floor demo records fine
 without any of them; each one folded in makes it sharper.
 
+**Priority — identification happens at *one* moment (beat #3, "watching it think"),
+not five.** Everything before #3 is setup; everything after is reinforcement. If #3
+doesn't land, the rest doesn't matter; if it lands hard, the rest gets the benefit
+of the doubt. So the order, and how trade-offs resolve:
+**3a (the centerpiece) → 3b (the world-model claim) → 3e (defends integrity) → 3f
+(closes the desire loop) → 3c (value, but only after identification lands) → 3d
+(decoupled bonus).**
+
 ### 3a. Per-node live reasoning — "watch it think"
 Today the live run streams one event *per tick*, so a tick is ~16s of silence then
 a burst. The fix turns the wait into the show: stream **who is thinking now** and
 **each node's one-line rationale the instant its call returns**. The dead air
-becomes a live feed of reasoning. This is the single highest-leverage thing for the
-DeepMind "it's really reasoning" moment — it converts a latency liability into the
-spectacle. *(Kernel emits finer-grained events; the viz renders a thinking-pulse +
-a reasoning ticker.)*
+becomes a live feed of reasoning. **This is THE centerpiece — the one moment where
+the judge's identification snaps shut.** Get it working, then beautiful, then *more*
+beautiful; if anything else slips to make this better, that is the right trade. It
+converts a latency liability into the spectacle. *(Kernel emits finer-grained events;
+the viz renders a thinking-pulse + a reasoning ticker.)*
 
 ### 3b. Same action, different world — the intellectual centerpiece
 The vision's sharpest idea: run the *same* action in two *shapes* of world and watch
@@ -137,20 +148,28 @@ being "a Notion simulator" and becomes "**describe any decision in any org and
 watch its consequence space, on demand.**" It's fully decoupled from the demo's
 critical path — a bonus reveal if it lands, a vision slide if it doesn't.
 
-### 3e. Credibility re-tune of the fan
+### 3e. Credibility re-tune of the fan — *near-floor, not stretch*
 The current fan reads *too* clean (framing explains 100%, a perfect 50/50 split) —
 a skeptic smells synthetic. A light re-tune to ~80% explained variance with a
-slightly uneven split makes the punchline more believable without weakening it.
+slightly uneven split makes the punchline believable without weakening it. **This is
+integrity, not polish:** if the fan reads fake, the live cascade *retroactively*
+re-frames as scripted too. Treat it as near-floor.
 
-### 3f. The decision made explicit — variant A/B + a recommendation
+### 3f. The decision made explicit — variant A/B + what the sweep settles on
 The fan *already is* a variant comparison (its two clusters are the two framings),
-but it's framed implicitly as "16 futures." Make the wedge explicit, cheaply: read
-the fan as **"we ran your announcement two ways — independent vs. integrated"** and
-surface a **recommended variant** ("lead with 'independent' — it avoids the backlash
-regime entirely"). This is the move that turns Wake from "watch consequences" into
-"**here's which way to do it**" — the AIFF decision-optimization wedge, on screen, in
-one line. It's a `recommendation` field + a copy/narration change, *not* the full
-interactive variant/sequence lab (that stays a future extension).
+framed implicitly as "16 futures." Make the wedge explicit, cheaply: read it as
+**"we ran your announcement two ways"** and surface **what the sweep settles on**.
+Two hard rules on the copy, because this is exactly where 3f could undercut 3e's
+honesty:
+- **Hedge to the data, never to an oracle.** ❌ "Lead with 'independent' — it avoids
+  the backlash entirely." ✅ "Integrated framing falls into the backlash regime four
+  times in five — the pivotal variable points to 'independent.'"
+- **Wake is the instrument; the judge is the judgment.** Never "Wake recommends" /
+  "the AI says." Use "the sweep settles on…" / "the pivotal variable points to…" so
+  the call reads as coming from the *math of the sweep*, not a model's opinion —
+  otherwise we fall into the discredited "AI advice tool" category and lose the room.
+This turns "watch consequences" into "which way survives" — the AIFF wedge — for the
+cost of a `recommendation` field + careful copy, not the full interactive lab.
 
 ---
 
@@ -211,10 +230,11 @@ Agent 4 (anlys)  █credibility re-tune█ ░QA full arc + (stretch) Anthropic 
   switch) and a shareable Vercel deployment of the replay.
 - **Agent 3** — *the moonshot, isolated:* Genesis via Gemini Managed Agents — NL →
   research → Flash-generated world; decoupled, use-if-ready.
-- **Agent 4** — *credibility + the wedge:* the fan credibility re-tune; the
-  **variant A/B recommendation** (a `recommendation` derived from the existing sweep
-  — "lead with 'independent'"); a QA pass of the full arc; (stretch) an Anthropic
-  Monte-Carlo fan.
+- **Agent 4** — *credibility + the wedge:* the fan credibility re-tune (near-floor —
+  protects the demo's integrity); the **variant A/B `recommendation`** derived from
+  the sweep math, phrased as *instrument-not-advisor* ("the sweep settles on
+  'independent'; integrated hits the backlash regime N of M") — never "Wake
+  recommends"; a QA pass of the full arc; (stretch) an Anthropic Monte-Carlo fan.
 
 ---
 
