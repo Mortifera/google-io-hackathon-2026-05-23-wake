@@ -9,6 +9,8 @@ import {
   RealGeminiTransport,
   toJsonSchema,
   httpStatusOf,
+  isNetworkError,
+  isRetryableError,
   withRetry,
   type GeminiTransport,
   type GeminiRawResponse,
@@ -50,6 +52,13 @@ function ok(data: unknown, usage = USAGE): GeminiRawResponse {
 
 function status(code: number, message = `http ${code}`): Error {
   return Object.assign(new Error(message), { status: code });
+}
+
+/** Build an undici-style `TypeError: fetch failed` wrapping a network code. */
+function fetchFailed(code = "ECONNRESET"): Error {
+  return Object.assign(new TypeError("fetch failed"), {
+    cause: Object.assign(new Error(`network error: ${code}`), { code }),
+  });
 }
 
 /** Transport that replays `steps` (errors are thrown), repeating the last step. */
@@ -195,6 +204,27 @@ describe("GeminiLLMClient.complete — resilience", () => {
     const res = await client.complete<Decision>(ARGS);
     expect(res.data).toEqual(VALID);
     expect(calls).toHaveLength(2);
+  });
+
+  it("retries on a network error (fetch failed / ECONNRESET) then succeeds", async () => {
+    // This is the failure that crashed the precompute: a network-layer blip,
+    // not an HTTP status. The SDK surfaces it as `TypeError: fetch failed`.
+    const { transport, calls } = makeTransport([fetchFailed("ECONNRESET"), ok(VALID)]);
+    const client = new GeminiLLMClient({ transport, sleep: NO_SLEEP });
+    const res = await client.complete<Decision>(ARGS);
+    expect(res.data).toEqual(VALID);
+    expect(calls).toHaveLength(2);
+  });
+
+  it("retries through several network blips before succeeding", async () => {
+    const { transport, calls } = makeTransport([
+      fetchFailed("ETIMEDOUT"),
+      fetchFailed("EAI_AGAIN"),
+      ok(VALID),
+    ]);
+    const client = new GeminiLLMClient({ transport, sleep: NO_SLEEP });
+    await client.complete<Decision>(ARGS);
+    expect(calls).toHaveLength(3);
   });
 
   it("retries on 503 then succeeds", async () => {
@@ -455,6 +485,38 @@ describe("httpStatusOf", () => {
     expect(httpStatusOf({ code: 503 })).toBe(503);
     expect(httpStatusOf(new Error("got a 500 from upstream"))).toBe(500);
     expect(httpStatusOf(new Error("nope"))).toBeUndefined();
+  });
+});
+
+describe("isNetworkError", () => {
+  it("detects undici 'fetch failed' and walks the cause chain for the code", () => {
+    expect(isNetworkError(fetchFailed("ECONNRESET"))).toBe(true);
+    expect(isNetworkError(fetchFailed("ETIMEDOUT"))).toBe(true);
+    expect(isNetworkError(fetchFailed("ECONNREFUSED"))).toBe(true);
+    expect(isNetworkError(fetchFailed("EAI_AGAIN"))).toBe(true);
+  });
+
+  it("detects a code directly on the error and undici UND_ERR_* codes", () => {
+    expect(isNetworkError({ code: "ECONNRESET" })).toBe(true);
+    expect(isNetworkError({ code: "UND_ERR_SOCKET" })).toBe(true);
+    expect(isNetworkError(new Error("socket hang up"))).toBe(true);
+  });
+
+  it("does not flag ordinary HTTP/application errors as network errors", () => {
+    expect(isNetworkError(status(400, "bad request"))).toBe(false);
+    expect(isNetworkError(status(429))).toBe(false);
+    expect(isNetworkError(new Error("invalid responseJsonSchema"))).toBe(false);
+    expect(isNetworkError(undefined)).toBe(false);
+  });
+});
+
+describe("isRetryableError", () => {
+  it("is true for 429/5xx and for network blips, false otherwise", () => {
+    expect(isRetryableError(status(429))).toBe(true);
+    expect(isRetryableError(status(503))).toBe(true);
+    expect(isRetryableError(fetchFailed("ECONNRESET"))).toBe(true);
+    expect(isRetryableError(status(400))).toBe(false);
+    expect(isRetryableError(new Error("unrelated"))).toBe(false);
   });
 });
 

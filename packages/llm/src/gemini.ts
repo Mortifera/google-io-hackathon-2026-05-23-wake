@@ -302,10 +302,9 @@ export class GeminiLLMClient implements LLMClient {
           maxDelayMs: this.maxDelayMs,
           sleep: this.sleep,
           maxOnErrorRetries: MAX_ON_ERROR_RETRIES,
-          isRetryable: (e) => {
-            const status = httpStatusOf(e);
-            return status !== undefined && RETRYABLE_STATUS.has(status);
-          },
+          // Retry transient HTTP statuses (429/5xx) AND network-layer blips
+          // (ECONNRESET, fetch failed, etc.) — the latter killed the precompute.
+          isRetryable: isRetryableError,
           // Correctable, non-transient errors: rewrite request state and retry
           // immediately (bounded by maxOnErrorRetries). Each guard is also self-
           // limiting because it clears the state it keys on.
@@ -529,6 +528,49 @@ export function httpStatusOf(err: unknown): number | undefined {
   const msg = typeof e.message === "string" ? e.message : "";
   const m = /\b(429|500|502|503|504)\b/.exec(msg);
   return m ? Number(m[1]) : undefined;
+}
+
+/** node:fetch / undici network-layer error codes worth retrying. */
+const NETWORK_ERROR_CODES = new Set([
+  "ECONNRESET",
+  "ETIMEDOUT",
+  "ECONNREFUSED",
+  "EAI_AGAIN",
+  "ENOTFOUND",
+  "EPIPE",
+  "ECONNABORTED",
+  "EHOSTUNREACH",
+  "ENETUNREACH",
+]);
+
+/**
+ * Detect a transient network/connection failure (not an HTTP response). Node's
+ * `fetch` throws `TypeError: fetch failed` whose `.cause` carries the real code
+ * (e.g. ECONNRESET) or an undici `UND_ERR_*` code, so we walk the cause chain.
+ */
+export function isNetworkError(err: unknown): boolean {
+  for (let e: unknown = err, depth = 0; e && typeof e === "object" && depth < 5; depth++) {
+    const o = e as { code?: unknown; message?: unknown; cause?: unknown };
+    const code = typeof o.code === "string" ? o.code : "";
+    if (NETWORK_ERROR_CODES.has(code) || code.startsWith("UND_ERR_")) return true;
+    const msg = typeof o.message === "string" ? o.message.toLowerCase() : "";
+    if (
+      /fetch failed|socket hang up|und_err_|econnreset|etimedout|econnrefused|eai_again|enotfound|epipe/.test(
+        msg,
+      )
+    ) {
+      return true;
+    }
+    e = o.cause;
+  }
+  return false;
+}
+
+/** Transient and worth retrying with backoff: 429/5xx, or a network blip. */
+export function isRetryableError(err: unknown): boolean {
+  const status = httpStatusOf(err);
+  if (status !== undefined && RETRYABLE_STATUS.has(status)) return true;
+  return isNetworkError(err);
 }
 
 function errMessage(err: unknown): string {
