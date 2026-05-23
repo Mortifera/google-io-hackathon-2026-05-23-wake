@@ -50,16 +50,36 @@ export function applyPerturbation(
 ): World {
   const w = structuredClone(world);
 
-  // framing — rewrite the acquisition messaging the seed injects.
+  // framing — the headline DECISION lever. It rewrites the seed messaging AND
+  // shifts initial conditions, because "deeply integrated into Microsoft 365"
+  // genuinely alarms the craft/community base far more than "stays independent".
+  // This makes framing a real, strong lever (not just a text tweak), which is
+  // both more honest about the world and the on-thesis "watch your decision" axis.
   const seed = w.seeds.find((s) => s.id === seedId);
-  if (p.framing && seed) {
-    seed.payload =
-      p.framing === "integrated"
+  if (p.framing) {
+    const integrated = p.framing === "integrated";
+    if (seed) {
+      seed.payload = integrated
         ? "Microsoft has acquired Notion. The official announcement emphasizes that Notion will be deeply integrated into Microsoft 365 and Copilot."
         : "Microsoft has acquired Notion. The official announcement emphasizes that Notion will keep operating independently — its own brand, team, and design culture.";
+    }
+    for (const n of w.nodes) {
+      if (
+        /power-user|ambassador|designer|prosumer|creator|community|reddit|discord|hacker|productivity|enthusiast|switch/i.test(
+          `${n.id} ${n.label} ${n.dossier}`,
+        )
+      ) {
+        n.initialState.mood.sentiment = integrated
+          ? Math.min(n.initialState.mood.sentiment, -0.3)
+          : Math.max(n.initialState.mood.sentiment, 0.15);
+        if (integrated) {
+          n.initialState.mood.urgency = Math.max(n.initialState.mood.urgency, 0.4);
+        }
+      }
+    }
   }
 
-  // pressClimate — tilt the journalists' starting disposition.
+  // pressClimate — a SECONDARY lever: a softer tilt to journalists' disposition.
   if (p.pressClimate) {
     const skeptical = p.pressClimate === "skeptical";
     for (const n of w.nodes) {
@@ -69,8 +89,8 @@ export function applyPerturbation(
         )
       ) {
         n.initialState.mood.sentiment = skeptical
-          ? Math.min(n.initialState.mood.sentiment, -0.4)
-          : Math.max(n.initialState.mood.sentiment, 0.15);
+          ? Math.min(n.initialState.mood.sentiment, -0.2)
+          : Math.max(n.initialState.mood.sentiment, 0.1);
       }
     }
   }
