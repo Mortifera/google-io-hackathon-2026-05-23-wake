@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
-import type { Cascade, MonteCarloResult, World } from "@wake/contracts";
+import { useEffect, useMemo, useState } from "react";
+import type { World } from "@wake/contracts";
 import {
   buildCascadeModel,
   buildGraphModel,
@@ -9,19 +9,19 @@ import {
 } from "../lib/model";
 import { usePlayback } from "../lib/usePlayback";
 import { AFFECT_LEGEND } from "../lib/palette";
+import { DEFAULT_ACTION_ID, isLive, scenarioFor } from "../lib/scenarios";
 import GraphCanvas from "./GraphCanvas";
 import Transport from "./Transport";
 import InspectorPanel, { type Focus } from "./InspectorPanel";
 import MonteCarloFan from "./MonteCarloFan";
+import OperatorConsole from "./OperatorConsole";
 import s from "./stage.module.css";
 
 type Layer = "public" | "private";
 type View = "cascade" | "futures";
 
 interface Props {
-  cascade: Cascade;
-  mc: MonteCarloResult;
-  world?: World;
+  world: World;
 }
 
 const EVENT_PRIORITY: Record<string, number> = {
@@ -39,42 +39,73 @@ function fmtClock(min: number): string {
   return m ? `t+${h}h ${m}m` : `t+${h}h`;
 }
 
-export default function Stage({ cascade, mc, world }: Props) {
+export default function Stage({ world }: Props) {
+  const [actionId, setActionId] = useState(DEFAULT_ACTION_ID);
+  const scenario = scenarioFor(actionId);
+  const cascade = scenario.cascade;
+  const mc = scenario.mc;
+
   const graph = useMemo(() => buildGraphModel(cascade, world), [cascade, world]);
   const model = useMemo(() => buildCascadeModel(cascade, graph), [cascade, graph]);
   // Playback spans [0, nTicks] so the final act animates fully (see resolveFrame).
   const last = model.ticks.length;
 
   const pb = usePlayback(last);
+  const { setP, play } = pb;
   const [view, setView] = useState<View>("cascade");
   const [layer, setLayer] = useState<Layer>("public");
   const [focus, setFocus] = useState<Focus>({ kind: "none" });
+  const [consoleOpen, setConsoleOpen] = useState(false);
 
-  // autoplay once, after first paint, for the cinematic open
-  const didAuto = useRef(false);
+  // autoplay on mount and whenever the scenario changes (the cinematic open)
   useEffect(() => {
-    if (didAuto.current) return;
-    didAuto.current = true;
-    const t = setTimeout(() => pb.play(), 650);
+    setFocus({ kind: "none" });
+    setP(0);
+    const t = setTimeout(() => play(), 550);
     return () => clearTimeout(t);
-  }, [pb]);
+  }, [actionId, setP, play]);
 
-  // keyboard transport
+  const selectAction = (id: string) => {
+    if (!isLive(id)) return;
+    setActionId(id);
+    setView("cascade");
+    setConsoleOpen(false);
+  };
+  const escapeHatch = () => {
+    setActionId(DEFAULT_ACTION_ID);
+    setView("cascade");
+    setConsoleOpen(false);
+    setP(0);
+    play();
+  };
+
+  // keyboard transport + operator shortcuts
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.code === "KeyO") {
+        setConsoleOpen((v) => !v);
+        return;
+      }
+      // 1–5 inject the matching seed action (if precomputed)
+      if (/^Digit[1-5]$/.test(e.code)) {
+        const seed = world.seeds[Number(e.code.slice(5)) - 1];
+        if (seed) selectAction(seed.id);
+        return;
+      }
       if (view !== "cascade") return;
       if (e.code === "Space") {
         e.preventDefault();
         pb.toggle();
       } else if (e.code === "ArrowRight") {
-        pb.setP(Math.min(last, Math.round(pb.pRef.current ?? 0) + 1));
+        setP(Math.min(last, Math.round(pb.pRef.current ?? 0) + 1));
       } else if (e.code === "ArrowLeft") {
-        pb.setP(Math.max(0, Math.round(pb.pRef.current ?? 0) - 1));
+        setP(Math.max(0, Math.round(pb.pRef.current ?? 0) - 1));
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [pb, last, view]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pb, last, view, world]);
 
   const frame = resolveFrame(model, pb.p);
   const actEvents = model.ticks[frame.act]?.events ?? [];
@@ -96,19 +127,30 @@ export default function Stage({ cascade, mc, world }: Props) {
             <span className="mono">{model.seedActionId}</span>
           </span>
         </div>
-        <div className={s.switch}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <button
-            data-active={view === "cascade"}
-            onClick={() => setView("cascade")}
+            className={s.opBtn}
+            data-active={consoleOpen}
+            onClick={() => setConsoleOpen((v) => !v)}
+            title="Operator console (O)"
           >
-            Cascade
+            <span className={s.opDotLive} />
+            Operator
           </button>
-          <button
-            data-active={view === "futures"}
-            onClick={() => setView("futures")}
-          >
-            Futures
-          </button>
+          <div className={s.switch}>
+            <button
+              data-active={view === "cascade"}
+              onClick={() => setView("cascade")}
+            >
+              Cascade
+            </button>
+            <button
+              data-active={view === "futures"}
+              onClick={() => setView("futures")}
+            >
+              Futures
+            </button>
+          </div>
         </div>
       </header>
 
@@ -128,7 +170,7 @@ export default function Stage({ cascade, mc, world }: Props) {
               />
 
               {salient ? (
-                <div className={s.caption} key={frame.act}>
+                <div className={s.caption} key={`${actionId}-${frame.act}`}>
                   <div className={s.captionKicker}>
                     Act {frame.act + 1} · {fmtClock(frame.clock)}
                   </div>
@@ -144,6 +186,17 @@ export default function Stage({ cascade, mc, world }: Props) {
                   </div>
                 ))}
               </div>
+
+              {consoleOpen ? (
+                <OperatorConsole
+                  world={world}
+                  currentActionId={actionId}
+                  onSelect={selectAction}
+                  pb={pb}
+                  onEscape={escapeHatch}
+                  onClose={() => setConsoleOpen(false)}
+                />
+              ) : null}
             </div>
 
             <InspectorPanel
@@ -158,8 +211,18 @@ export default function Stage({ cascade, mc, world }: Props) {
 
           <Transport model={model} pb={pb} layer={layer} setLayer={setLayer} />
         </>
-      ) : (
+      ) : mc ? (
         <MonteCarloFan mc={mc} />
+      ) : (
+        <div className={s.middle}>
+          <div className={s.stage}>
+            <div className={s.empty} style={{ padding: 40, maxWidth: 460 }}>
+              Monte Carlo analysis hasn’t been computed for{" "}
+              <strong>{model.seedActionId}</strong> yet. Run the analysis pass to
+              populate the fan of futures.
+            </div>
+          </div>
+        </div>
       )}
     </div>
   );

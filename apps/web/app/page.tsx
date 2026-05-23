@@ -1,18 +1,13 @@
-import type { Cascade, MonteCarloResult, World } from "@wake/contracts";
-import cascadeJson from "@fixtures/cascades/notion-world.acquisition.json";
-import mcJson from "@fixtures/montecarlo/notion-acquisition.json";
+import type { World } from "@wake/contracts";
 import worldJson from "@worlds/notion/world.json";
 import Stage from "../components/Stage";
 
-// CP1 (landed): the cascade + world are now the REAL 207-node Gemini run
-// (`notion-world.acquisition.json` over `worlds/notion/world.json`), not the
-// hand-authored mini fixtures. The viz reads the same Cascade/World shapes, so
-// this was a two-import swap. The Monte Carlo fan still reads the fixture
-// MonteCarloResult until CP3 wires the real analysis output.
-const cascade = cascadeJson as unknown as Cascade;
-const mc = mcJson as unknown as MonteCarloResult;
+// CP1 (landed): the real 207-node Gemini world + cascade. Cascades are wired
+// through the scenario registry (lib/scenarios.ts) keyed by seed action, so the
+// operator console can switch between precomputed runs; this page just supplies
+// the static World. The Monte Carlo fan reads the fixture analysis until CP3.
 const world = worldJson as unknown as World;
 
 export default function Page() {
-  return <Stage cascade={cascade} mc={mc} world={world} />;
+  return <Stage world={world} />;
 }
