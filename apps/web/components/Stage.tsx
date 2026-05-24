@@ -635,7 +635,7 @@ export default function Stage({ world }: Props) {
               ) : null}
             </div>
 
-            {mode === "live" ? (
+            {mode === "live" && liveStatus !== "done" ? (
               <ReasoningFeed
                 reasoning={reasoning}
                 thinkingCount={thinking.size}
