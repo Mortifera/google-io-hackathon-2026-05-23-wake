@@ -13,7 +13,7 @@ import {
   shortHeadline,
   type ExplanationResult,
 } from "../lib/explain";
-import { appendTick, emptyCascade, openCascadeStream } from "../lib/liveStream";
+import { appendTick, emptyCascade, openByoWorldStream, openCascadeStream } from "../lib/liveStream";
 import { usePlayback } from "../lib/usePlayback";
 import { AFFECT_LEGEND, affectStyle } from "../lib/palette";
 import { DEFAULT_ACTION_ID, isLive, scenarioFor } from "../lib/scenarios";
@@ -24,6 +24,7 @@ import MonteCarloFan from "./MonteCarloFan";
 import OperatorConsole from "./OperatorConsole";
 import ReasoningFeed from "./ReasoningFeed";
 import ABTesting from "./ABTesting";
+import ByoWorldPanel from "./ByoWorldPanel";
 import s from "./stage.module.css";
 
 interface ActiveTrace {
@@ -72,6 +73,17 @@ export default function Stage({ world }: Props) {
   const scenario = scenarioFor(actionId);
   const mc = scenario.mc;
 
+  // BYO-world state: when set, the uploaded world drives the graph layout and
+  // a live cascade runs against it via POST /api/stream-cascade.
+  const [byoWorld, setByoWorld] = useState<World | null>(null);
+  const [byoSeed, setByoSeed] = useState<string>("");
+  const [byoPanelOpen, setByoPanelOpen] = useState(false);
+  // When non-null, we're in BYO mode: stream is opened via openByoWorldStream.
+  const byoWorldRef = useRef<World | null>(null);
+  const byoSeedRef = useRef<string>("");
+  byoWorldRef.current = byoWorld;
+  byoSeedRef.current = byoSeed;
+
   // Live streaming state. In live mode the active cascade is the growing
   // accumulator; the graph layout always comes from the (full) scenario cascade
   // + world, so node positions stay fixed while ticks stream in.
@@ -94,12 +106,27 @@ export default function Stage({ world }: Props) {
   const [flash, setFlash] = useState<{ id: string; nonce: number } | null>(null);
   const flashSeq = useRef(0);
 
-  const graph = useMemo(
-    () => buildGraphModel(scenario.cascade, world),
-    [scenario.cascade, world],
-  );
+  // In BYO mode, the graph layout comes from the uploaded world + an empty
+  // cascade (or the live cascade once it starts streaming).
+  const activeWorld = byoWorld ?? world;
+  // For BYO, build an empty cascade seed so nodes/positions are defined
+  // even before streaming starts.
+  const byoBaseCascade = useMemo<Cascade | null>(() => {
+    if (!byoWorld || !byoSeed) return null;
+    return emptyCascade(byoWorld.id, byoSeed);
+  }, [byoWorld, byoSeed]);
+
+  const graph = useMemo(() => {
+    if (byoWorld && byoBaseCascade) {
+      return buildGraphModel(byoBaseCascade, byoWorld);
+    }
+    return buildGraphModel(scenario.cascade, world);
+  }, [byoWorld, byoBaseCascade, scenario.cascade, world]);
+
   const activeCascade =
-    mode === "live" && liveCascade ? liveCascade : scenario.cascade;
+    mode === "live" && liveCascade ? liveCascade
+    : byoWorld && byoBaseCascade ? byoBaseCascade
+    : scenario.cascade;
   const model = useMemo(
     () => buildCascadeModel(activeCascade, graph),
     [activeCascade, graph],
@@ -121,6 +148,34 @@ export default function Stage({ world }: Props) {
   modeRef.current = mode;
   const streamOpenRef = useRef(streamOpen);
   streamOpenRef.current = streamOpen;
+
+  // On mount: check if /genesis sent us a world via sessionStorage ("Run it →").
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("byo") !== "1") return;
+    try {
+      const raw = sessionStorage.getItem("byo-world");
+      if (!raw) return;
+      sessionStorage.removeItem("byo-world");
+      // Lazy import WorldSchema to keep this effect clean.
+      import("@wake/contracts").then(({ WorldSchema }) => {
+        const result = WorldSchema.safeParse(JSON.parse(raw));
+        if (result.success) {
+          setByoWorld(result.data);
+          setByoSeed(result.data.seeds[0]?.id ?? "");
+          setByoPanelOpen(true);
+        }
+      }).catch(() => {/* ignore */});
+    } catch {
+      /* ignore storage errors */
+    }
+    // Remove the query param without a page reload.
+    const url = new URL(window.location.href);
+    url.searchParams.delete("byo");
+    window.history.replaceState({}, "", url.toString());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Run the DAG trace-back and enter the cinematic "why" mode (pauses playback).
   // The local trace renders instantly; we then try to enrich the prose with the
@@ -229,15 +284,17 @@ export default function Stage({ world }: Props) {
   // THE single source of truth for the SSE connection. Opening/closing happens
   // only here, so React (incl. StrictMode double-mount + Fast Refresh) guarantees
   // exactly one live connection, and its cleanup always closes the server run.
+  // BYO mode uses openByoWorldStream (POST) instead of openCascadeStream (GET/EventSource).
   useEffect(() => {
     if (!streamOpen) return;
-    const handle = openCascadeStream(actionIdRef.current, {
-      onTickStart: (_tick, active) => {
+
+    const streamHandlers = {
+      onTickStart: (_tick: number, active: { id: string; label: string }[]) => {
         setLiveStatus("streaming");
         setThinking(new Set(active.map((a) => a.id)));
         setActiveThisTick(active.length);
       },
-      onNodeActed: (tick, nodeId, label, rationale, outgoing) => {
+      onNodeActed: (tick: number, nodeId: string, label: string, rationale: string, outgoing: number) => {
         flashSeq.current += 1;
         setFlash({ id: nodeId, nonce: flashSeq.current });
         setThinking((prev) => {
@@ -252,28 +309,40 @@ export default function Stage({ world }: Props) {
           ].slice(0, 60),
         );
       },
-      onTick: (tick, snapshot, divergence) => {
+      onTick: (tick: import("@wake/contracts").Tick, snapshot: import("@wake/contracts").StateSnapshot, divergence: import("../lib/liveStream").StreamDivergence) => {
         setLiveStatus("streaming");
         setThinking(new Set());
         setLiveCascade((prev) =>
           prev ? appendTick(prev, tick, snapshot, divergence) : prev,
         );
       },
-      onDone: (full) => {
+      onDone: (full: Cascade) => {
         setLiveStatus("done");
         setThinking(new Set());
         setLiveCascade(full);
         setStreamOpen(false);
       },
       onError: () => {
-        // stream failed/stalled → fall back to the precomputed run
+        // stream failed/stalled → fall back
         setLiveStatus("error");
         setStreamOpen(false);
-        setMode("replay");
-        setActionId(DEFAULT_ACTION_ID);
-        setReplayNonce((n) => n + 1);
+        if (byoWorldRef.current) {
+          // BYO error: stay in BYO world, just stop streaming
+          setMode("replay");
+        } else {
+          setMode("replay");
+          setActionId(DEFAULT_ACTION_ID);
+          setReplayNonce((n) => n + 1);
+        }
       },
-    });
+    };
+
+    let handle: import("../lib/liveStream").LiveHandle;
+    if (byoWorldRef.current && byoSeedRef.current) {
+      handle = openByoWorldStream(byoWorldRef.current, byoSeedRef.current, streamHandlers);
+    } else {
+      handle = openCascadeStream(actionIdRef.current, streamHandlers);
+    }
     return () => handle.close();
   }, [streamOpen, liveToken]);
 
@@ -281,6 +350,10 @@ export default function Stage({ world }: Props) {
     setFocus({ kind: "none" });
     setView("cascade");
     setConsoleOpen(false);
+    setByoPanelOpen(false);
+    // Clear BYO mode — this starts a standard live run on the Notion world.
+    setByoWorld(null);
+    setByoSeed("");
     setLiveCascade(emptyCascade(world.id, actionIdRef.current));
     setThinking(new Set());
     setActiveThisTick(0);
@@ -293,6 +366,26 @@ export default function Stage({ world }: Props) {
     setLiveToken((t) => t + 1);
     setStreamOpen(true);
   }, [world.id, setP]);
+
+  // Start a live cascade on a bring-your-own world via POST.
+  const startByoLive = useCallback((byo: World, seed: string) => {
+    setFocus({ kind: "none" });
+    setView("cascade");
+    setByoPanelOpen(false);
+    setByoWorld(byo);
+    setByoSeed(seed);
+    setLiveCascade(emptyCascade(byo.id, seed));
+    setThinking(new Set());
+    setActiveThisTick(0);
+    setReasoning([]);
+    setFlash(null);
+    setMode("live");
+    setLiveStatus("connecting");
+    setP(0);
+    setStreamOpen(false);
+    setLiveToken((t) => t + 1);
+    setStreamOpen(true);
+  }, [setP]);
 
   // Stop the live stream (Pause during a live run) but keep the streamed-so-far
   // cascade frozen for scrubbing. Closing the connection aborts the server run.
@@ -309,6 +402,8 @@ export default function Stage({ world }: Props) {
     setStreamOpen(false);
     setMode("replay");
     setLiveCascade(null);
+    setByoWorld(null);
+    setByoSeed("");
     setThinking(new Set());
     setActiveThisTick(0);
     setReasoning([]);
@@ -423,6 +518,17 @@ export default function Stage({ world }: Props) {
             <span className={s.fallbackTag}>stream unavailable — precomputed run</span>
           ) : null}
           <button
+            className={s.byoBtn}
+            data-active={byoPanelOpen}
+            onClick={() => setByoPanelOpen((v) => !v)}
+            title="Upload a world JSON from /genesis"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 2a1 1 0 0 1 1 1v8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 1.414-1.414L11 11.586V3a1 1 0 0 1 1-1ZM5 19a1 1 0 1 0 0 2h14a1 1 0 1 0 0-2H5Z" style={{ transform: "rotate(180deg)", transformOrigin: "center" }} />
+            </svg>
+            Upload world
+          </button>
+          <button
             className={s.opBtn}
             data-active={consoleOpen}
             onClick={() => setConsoleOpen((v) => !v)}
@@ -512,6 +618,19 @@ export default function Stage({ world }: Props) {
                   onRunLive={startLive}
                   liveStatus={liveStatus}
                   mode={mode}
+                />
+              ) : byoPanelOpen ? (
+                <ByoWorldPanel
+                  onWorldLoaded={(w) => {
+                    // Preview the world graph immediately (no stream yet).
+                    setByoWorld(w);
+                    setByoSeed(w.seeds[0]?.id ?? "");
+                    setMode("replay");
+                    setLiveCascade(null);
+                  }}
+                  onStartStream={startByoLive}
+                  onClose={() => setByoPanelOpen(false)}
+                  liveStatus={liveStatus}
                 />
               ) : null}
             </div>

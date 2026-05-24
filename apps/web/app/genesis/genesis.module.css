@@ -477,9 +477,9 @@
 
 .castRow {
   flex-shrink: 0;
-  height: 96px;
+  min-height: 96px;
   border-top: 1px solid var(--border);
-  padding: 0 44px;
+  padding: 12px 44px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -519,4 +519,50 @@
   letter-spacing: 0.1em;
   color: var(--text-faint);
   text-transform: uppercase;
+}
+
+/* ── Cast action buttons ─────────────────────────────────────────────────── */
+
+.castActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.downloadBtn,
+.runBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 14px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+
+.downloadBtn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+.downloadBtn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.runBtn {
+  background: var(--accent);
+  border: none;
+  color: #06080d;
+}
+
+.runBtn:hover {
+  opacity: 0.85;
 }

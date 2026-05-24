@@ -1,4 +1,4 @@
-import type { Cascade, StateSnapshot, Tick } from "@wake/contracts";
+import type { Cascade, StateSnapshot, Tick, World } from "@wake/contracts";
 
 /** Divergence on the wire may be a bare count or a {tick,count} point. */
 export type StreamDivergence = number | { tick: number; count: number };
@@ -142,6 +142,108 @@ export function emptyCascade(worldId: string, seedActionId: string): Cascade {
     divergence: [],
     finalState: {},
   };
+}
+
+/**
+ * Open a live cascade stream for a bring-your-own world via POST. Uses
+ * fetch() + ReadableStream because EventSource only supports GET. Parses the
+ * same SSE protocol as the GET path so the same handlers work for both.
+ */
+export function openByoWorldStream(
+  byoWorld: World,
+  seed: string,
+  handlers: Handlers,
+  opts: { stallMs?: number } = {},
+): LiveHandle {
+  const stallMs = opts.stallMs ?? 45_000;
+  let closed = false;
+  let stallTimer: ReturnType<typeof setTimeout> | null = null;
+  const ctrl = new AbortController();
+
+  const cleanup = () => {
+    closed = true;
+    if (stallTimer) clearTimeout(stallTimer);
+    stallTimer = null;
+    ctrl.abort();
+  };
+  const fail = () => {
+    if (closed) return;
+    cleanup();
+    handlers.onError();
+  };
+  const armStall = () => {
+    if (stallTimer) clearTimeout(stallTimer);
+    stallTimer = setTimeout(fail, stallMs);
+  };
+
+  // Kick off the fetch in the background; parse the streaming SSE lines.
+  void (async () => {
+    armStall();
+    try {
+      const res = await fetch("/api/stream-cascade", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ world: byoWorld, seed }),
+        signal: ctrl.signal,
+      });
+      if (!res.ok || !res.body) {
+        fail();
+        return;
+      }
+      armStall();
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = "";
+
+      while (!closed) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        // SSE frames are separated by double-newline.
+        const chunks = buf.split("\n\n");
+        buf = chunks.pop() ?? "";
+
+        for (const chunk of chunks) {
+          if (closed) break;
+          armStall();
+          // A chunk may be a keep-alive comment (": keep-alive") — ignore it.
+          const line = chunk.trim();
+          if (!line.startsWith("data:")) continue;
+          let msg: StreamEvent;
+          try {
+            msg = JSON.parse(line.slice(5).trim()) as StreamEvent;
+          } catch {
+            continue;
+          }
+          if (msg.type === "tick") {
+            handlers.onTick(msg.tick, msg.snapshot, msg.divergence);
+          } else if (msg.type === "tick-start") {
+            handlers.onTickStart?.(msg.tick, msg.active);
+          } else if (msg.type === "node-acted") {
+            handlers.onNodeActed?.(
+              msg.tick,
+              msg.nodeId,
+              msg.label,
+              msg.rationale,
+              msg.outgoing,
+            );
+          } else if (msg.type === "done") {
+            handlers.onDone(msg.cascade);
+            cleanup();
+            return;
+          } else if ((msg as { type: string }).type === "error") {
+            fail();
+            return;
+          }
+        }
+      }
+      if (!closed) fail();
+    } catch (err) {
+      if ((err as Error).name !== "AbortError") fail();
+    }
+  })();
+
+  return { close: cleanup };
 }
 
 /** Append one streamed tick to a growing cascade (immutably). */

@@ -86,3 +86,92 @@ export function GET(req: Request) {
     },
   });
 }
+
+// ── POST: bring-your-own-world ─────────────────────────────────────────────
+// Accepts { world: World, seed: string } in the request body. Validates the
+// world with WorldSchema (400 on failure), then streams a live cascade exactly
+// like the GET path. The same SSE protocol: tick-start → node-acted → tick →
+// done. Client reads via fetch() + ReadableStream (EventSource is GET-only).
+export async function POST(req: Request) {
+  const key =
+    process.env.GEMINI_API_KEY ||
+    process.env.GOOGLE_API_KEY ||
+    process.env.GOOGLE_GENERATIVE_AI_API_KEY;
+
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return new Response(JSON.stringify({ error: "invalid JSON body" }), {
+      status: 400,
+      headers: { "content-type": "application/json" },
+    });
+  }
+
+  const parsed = WorldSchema.safeParse((body as Record<string, unknown>)?.world);
+  if (!parsed.success) {
+    return new Response(
+      JSON.stringify({ error: "world failed WorldSchema validation", issues: parsed.error.issues }),
+      { status: 400, headers: { "content-type": "application/json" } },
+    );
+  }
+
+  const uploadedWorld = parsed.data;
+  const seed = String((body as Record<string, unknown>)?.seed ?? uploadedWorld.seeds[0]?.id ?? "");
+
+  const encoder = new TextEncoder();
+
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      let open = true;
+      const send = (chunk: string): void => {
+        if (!open) return;
+        try {
+          controller.enqueue(encoder.encode(chunk));
+        } catch {
+          open = false;
+        }
+      };
+      const heartbeat = setInterval(() => send(`: keep-alive\n\n`), HEARTBEAT_MS);
+
+      try {
+        if (!key) throw new Error("no Gemini API key configured");
+        const llm = new GeminiLLMClient();
+
+        for await (const ev of runCascadeStream(
+          uploadedWorld,
+          seed,
+          { llm, tickFn, edgeTransform },
+          { concurrency: 6, maxTicks: 12 },
+        )) {
+          send(`data: ${JSON.stringify(ev)}\n\n`);
+          if (ev.type === "done") break;
+          if (req.signal.aborted || !open) break;
+        }
+      } catch (err) {
+        console.error(
+          "[/api/stream-cascade POST] failed:",
+          (err as Error)?.message ?? err,
+        );
+        send(`data: ${JSON.stringify({ type: "error" })}\n\n`);
+      } finally {
+        clearInterval(heartbeat);
+        open = false;
+        try {
+          controller.close();
+        } catch {
+          /* already closed */
+        }
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "content-type": "text/event-stream; charset=utf-8",
+      "cache-control": "no-cache, no-transform",
+      connection: "keep-alive",
+      "x-accel-buffering": "no",
+    },
+  });
+}

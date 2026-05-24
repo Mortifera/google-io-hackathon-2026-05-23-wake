@@ -239,6 +239,20 @@ export default function GenesisClient() {
 
   const totalEntities = world ? world.nodes.length : 0;
 
+  // ── Download helper ────────────────────────────────────────────────────────
+  const handleDownload = useCallback(() => {
+    if (!world) return;
+    const blob = new Blob([JSON.stringify(world, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `wake-world-${world.id.replace(/[^a-z0-9-]/gi, "-")}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }, [world]);
+
   return (
     <div className={s.root}>
       {/* ── Nav ───────────────────────────────────────────────────────────── */}
@@ -428,6 +442,34 @@ export default function GenesisClient() {
                 <span className={s.castLabel}>{label}</span>
               </div>
             ))}
+          </div>
+          <div className={s.castActions}>
+            <button className={s.downloadBtn} onClick={handleDownload} title="Download world.json">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 16l-5-5 1.4-1.4 2.6 2.6V4h2v8.2l2.6-2.6L17 11l-5 5zm-7 2h14v2H5v-2z"/>
+              </svg>
+              Download world.json
+            </button>
+            <a
+              href={`/?byoWorld=${encodeURIComponent(world.id)}`}
+              className={s.runBtn}
+              onClick={(e) => {
+                e.preventDefault();
+                // Encode world as query param is too large; use sessionStorage.
+                try {
+                  sessionStorage.setItem("byo-world", JSON.stringify(world));
+                  window.location.href = "/?byo=1";
+                } catch {
+                  // Fallback: download only
+                  handleDownload();
+                }
+              }}
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Run it →
+            </a>
           </div>
         </div>
       )}
