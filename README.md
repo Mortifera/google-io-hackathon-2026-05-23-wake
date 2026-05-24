@@ -124,6 +124,29 @@ checkpoints), and your **[`briefs/`](./briefs/README.md)** entry.
   action, cited event by event.
 - **Genesis** — one English sentence → a researched, runnable world (`tools/genesis`).
 
+## Build timeline
+
+**Built end to end during the hackathon and submitted by the 5:00pm PT freeze
+(2026-05-23).** Everything in **Status** above was in the submitted build: the
+simulation kernel (propagation, streaming, provenance DAG), per-node and per-edge
+Gemini 3.5 Flash reasoning, the Notion (208-node) and Anthropic worlds, live
+tick-by-tick streaming with the per-node reasoning feed, the Monte Carlo fan +
+pivotal variable, the interpretability trace, the A/B Testing and Genesis views, and
+the live Vercel deploy.
+
+A few small, cosmetic odds and ends landed *after* the freeze — pure housekeeping and
+minor convenience, nothing that touches the engine, the worlds, or the substance of
+what was submitted:
+
+- **5:00pm** — Parked the pitch deck in the repo (`docs/deck.html`). The slides
+  already existed; just committing the file.
+- **5:02pm** — Tidied a few stale planning/status notes out of `docs/`. Pure cleanup.
+- **5:11pm** — Small convenience: a "download" button on `/genesis` + a file-upload on
+  the main page so a generated world can be re-run. Reuses the existing live-cascade
+  stream — no new engine code.
+- **5:24pm** — One-line UX nit: after a live run finishes, clicking a node shows the
+  inspector again (it had stayed on the live feed). A single condition tweak.
+
 ## Name
 
 *Wake* — the trail of disturbance left behind a moving object; the thing every
