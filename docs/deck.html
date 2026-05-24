@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wake — Demo Deck (merged)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- One note per slide, in order. Demo slides carry the live-narration. -->
+  <script type="application/json" id="speaker-notes">
+  [
+    "This is Wake — a world model for organizational action. We built it to show what Gemini 3.5 Flash makes newly possible. It's live at wake-web-zeta.vercel.app.",
+
+    "I'm Jack Gardner — founding team at 11x, before that Amazon and Williams F1. I've built both AI agents and high-performance simulations. Wake is both.",
+
+    "Every operator in this room makes decisions that ripple through systems they can't see. You announce something, you ship something, you hire someone — and it propagates. By the time you can measure the consequences, they're already loose. So: what happens after you let go of the decision?",
+
+    "Every knowledge worker asks questions like these constantly and has no good tool for them. Will anyone care if we ship this? What does the world look like three months after this acquisition? Will this idea survive the room? Today they're answered by gut, by analogy, by expensive consultants who substitute their gut for yours. None of it scales. None of it branches. None of it shows you the world you're about to act on.",
+
+    "So we built the instrument that does. One action: Notion is acquired by Microsoft. What happens next? Watch.",
+
+    "[LIVE DEMO] This is Wake. Two hundred real people and platforms, each its own Gemini 3.5 Flash reasoner. We drop in one action — and let go. This isn't a progress bar — it's two hundred minds reasoning, live; you can read who's thinking and why, one rationale at a time… [pause, let the leak fire] …and that — that's a leak: a node's private interior diverged too far from its public face and surfaced. We don't script that. [click Ask why] And every outcome traces back to your action — cited, event by event.",
+
+    "[LIVE DEMO] Same action, two framings, side by side. Frame the acquisition as 'independent' and the base stays guarded; frame it 'integrated' and it tips into consumer backlash. You can A/B test a decision before you make it — which sets up the real question: what happens across not two framings, but a whole distribution?",
+
+    "[LIVE DEMO → land on these numbers] And we don't run it once. We ran the same acquisition 32 times with the world perturbed — three dollars and nineteen cents. The futures settle into two regimes: consumer backlash in three of four runs, competitors capitalizing in the rest. The single dial that most decides which one you land in is the acquisition messaging framing — independent versus integrated — 58% of the cross-regime variance. Wake doesn't tell you what to do. It tells you where the lever is.",
+
+    "None of this was possible until last week. You need three things at once: frontier reasoning at every node, output fast enough to tick on stage, and cost low enough to run thousands of branches. Frontier models had the intelligence but not the speed or the cost; small models had the reverse. Gemini 3.5 Flash is the first model in the corner where all three are satisfied simultaneously — which is exactly why 32 Monte Carlo runs over 200 nodes cost $3.19 instead of thousands. The cost basis is the product.",
+
+    "[optional depth] For the demo we hand-built the Notion world: 208 nodes, 346 edges, 5 seed actions. Named entities where you'd recognize them, archetypal communities that behave consistently, and six platform nodes — Twitter, LinkedIn, HN, the blog, Slack, Discord — each with its own behavioral character modeled as a prompt that biases propagation.",
+
+    "[optional depth] Under the hood, each node is a single Flash call: current state, inbox, and world clock in; a state delta, typed outgoing events, and a one-sentence first-person rationale out. The dossier is a cached system prompt, so it's about half a cent per node per tick. Lighter edges skip the model and use deterministic rules.",
+
+    "DeepMind asked for sub-agents, multi-step workflows, and long-horizon tasks at scale. That's every node and edge, the cascade, and the Monte Carlo — the problem statement, rendered. Robotics is building world models for physical, embodied action. We built the first one for organizational, textual action.",
+
+    "And the world doesn't even have to be hand-built — this runs right in the app. You type one sentence, and Wake researches the real cast with Google Search, sizes the graph to a budget, writes every dossier with Flash, and assembles a runnable world — about two cents. Same engine, any world, one sentence.",
+
+    "We didn't build an oracle. Wake is a Monte Carlo over imagined futures — wrong about any specific future in the way nobody minds, because that's what a Monte Carlo is for. What it's right about is the consequence space: the trajectories, the distribution, the pivotal variable. A softer, more defensible claim. The simulation layer of the AI-native company. Watch your decision before you make it."
+  ]
+  </script>
+
+  <style>
+    :root {
+      /* Colors */
+      --bg:        #0e0d0b;
+      --surface:   #181714;
+      --surface-2: #1f1e1a;
+      --border:    #242220;
+      --text:      #e3ded4;
+      --muted:     #5a5450;
+      --faint:     #2e2b28;
+
+      /* Accent — calm-state teal (from the simpler deck) + amber */
+      --accent:    oklch(66% 0.15 168);
+      --amber:     oklch(72% 0.16 70);
+
+      /* Type scale — 1920×1080 */
+      --type-hero:  180px;
+      --type-title:  80px;
+      --type-sub:    52px;
+      --type-body:   36px;
+      --type-small:  28px;
+      --type-mono:   26px;
+      --type-label:  24px;
+
+      /* Spacing */
+      --pad-x:  130px;
+      --pad-y:   96px;
+      --gap-xl:  72px;
+      --gap-lg:  52px;
+      --gap-md:  36px;
+      --gap-sm:  20px;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      background: var(--bg);
+      font-family: 'DM Sans', 'Helvetica Neue', sans-serif;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Section base ── */
+    section {
+      display: flex;
+      flex-direction: column;
+      padding: var(--pad-y) var(--pad-x);
+      background: var(--bg);
+    }
+    section.bg-surface  { background: var(--surface); }
+    section.bg-surface2 { background: var(--surface-2); }
+
+    /* ── Type ── */
+    .t-hero  { font-size: var(--type-hero);  font-weight: 600; letter-spacing: -0.04em;  line-height: 1; }
+    .t-title { font-size: var(--type-title); font-weight: 500; letter-spacing: -0.025em; line-height: 1.1; }
+    .t-sub   { font-size: var(--type-sub);   font-weight: 400; letter-spacing: -0.02em;  line-height: 1.3; }
+    .t-body  { font-size: var(--type-body);  font-weight: 400; line-height: 1.5; }
+    .t-small { font-size: var(--type-small); font-weight: 400; line-height: 1.55; }
+    .t-mono  { font-family: 'JetBrains Mono', monospace; font-size: var(--type-mono); line-height: 1.65; }
+    .t-label, .eyebrow {
+      font-size: var(--type-label);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+    .wake-mark { font-size: 28px; font-weight: 600; letter-spacing: -0.03em; color: var(--text); }
+
+    /* ── Color ── */
+    .c-accent { color: var(--accent); }
+    .c-amber  { color: var(--amber); }
+    .c-muted  { color: var(--muted); }
+    .c-text   { color: var(--text); }
+    .c-faint  { color: var(--faint); }
+
+    /* ── Layout ── */
+    .row    { display: flex; flex-direction: row; }
+    .col    { display: flex; flex-direction: column; }
+    .flex-1 { flex: 1; }
+    .gap-xl { gap: var(--gap-xl); } .gap-lg { gap: var(--gap-lg); }
+    .gap-md { gap: var(--gap-md); } .gap-sm { gap: var(--gap-sm); }
+    .items-start { align-items: flex-start; } .items-center { align-items: center; }
+    .items-end { align-items: flex-end; } .items-stretch { align-items: stretch; }
+    .justify-between { justify-content: space-between; }
+    .justify-center { justify-content: center; } .justify-end { justify-content: flex-end; }
+
+    /* ── Rule ── */
+    .rule { width: 100%; height: 1px; background: var(--border); flex-shrink: 0; }
+
+    /* ── Three-column grid ── */
+    .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 64px; }
+    .col-block { display: flex; flex-direction: column; gap: 14px; }
+
+    /* ── Code box ── */
+    .code-box {
+      background: var(--surface-2); border: 1px solid var(--border); border-radius: 6px;
+      padding: 44px 52px; font-family: 'JetBrains Mono', monospace;
+      font-size: var(--type-mono); line-height: 1.7;
+    }
+
+    /* ── Node-category card ── */
+    .node-card {
+      flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+      padding: 36px 40px; display: flex; flex-direction: column; gap: 14px;
+    }
+    .node-card-n { font-size: 68px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: var(--accent); }
+
+    /* ── Stat block ── */
+    .stat-block { display: flex; flex-direction: column; gap: 8px; }
+    .stat-n { font-size: 108px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; }
+    .stat-lbl { font-size: var(--type-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+
+    /* ── Pivotal card ── */
+    .pivotal-card {
+      flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+      padding: 52px 56px; display: flex; flex-direction: column; gap: 28px; justify-content: center;
+    }
+
+    /* ── Cluster row ── */
+    .cluster-row { display: flex; flex-direction: row; align-items: center; gap: 20px; }
+    .cluster-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── Flow list ── */
+    .flow-row {
+      display: flex; flex-direction: row; align-items: center; gap: 20px;
+      padding: 20px 0; border-bottom: 1px solid var(--border);
+    }
+    .flow-row:last-child { border-bottom: none; }
+    .flow-n { font-family: 'JetBrains Mono', monospace; font-size: 24px; color: var(--muted); width: 40px; flex-shrink: 0; }
+
+    /* ── Demo placeholder slide ── */
+    .demo-tag { font-size: var(--type-label); font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); }
+    .demo-beat { font-size: 64px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; color: var(--text); }
+    .demo-hint { font-size: var(--type-small); color: var(--muted); }
+
+    /* ── Reframe mapping row ── */
+    .map-row {
+      display: grid; grid-template-columns: 460px 56px 1fr; align-items: baseline;
+      padding: 24px 0; border-bottom: 1px solid var(--border);
+    }
+    .map-row:last-child { border-bottom: none; }
+    .map-from { font-size: 34px; font-weight: 400; color: var(--muted); }
+    .map-arrow { font-size: 34px; font-weight: 300; color: var(--border); text-align: center; }
+    .map-to { font-size: 34px; font-weight: 400; color: var(--text); }
+  </style>
+
+  <script src="deck-stage.js"></script>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+
+  <!-- ═══════════════════════════════════════ S01 — Splash -->
+  <section data-screen-label="01 Wake" style="justify-content: space-between;">
+    <div class="row justify-end">
+      <p class="eyebrow">Google DeepMind · AI Futures Fund · Cerebral Valley · 2026</p>
+    </div>
+    <div class="col" style="gap: 32px;">
+      <h1 class="t-hero">Wake</h1>
+      <p class="t-sub c-muted" style="font-weight: 300;">a world model for organizational action</p>
+    </div>
+    <p class="t-small c-muted">wake-web-zeta.vercel.app</p>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S02 — Who -->
+  <section data-screen-label="02 Who" style="justify-content: center; gap: 28px;">
+    <p class="eyebrow">Who's presenting</p>
+    <h2 class="t-title" style="font-size: 120px;">Jack Gardner</h2>
+    <p class="t-sub c-muted" style="font-weight: 300;">Founding team @ 11x · ex-Amazon · ex-Williams F1</p>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S03 — Hook -->
+  <section data-screen-label="03 Hook" style="justify-content: center; gap: 44px;">
+    <p style="font-size: 104px; font-weight: 500; letter-spacing: -0.035em; line-height: 1.1; max-width: 1300px;">
+      What happens after you let go of the decision?
+    </p>
+    <p class="c-muted" style="font-size: 38px; font-weight: 300; letter-spacing: -0.01em; text-align: right; align-self: stretch;">
+      What if you could see how the world reacts — before you decide?
+    </p>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S04 — The Question -->
+  <section data-screen-label="04 The Question" style="justify-content: center; gap: var(--gap-lg);">
+    <p class="eyebrow">The question no good tool answers</p>
+    <div class="col" style="gap: 36px;">
+      <div class="col" style="gap: 6px;">
+        <p class="eyebrow c-faint">the product lead</p>
+        <p class="t-sub" style="font-style: italic;">"If we ship this, will anyone care — or will it quietly enrage the people who love us?"</p>
+      </div>
+      <div class="col" style="gap: 6px;">
+        <p class="eyebrow c-faint">the CEO</p>
+        <p class="t-sub" style="font-style: italic;">"If we announce this acquisition, what does our world look like in three months?"</p>
+      </div>
+      <div class="col" style="gap: 6px;">
+        <p class="eyebrow c-faint">the engineer</p>
+        <p class="t-sub" style="font-style: italic;">"If I take this idea to my manager, does it survive the room?"</p>
+      </div>
+    </div>
+    <div class="rule"></div>
+    <p class="t-body c-muted" style="max-width: 1150px;">
+      Every one of these is answered by gut, by analogy, by a consultant substituting their gut for yours. None of it scales. None of it branches. <span class="c-text">None of it lets you watch the world you're about to act on.</span>
+    </p>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S03 — The Action -->
+  <section data-screen-label="05 The Action" style="justify-content: center; gap: var(--gap-md);">
+    <p class="eyebrow">The action</p>
+    <p class="t-title" style="font-weight: 500; max-width: 1300px;">Notion is acquired by Microsoft.</p>
+    <p class="t-sub c-muted" style="font-weight: 300; margin-top: 4px;">What happens next?</p>
+    <div class="rule" style="margin-top: 28px; max-width: 400px;"></div>
+    <p class="c-accent" style="font-size: 32px; font-weight: 400; letter-spacing: 0.04em; margin-top: 4px;">Watch →</p>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S06 — Cascade (live demo) -->
+  <section data-screen-label="06 Cascade" style="justify-content: center;">
+    <p style="font-size: 88px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.12; max-width: 1300px;">
+      Two hundred minds, reasoning live.
+    </p>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S07 — A/B (live demo) -->
+  <section data-screen-label="07 A/B Testing" style="justify-content: center;">
+    <p style="font-size: 88px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.12; max-width: 1300px;">
+      A/B test the action before you take it.
+    </p>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S06 — 32 Futures (demo beat 03 + the numbers) -->
+  <section data-screen-label="08 32 Futures" style="justify-content: center; gap: var(--gap-lg);">
+
+    <p class="eyebrow">Monte Carlo · Notion acquired by Microsoft · 32 independent runs</p>
+
+    <div class="row" style="gap: 64px; align-items: stretch; flex: 1;">
+
+      <div class="col flex-1" style="gap: var(--gap-lg); justify-content: center;">
+        <div class="row items-end" style="gap: 60px;">
+          <div class="stat-block"><span class="stat-n c-text">32</span><span class="stat-lbl">runs</span></div>
+          <div class="stat-block"><span class="stat-n c-amber">$3.19</span><span class="stat-lbl">total cost</span></div>
+          <div class="stat-block"><span class="stat-n c-accent">58%</span><span class="stat-lbl">of variance explained</span></div>
+        </div>
+        <div class="rule"></div>
+        <div class="col" style="gap: 24px;">
+          <p class="t-label" style="margin-bottom: 4px;">Outcome regimes</p>
+          <div class="cluster-row">
+            <div class="cluster-dot" style="background: var(--accent);"></div>
+            <p class="t-body" style="flex: 1;">Consumer backlash</p>
+            <p class="t-body c-muted">24 / 32</p>
+          </div>
+          <div class="cluster-row">
+            <div class="cluster-dot" style="background: var(--amber);"></div>
+            <p class="t-body" style="flex: 1;">Competitor capitalizing</p>
+            <p class="t-body c-muted">8 / 32</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="pivotal-card">
+        <p class="t-label">Pivotal variable</p>
+        <p style="font-size: 64px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.15;">
+          Acquisition<br>messaging<br>framing
+        </p>
+        <div class="rule"></div>
+        <p class="t-small c-muted">
+          Whether the deal is framed as <em>"independent"</em> or <em>"integrated"</em> accounts for 58% of cross-regime variance — more than any other single variable in the sweep.
+        </p>
+        <p class="t-small c-muted" style="font-style: italic; margin-top: 4px;">
+          Wake reports the math, not a recommendation.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S07 — Why Now / The Unlock -->
+  <section data-screen-label="09 Why Now" class="bg-surface" style="justify-content: center; gap: var(--gap-lg);">
+
+    <div class="col" style="gap: 16px;">
+      <p class="eyebrow">Why no one built this before — and why now</p>
+      <p class="t-title">Three things required, simultaneously.</p>
+    </div>
+
+    <div class="three-col" style="margin-top: 4px;">
+      <div class="col-block">
+        <p class="eyebrow c-accent" style="color: var(--accent);">01 — Intelligence per node</p>
+        <p class="t-body">Frontier-class reasoning</p>
+        <p class="t-small c-muted">Each entity's behavior has to be worth reading and believing if you knew the person.</p>
+      </div>
+      <div class="col-block">
+        <p class="eyebrow c-accent" style="color: var(--accent);">02 — Output speed</p>
+        <p class="t-body">4× — ticks forward on stage</p>
+        <p class="t-small c-muted">A 200-node cascade resolves in seconds. You cannot demo a simulation that runs overnight.</p>
+      </div>
+      <div class="col-block">
+        <p class="eyebrow c-accent" style="color: var(--accent);">03 — Cost at scale</p>
+        <p class="t-body c-amber">$3.19 for 32 runs × 200 nodes</p>
+        <p class="t-small c-muted">The Monte Carlo only works if the branches cost a few dollars, not thousands.</p>
+      </div>
+    </div>
+
+    <div class="rule"></div>
+
+    <p class="t-sub" style="font-weight: 400; max-width: 1300px;">
+      <span class="c-muted">Frontier models had intelligence. Small models had speed. Neither had all three —</span>
+      <span class="c-accent">Gemini 3.5 Flash</span> <span class="c-muted">is the first that does.</span>
+      <span style="font-style: italic;"> The cost basis is the product.</span>
+    </p>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S08 — The Notion World  [optional depth] -->
+  <section data-screen-label="10 The Notion World" style="justify-content: center; gap: var(--gap-md);">
+    <div class="row items-end justify-between">
+      <div class="col" style="gap: 12px;">
+        <p class="eyebrow">The graph</p>
+        <p class="t-title">The Notion world</p>
+      </div>
+      <div class="row" style="gap: 56px; align-items: flex-end;">
+        <div class="col items-end" style="gap: 4px;">
+          <span style="font-size: 64px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: var(--accent);">208</span>
+          <span class="eyebrow">nodes</span></div>
+        <div class="col items-end" style="gap: 4px;">
+          <span style="font-size: 64px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: var(--accent);">346</span>
+          <span class="eyebrow">edges</span></div>
+        <div class="col items-end" style="gap: 4px;">
+          <span style="font-size: 64px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: var(--accent);">5</span>
+          <span class="eyebrow">seed actions</span></div>
+      </div>
+    </div>
+    <div class="row gap-md" style="flex: 1; margin-top: 12px; align-items: stretch;">
+      <div class="node-card"><span class="t-label">Internal</span><span class="node-card-n">47</span>
+        <p class="t-small c-muted">C-suite · key managers · named engineers · employee archetypes by team</p></div>
+      <div class="node-card"><span class="t-label">External</span><span class="node-card-n">38</span>
+        <p class="t-small c-muted">Journalists · influencers · competitor leaders · VCs who comment publicly</p></div>
+      <div class="node-card"><span class="t-label">Community</span><span class="node-card-n">117</span>
+        <p class="t-small c-muted">Productivity Twitter · skeptical HN · enterprise IT buyer · switching cohorts</p></div>
+      <div class="node-card"><span class="t-label">Platforms</span><span class="node-card-n">6</span>
+        <p class="t-small c-muted">Twitter · LinkedIn · Hacker News · Company blog · Slack · Discord</p></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S09 — The Tick / kernel  [optional depth] -->
+  <section data-screen-label="11 The Tick" style="justify-content: center; gap: var(--gap-lg);">
+    <div class="col" style="gap: 12px;">
+      <p class="eyebrow">The simulation kernel</p>
+      <p class="t-title">Each node reasons, every tick.</p>
+    </div>
+    <div class="code-box">
+      <span style="color: var(--muted);">// one Gemini 3.5 Flash call per node per tick</span><br><br>
+      <span style="color: var(--amber);">(node_state, inbox, world_clock)</span><br>
+      <span style="color: var(--muted); padding-left: 28px;">→</span>
+      <span style="color: var(--accent);">&nbsp;(state_delta, outgoing_events, rationale)</span>
+    </div>
+    <div class="three-col" style="margin-top: 8px;">
+      <div class="col-block"><p class="t-label">Input</p><p class="t-body">~600–1,000 tokens</p>
+        <p class="t-small c-muted">Dossier cached as system prompt. Per-tick input is current state + inbox + world clock.</p></div>
+      <div class="col-block"><p class="t-label">Output</p><p class="t-body">~300–500 tokens</p>
+        <p class="t-small c-muted">Structured JSON: state delta, typed outgoing events, a one-sentence first-person rationale.</p></div>
+      <div class="col-block"><p class="t-label">Cost</p><p class="t-body c-amber">~$0.005 / tick / node</p>
+        <p class="t-small c-muted">Most input is cached. Lighter edges skip the LLM and use deterministic rules.</p></div>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S10 — The Reframe -->
+  <section data-screen-label="12 The Reframe" class="bg-surface" style="justify-content: space-between;">
+    <p class="wake-mark">Wake.</p>
+    <div class="col" style="flex: 1; justify-content: center; gap: 0; max-width: 1400px;">
+      <div class="map-row"><p class="map-from">sub-agents</p><p class="map-arrow">→</p><p class="map-to">every node, every edge</p></div>
+      <div class="map-row"><p class="map-from">multi-step workflows</p><p class="map-arrow">→</p><p class="map-to">the cascade</p></div>
+      <div class="map-row"><p class="map-from">long-horizon tasks at scale</p><p class="map-arrow">→</p><p class="map-to">the Monte Carlo</p></div>
+    </div>
+    <p style="font-size: 72px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; padding-bottom: 8px;">
+      A world model for organizational action.
+    </p>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S11 — Genesis -->
+  <section data-screen-label="13 Genesis" style="justify-content: space-between;">
+    <p class="wake-mark">Wake.</p>
+    <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
+                padding: 44px 48px; flex: 1; margin-top: 28px; display: flex; flex-direction: column; gap: 30px;">
+      <div style="display: flex; align-items: center; gap: 18px;">
+        <div style="flex: 1; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 20px 26px; font-size: 28px; color: var(--text);">What happens if Stripe acquires Plaid?</div>
+        <div style="background: var(--accent); color: var(--bg); border-radius: 8px; padding: 20px 30px; font-size: 24px; font-weight: 600; white-space: nowrap;">Build world →</div>
+      </div>
+      <div class="three-col" style="grid-template-columns: repeat(2, 1fr); gap: 20px 56px;">
+        <p class="t-small"><span style="color: var(--accent);">✓</span>&nbsp;&nbsp;Researching the cast <span class="c-muted">· Google Search</span></p>
+        <p class="t-small"><span style="color: var(--accent);">✓</span>&nbsp;&nbsp;Sizing to budget <span class="c-muted">· 21 entities · ~$0.016</span></p>
+        <p class="t-small"><span style="color: var(--accent);">✓</span>&nbsp;&nbsp;Generating dossiers <span class="c-muted">· Gemini 3.5 Flash</span></p>
+        <p class="t-small"><span style="color: var(--accent);">✓</span>&nbsp;&nbsp;Writing edges &amp; channels <span class="c-muted">· 37 edges</span></p>
+        <p class="t-small"><span style="color: var(--accent);">✓</span>&nbsp;&nbsp;Assembling world.json <span class="c-muted">· runnable ✓</span></p>
+        <p class="t-small"><span style="color: var(--accent);">✓</span>&nbsp;&nbsp;The cast <span class="c-muted">· 21 entities</span></p>
+      </div>
+    </div>
+    <div class="col" style="gap: 16px; padding-top: 36px; padding-bottom: 8px;">
+      <p style="font-size: 60px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.1;">
+        Same engine, any world, one sentence.
+      </p>
+      <p class="t-small c-muted">wake-web-zeta.vercel.app/genesis</p>
+    </div>
+  </section>
+
+
+  <!-- ═══════════════════════════════════════ S12 — Close -->
+  <section data-screen-label="14 Close" class="bg-surface" style="justify-content: space-between;">
+    <div class="col" style="gap: var(--gap-lg); flex: 1; justify-content: center;">
+      <p class="eyebrow">Honest framing</p>
+      <p class="t-title" style="max-width: 1000px; line-height: 1.15;">Watch your decision before you make it.</p>
+      <p class="t-sub c-muted" style="max-width: 1150px; line-height: 1.35; font-weight: 300;">
+        Wake does not predict the future. It makes the consequence space of an action legible — the trajectories, the distribution, the pivotal variable.
+      </p>
+      <div class="rule" style="max-width: 1150px;"></div>
+      <p class="t-body c-muted" style="max-width: 950px; line-height: 1.55;">
+        The simulation layer of the AI-native company. Robotics is solving this for physical, embodied action. Wake is the first instance of this primitive for organizational, textual action.
+      </p>
+    </div>
+    <div class="row items-end justify-between" style="padding-top: 16px;">
+      <p class="t-small c-muted">wake-web-zeta.vercel.app</p>
+      <h2 style="font-size: 80px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; color: var(--text);">Wake</h2>
+    </div>
+  </section>
+
+
+</deck-stage>
+</body>
+</html>
