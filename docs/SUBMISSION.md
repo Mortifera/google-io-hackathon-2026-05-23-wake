@@ -3,8 +3,8 @@
 > One reference doc to build the Google I/O Hackathon submission from: the vision,
 > what we planned vs. what we built vs. what's left (Phase C), the proof points,
 > and **draft answers for every field on the submission form**. Sources: `VISION.md`,
-> `PLAN.md`, `ARCHITECTURE.md`, `docs/final-push.md`, `docs/demo-script.md`,
-> `docs/extensions.md`, `docs/critical-path.html`, and a code scan of every package.
+> `PLAN.md`, `ARCHITECTURE.md`, `docs/demo-script.md`, `docs/extensions.md`, and a
+> code scan of every package.
 >
 > Event: **Google I/O Hackathon**, Shack15 SF, Sat 2026-05-23. Submissions due 5:00pm PT.
 > Problem statement: *"Build something that's never been built before with **Gemini
@@ -33,7 +33,7 @@ multi-step workflows = the tick-by-tick cascade, long-horizon scale = the Monte 
 
 ## 1. The vision (what we set out to build)
 
-From `VISION.md` / `final-push.md`:
+From `VISION.md`:
 
 - **The category:** *the simulation layer of the AI-native company.* If AI takes
   over orchestration and humans become the judgment layer, every orchestrator must
@@ -87,7 +87,7 @@ hatch, rehearsal). **All four checkpoints are met.**
 
 ## 3. What we actually built (verified, in-repo today)
 
-This is the "feature-complete floor" from `final-push.md §0`, confirmed by code scan.
+This is the feature-complete floor, confirmed by code scan.
 
 ### 3.1 The engine — `@wake/kernel`
 A real propagation-wave simulator (not a scripted swarm):
@@ -187,8 +187,8 @@ nuance — this matters for a $5,000 prize and a required form field.**
 
 ## 4. Phase C — what's still in flight (the final push)
 
-From `final-push.md` / `critical-path.html`, these are *upgrades on a working floor*
-(each independently droppable; the floor records fine without any of them):
+These were the final-push *upgrades on a working floor* (each independently
+droppable; the floor records fine without any of them) — all now shipped:
 
 | # | Upgrade | Why it earns its place | Status |
 |---|---|---|---|
