@@ -12,6 +12,7 @@
   --accent-glow: rgba(105, 211, 227, 0.5);    /* cyan "live" glow */
   --m-live: #69d3e3;                           /* cold cyan — the instrument is on */
   --m-live-soft: rgba(105, 211, 227, 0.14);
+  --text-faint: #717f99;                       /* brighter than the global faint for AA contrast on dark */
   /* Scroll-depth wash: lifted at the top, descends into the deep at the foot. */
   background:
     linear-gradient(180deg, rgba(91, 156, 240, 0.04), transparent 16%),
@@ -115,8 +116,8 @@
   .headline, .finalTitle { color: var(--text); }
 }
 .sub {
-  margin-top: 24px; max-width: 48ch; font-size: clamp(16px, 1.5vw, 19px);
-  line-height: 1.55; color: var(--text-dim);
+  margin-top: 24px; max-width: 46ch; font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.65; color: var(--text-dim);
 }
 .sub em { color: var(--text); font-style: normal; }
 .ctaRow { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
@@ -616,13 +617,13 @@
 .footerTag { margin-top: 12px; font-size: 13.5px; color: var(--text-dim); line-height: 1.5; }
 .footerCols { display: flex; gap: 56px; flex-wrap: wrap; }
 .footerCol { display: flex; flex-direction: column; gap: 10px; }
-.footerColHead { font-family: var(--font-geist-mono), monospace; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 4px; }
+.footerColHead { font-family: var(--font-geist-mono), monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 4px; }
 .footerLink { font-size: 14px; color: var(--text-dim); transition: color 0.18s var(--ease-out); }
 .footerLink:hover { color: var(--text); }
 .footerBar {
   display: flex; justify-content: space-between; gap: 16px; margin-top: 44px; padding-top: 20px;
   border-top: 1px solid var(--border-soft); flex-wrap: wrap;
-  font-family: var(--font-geist-mono), monospace; font-size: 11.5px; color: var(--text-faint);
+  font-family: var(--font-geist-mono), monospace; font-size: 12px; color: var(--text-faint);
 }
 
 /* ── Footer (legacy, unused) ── */
