@@ -428,7 +428,7 @@
 .hwSvg { width: 100%; height: 100%; }
 .flowNum { font-family: var(--font-geist-mono), monospace; font-size: 11px; color: var(--m-live); letter-spacing: 0.1em; margin-top: 18px; }
 .flowTitle { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; margin: 7px 0; }
-.flowBody { font-size: 14.5px; line-height: 1.6; color: var(--text-dim); }
+.flowBody { font-size: 15px; line-height: 1.65; color: var(--text-dim); }
 /* beat 1 — input frame */
 .hwInput { width: 100%; display: flex; flex-direction: column; gap: 12px; }
 .hwInputField {
@@ -477,11 +477,10 @@
 /* ── Trust strip ── */
 .trust {
   position: relative; z-index: 1;
-  border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);
-  background: rgba(9, 13, 21, 0.4);
+  border-top: 1px solid var(--border-soft);
 }
 .trustInner {
-  max-width: 1120px; margin: 0 auto; padding: 15px 32px;
+  max-width: 1120px; margin: 0 auto; padding: 18px 32px;
   display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 28px;
 }
 .trustItem {
