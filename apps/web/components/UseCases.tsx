@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import s from "../app/marketing.module.css";
 
 /**
@@ -32,8 +33,12 @@ export default function UseCases() {
         </div>
         <div className={s.ucGrid}>
           {CASES.map((c) => (
-            <article key={c.k} className={`${s.ucTile} ${c.big ? s.ucTileBig : ""}`}>
-              <span className={s.ucDot} style={{ background: c.c }} />
+            <article
+              key={c.k}
+              className={`${s.ucTile} ${c.big ? s.ucTileBig : ""}`}
+              style={{ "--tileAccent": c.c } as CSSProperties}
+            >
+              <span className={s.ucDot} style={{ background: c.c, boxShadow: `0 0 10px ${c.c}55` }} />
               <h3 className={s.ucName}>{c.t}</h3>
               <p className={s.ucDesc}>{c.d}</p>
             </article>
