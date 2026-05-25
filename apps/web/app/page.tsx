@@ -6,6 +6,7 @@ import UseCases from "../components/UseCases";
 import ClaimVisual from "../components/ClaimVisual";
 import Pricing from "../components/Pricing";
 import FAQ from "../components/FAQ";
+import SocialProof from "../components/SocialProof";
 import TrustStrip from "../components/TrustStrip";
 import Reveal from "../components/Reveal";
 import SiteNav from "../components/SiteNav";
@@ -101,6 +102,11 @@ export default function MarketingPage() {
       </Reveal>
 
       {/* Confidence - pricing */}
+      {/* Trust: operators who could not afford to be blindsided */}
+      <Reveal>
+        <SocialProof />
+      </Reveal>
+
       <Reveal>
         <Pricing />
       </Reveal>

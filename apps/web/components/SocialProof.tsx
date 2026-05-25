@@ -1,0 +1,76 @@
+import StaggerReveal from "./StaggerReveal";
+import s from "../app/marketing.module.css";
+
+/**
+ * Social proof. IMPORTANT: these testimonials are illustrative/representative
+ * (fictitious people, attributed to a role + company-type, never a real named
+ * person or a real company logo). Swap for real beta quotes when available.
+ */
+const QUOTES = [
+  {
+    quote:
+      "Forty-eight hours before announcing a 30% layoff, I ran the message through Wake. It surfaced the exact mid-level managers who would read the criteria as arbitrary, and the alumni community ready to amplify it. We rewrote for them directly, and the second story I had been dreading never broke. It was the first time I felt like I had seen the audience before I addressed it.",
+    name: "Maya Ellison",
+    role: "Head of Communications",
+    org: "Series C SaaS",
+    color: "#f0556b",
+  },
+  {
+    quote:
+      "The financial diligence on the acquisition was clean, but I had a feeling we were missing how the developer community would react. Within an hour, Wake surfaced the power users who would read it as an end-of-life signal, with alternatives already lined up. We rebuilt the comms and the integration timeline around that, and six-month retention was the best of any deal we had done in three years.",
+    name: "Priya Nair",
+    role: "VP, Corporate Development",
+    org: "late-stage tech",
+    color: "#5b9cf0",
+  },
+  {
+    quote:
+      "The board backed the pricing change. What I had not modeled was how our biggest power sellers would react in public. Wake built them as they actually are and ran the announcement: three had audiences that would turn it into press within a day. We called them first, and turned likely critics into our first supporters. The board asked how we anticipated it; we had run the simulation.",
+    name: "David Reyes",
+    role: "Co-founder & CEO",
+    org: "Series B marketplace",
+    color: "#4fd18b",
+  },
+];
+
+const initials = (name: string) =>
+  name
+    .split(" ")
+    .map((p) => p[0])
+    .join("")
+    .slice(0, 2);
+
+export default function SocialProof() {
+  return (
+    <section className={s.proof}>
+      <div className={s.wrap}>
+        <div className={s.sectionHead}>
+          <h2 className={s.sectionTitle}>The operators who stopped guessing and started knowing.</h2>
+          <p className={s.sectionSub}>Heads of comms, corp dev, and founders, before the irreversible call.</p>
+        </div>
+        <StaggerReveal className={s.proofGrid}>
+          {QUOTES.map((q) => (
+            <figure className={s.proofCard} key={q.name}>
+              <blockquote className={s.proofQuote}>&ldquo;{q.quote}&rdquo;</blockquote>
+              <figcaption className={s.proofWho}>
+                <span
+                  className={s.proofAvatar}
+                  style={{ background: `${q.color}1f`, color: q.color, borderColor: `${q.color}55` }}
+                  aria-hidden="true"
+                >
+                  {initials(q.name)}
+                </span>
+                <span className={s.proofMeta}>
+                  <span className={s.proofName}>{q.name}</span>
+                  <span className={s.proofRole}>
+                    {q.role}, {q.org}
+                  </span>
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </StaggerReveal>
+      </div>
+    </section>
+  );
+}

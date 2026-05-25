@@ -34,6 +34,15 @@ export default function SiteFooter() {
               FAQ
             </a>
           </div>
+          <div className={s.footerCol}>
+            <div className={s.footerColHead}>Company</div>
+            <Link href="/privacy" className={s.footerLink}>
+              Privacy
+            </Link>
+            <Link href="/terms" className={s.footerLink}>
+              Terms
+            </Link>
+          </div>
         </div>
       </div>
       <div className={s.footerBar}>

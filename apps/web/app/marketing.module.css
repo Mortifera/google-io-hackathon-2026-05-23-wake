@@ -605,6 +605,26 @@
 .faqItem[open] .faqMark::after { transform: rotate(90deg); opacity: 0; }
 .faqA { padding: 0 4px 22px; font-size: 14.5px; line-height: 1.65; color: var(--text-dim); max-width: 64ch; }
 
+/* ── Social proof (illustrative testimonials) ── */
+.proof { position: relative; z-index: 1; padding: 84px 0; }
+.proofGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 860px) { .proofGrid { grid-template-columns: 1fr; } }
+.proofCard {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 22px;
+  border: 1px solid var(--border-soft); border-radius: 16px; padding: 26px;
+  background: linear-gradient(180deg, rgba(17, 24, 38, 0.5), rgba(12, 17, 27, 0.35));
+}
+.proofQuote { font-size: 15.5px; line-height: 1.6; color: var(--text); }
+.proofWho { display: flex; align-items: center; gap: 12px; }
+.proofAvatar {
+  width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--font-geist-mono), monospace; font-size: 12.5px; font-weight: 600;
+  border: 1px solid; flex: none;
+}
+.proofMeta { display: flex; flex-direction: column; gap: 1px; }
+.proofName { font-size: 14px; font-weight: 600; color: var(--text); }
+.proofRole { font-size: 12.5px; color: var(--text-dim); }
+
 /* ── Claim — animated distribution knob ── */
 .claimViz { margin-top: 34px; }
 .claimViz .claimSvg { margin: 0 auto; }
