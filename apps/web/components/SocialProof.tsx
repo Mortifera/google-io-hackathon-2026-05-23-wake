@@ -8,28 +8,28 @@ import s from "../app/marketing.module.css";
  */
 const QUOTES = [
   {
-    highlight: "I saw the audience before I addressed it.",
+    highlight: "I ran a month of quiet work before we said a word.",
     quote:
-      "Forty-eight hours before a 30% layoff, Wake surfaced the managers who would read the criteria as arbitrary, and the alumni community ready to amplify it. We rewrote for them directly, and the second story I had been dreading never broke.",
-    name: "Maya Ellison",
+      "Wake showed that two manager segments would read the layoff criteria as arbitrary, and that a specific alumni community would amplify it within hours. So we did not just rewrite the message. Over the four weeks before the announcement, we seeded that community with context through three people they already trusted, and rebuilt the all-hands deck for those two segments. The story I had been losing sleep over never appeared.",
+    name: "Meredith",
     role: "Head of Communications",
     org: "Series C SaaS",
     color: "#f0556b",
   },
   {
-    highlight: "It found what the diligence missed.",
+    highlight: "It found the variable the financial model missed.",
     quote:
-      "The financials were clean, but Wake surfaced the power users who would read the acquisition as an end-of-life signal, with alternatives already lined up. We rebuilt the comms around it, and six-month retention was the best of any deal in three years.",
-    name: "Priya Nair",
+      "The financials were clean, but Wake surfaced a power-user segment already eyeing alternatives, the retention driver for an outsized share of revenue. Over the five weeks to close we ran a sequence: a private briefing before any announcement, a roadmap session where they shaped the first ninety days, then a reference-call chain they anchored. By announcement day they were on record as supporters, and six-month retention was the best of any deal in three years.",
+    name: "Daniel",
     role: "VP, Corporate Development",
     org: "late-stage tech",
     color: "#5b9cf0",
   },
   {
-    highlight: "I walked into the board knowing.",
+    highlight: "I turned the people most likely to kill it into the ones who launched it.",
     quote:
-      "The board backed the pricing change. What I had not modeled was the power sellers who would turn it into press within a day, so we called them first and made them our earliest supporters.",
-    name: "David Reyes",
+      "The board backed the pricing change, but Wake showed me our top power sellers would read it as a margin grab and go to press within a day. I had two weeks, so I called the eleven biggest sellers individually, walked them through the unit economics, and asked each to co-design the transition terms. By announcement day, four had already posted in support, and the story that would have run never had a hook.",
+    name: "Jasmine",
     role: "Co-founder & CEO",
     org: "Series B marketplace",
     color: "#4fd18b",
