@@ -115,6 +115,7 @@ export default function HowItWorks() {
         </div>
         <div className={s.flow}>
           <div className={s.flowLine} aria-hidden="true" />
+          <span className={s.flowPulse} aria-hidden="true" />
           {STEPS.map((step) => (
             <div className={s.flowBeat} key={step.n}>
               <div className={s.flowFrame}>

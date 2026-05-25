@@ -375,8 +375,11 @@
 .baFlatBar span { display: block; width: 54%; height: 100%; background: var(--text-faint); }
 .baFlatWait { font-size: 11px; color: var(--text-faint); }
 .baVs {
-  align-self: center; font-family: var(--font-geist-mono), monospace; font-size: 11px;
-  color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.12em;
+  align-self: center; justify-self: center; display: grid; place-items: center;
+  width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border);
+  background: var(--surface-2); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+  font-family: var(--font-geist-mono), monospace; font-size: 10px;
+  color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.06em;
 }
 .baSvg { width: 100%; flex: 1; }
 .baAfterFoot {
@@ -395,6 +398,18 @@
   opacity: 0.5;
 }
 @media (max-width: 860px) { .flowLine { display: none; } }
+.flowPulse {
+  position: absolute; top: 84px; left: 8%; width: 6px; height: 6px; border-radius: 50%; z-index: 0;
+  background: var(--m-live); box-shadow: 0 0 12px var(--accent-glow);
+  animation: flow-pulse 4.5s var(--ease-in-out) infinite;
+}
+@keyframes flow-pulse {
+  0% { left: 8%; opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { left: 92%; opacity: 0; }
+}
+@media (max-width: 860px) { .flowPulse { display: none; } }
 .flowBeat { position: relative; z-index: 1; }
 .flowFrame {
   position: relative; border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
