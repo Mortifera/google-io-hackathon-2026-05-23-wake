@@ -26,6 +26,8 @@ export interface RunConfig {
   actions: SeedAction[];
   /** Runs per action. 1 = a single live cascade; >1 = a Monte Carlo fan. */
   variations: number;
+  /** How the world was obtained — gates precomputed replay for prebuilt picks. */
+  source: "prebuilt" | "genesis" | null;
 }
 
 interface Props {
@@ -52,7 +54,7 @@ const EMPTY: Draft = {
 
 export default function Studio({ prebuilt }: Props) {
   const [draft, setDraft] = useState<Draft>(EMPTY);
-  const { step, world, actions, variations } = draft;
+  const { step, world, actions, variations, source } = draft;
 
   // Hydrate a draft from sessionStorage so a refresh mid-flow survives (no DB).
   useEffect(() => {
@@ -161,7 +163,7 @@ export default function Studio({ prebuilt }: Props) {
       {step === "run" && world && (
         <div className={s.runBody}>
           <RunStep
-            config={{ world, actions, variations }}
+            config={{ world, actions, variations, source }}
             onReconfigure={() => goto("action")}
           />
         </div>

@@ -115,9 +115,17 @@ interface Props {
   actions: SeedAction[];
   variations: number;
   onReconfigure: () => void;
+  /** If set, render this saved result instead of running the workflow. */
+  precomputed?: MonteCarloResult;
 }
 
-export default function MonteCarloRun({ world, actions, variations, onReconfigure }: Props) {
+export default function MonteCarloRun({
+  world,
+  actions,
+  variations,
+  onReconfigure,
+  precomputed,
+}: Props) {
   const multi = actions.length > 1;
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", width: "100%" }}>
@@ -131,7 +139,8 @@ export default function MonteCarloRun({ world, actions, variations, onReconfigur
         }}
       >
         <div style={{ fontSize: 13, color: "var(--text-dim)" }}>
-          Monte Carlo · {variations} futures{multi ? " · A/B" : ""} ·{" "}
+          Monte Carlo · {precomputed ? "saved run" : `${variations} futures`}
+          {multi ? " · A/B" : ""} ·{" "}
           <span style={{ color: "var(--accent)" }}>{world.label || world.id}</span>
         </div>
         <button className={st.secondary} onClick={onReconfigure}>
@@ -147,24 +156,30 @@ export default function MonteCarloRun({ world, actions, variations, onReconfigur
           flexDirection: multi ? "column" : "row",
         }}
       >
-        {actions.map((a, i) => (
-          <div
-            key={i}
-            style={{
-              flex: 1,
-              minHeight: multi ? 440 : 0,
-              position: "relative",
-              borderBottom: i === 0 && multi ? "1px solid var(--border)" : "none",
-            }}
-          >
-            <FanPanel
-              world={world}
-              action={a}
-              variations={variations}
-              letter={multi ? (i === 0 ? "A" : "B") : null}
-            />
+        {precomputed ? (
+          <div style={{ flex: 1, position: "relative" }}>
+            <MonteCarloFan mc={precomputed} />
           </div>
-        ))}
+        ) : (
+          actions.map((a, i) => (
+            <div
+              key={i}
+              style={{
+                flex: 1,
+                minHeight: multi ? 440 : 0,
+                position: "relative",
+                borderBottom: i === 0 && multi ? "1px solid var(--border)" : "none",
+              }}
+            >
+              <FanPanel
+                world={world}
+                action={a}
+                variations={variations}
+                letter={multi ? (i === 0 ? "A" : "B") : null}
+              />
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
