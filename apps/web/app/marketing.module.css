@@ -132,7 +132,10 @@
   background: rgba(17, 24, 38, 0.5); backdrop-filter: blur(8px);
   transition: border-color 0.18s var(--ease-out), background 0.18s var(--ease-out);
 }
-.ctaSecondary:hover { border-color: var(--accent); background: rgba(17, 24, 38, 0.85); }
+.ctaSecondary:hover {
+  border-color: var(--m-live); color: var(--m-live);
+  background: rgba(17, 24, 38, 0.85); transform: translateY(-1px);
+}
 .proofline {
   margin-top: 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
   font-family: var(--font-geist-mono), monospace; font-size: 12.5px; color: var(--text-faint);
@@ -184,12 +187,12 @@
 .fanLabelFutures { position: absolute; right: 2%; top: 8%; }
 @media (max-width: 900px) { .fanLabels { display: none; } }
 /* hero instrument labels (SVG text) */
-.fanActionTag { fill: var(--text-faint); font-family: var(--font-geist-mono), monospace; font-size: 9.5px; letter-spacing: 0.18em; }
-.fanActionName { fill: var(--text); font-size: 12.5px; font-weight: 500; }
-.fanFuturesTag { fill: var(--text-faint); font-family: var(--font-geist-mono), monospace; font-size: 9.5px; letter-spacing: 0.18em; }
-.fanClusterCount { font-family: var(--font-geist-mono), monospace; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.fanClusterName { fill: var(--text-dim); font-family: var(--font-geist-mono), monospace; font-size: 10px; letter-spacing: 0.04em; }
-.fanPivotTag { font-family: var(--font-geist-mono), monospace; font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; }
+.fanActionTag { fill: var(--text-dim); font-family: var(--font-geist-mono), monospace; font-size: 11px; letter-spacing: 0.16em; }
+.fanActionName { fill: var(--text); font-size: 14px; font-weight: 500; }
+.fanFuturesTag { fill: var(--text-dim); font-family: var(--font-geist-mono), monospace; font-size: 11px; letter-spacing: 0.16em; }
+.fanClusterCount { font-family: var(--font-geist-mono), monospace; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.fanClusterName { fill: var(--text-dim); font-family: var(--font-geist-mono), monospace; font-size: 12.5px; letter-spacing: 0.03em; }
+.fanPivotTag { font-family: var(--font-geist-mono), monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
 
 /* ── Section base ── */
 .section { position: relative; z-index: 1; padding: 76px 0; }
@@ -277,10 +280,10 @@
   fill: none; stroke-width: 1.4; opacity: 0.2;
   animation: sv-strand 3.4s var(--ease-in-out) infinite;
 }
-.svCount { font-family: var(--font-geist-mono), monospace; font-size: 11px; font-weight: 600; }
+.svCount { font-family: var(--font-geist-mono), monospace; font-size: 13px; font-weight: 600; }
 .svClabel {
-  fill: var(--text-faint); font-family: var(--font-geist-mono), monospace;
-  font-size: 8.5px; letter-spacing: 0.05em; text-transform: uppercase;
+  fill: var(--text-dim); font-family: var(--font-geist-mono), monospace;
+  font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase;
 }
 @keyframes sv-node { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
 @keyframes sv-strand { 0%, 100% { opacity: 0.16; } 30% { opacity: 0.72; } }
@@ -325,8 +328,8 @@
 .cvPivot { stroke: var(--text-dim); stroke-width: 1.2; stroke-dasharray: 3 3; opacity: 0.55; }
 .cvCount { font-family: var(--font-geist-mono), monospace; font-size: 12px; font-weight: 600; }
 .cvLabel {
-  fill: var(--text-faint); font-family: var(--font-geist-mono), monospace;
-  font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase;
+  fill: var(--text-dim); font-family: var(--font-geist-mono), monospace;
+  font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
 }
 
 /* ── Final CTA ── */
@@ -446,8 +449,8 @@
 
 /* ── Scroll-reveal (life on scroll; disabled for reduced-motion) ── */
 .reveal {
-  opacity: 0; transform: translateY(18px);
-  transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+  opacity: 0; transform: translateY(24px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
   will-change: opacity, transform;
 }
 .revealIn { opacity: 1; transform: none; }
@@ -481,7 +484,7 @@
 }
 .trustItem {
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-geist-mono), monospace; font-size: 11.5px; letter-spacing: 0.03em; color: var(--text-dim);
+  font-family: var(--font-geist-mono), monospace; font-size: 12.5px; letter-spacing: 0.03em; color: var(--text-dim);
 }
 .trustTick { width: 5px; height: 5px; border-radius: 50%; background: var(--m-live); box-shadow: 0 0 6px var(--accent-glow); }
 
