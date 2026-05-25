@@ -607,28 +607,117 @@
 
 /* ── Social proof (illustrative testimonials) ── */
 .proof { position: relative; z-index: 1; padding: 84px 0; }
-/* horizontal carousel: scroll-snap row, partial next card peeks to signal more */
+/* section header: title left, desktop arrow controls right */
+.proofHead {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 24px; margin-bottom: 30px;
+}
+.proofNav { display: flex; gap: 10px; flex: none; }
+.proofArrow {
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+  color: var(--accent); background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border); cursor: pointer;
+  transition: border-color 0.18s, background 0.18s, box-shadow 0.18s, opacity 0.18s;
+}
+.proofArrow:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--m-live) 55%, var(--border));
+  background: rgba(105, 211, 227, 0.08);
+  box-shadow: 0 0 0 1px rgba(105, 211, 227, 0.14), 0 8px 20px -12px var(--m-live);
+}
+.proofArrow:focus-visible { outline: 2px solid var(--m-live); outline-offset: 2px; }
+.proofArrow:disabled { opacity: 0.26; cursor: default; }
+.proofArrow svg { width: 18px; height: 18px; }
+
+/* scroller + soft edge fades that signal "more"; hidden at the matching end */
+.proofScroller { position: relative; }
+.proofScroller::before, .proofScroller::after {
+  content: ""; position: absolute; top: 0; bottom: 0; width: 44px; z-index: 2;
+  pointer-events: none; opacity: 0; transition: opacity 0.2s ease;
+}
+.proofScroller::before { left: 0; background: linear-gradient(90deg, var(--bg-deep), transparent); }
+.proofScroller::after { right: 0; background: linear-gradient(270deg, var(--bg-deep), transparent); }
+/* fades are a motion cue: visible only while scrolling, gone once a card settles
+   (and never on the side you've already bottomed out against) */
+.proofScroller.scrolling::before, .proofScroller.scrolling::after { opacity: 1; }
+.proofScroller.atStart::before { opacity: 0; }
+.proofScroller.atEnd::after { opacity: 0; }
+
+/* horizontal carousel: scroll-snap row, native scrollbar hidden */
 .proofGrid {
   display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory;
-  padding-bottom: 16px; scroll-padding-left: 2px;
+  padding: 2px 0 8px; scrollbar-width: none;
 }
+.proofGrid::-webkit-scrollbar { display: none; }
+.proofGrid:focus-visible { outline: 2px solid var(--m-live); outline-offset: 5px; border-radius: 20px; }
 .proofCard {
-  flex: 0 0 min(340px, 82vw); scroll-snap-align: start;
-  display: flex; flex-direction: column; justify-content: space-between; gap: 22px;
-  border: 1px solid var(--border-soft); border-radius: 16px; padding: 26px;
-  background: linear-gradient(180deg, rgba(17, 24, 38, 0.5), rgba(12, 17, 27, 0.35));
+  flex: 0 0 min(366px, 84vw); scroll-snap-align: start;
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: 16px;
+  border: 1px solid var(--border-soft); border-radius: 18px;
+  padding: 28px 26px 24px;
+  background:
+    radial-gradient(135% 105% at 0% 0%, color-mix(in oklab, var(--cAccent) 9%, transparent) 0%, transparent 56%),
+    linear-gradient(180deg, rgba(17, 24, 38, 0.55), rgba(12, 17, 27, 0.4));
 }
-.proofQuote { font-size: 15px; line-height: 1.65; color: var(--text-dim); }
+/* colored top edge ties each card to its scenario */
+.proofCard::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 2px;
+  background: linear-gradient(90deg, var(--cAccent), transparent 72%);
+  opacity: 0.75;
+}
+/* decorative quote watermark */
+.proofMark {
+  position: absolute; top: 6px; right: 18px; pointer-events: none;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 74px; line-height: 1; font-weight: 700;
+  color: var(--cAccent); opacity: 0.15;
+}
+.proofTag {
+  display: inline-flex; align-items: center; gap: 7px; width: fit-content;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--cAccent);
+}
+.proofTag::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--cAccent);
+  box-shadow: 0 0 9px color-mix(in oklab, var(--cAccent) 75%, transparent);
+}
+.proofQuote { font-size: 15.5px; line-height: 1.7; color: var(--text-dim); margin: 0; }
 .proofLead { color: var(--text); font-weight: 600; }
-.proofWho { display: flex; align-items: center; gap: 12px; }
-.proofAvatar {
-  width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
-  font-family: var(--font-geist-mono), monospace; font-size: 12.5px; font-weight: 600;
-  border: 1px solid; flex: none;
+.proofWho {
+  margin-top: auto; padding-top: 18px; border-top: 1px solid var(--border-soft);
+  display: flex; align-items: center; gap: 12px;
 }
-.proofMeta { display: flex; flex-direction: column; gap: 1px; }
-.proofName { font-size: 14px; font-weight: 600; color: var(--text); }
-.proofRole { font-size: 12.5px; color: var(--text-dim); }
+.proofAvatar {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  font-family: var(--font-geist-mono), monospace; font-size: 13px; font-weight: 600;
+  color: var(--cAccent); flex: none;
+  background: color-mix(in oklab, var(--cAccent) 15%, transparent);
+  border: 1px solid color-mix(in oklab, var(--cAccent) 40%, transparent);
+}
+.proofMeta { display: flex; flex-direction: column; gap: 2px; }
+.proofName { font-size: 14.5px; font-weight: 600; color: var(--text); }
+.proofRole { font-size: 12.5px; color: var(--text-faint); }
+
+/* dot indicators (both viewports); active dot is a starlight-white pill */
+.proofDots { display: flex; gap: 6px; justify-content: center; margin-top: 24px; }
+.proofDot {
+  width: 30px; height: 44px; padding: 0; border: none; background: none; cursor: pointer;
+  display: grid; place-items: center;
+}
+.proofDot::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--text-faint); opacity: 0.5;
+  transition: width 0.25s ease, background 0.25s ease, opacity 0.25s ease;
+}
+.proofDotOn::before { width: 22px; border-radius: 4px; background: var(--accent); opacity: 1; }
+.proofDot:focus-visible { outline: 2px solid var(--m-live); outline-offset: 2px; border-radius: 8px; }
+
+@media (max-width: 700px) {
+  .proofHead { margin-bottom: 22px; }
+  .proofNav { display: none; } /* mobile = swipe + dots */
+  .proofScroller::before, .proofScroller::after { width: 28px; }
+}
 
 /* ── Claim — animated distribution knob ── */
 .claimViz { margin-top: 34px; }
