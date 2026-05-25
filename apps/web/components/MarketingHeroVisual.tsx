@@ -1,99 +1,88 @@
 "use client";
 
 /**
- * Lightweight hero cascade — a seed node fires and a wave of activation ripples
- * outward through rings of nodes. Pure SVG + CSS keyframes (delay ∝ ring), no
- * fixtures and no engine, so the landing stays fast. Evokes the product without
- * shipping a megabyte of world data.
+ * Hero: one action fans into many futures. A single bright "action" node on the
+ * left throws strands that diverge and settle into three outcome clusters on the
+ * right — the product's Monte Carlo fan, the signature shape. Pure SVG + CSS
+ * (a looping activation wave); no fixtures, no engine, so the landing stays fast.
  */
 import { useMemo } from "react";
 import s from "../app/marketing.module.css";
 
-interface Node {
-  x: number;
-  y: number;
-  ring: number;
-  r: number;
-}
-interface Edge {
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  ring: number;
+const SEED_X = 60;
+const SEED_Y = 230;
+const END_X = 556;
+
+// Three outcome clusters (the affect/cluster palette from globals.css).
+const CLUSTERS = [
+  { color: "#4fd18b", center: 116, n: 7, spread: 70 }, // a calmer outcome
+  { color: "#f0556b", center: 250, n: 10, spread: 92 }, // the dominant regime
+  { color: "#f2b450", center: 380, n: 5, spread: 56 }, // a third regime
+];
+
+interface Strand {
+  d: string;
+  ex: number;
+  ey: number;
+  color: string;
+  i: number;
 }
 
-const RING_RADII = [0, 78, 150, 222, 286];
-const RING_COUNTS = [1, 6, 11, 16, 20];
-const RING_COLORS = ["#5bd1a0", "#56c7d6", "#5b9cf0", "#8a7bf0", "#f0556b"];
-
-function build(): { nodes: Node[]; edges: Edge[] } {
-  const C = 300;
-  const nodes: Node[] = [];
-  RING_RADII.forEach((rad, ring) => {
-    const n = RING_COUNTS[ring];
-    for (let i = 0; i < n; i++) {
-      const a = (i / n) * Math.PI * 2 + ring * 0.6;
-      nodes.push({
-        // Round so the SSR + client SVG strings are byte-identical (no hydration
-        // mismatch from float formatting).
-        x: Math.round(C + rad * Math.cos(a)),
-        y: Math.round(C + rad * Math.sin(a)),
-        ring,
-        r: ring === 0 ? 6 : ring >= 3 ? 2.4 : 3.4,
-      });
+function build(): Strand[] {
+  const strands: Strand[] = [];
+  let idx = 0;
+  for (const cl of CLUSTERS) {
+    for (let i = 0; i < cl.n; i++) {
+      const t = cl.n === 1 ? 0.5 : i / (cl.n - 1);
+      const jitter = ((i * 53) % 11) - 5; // deterministic (hydration-safe)
+      const ey = Math.round(cl.center - cl.spread / 2 + t * cl.spread + jitter * 0.4);
+      const ex = END_X + (((i * 37) % 9) - 4);
+      // Smooth fan: flat near the seed, curving out to the endpoint.
+      const d = `M ${SEED_X} ${SEED_Y} C ${SEED_X + 168} ${SEED_Y}, ${ex - 128} ${ey}, ${ex} ${ey}`;
+      strands.push({ d, ex, ey, color: cl.color, i: idx++ });
     }
-  });
-  const edges: Edge[] = [];
-  for (const node of nodes) {
-    if (node.ring === 0) continue;
-    const prev = nodes.filter((p) => p.ring === node.ring - 1);
-    let best = prev[0];
-    let bd = Infinity;
-    for (const p of prev) {
-      const d = (p.x - node.x) ** 2 + (p.y - node.y) ** 2;
-      if (d < bd) {
-        bd = d;
-        best = p;
-      }
-    }
-    if (best) edges.push({ x1: best.x, y1: best.y, x2: node.x, y2: node.y, ring: node.ring });
   }
-  return { nodes, edges };
+  return strands;
 }
 
 export default function MarketingHeroVisual() {
-  const { nodes, edges } = useMemo(build, []);
+  const strands = useMemo(build, []);
   return (
     <div className={s.heroVisualWrap}>
-      <svg className={s.heroSvg} viewBox="0 0 600 600" fill="none" aria-hidden="true">
-        {edges.map((e, i) => (
-          <line
-            key={`e${i}`}
-            className={s.edge}
-            x1={e.x1}
-            y1={e.y1}
-            x2={e.x2}
-            y2={e.y2}
-            style={{ animationDelay: `${e.ring * 0.5}s` }}
+      <svg
+        className={s.fanSvg}
+        viewBox="0 0 600 460"
+        fill="none"
+        aria-hidden="true"
+      >
+        {strands.map((st) => (
+          <path
+            key={`s${st.i}`}
+            className={s.fanStrand}
+            d={st.d}
+            stroke={st.color}
+            style={{ animationDelay: `${(st.i % 8) * 0.18}s` }}
           />
         ))}
-        {nodes.map((n, i) => (
+        {strands.map((st) => (
           <circle
-            key={`n${i}`}
-            className={s.node}
-            cx={n.x}
-            cy={n.y}
-            r={n.r}
-            fill={RING_COLORS[Math.min(n.ring, 4)]}
-            style={{
-              animationDelay: `${n.ring * 0.5}s`,
-              filter:
-                n.ring === 0 ? "drop-shadow(0 0 10px var(--accent-glow))" : undefined,
-            }}
+            key={`d${st.i}`}
+            className={s.fanDot}
+            cx={st.ex}
+            cy={st.ey}
+            r={2.6}
+            fill={st.color}
+            style={{ animationDelay: `${(st.i % 8) * 0.18}s` }}
           />
         ))}
+        {/* the action */}
+        <circle className={s.fanSeedGlow} cx={SEED_X} cy={SEED_Y} r={16} />
+        <circle className={s.fanSeed} cx={SEED_X} cy={SEED_Y} r={6.5} />
       </svg>
+      <div className={s.fanLabels} aria-hidden="true">
+        <span className={s.fanLabelAction}>your action</span>
+        <span className={s.fanLabelFutures}>the futures</span>
+      </div>
     </div>
   );
 }
