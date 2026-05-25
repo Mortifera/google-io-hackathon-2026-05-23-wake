@@ -2,9 +2,9 @@
 
 /**
  * How it works as ONE continuous mechanism sequence (not three isolated cards):
- * the same scenario — an acquisition — moving through the instrument, type →
+ * the same scenario - an acquisition - moving through the instrument, type →
  * world → futures, the three product frames strung on a single through-line.
- * (Schwartz: syllogistic mechanization — each beat the consequent of the last.)
+ * (Schwartz: syllogistic mechanization - each beat the consequent of the last.)
  */
 import s from "../app/marketing.module.css";
 
@@ -88,19 +88,19 @@ const STEPS = [
   {
     n: "01",
     title: "Type one action",
-    body: "An acquisition, a launch, a layoff, a price change. One sentence. About two cents — or start from a prebuilt world.",
+    body: "An acquisition, a launch, a layoff, a price change. One sentence. About two cents, or start from a prebuilt world.",
     visual: <FrameInput />,
   },
   {
     n: "02",
     title: "It builds the world, in character",
-    body: "Wake researches the real people, communities, and platforms involved — each reasoning with a public face and a private interior that can diverge.",
+    body: "Wake researches the real people, communities, and platforms involved, each reasoning with a public face and a private interior that can diverge.",
     visual: <FrameWorld />,
   },
   {
     n: "03",
     title: "Watch the futures",
-    body: "The action propagates tick by tick into a distribution of outcomes. You read who reacts and why — and every outcome traces back to its cause.",
+    body: "The action propagates tick by tick into a distribution of outcomes. You read who reacts and why, and every outcome traces back to its cause.",
     visual: <FrameFutures />,
   },
 ];
@@ -111,7 +111,7 @@ export default function HowItWorks() {
       <div className={s.wrap}>
         <div className={s.sectionHead}>
           <h2 className={s.sectionTitle}>One sentence in. A world out.</h2>
-          <p className={s.sectionSub}>One scenario — an acquisition — moving through the instrument.</p>
+          <p className={s.sectionSub}>One scenario, an acquisition, moving through the instrument.</p>
         </div>
         <div className={s.flow}>
           <div className={s.flowLine} aria-hidden="true" />

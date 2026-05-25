@@ -2,7 +2,7 @@
 
 /**
  * Problem beat as a before/after contrast (Schwartz's bad/good Concentration):
- * LEFT — how you decide now: a flat, dim, brittle artifact. RIGHT — the same
+ * LEFT - how you decide now: a flat, dim, brittle artifact. RIGHT - the same
  * decision as a Wake world-model: bright, affect-coloured, alive. The visual
  * does the arguing; the copy stays short.
  */
@@ -69,7 +69,7 @@ export default function ProblemBeat() {
         <figure className={s.baAfter}>
           <figcaption className={`${s.baTag} ${s.baTagLive}`}>with Wake</figcaption>
           <WorldGraph />
-          <div className={s.baAfterFoot}>the world, modeled — every actor, reasoning</div>
+          <div className={s.baAfterFoot}>the world, modeled, with every actor reasoning</div>
         </figure>
       </StaggerReveal>
     </section>

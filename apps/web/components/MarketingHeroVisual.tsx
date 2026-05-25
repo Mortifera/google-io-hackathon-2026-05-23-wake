@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Hero: one action fans into many futures — read as REAL instrument output, and
+ * Hero: one action fans into many futures - read as REAL instrument output, and
  * now interactive: hover an outcome regime to brighten its strands and read a
  * sample future (turns "abstract art" into a concrete demo). One coherent
  * scenario ("Acquired by Microsoft") threaded through the page. SVG + CSS,
@@ -13,9 +13,9 @@ import s from "../app/marketing.module.css";
 const SEED = { x: 64, y: 232 };
 const END_X = 468;
 
-// The futures — affect/cluster palette. Middle regime is dominant (pivotal).
+// The futures - affect/cluster palette. Middle regime is dominant (pivotal).
 const CLUSTERS = [
-  { key: "integration", name: "integration", count: 19, color: "#4fd18b", center: 118, n: 7, spread: 62, pivotal: false, sample: "devrel amplifies — “finally, real resources”" },
+  { key: "integration", name: "integration", count: 19, color: "#4fd18b", center: 118, n: 7, spread: 62, pivotal: false, sample: "devrel amplifies: “finally, real resources”" },
   { key: "backlash", name: "backlash", count: 24, color: "#f0556b", center: 248, n: 10, spread: 96, pivotal: true, sample: "indie devs feel abandoned; #boycott trends" },
   { key: "competitor", name: "competitor", count: 9, color: "#f2b450", center: 372, n: 5, spread: 50, pivotal: false, sample: "a rival quietly courts your power users" },
 ];
@@ -86,13 +86,13 @@ export default function MarketingHeroVisual() {
           />
         ))}
 
-        {/* the action — cool-white instrument core with a cyan live glow */}
+        {/* the action - cool-white instrument core with a cyan live glow */}
         <circle className={s.fanSeedGlow} cx={SEED.x} cy={SEED.y} r={16} />
         <circle className={s.fanSeed} cx={SEED.x} cy={SEED.y} r={6.5} />
         <text className={s.fanActionTag} x={30} y={SEED.y + 28}>ACTION</text>
         <text className={s.fanActionName} x={30} y={SEED.y + 44}>&ldquo;Acquired by Microsoft&rdquo;</text>
 
-        {/* the futures — named regimes, hover to focus + reveal a sample */}
+        {/* the futures - named regimes, hover to focus + reveal a sample */}
         <text className={s.fanFuturesTag} x={502} y={58}>52 FUTURES</text>
         {labels.map(({ y, cl }) => {
           const dim = hover != null && hover !== cl.key;
@@ -114,11 +114,11 @@ export default function MarketingHeroVisual() {
           );
         })}
 
-        {/* bottom caption — hint by default, a sample future on hover */}
+        {/* bottom caption - hint by default, a sample future on hover */}
         {active ? (
           <text className={s.fanCaption} x={30} y={440}>
             <tspan style={{ fill: active.color, fontWeight: 700 }}>{active.name}</tspan>
-            <tspan style={{ fill: "var(--text-dim)" }}>{`  —  ${active.sample}`}</tspan>
+            <tspan style={{ fill: "var(--text-dim)" }}>{`  ·  ${active.sample}`}</tspan>
           </text>
         ) : (
           <text className={s.fanCaptionHint} x={30} y={440}>hover an outcome to read a sample future</text>

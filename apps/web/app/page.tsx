@@ -18,9 +18,9 @@ import s from "./marketing.module.css";
 // light beat) → trust (claim) → confidence (pricing) → objections (FAQ) →
 // invitation (CTA). The page descends into the dark as belief is built.
 export const metadata = {
-  title: "Wake — watch your decision before you make it",
+  title: "Wake: watch your decision before you make it",
   description:
-    "The first world model for organizational action. Type one decision and watch hundreds of real people and platforms reason through what happens next — live, and traceable to the cause.",
+    "The first world model for organizational action. Type one decision and watch hundreds of real people and platforms reason through what happens next, live and traceable to the cause.",
 };
 
 export default function MarketingPage() {
@@ -32,15 +32,15 @@ export default function MarketingPage() {
 
       <SiteNav />
 
-      {/* Hero — desire: see the future before you act */}
+      {/* Hero - desire: see the future before you act */}
       <header className={s.hero}>
         <div className={s.heroCopy}>
           <h1 className={s.headline}>Watch your decision before you make it.</h1>
           <p className={s.sub}>
-            Type one action — an acquisition, a launch, a layoff. Wake builds a{" "}
+            Type one action: an acquisition, a launch, a layoff. Wake builds a{" "}
             <em>live world model</em> around it: hundreds of the real people,
             communities, and platforms it touches, each reasoning through what happens
-            next. You see the outcomes — each traced to its cause — before you commit.
+            next. You see the outcomes, each traced to its cause, before you commit.
           </p>
           <div className={s.ctaRow}>
             <Link href="/app" className={s.ctaPrimary}>
@@ -66,30 +66,30 @@ export default function MarketingPage() {
       {/* Credibility */}
       <TrustStrip />
 
-      {/* Recognition — the problem, as a before/after contrast */}
+      {/* Recognition - the problem, as a before/after contrast */}
       <Reveal>
         <ProblemBeat />
       </Reveal>
 
-      {/* Belief — the mechanism, one continuous sequence */}
+      {/* Belief - the mechanism, one continuous sequence */}
       <Reveal>
         <HowItWorks />
       </Reveal>
 
-      {/* Identification — the one light beat: your own decisions, in daylight */}
+      {/* Identification - the one light beat: your own decisions, in daylight */}
       <Reveal>
         <UseCases />
       </Reveal>
 
       <div className={s.divider} />
 
-      {/* Trust — the honest claim, paired with the distribution it describes */}
+      {/* Trust - the honest claim, paired with the distribution it describes */}
       <Reveal>
         <section className={s.claim}>
           <div className={s.claimCard}>
             <h2 className={s.claimTitle}>A map, not a prediction.</h2>
             <p className={s.claimBody}>
-              Wake runs hundreds of imagined futures in parallel — not to predict the one
+              Wake runs hundreds of imagined futures in parallel, not to predict the one
               that happens, but to show you the space of what can: which trajectories are
               common, which are rare, and the single variable that tips the balance. The
               operator who has seen the <em>distribution of outcomes</em>, before they act,
@@ -100,17 +100,17 @@ export default function MarketingPage() {
         </section>
       </Reveal>
 
-      {/* Confidence — pricing */}
+      {/* Confidence - pricing */}
       <Reveal>
         <Pricing />
       </Reveal>
 
-      {/* Objections — FAQ */}
+      {/* Objections - FAQ */}
       <Reveal>
         <FAQ />
       </Reveal>
 
-      {/* Invitation — the turn, without a jar */}
+      {/* Invitation - the turn, without a jar */}
       <Reveal>
         <section className={s.finalCta}>
           <h2 className={s.finalTitle}>Watch your decision before you make it.</h2>

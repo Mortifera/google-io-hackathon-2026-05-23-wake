@@ -1,6 +1,6 @@
 import s from "../app/marketing.module.css";
 
-/** Slim credibility band under the hero — borrowed believability, mono, restrained. */
+/** Slim credibility band under the hero - borrowed believability, mono, restrained. */
 const ITEMS = [
   "Built on Google Gemini",
   "Hundreds of futures per run",

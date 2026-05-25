@@ -1,7 +1,7 @@
 import Link from "next/link";
 import s from "../app/marketing.module.css";
 
-/** Pricing — transparent, usage-based, no lock-in. Dissolves risk before the CTA. */
+/** Pricing - transparent, usage-based, no lock-in. Dissolves risk before the CTA. */
 export default function Pricing() {
   return (
     <section id="pricing" className={s.pricing}>
@@ -35,7 +35,7 @@ export default function Pricing() {
             <ul className={s.priceList}>
               <li>Build your own world with Gemini</li>
               <li>32 futures for about $3</li>
-              <li>Bring your own key — never stored</li>
+              <li>Bring your own key, never stored</li>
             </ul>
             <Link href="/app" className={s.priceCtaLive}>
               Run a simulation →

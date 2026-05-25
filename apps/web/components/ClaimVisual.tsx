@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Claim visual: the distribution of outcomes that MOVES — and that you can drive.
+ * Claim visual: the distribution of outcomes that MOVES - and that you can drive.
  * Drag (or arrow-key) the "announcement tone" slider and the three outcome
  * regimes re-form in real time. When you're not touching it, it gently
  * auto-animates so it still reads as alive (and so the passive critic video sees
@@ -101,7 +101,7 @@ export default function ClaimVisual() {
             step="0.001"
             defaultValue="0.5"
             className={s.cvRange}
-            aria-label="Announcement tone, measured to blunt — drag to reshape the outcome distribution"
+            aria-label="Announcement tone, measured to blunt. Drag to reshape the outcome distribution"
             onInput={onInteract}
             onPointerDown={onInteract}
           />

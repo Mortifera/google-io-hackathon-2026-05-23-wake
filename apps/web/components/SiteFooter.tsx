@@ -1,7 +1,7 @@
 import Link from "next/link";
 import s from "../app/marketing.module.css";
 
-/** Richer footer — signals a real product, not a demo. */
+/** Richer footer - signals a real product, not a demo. */
 export default function SiteFooter() {
   return (
     <footer className={s.footer2}>

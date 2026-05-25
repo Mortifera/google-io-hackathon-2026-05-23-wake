@@ -3,7 +3,7 @@ import StaggerReveal from "./StaggerReveal";
 import s from "../app/marketing.module.css";
 
 /**
- * Use cases — the page's one LIGHT section: "step into daylight and see your own
+ * Use cases - the page's one LIGHT section: "step into daylight and see your own
  * decisions" (identification beat + mid-page relief). Asymmetric bento, not a
  * 3-equal-card grid; the affect colours appear as small accents on light.
  */
@@ -11,7 +11,7 @@ const CASES = [
   {
     k: "acquisition",
     t: "Acquisitions & M&A",
-    d: "Announce the deal and watch the indie community, the press, and your power users diverge — before the leak does.",
+    d: "Announce the deal and watch the indie community, the press, and your power users diverge, before the leak does.",
     big: true,
     c: "#f0556b",
   },
@@ -28,7 +28,7 @@ export default function UseCases() {
         <div className={s.ucHead}>
           <h2 className={s.ucTitle}>For the decisions you can&apos;t take back.</h2>
           <p className={s.ucSub}>
-            The moves where being blindsided is expensive — and where seeing the room
+            The moves where being blindsided is expensive, and where seeing the room
             first changes the call.
           </p>
         </div>

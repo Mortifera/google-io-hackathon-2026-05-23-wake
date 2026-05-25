@@ -1,13 +1,13 @@
 import s from "../app/marketing.module.css";
 
 /**
- * FAQ — objection handling (Schwartz's Concentration: dissolve the last doubts).
+ * FAQ - objection handling (Schwartz's Concentration: dissolve the last doubts).
  * Native <details> for keyboard accessibility with zero JS.
  */
 const QA = [
   {
     q: "Isn't this just predicting the future?",
-    a: "No — and that's the point. Wake shows you a distribution of what can happen, not a single forecast. It's a map you read before you act, not an oracle.",
+    a: "No, and that's the point. Wake shows you a distribution of what can happen, not a single forecast. It's a map you read before you act, not an oracle.",
   },
   {
     q: "Is my data safe?",
@@ -15,11 +15,11 @@ const QA = [
   },
   {
     q: "Do I need an API key?",
-    a: "No. Prebuilt worlds and precomputed runs are free and instant. To build your own world or run it live, bring a Gemini key — or use ours.",
+    a: "No. Prebuilt worlds and precomputed runs are free and instant. To build your own world or run it live, bring a Gemini key, or use ours.",
   },
   {
     q: "How accurate is it?",
-    a: "It's an instrument, not a prophecy. The value is in the shape of the distribution — which outcomes are common, which are rare, and the one variable that tips it.",
+    a: "It's an instrument, not a prophecy. The value is in the shape of the distribution: which outcomes are common, which are rare, and the one variable that tips it.",
   },
   {
     q: "What model runs it?",
