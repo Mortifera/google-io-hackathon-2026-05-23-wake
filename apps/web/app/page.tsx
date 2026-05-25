@@ -38,9 +38,9 @@ export default function MarketingPage() {
           <h1 className={s.headline}>Watch your decision before you make it.</h1>
           <p className={s.sub}>
             Type one action — an acquisition, a launch, a layoff. Wake builds a{" "}
-            <em>live world model</em> around it: the real people, communities, and
-            platforms involved each reason through what happens next, and every outcome
-            cites its cause.
+            <em>live world model</em> around it: a working simulation where the real
+            people, communities, and platforms involved reason through what happens
+            next, and every outcome cites its cause.
           </p>
           <div className={s.ctaRow}>
             <Link href="/app" className={s.ctaPrimary}>
