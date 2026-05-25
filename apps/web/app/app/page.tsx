@@ -1,13 +1,28 @@
 import type { World } from "@wake/contracts";
-import worldJson from "@worlds/notion/world.json";
-import Stage from "../../components/Stage";
+import notionJson from "@worlds/notion/world.json";
+import anthropicJson from "@worlds/anthropic/world.json";
+import Studio, { type PrebuiltWorld } from "../../components/Studio";
 
-// The product workspace. Phase 1 mounts the existing Stage console on the
-// prebuilt Notion world so /app works end-to-end immediately; Phase 2 replaces
-// this with the <Studio> flow (pick/build world → action → run), which mounts
-// Stage as its run step.
-const world = worldJson as unknown as World;
+// The product workspace: the Studio flow (pick/build a world → action → run).
+// Prebuilt worlds are the "quick look" on-ramp; build-your-own (Genesis) is the
+// hero, handled inside the World step.
+const PREBUILT: PrebuiltWorld[] = [
+  {
+    id: "notion",
+    label: "Notion × Microsoft",
+    description:
+      "Microsoft acquires Notion. 208 people, communities, and platforms reason about the deal, the backlash, and the integration.",
+    world: notionJson as unknown as World,
+  },
+  {
+    id: "anthropic",
+    label: "Anthropic",
+    description:
+      "A frontier lab under the safety-vs-commercial tension. 57 named leaders, labs, journalists, and regulators.",
+    world: anthropicJson as unknown as World,
+  },
+];
 
 export default function AppPage() {
-  return <Stage world={world} />;
+  return <Studio prebuilt={PREBUILT} />;
 }

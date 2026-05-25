@@ -49,8 +49,20 @@ type View = "cascade" | "futures" | "abtesting";
 type RunMode = "replay" | "live";
 export type LiveStatus = "idle" | "connecting" | "streaming" | "done" | "error";
 
+interface StudioRun {
+  /** The seed action id to run (present in world.seeds). */
+  seedId: string;
+  /** Auto-open a live BYO cascade on mount (true for Studio-driven runs). */
+  autoRunLive: boolean;
+  /** Return to the Studio's action step. */
+  onReconfigure: () => void;
+}
+
 interface Props {
   world: World;
+  /** When set, Stage is embedded in the Studio flow: stripped chrome, the given
+   *  world runs live on mount, and the header offers "Reconfigure". */
+  studio?: StudioRun;
 }
 
 const EVENT_PRIORITY: Record<string, number> = {
@@ -68,15 +80,19 @@ function fmtClock(min: number): string {
   return m ? `t+${h}h ${m}m` : `t+${h}h`;
 }
 
-export default function Stage({ world }: Props) {
-  const [actionId, setActionId] = useState(DEFAULT_ACTION_ID);
+export default function Stage({ world, studio }: Props) {
+  const [actionId, setActionId] = useState(studio?.seedId ?? DEFAULT_ACTION_ID);
   const scenario = scenarioFor(actionId);
   const mc = scenario.mc;
 
   // BYO-world state: when set, the uploaded world drives the graph layout and
   // a live cascade runs against it via POST /api/stream-cascade.
-  const [byoWorld, setByoWorld] = useState<World | null>(null);
-  const [byoSeed, setByoSeed] = useState<string>("");
+  const [byoWorld, setByoWorld] = useState<World | null>(
+    studio?.autoRunLive ? world : null,
+  );
+  const [byoSeed, setByoSeed] = useState<string>(
+    studio?.autoRunLive ? studio.seedId : "",
+  );
   const [byoPanelOpen, setByoPanelOpen] = useState(false);
   // When non-null, we're in BYO mode: stream is opened via openByoWorldStream.
   const byoWorldRef = useRef<World | null>(null);
@@ -87,7 +103,7 @@ export default function Stage({ world }: Props) {
   // Live streaming state. In live mode the active cascade is the growing
   // accumulator; the graph layout always comes from the (full) scenario cascade
   // + world, so node positions stay fixed while ticks stream in.
-  const [mode, setMode] = useState<RunMode>("replay");
+  const [mode, setMode] = useState<RunMode>(studio?.autoRunLive ? "live" : "replay");
   const [liveStatus, setLiveStatus] = useState<LiveStatus>("idle");
   const [liveCascade, setLiveCascade] = useState<Cascade | null>(null);
   // Stream lifecycle is owned by a single effect (StrictMode-safe). `streamOpen`
@@ -387,6 +403,17 @@ export default function Stage({ world }: Props) {
     setStreamOpen(true);
   }, [setP]);
 
+  // Studio-driven: auto-open a live cascade on the provided world once on mount.
+  const studioStarted = useRef(false);
+  const studioAutoRun = studio?.autoRunLive;
+  const studioSeedId = studio?.seedId;
+  useEffect(() => {
+    if (studioAutoRun && studioSeedId && !studioStarted.current) {
+      studioStarted.current = true;
+      startByoLive(world, studioSeedId);
+    }
+  }, [studioAutoRun, studioSeedId, world, startByoLive]);
+
   // Stop the live stream (Pause during a live run) but keep the streamed-so-far
   // cascade frozen for scrubbing. Closing the connection aborts the server run.
   const stopLiveStream = useCallback(() => {
@@ -442,7 +469,7 @@ export default function Stage({ world }: Props) {
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.code === "KeyO") {
-        setConsoleOpen((v) => !v);
+        if (!studio) setConsoleOpen((v) => !v);
         return;
       }
       if (e.code === "Escape") {
@@ -517,46 +544,58 @@ export default function Stage({ world }: Props) {
           ) : liveStatus === "error" ? (
             <span className={s.fallbackTag}>stream unavailable — precomputed run</span>
           ) : null}
-          <button
-            className={s.byoBtn}
-            data-active={byoPanelOpen}
-            onClick={() => setByoPanelOpen((v) => !v)}
-            title="Upload a world JSON from /genesis"
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 2a1 1 0 0 1 1 1v8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 1.414-1.414L11 11.586V3a1 1 0 0 1 1-1ZM5 19a1 1 0 1 0 0 2h14a1 1 0 1 0 0-2H5Z" style={{ transform: "rotate(180deg)", transformOrigin: "center" }} />
-            </svg>
-            Upload world
-          </button>
-          <button
-            className={s.opBtn}
-            data-active={consoleOpen}
-            onClick={() => setConsoleOpen((v) => !v)}
-            title="Operator console (O)"
-          >
-            <span className={s.opDotLive} />
-            Operator
-          </button>
-          <div className={s.switch}>
+          {studio ? (
             <button
-              data-active={view === "cascade"}
-              onClick={() => setView("cascade")}
+              className={s.opBtn}
+              onClick={studio.onReconfigure}
+              title="Change the world or action"
             >
-              Cascade
+              ← Reconfigure
             </button>
-            <button
-              data-active={view === "futures"}
-              onClick={() => setView("futures")}
-            >
-              Futures
-            </button>
-            <button
-              data-active={view === "abtesting"}
-              onClick={() => setView("abtesting")}
-            >
-              A/B Testing
-            </button>
-          </div>
+          ) : (
+            <>
+              <button
+                className={s.byoBtn}
+                data-active={byoPanelOpen}
+                onClick={() => setByoPanelOpen((v) => !v)}
+                title="Upload a world JSON from /genesis"
+              >
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 2a1 1 0 0 1 1 1v8.586l2.293-2.293a1 1 0 0 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4a1 1 0 0 1 1.414-1.414L11 11.586V3a1 1 0 0 1 1-1ZM5 19a1 1 0 1 0 0 2h14a1 1 0 1 0 0-2H5Z" style={{ transform: "rotate(180deg)", transformOrigin: "center" }} />
+                </svg>
+                Upload world
+              </button>
+              <button
+                className={s.opBtn}
+                data-active={consoleOpen}
+                onClick={() => setConsoleOpen((v) => !v)}
+                title="Operator console (O)"
+              >
+                <span className={s.opDotLive} />
+                Operator
+              </button>
+              <div className={s.switch}>
+                <button
+                  data-active={view === "cascade"}
+                  onClick={() => setView("cascade")}
+                >
+                  Cascade
+                </button>
+                <button
+                  data-active={view === "futures"}
+                  onClick={() => setView("futures")}
+                >
+                  Futures
+                </button>
+                <button
+                  data-active={view === "abtesting"}
+                  onClick={() => setView("abtesting")}
+                >
+                  A/B Testing
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </header>
 
