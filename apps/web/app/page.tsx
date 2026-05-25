@@ -20,7 +20,7 @@ const PROPS = [
     badge: "⌁",
     tint: "var(--accent)",
     title: "A simulation kernel",
-    body: "Your action propagates in waves. Run it once, A/B two decisions side by side, or fan out a hundred futures and read the distribution.",
+    body: "Run it once, A/B two decisions, or fan out hundreds of futures. Wake shows the distribution — and the one variable that decides which way it goes. An instrument, not an oracle.",
   },
   {
     badge: "❓",
@@ -57,9 +57,9 @@ export default function MarketingPage() {
         <h1 className={s.headline}>Watch your decision before you make it.</h1>
         <p className={s.sub}>
           You have an action — an acquisition, a launch, a layoff, a post. Wake
-          builds the world it lands in, then lets <em>hundreds of real people and
-          platforms</em> reason through what happens next. Live, and traceable to
-          the cause.
+          builds the world it lands in, gives <em>every person and platform a public
+          face and a private interior</em>, and runs your decision forward in waves.
+          You watch what happens, live — and every outcome traces back to what you did.
         </p>
         <div className={s.ctaRow}>
           <Link href="/app" className={s.ctaPrimary}>
