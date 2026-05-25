@@ -1,5 +1,8 @@
 import Link from "next/link";
 import MarketingHeroVisual from "../components/MarketingHeroVisual";
+import BeatVisual from "../components/BeatVisual";
+import ClaimVisual from "../components/ClaimVisual";
+import Reveal from "../components/Reveal";
 import s from "./marketing.module.css";
 
 // Early-product landing, kept lean: hero (fan) → one problem beat → how it works
@@ -13,59 +16,80 @@ export const metadata = {
     "The first world model for organizational action. Type one decision and watch hundreds of real people and platforms reason through what happens next — live, and traceable to the cause.",
 };
 
-// ── Step visuals (static SVG motifs — show the product, stay lightweight) ──
-function StepGraph() {
+// ── Step visuals — these SHOW the product (graph, reasoning, fan). SVG + CSS. ──
+const AFFECT = ["#56c7d6", "#5b9cf0", "#4fd18b", "#f2b450", "#f0556b", "#b06bf0"];
+
+function StepWorld() {
+  // A believable org graph: named tiers + cohorts, affect-colored, edges to
+  // nearest prior node. Looks like the world Genesis builds.
+  const nodes: [number, number, number][] = [
+    [38, 84, 1], [66, 40, 0], [74, 124, 2], [104, 70, 1], [118, 30, 3],
+    [124, 112, 4], [150, 56, 1], [156, 98, 2], [180, 34, 0], [186, 80, 3],
+    [192, 120, 4], [214, 56, 5], [222, 102, 1], [244, 42, 2], [248, 88, 3], [252, 124, 4],
+  ];
+  const edges: [number, number][] = [];
+  nodes.forEach((n, i) => {
+    let best = -1, bd = 1e9;
+    nodes.forEach((m, j) => {
+      if (j >= i) return;
+      const d = (m[0] - n[0]) ** 2 + (m[1] - n[1]) ** 2;
+      if (d < bd) { bd = d; best = j; }
+    });
+    if (best >= 0) edges.push([i, best]);
+  });
   return (
-    <svg viewBox="0 0 240 120" fill="none" aria-hidden="true">
-      <line className={s.svEdge} x1="42" y1="60" x2="96" y2="32" />
-      <line className={s.svEdge} x1="42" y1="60" x2="96" y2="88" />
-      <line className={s.svEdge} x1="96" y1="32" x2="150" y2="46" />
-      <line className={s.svEdge} x1="96" y1="88" x2="150" y2="80" />
-      <line className={s.svEdge} x1="150" y1="46" x2="200" y2="34" />
-      <line className={s.svEdge} x1="150" y1="46" x2="200" y2="64" />
-      <line className={s.svEdge} x1="150" y1="80" x2="200" y2="96" />
-      {[
-        [42, 60], [96, 32], [96, 88], [150, 46], [150, 80], [200, 34], [200, 64], [200, 96],
-      ].map(([x, y], i) => (
-        <circle key={i} className={s.svNode} cx={x} cy={y} r={i === 0 ? 5.5 : 4} />
+    <svg viewBox="0 0 290 160" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+      {edges.map(([a, b], k) => (
+        <line key={k} className={s.svEdge} x1={nodes[a][0]} y1={nodes[a][1]} x2={nodes[b][0]} y2={nodes[b][1]} />
       ))}
+      {nodes.map(([x, y, c], i) => (
+        <circle key={i} className={s.svNode} cx={x} cy={y} r={3.6}
+          style={{ fill: AFFECT[c], animationDelay: `${(i % 6) * 0.22}s` }} />
+      ))}
+      <text className={s.svLabel} x={58} y={22}>press</text>
+      <text className={s.svLabel} x={196} y={150}>power users</text>
     </svg>
   );
 }
-function StepAction() {
+
+function StepReason() {
+  // The product's signature: a node reasoning, public face vs private interior.
   return (
-    <svg viewBox="0 0 240 120" fill="none" aria-hidden="true">
-      <line className={s.svEdge} x1="48" y1="60" x2="124" y2="40" />
-      <line className={s.svEdge} x1="48" y1="60" x2="124" y2="80" />
-      <line className={s.svEdge} x1="124" y1="40" x2="196" y2="32" />
-      <line className={s.svEdge} x1="124" y1="80" x2="196" y2="64" />
-      <line className={s.svEdge} x1="124" y1="80" x2="196" y2="94" />
-      {[[124, 40], [124, 80], [196, 32], [196, 64], [196, 94]].map(([x, y], i) => (
-        <circle key={i} className={s.svNode} cx={x} cy={y} r={3.6} />
-      ))}
-      <circle className={s.svPulse} cx={48} cy={60} r={7} />
-    </svg>
+    <div className={s.rxCard}>
+      <div className={s.rxHead}>
+        <span className={s.rxDot} />
+        <span className={s.rxName}>Head of Comms</span>
+        <span className={s.rxThinking}>reasoning…</span>
+      </div>
+      <div className={s.rxPublic}>“Thrilled to join Microsoft — huge for our users.”</div>
+      <div className={s.rxPrivate}>privately: “we just lost the indie story that built us.”</div>
+    </div>
   );
 }
-function StepFan() {
-  const C = ["#4fd18b", "#f0556b", "#f2b450"];
-  const ends = [34, 60, 92];
+
+function StepFutures() {
+  const CL = [
+    { c: "#4fd18b", y: 36, label: "integration", n: 19 },
+    { c: "#f0556b", y: 82, label: "backlash", n: 24 },
+    { c: "#f2b450", y: 126, label: "competitor", n: 9 },
+  ];
   return (
-    <svg viewBox="0 0 240 120" fill="none" aria-hidden="true">
-      {ends.map((ey, i) => (
-        <path
-          key={i}
-          d={`M 44 60 C 110 60, 150 ${ey}, 196 ${ey}`}
-          stroke={C[i]}
-          strokeWidth={1.5}
-          opacity={0.7}
-          fill="none"
-        />
+    <svg viewBox="0 0 290 160" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
+      {CL.map((cl, i) =>
+        [0, 1, 2, 3].map((k) => (
+          <path key={`${i}-${k}`} className={s.svStrand}
+            d={`M 34 82 C 108 82, 150 ${cl.y + (k - 1.5) * 6}, 196 ${cl.y + (k - 1.5) * 6}`}
+            stroke={cl.c} style={{ animationDelay: `${i * 0.3}s` }} />
+        )),
+      )}
+      {CL.map((cl, i) => (
+        <g key={`c${i}`}>
+          <circle cx={196} cy={cl.y} r={4} fill={cl.c} />
+          <text className={s.svCount} x={208} y={cl.y - 1} style={{ fill: cl.c }}>{cl.n}</text>
+          <text className={s.svClabel} x={208} y={cl.y + 10}>{cl.label}</text>
+        </g>
       ))}
-      {ends.map((ey, i) => (
-        <circle key={`d${i}`} cx={196} cy={ey} r={3.4} fill={C[i]} />
-      ))}
-      <circle cx={44} cy={60} r={6} fill="var(--accent)" />
+      <circle className={s.svSeed} cx={34} cy={82} r={6} />
     </svg>
   );
 }
@@ -73,21 +97,21 @@ function StepFan() {
 const STEPS = [
   {
     n: "01 · Build the world",
-    visual: <StepGraph />,
+    visual: <StepWorld />,
     title: "From one sentence",
     body: "Wake researches the real people, communities, and platforms involved, and writes every dossier with Gemini. About two cents — or start from a prebuilt world.",
   },
   {
     n: "02 · Drop in your action",
-    visual: <StepAction />,
-    title: "",
-    body: "An acquisition, a launch, a price change, a post. Choose where it enters — then run it once, A/B two decisions, or fan out a hundred futures.",
+    visual: <StepReason />,
+    title: "It reasons in character",
+    body: "Each entity thinks with a public face and a private interior that can diverge. Run it once, A/B two decisions, or fan out a hundred futures.",
   },
   {
     n: "03 · Watch it unfold",
-    visual: <StepFan />,
+    visual: <StepFutures />,
     title: "Live, and cited",
-    body: "Hundreds of reasoners think live — each with a public face and a private interior that can diverge. You read who reacts, why, and every outcome traces back to the event that caused it.",
+    body: "The action propagates tick by tick into a distribution of outcomes. You read who reacts and why — and every outcome traces back to the event that caused it.",
   },
 ];
 
@@ -142,22 +166,30 @@ export default function MarketingPage() {
         <MarketingHeroVisual />
       </header>
 
-      {/* One problem beat */}
+      <div className={s.divider} />
+
+      {/* Problem beat — the statement paired with the blind-spot visual */}
+      <Reveal>
       <section className={s.beat}>
-        <h2 className={s.beatText}>
-          You can map the decision. You can&apos;t map the{" "}
-          <em>world it lands in</em>.
-        </h2>
-        <p className={s.beatSub}>
-          You make the call, then you wait. The press runs an angle you didn&apos;t
-          anticipate. A community takes it as a signal you never meant to send. A
-          competitor moves. By the time you know what actually happened, you&apos;re
-          already in damage control — and the standard answer to &ldquo;what happens if we
-          do this?&rdquo; was gut, or a consultant&apos;s gut.
-        </p>
+        <div>
+          <h2 className={s.beatText}>
+            You can map the decision. You can&apos;t map the{" "}
+            <em>world it lands in</em>.
+          </h2>
+          <p className={s.beatSub}>
+            You make the call, then you wait. The press runs an angle you didn&apos;t
+            anticipate. A community takes it as a signal you never meant to send. A
+            competitor moves. By the time you know what actually happened, you&apos;re
+            already in damage control — and the standard answer to &ldquo;what happens if we
+            do this?&rdquo; was gut, or a consultant&apos;s gut.
+          </p>
+        </div>
+        <BeatVisual />
       </section>
+      </Reveal>
 
       {/* How it works — each step shows the product */}
+      <Reveal>
       <section className={`${s.section} ${s.sectionAlt}`}>
         <div className={s.wrap}>
           <div className={s.sectionHead}>
@@ -177,8 +209,12 @@ export default function MarketingPage() {
           </div>
         </div>
       </section>
+      </Reveal>
 
-      {/* The honest claim */}
+      <div className={s.divider} />
+
+      {/* The honest claim — paired with the distribution it describes */}
+      <Reveal>
       <section className={s.claim}>
         <div className={s.claimCard}>
           <h2 className={s.claimTitle}>A map, not a prediction.</h2>
@@ -189,10 +225,13 @@ export default function MarketingPage() {
             operator who has seen the <em>distribution of outcomes</em>, before they act,
             isn&apos;t flying blind. They&apos;re flying with a map.
           </p>
+          <ClaimVisual />
         </div>
       </section>
+      </Reveal>
 
       {/* Final CTA */}
+      <Reveal>
       <section className={s.finalCta}>
         <h2 className={s.finalTitle}>Watch your decision before you make it.</h2>
         <Link href="/app" className={s.ctaPrimary}>
@@ -203,6 +242,7 @@ export default function MarketingPage() {
           <span className={s.proofSep}>·</span> 32 futures for <b>$3</b>
         </div>
       </section>
+      </Reveal>
 
       <footer className={s.footer}>
         <span>
