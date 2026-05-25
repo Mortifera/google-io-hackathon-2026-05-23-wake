@@ -20,6 +20,7 @@ import { mapStream } from "@wake/util";
 
 export { loadWorld } from "./loadWorld";
 export { mutateWorldFromCascade } from "./mutate";
+export { cannedResponder } from "./canned";
 
 export interface RunOptions {
   /** Deterministic seed; Monte Carlo passes base+i per branch. */
