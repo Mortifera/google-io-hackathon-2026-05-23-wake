@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import type { World } from "@wake/contracts";
 import Stage from "../Stage";
+import ABRun from "../ABRun";
 import type { RunConfig } from "../Studio";
 import s from "../studio.module.css";
 
@@ -38,17 +39,9 @@ export default function RunStep({ config, onReconfigure }: Props) {
     );
   }
 
-  // A/B (two actions, single run each) — lands in Phase 3.
+  // A/B (two actions, single run each) — live side-by-side.
   if (n === 2) {
-    return (
-      <div className={s.placeholder}>
-        <div className={s.placeholderTitle}>A/B — two actions, side by side</div>
-        <p>The live A/B comparison is being wired up next.</p>
-        <button className={s.secondary} onClick={onReconfigure}>
-          ← Change the run
-        </button>
-      </div>
-    );
+    return <ABRun world={world} actions={actions} onReconfigure={onReconfigure} />;
   }
 
   // Single live cascade (1 × 1) — the existing Stage console, prop-driven.
