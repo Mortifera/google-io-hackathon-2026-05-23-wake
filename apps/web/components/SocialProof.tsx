@@ -8,31 +8,39 @@ import s from "../app/marketing.module.css";
  */
 const QUOTES = [
   {
-    highlight: "I ran a month of quiet work before we said a word.",
-    quote:
-      "Wake showed that two manager segments would read the layoff criteria as arbitrary, and that a specific alumni community would amplify it within hours. So we did not just rewrite the message. Over the four weeks before the announcement, we seeded that community with context through three people they already trusted, and rebuilt the all-hands deck for those two segments. The story I had been losing sleep over never appeared.",
-    name: "Meredith",
-    role: "Head of Communications",
-    org: "Series C SaaS",
-    color: "#f0556b",
+    lead: "The whole team had its favorite launch message. I ran all three through Wake before we committed, and watched the audience turn on the one we loved.",
+    rest: "It read as hype to exactly the people we needed on our side, and in the sim you could watch them push back, hard. The option we'd nearly cut was the one that spread. We shipped that, and it drove our biggest signup week yet. We'd have launched the favorite and spent months wondering why it fell flat.",
+    name: "Marcus",
+    role: "Head of Growth, developer tools",
+    color: "#4fd18b",
   },
   {
-    highlight: "It found the variable the financial model missed.",
-    quote:
-      "The financials were clean, but Wake surfaced a power-user segment already eyeing alternatives, the retention driver for an outsized share of revenue. Over the five weeks to close we ran a sequence: a private briefing before any announcement, a roadmap session where they shaped the first ninety days, then a reference-call chain they anchored. By announcement day they were on record as supporters, and six-month retention was the best of any deal in three years.",
-    name: "Daniel",
-    role: "VP, Corporate Development",
-    org: "late-stage tech",
+    lead: "Before we dropped prices to fight off a competitor, I ran it a few hundred times in Wake to see how it could go.",
+    rest: "Most of the time it was fine, but about a third of the runs turned into a price war, and they all came down to one thing: whether the competitor matched us in the first week. So we prepared for exactly that, and the war never started. I went in knowing the one move that would decide it.",
+    name: "Priya",
+    role: "Founder, fintech",
     color: "#5b9cf0",
   },
   {
-    highlight: "I turned the people most likely to kill it into the ones who launched it.",
-    quote:
-      "The board backed the pricing change, but Wake showed me our top power sellers would read it as a margin grab and go to press within a day. I had two weeks, so I called the eleven biggest sellers individually, walked them through the unit economics, and asked each to co-design the transition terms. By announcement day, four had already posted in support, and the story that would have run never had a hook.",
-    name: "Jasmine",
-    role: "Co-founder & CEO",
-    org: "Series B marketplace",
-    color: "#4fd18b",
+    lead: "Everyone was sure the acquisition would spook our customers, so we were ready to bury the announcement. I ran it through Wake first.",
+    rest: "The backlash we were all bracing for barely showed up: in almost every run it was a small, loud minority and the rest shrugged. What actually moved was the enterprise side, the acquisition made us a safer bet and they leaned in. So we did the opposite of the plan and led with it, loudly. We'd have buried our best quarter out of fear.",
+    name: "Daniel",
+    role: "VP, Corporate Development, late-stage tech",
+    color: "#f2b450",
+  },
+  {
+    lead: "I ran our reorg through Wake before we finalized the new structure.",
+    rest: "It showed me we were about to push out the exact senior people we were trying to keep, because the new roles would've felt like a demotion. So we redrew the structure itself, not just how we explained it. I caught it before it happened, not in the exit interviews.",
+    name: "Elena",
+    role: "Chief People Officer, enterprise software",
+    color: "#f0556b",
+  },
+  {
+    lead: "Before we announced the layoffs, I ran the rollout through Wake to see where it would break.",
+    rest: "What surprised me was that the wording barely mattered. What set people off was the order they found out: when the team leads heard it the same hour as their reports, they felt ambushed and said so, loudly. So we briefed the leads a day ahead and gave them time to sit with it. The backlash everyone braced for never came. We'd have spent that whole month wordsmithing the wrong thing.",
+    name: "Meredith",
+    role: "Head of Communications, Series C SaaS",
+    color: "#b06bf0",
   },
 ];
 
@@ -49,15 +57,13 @@ export default function SocialProof() {
       <div className={s.wrap}>
         <div className={s.sectionHead}>
           <h2 className={s.sectionTitle}>The operators who stopped guessing and started knowing.</h2>
-          <p className={s.sectionSub}>Heads of comms, corp dev, and founders, before the irreversible call.</p>
         </div>
         <StaggerReveal className={s.proofGrid}>
           {QUOTES.map((q) => (
             <figure className={s.proofCard} key={q.name}>
-              <div>
-                <p className={s.proofHighlight}>{q.highlight}</p>
-                <blockquote className={s.proofQuote}>&ldquo;{q.quote}&rdquo;</blockquote>
-              </div>
+              <blockquote className={s.proofQuote}>
+                &ldquo;<span className={s.proofLead}>{q.lead}</span> {q.rest}&rdquo;
+              </blockquote>
               <figcaption className={s.proofWho}>
                 <span
                   className={s.proofAvatar}
@@ -68,9 +74,7 @@ export default function SocialProof() {
                 </span>
                 <span className={s.proofMeta}>
                   <span className={s.proofName}>{q.name}</span>
-                  <span className={s.proofRole}>
-                    {q.role}, {q.org}
-                  </span>
+                  <span className={s.proofRole}>{q.role}</span>
                 </span>
               </figcaption>
             </figure>

@@ -607,15 +607,19 @@
 
 /* ── Social proof (illustrative testimonials) ── */
 .proof { position: relative; z-index: 1; padding: 84px 0; }
-.proofGrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-@media (max-width: 860px) { .proofGrid { grid-template-columns: 1fr; } }
+/* horizontal carousel: scroll-snap row, partial next card peeks to signal more */
+.proofGrid {
+  display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding-bottom: 16px; scroll-padding-left: 2px;
+}
 .proofCard {
+  flex: 0 0 min(340px, 82vw); scroll-snap-align: start;
   display: flex; flex-direction: column; justify-content: space-between; gap: 22px;
   border: 1px solid var(--border-soft); border-radius: 16px; padding: 26px;
   background: linear-gradient(180deg, rgba(17, 24, 38, 0.5), rgba(12, 17, 27, 0.35));
 }
-.proofHighlight { font-size: 18px; font-weight: 600; line-height: 1.35; letter-spacing: -0.015em; color: var(--text); margin-bottom: 12px; }
-.proofQuote { font-size: 14px; line-height: 1.6; color: var(--text-dim); }
+.proofQuote { font-size: 15px; line-height: 1.65; color: var(--text-dim); }
+.proofLead { color: var(--text); font-weight: 600; }
 .proofWho { display: flex; align-items: center; gap: 12px; }
 .proofAvatar {
   width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center;
