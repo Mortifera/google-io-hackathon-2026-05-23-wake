@@ -3,6 +3,7 @@ import MarketingHeroVisual from "../components/MarketingHeroVisual";
 import BeatVisual from "../components/BeatVisual";
 import ClaimVisual from "../components/ClaimVisual";
 import Reveal from "../components/Reveal";
+import SiteNav from "../components/SiteNav";
 import s from "./marketing.module.css";
 
 // Early-product landing, kept lean: hero (fan) → one problem beat → how it works
@@ -120,20 +121,9 @@ export default function MarketingPage() {
     <div className={s.root}>
       <div className={s.aurora} />
       <div className={s.grid} />
+      <div className={s.grain} />
 
-      <nav className={s.nav}>
-        <span className={s.brand}>
-          Wake<span className={s.dot}>.</span>
-        </span>
-        <div className={s.navRight}>
-          <Link href="/app" className={s.navLink}>
-            Prebuilt worlds
-          </Link>
-          <Link href="/app" className={s.navCta}>
-            Launch app
-          </Link>
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* Hero */}
       <header className={s.hero}>

@@ -1,23 +1,23 @@
 "use client";
 
 /**
- * Hero: one action fans into many futures. A single bright "action" node on the
- * left throws strands that diverge and settle into three outcome clusters on the
- * right — the product's Monte Carlo fan, the signature shape. Pure SVG + CSS
- * (a looping activation wave); no fixtures, no engine, so the landing stays fast.
+ * Hero: one action fans into many futures — read as REAL instrument output, not a
+ * decorative shape. A cool-white "action" core (the instrument is on) throws
+ * strands that settle into three NAMED outcome regimes with counts, the modal one
+ * marked pivotal. One coherent scenario ("Acquired by Microsoft") threaded through
+ * the page. Pure SVG + CSS, deterministic (hydration-safe), no engine.
  */
 import { useMemo } from "react";
 import s from "../app/marketing.module.css";
 
-const SEED_X = 60;
-const SEED_Y = 230;
-const END_X = 556;
+const SEED = { x: 64, y: 232 };
+const END_X = 468;
 
-// Three outcome clusters (the affect/cluster palette from globals.css).
+// The futures — affect/cluster palette. The middle regime is dominant (pivotal).
 const CLUSTERS = [
-  { color: "#4fd18b", center: 116, n: 7, spread: 70 }, // a calmer outcome
-  { color: "#f0556b", center: 250, n: 10, spread: 92 }, // the dominant regime
-  { color: "#f2b450", center: 380, n: 5, spread: 56 }, // a third regime
+  { key: "integration", name: "integration", count: 19, color: "#4fd18b", center: 118, n: 7, spread: 62, pivotal: false },
+  { key: "backlash", name: "backlash", count: 24, color: "#f0556b", center: 248, n: 10, spread: 96, pivotal: true },
+  { key: "competitor", name: "competitor", count: 9, color: "#f2b450", center: 372, n: 5, spread: 50, pivotal: false },
 ];
 
 interface Strand {
@@ -28,33 +28,31 @@ interface Strand {
   i: number;
 }
 
-function build(): Strand[] {
+function build() {
   const strands: Strand[] = [];
+  const labels: { y: number; cl: (typeof CLUSTERS)[number] }[] = [];
   let idx = 0;
   for (const cl of CLUSTERS) {
+    let sum = 0;
     for (let i = 0; i < cl.n; i++) {
       const t = cl.n === 1 ? 0.5 : i / (cl.n - 1);
       const jitter = ((i * 53) % 11) - 5; // deterministic (hydration-safe)
       const ey = Math.round(cl.center - cl.spread / 2 + t * cl.spread + jitter * 0.4);
       const ex = END_X + (((i * 37) % 9) - 4);
-      // Smooth fan: flat near the seed, curving out to the endpoint.
-      const d = `M ${SEED_X} ${SEED_Y} C ${SEED_X + 168} ${SEED_Y}, ${ex - 128} ${ey}, ${ex} ${ey}`;
+      const d = `M ${SEED.x} ${SEED.y} C ${SEED.x + 150} ${SEED.y}, ${ex - 120} ${ey}, ${ex} ${ey}`;
       strands.push({ d, ex, ey, color: cl.color, i: idx++ });
+      sum += ey;
     }
+    labels.push({ y: Math.round(sum / cl.n), cl });
   }
-  return strands;
+  return { strands, labels };
 }
 
 export default function MarketingHeroVisual() {
-  const strands = useMemo(build, []);
+  const { strands, labels } = useMemo(build, []);
   return (
     <div className={s.heroVisualWrap}>
-      <svg
-        className={s.fanSvg}
-        viewBox="0 0 600 460"
-        fill="none"
-        aria-hidden="true"
-      >
+      <svg className={s.fanSvg} viewBox="0 0 600 460" fill="none" aria-hidden="true">
         {strands.map((st) => (
           <path
             key={`s${st.i}`}
@@ -75,14 +73,38 @@ export default function MarketingHeroVisual() {
             style={{ animationDelay: `${(st.i % 8) * 0.18}s` }}
           />
         ))}
-        {/* the action */}
-        <circle className={s.fanSeedGlow} cx={SEED_X} cy={SEED_Y} r={16} />
-        <circle className={s.fanSeed} cx={SEED_X} cy={SEED_Y} r={6.5} />
+
+        {/* the action — a cool-white instrument core with a cyan live glow */}
+        <circle className={s.fanSeedGlow} cx={SEED.x} cy={SEED.y} r={16} />
+        <circle className={s.fanSeed} cx={SEED.x} cy={SEED.y} r={6.5} />
+        <text className={s.fanActionTag} x={30} y={SEED.y + 28}>
+          ACTION
+        </text>
+        <text className={s.fanActionName} x={30} y={SEED.y + 44}>
+          &ldquo;Acquired by Microsoft&rdquo;
+        </text>
+
+        {/* the futures — named outcome regimes with counts */}
+        <text className={s.fanFuturesTag} x={502} y={58}>
+          52 FUTURES
+        </text>
+        {labels.map(({ y, cl }) => (
+          <g key={cl.key}>
+            <line x1={END_X + 6} y1={y} x2={496} y2={y} stroke={cl.color} strokeWidth="1" opacity="0.5" />
+            <text className={s.fanClusterCount} x={502} y={y - 3} style={{ fill: cl.color }}>
+              {cl.count}
+            </text>
+            <text className={s.fanClusterName} x={502} y={y + 10}>
+              {cl.name}
+            </text>
+            {cl.pivotal && (
+              <text className={s.fanPivotTag} x={502} y={y + 23} style={{ fill: cl.color }}>
+                &#9666; pivotal
+              </text>
+            )}
+          </g>
+        ))}
       </svg>
-      <div className={s.fanLabels} aria-hidden="true">
-        <span className={s.fanLabelAction}>your action</span>
-        <span className={s.fanLabelFutures}>the futures</span>
-      </div>
     </div>
   );
 }
