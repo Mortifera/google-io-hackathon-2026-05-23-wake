@@ -4,6 +4,12 @@
 
 .root {
   position: relative; min-height: 100vh; overflow-x: hidden;
+  /* crisper type (kerning + ligatures); pairs with the global font-smoothing.
+     Note: we deliberately do NOT force text onto a GPU layer (translateZ) — that
+     drops sub-pixel AA and makes text blurrier, the opposite of the goal. */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   /* Landing-scoped palette (the /app studio keeps the global mint):
      starlight-white carries the brand/CTA, cold cyan is the "live" glow,
      and all saturated colour is reserved for the affect data. */
@@ -178,6 +184,14 @@
   0%, 100% { opacity: 0.12; transform: scale(0.9); }
   10% { opacity: 0.4; transform: scale(1.5); }
 }
+/* the fan branches out from the action node on load (one-time, group-level so it
+   doesn't touch the per-strand flow/hover logic) */
+.fanGrow { transform-box: view-box; transform-origin: 64px 232px; animation: fan-grow 1.2s var(--ease-out) both; }
+@keyframes fan-grow {
+  from { transform: scaleX(0.12); opacity: 0; }
+  to { transform: scaleX(1); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .fanGrow { animation: none; } }
 .fanLabels {
   position: absolute; inset: 0; pointer-events: none;
   font-family: var(--font-geist-mono), monospace; font-size: 11px;

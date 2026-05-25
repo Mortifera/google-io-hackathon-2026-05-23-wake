@@ -57,6 +57,7 @@ export default function MarketingHeroVisual() {
   return (
     <div className={s.heroVisualWrap}>
       <svg className={s.fanSvg} viewBox="0 0 600 460" fill="none">
+        <g className={s.fanGrow}>
         {strands.map((st) => (
           <path
             key={`s${st.i}`}
@@ -85,6 +86,7 @@ export default function MarketingHeroVisual() {
             }
           />
         ))}
+        </g>
 
         {/* the action - cool-white instrument core with a cyan live glow */}
         <circle className={s.fanSeedGlow} cx={SEED.x} cy={SEED.y} r={16} />
