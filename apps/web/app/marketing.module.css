@@ -614,7 +614,7 @@
   border: 1px solid var(--border-soft); border-radius: 16px; padding: 26px;
   background: linear-gradient(180deg, rgba(17, 24, 38, 0.5), rgba(12, 17, 27, 0.35));
 }
-.proofHighlight { font-size: 16.5px; font-weight: 600; line-height: 1.4; letter-spacing: -0.01em; color: var(--text); margin-bottom: 12px; }
+.proofHighlight { font-size: 18px; font-weight: 600; line-height: 1.35; letter-spacing: -0.015em; color: var(--text); margin-bottom: 12px; }
 .proofQuote { font-size: 14px; line-height: 1.6; color: var(--text-dim); }
 .proofWho { display: flex; align-items: center; gap: 12px; }
 .proofAvatar {

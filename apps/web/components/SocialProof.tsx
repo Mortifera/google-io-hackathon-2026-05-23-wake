@@ -10,7 +10,7 @@ const QUOTES = [
   {
     highlight: "I saw the audience before I addressed it.",
     quote:
-      "Forty-eight hours before announcing a 30% layoff, I ran the message through Wake. It surfaced the exact mid-level managers who would read the criteria as arbitrary, and the alumni community ready to amplify it. We rewrote for them directly, and the second story I had been dreading never broke. It was the first time I felt like I had seen the audience before I addressed it.",
+      "Forty-eight hours before a 30% layoff, Wake surfaced the managers who would read the criteria as arbitrary, and the alumni community ready to amplify it. We rewrote for them directly, and the second story I had been dreading never broke.",
     name: "Maya Ellison",
     role: "Head of Communications",
     org: "Series C SaaS",
@@ -19,7 +19,7 @@ const QUOTES = [
   {
     highlight: "It found what the diligence missed.",
     quote:
-      "The financial diligence on the acquisition was clean, but I had a feeling we were missing how the developer community would react. Within an hour, Wake surfaced the power users who would read it as an end-of-life signal, with alternatives already lined up. We rebuilt the comms and the integration timeline around that, and six-month retention was the best of any deal we had done in three years.",
+      "The financials were clean, but Wake surfaced the power users who would read the acquisition as an end-of-life signal, with alternatives already lined up. We rebuilt the comms around it, and six-month retention was the best of any deal in three years.",
     name: "Priya Nair",
     role: "VP, Corporate Development",
     org: "late-stage tech",
@@ -28,7 +28,7 @@ const QUOTES = [
   {
     highlight: "I walked into the board knowing.",
     quote:
-      "The board backed the pricing change. What I had not modeled was how our biggest power sellers would react in public. Wake built them as they actually are and ran the announcement: three had audiences that would turn it into press within a day. We called them first, and turned likely critics into our first supporters. The board asked how we anticipated it; we had run the simulation.",
+      "The board backed the pricing change. What I had not modeled was the power sellers who would turn it into press within a day, so we called them first and made them our earliest supporters.",
     name: "David Reyes",
     role: "Co-founder & CEO",
     org: "Series B marketplace",
