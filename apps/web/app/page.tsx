@@ -44,10 +44,10 @@ export default function MarketingPage() {
           </p>
           <div className={s.ctaRow}>
             <Link href="/app" className={s.ctaPrimary}>
-              Run it now →
+              Run a simulation →
             </Link>
             <Link href="/app" className={s.ctaSecondary}>
-              See a live example
+              See a live example →
             </Link>
           </div>
           <div className={s.proofline}>

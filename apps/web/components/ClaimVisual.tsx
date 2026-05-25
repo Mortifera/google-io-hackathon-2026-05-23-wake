@@ -42,9 +42,9 @@ export default function ClaimVisual() {
     let raf = 0;
     const t0 = performance.now();
     const loop = (t: number) => {
-      const v = (Math.sin((t - t0) / 3200) + 1) / 2; // 0..1, slow
+      const v = (Math.sin((t - t0) / 2600) + 1) / 2; // 0..1
       // As tone goes measured→blunt: backlash swells, integration recedes.
-      const hs = [70 - v * 34, 108 + v * 30, 52 + v * 10];
+      const hs = [70 - v * 44, 108 + v * 34, 52 + v * 16];
       for (let i = 0; i < HUMPS.length; i++) {
         const d = areaPath(HUMPS[i].cx, HUMPS[i].w, hs[i]);
         fills.current[i]?.setAttribute("d", d);

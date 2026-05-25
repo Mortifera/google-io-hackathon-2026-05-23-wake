@@ -38,7 +38,7 @@ export default function Pricing() {
               <li>Bring your own key — never stored</li>
             </ul>
             <Link href="/app" className={s.priceCtaLive}>
-              Run your decision →
+              Run a simulation →
             </Link>
           </div>
         </div>

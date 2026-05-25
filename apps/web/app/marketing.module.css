@@ -130,15 +130,11 @@
   box-shadow: 0 16px 48px rgba(105, 211, 227, 0.45), 0 0 22px rgba(105, 211, 227, 0.28);
 }
 .ctaSecondary {
-  font-size: 16px; font-weight: 500; padding: 14px 24px; border-radius: 11px;
-  color: var(--text); border: 1px solid var(--border);
-  background: rgba(17, 24, 38, 0.5); backdrop-filter: blur(8px);
-  transition: border-color 0.18s var(--ease-out), background 0.18s var(--ease-out);
+  font-size: 15.5px; font-weight: 500; padding: 14px 10px; border-radius: 10px;
+  color: var(--text-dim); display: inline-flex; align-items: center; gap: 6px;
+  transition: color 0.18s var(--ease-out), gap 0.18s var(--ease-out);
 }
-.ctaSecondary:hover {
-  border-color: var(--m-live); color: var(--m-live);
-  background: rgba(17, 24, 38, 0.85); transform: translateY(-1px);
-}
+.ctaSecondary:hover { color: var(--m-live); gap: 10px; }
 .proofline {
   margin-top: 24px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
   font-family: var(--font-geist-mono), monospace; font-size: 12.5px; color: var(--text-faint);
@@ -168,9 +164,9 @@
   animation: fan-seed 4s var(--ease-out) infinite;
 }
 @keyframes fan-flow {
-  0%, 100% { opacity: 0.16; }
-  18% { opacity: 0.7; }
-  52% { opacity: 0.24; }
+  0%, 100% { opacity: 0.2; }
+  16% { opacity: 0.85; }
+  50% { opacity: 0.3; }
 }
 @keyframes fan-dot {
   0%, 100% { opacity: 0.35; }
