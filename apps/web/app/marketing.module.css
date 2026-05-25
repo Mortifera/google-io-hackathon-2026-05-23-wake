@@ -395,8 +395,9 @@
 /* ── How it works — one continuous mechanism sequence ── */
 .how { position: relative; z-index: 1; padding: 76px 0; }
 .sectionSub { margin-top: 12px; font-size: 15px; color: var(--text-dim); }
-.flow { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-@media (max-width: 860px) { .flow { grid-template-columns: 1fr; gap: 36px; } }
+.flow { position: relative; }
+.flowBeats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+@media (max-width: 860px) { .flowBeats { grid-template-columns: 1fr; gap: 36px; } }
 .flowLine {
   position: absolute; top: 86px; left: 8%; right: 8%; height: 1px; z-index: 0;
   background: linear-gradient(90deg, transparent, var(--border) 12%, var(--m-live) 50%, var(--border) 88%, transparent);
@@ -571,6 +572,7 @@
 .priceCta:hover { border-color: var(--m-live); }
 .priceCtaLive { color: var(--accent-ink); background: var(--accent); }
 .priceCtaLive:hover { transform: translateY(-2px); box-shadow: 0 12px 34px var(--accent-glow); }
+.priceNote { max-width: 540px; margin: 24px auto 0; text-align: center; font-size: 13px; line-height: 1.55; color: var(--text-faint); }
 
 /* ── FAQ ── */
 .faq { position: relative; z-index: 1; padding: 84px 0; }

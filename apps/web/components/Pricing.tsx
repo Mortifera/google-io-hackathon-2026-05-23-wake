@@ -42,6 +42,10 @@ export default function Pricing() {
             </Link>
           </div>
         </div>
+        <p className={s.priceNote}>
+          A world is one modeled scenario. A typical decision is a single world; a full
+          fan of 32 futures runs about $3.
+        </p>
       </div>
     </section>
   );

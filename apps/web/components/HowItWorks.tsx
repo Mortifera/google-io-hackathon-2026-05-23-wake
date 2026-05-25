@@ -6,6 +6,7 @@
  * world → futures, the three product frames strung on a single through-line.
  * (Schwartz: syllogistic mechanization - each beat the consequent of the last.)
  */
+import StaggerReveal from "./StaggerReveal";
 import s from "../app/marketing.module.css";
 
 const AFFECT = ["#56c7d6", "#5b9cf0", "#4fd18b", "#f2b450", "#f0556b", "#b06bf0"];
@@ -116,6 +117,7 @@ export default function HowItWorks() {
         <div className={s.flow}>
           <div className={s.flowLine} aria-hidden="true" />
           <span className={s.flowPulse} aria-hidden="true" />
+          <StaggerReveal className={s.flowBeats}>
           {STEPS.map((step) => (
             <div className={s.flowBeat} key={step.n}>
               <div className={s.flowFrame}>
@@ -131,6 +133,7 @@ export default function HowItWorks() {
               <div className={s.flowBody}>{step.body}</div>
             </div>
           ))}
+          </StaggerReveal>
         </div>
       </div>
     </section>
