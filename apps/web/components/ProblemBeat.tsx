@@ -6,6 +6,7 @@
  * decision as a Wake world-model: bright, affect-coloured, alive. The visual
  * does the arguing; the copy stays short.
  */
+import StaggerReveal from "./StaggerReveal";
 import s from "../app/marketing.module.css";
 
 const AFFECT = ["#56c7d6", "#5b9cf0", "#4fd18b", "#f2b450", "#f0556b", "#b06bf0"];
@@ -51,7 +52,7 @@ export default function ProblemBeat() {
           hundreds of people, communities, and platforms who decide what it actually means.
         </p>
       </div>
-      <div className={s.baRow}>
+      <StaggerReveal className={s.baRow}>
         <figure className={s.baBefore}>
           <figcaption className={s.baTag}>how you decide now</figcaption>
           <div className={s.baFlat}>
@@ -70,7 +71,7 @@ export default function ProblemBeat() {
           <WorldGraph />
           <div className={s.baAfterFoot}>the world, modeled — every actor, reasoning</div>
         </figure>
-      </div>
+      </StaggerReveal>
     </section>
   );
 }

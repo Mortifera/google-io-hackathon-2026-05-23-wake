@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import StaggerReveal from "./StaggerReveal";
 import s from "../app/marketing.module.css";
 
 /**
@@ -31,7 +32,7 @@ export default function UseCases() {
             first changes the call.
           </p>
         </div>
-        <div className={s.ucGrid}>
+        <StaggerReveal className={s.ucGrid}>
           {CASES.map((c) => (
             <article
               key={c.k}
@@ -43,7 +44,7 @@ export default function UseCases() {
               <p className={s.ucDesc}>{c.d}</p>
             </article>
           ))}
-        </div>
+        </StaggerReveal>
       </div>
     </section>
   );
