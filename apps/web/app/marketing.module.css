@@ -1,0 +1,213 @@
+/* Marketing landing — the product front door. Reuses the observatory palette
+ * from globals.css; pure CSS (no client JS) so it stays a fast static page. */
+
+.root {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Aurora wash behind everything — slow, calm, on-brand. */
+.aurora {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 75% 8%, rgba(91, 156, 240, 0.12), transparent 60%),
+    radial-gradient(55% 45% at 12% 100%, rgba(91, 209, 160, 0.1), transparent 55%),
+    radial-gradient(40% 40% at 90% 90%, rgba(176, 107, 240, 0.07), transparent 60%);
+  animation: mkt-drift 24s var(--ease-in-out) infinite alternate;
+}
+@keyframes mkt-drift {
+  to { transform: translate3d(0, -2%, 0) scale(1.05); }
+}
+
+/* faint dotted field */
+.grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(231, 236, 246, 0.05) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: radial-gradient(120% 90% at 50% 0%, #000 30%, transparent 75%);
+}
+
+/* ── Nav ── */
+.nav {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 40px;
+}
+.brand {
+  font-size: 19px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.dot { color: var(--accent); }
+.navRight { display: flex; align-items: center; gap: 22px; }
+.navLink {
+  font-size: 14px;
+  color: var(--text-dim);
+  transition: color 0.18s var(--ease-out);
+}
+.navLink:hover { color: var(--text); }
+.navCta {
+  font-size: 14px;
+  font-weight: 550;
+  padding: 9px 16px;
+  border-radius: 9px;
+  color: #04130c;
+  background: var(--accent);
+  transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
+}
+.navCta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 26px rgba(91, 209, 160, 0.3);
+}
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 64px 24px 40px;
+}
+.eyebrow {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 26px;
+  animation: wake-fade-in 0.6s var(--ease-out) both;
+}
+.eyebrow b { color: var(--accent); font-weight: 500; }
+
+.headline {
+  font-size: clamp(40px, 7vw, 84px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  max-width: 16ch;
+  background: linear-gradient(180deg, #ffffff 0%, #cdd6e6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: wake-fade-in 0.7s var(--ease-out) 0.05s both;
+}
+
+.sub {
+  margin-top: 28px;
+  max-width: 56ch;
+  font-size: clamp(16px, 1.6vw, 20px);
+  line-height: 1.55;
+  color: var(--text-dim);
+  animation: wake-fade-in 0.7s var(--ease-out) 0.12s both;
+}
+.sub em { color: var(--text); font-style: normal; }
+
+.ctaRow {
+  margin-top: 40px;
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  animation: wake-fade-in 0.7s var(--ease-out) 0.2s both;
+}
+.ctaPrimary {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 26px;
+  border-radius: 11px;
+  color: #04130c;
+  background: var(--accent);
+  transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out);
+}
+.ctaPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 40px rgba(91, 209, 160, 0.34);
+}
+.ctaSecondary {
+  font-size: 16px;
+  font-weight: 500;
+  padding: 14px 24px;
+  border-radius: 11px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  background: rgba(17, 24, 38, 0.5);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.18s var(--ease-out), background 0.18s var(--ease-out);
+}
+.ctaSecondary:hover { border-color: var(--accent); background: rgba(17, 24, 38, 0.8); }
+
+.runline {
+  margin-top: 22px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12.5px;
+  color: var(--text-faint);
+  animation: wake-fade-in 0.7s var(--ease-out) 0.28s both;
+}
+.runline b { color: var(--accent-sky); font-weight: 500; }
+
+/* ── Value props ── */
+.props {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 24px 40px 72px;
+}
+@media (max-width: 760px) {
+  .props { grid-template-columns: 1fr; }
+}
+.prop {
+  padding: 24px;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  background: linear-gradient(180deg, rgba(17, 24, 38, 0.55), rgba(12, 17, 27, 0.4));
+  animation: wake-fade-in 0.7s var(--ease-out) 0.34s both;
+}
+.propBadge {
+  width: 30px; height: 30px; border-radius: 8px;
+  display: grid; place-items: center;
+  margin-bottom: 14px;
+  font-size: 15px;
+}
+.propTitle {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+}
+.propBody {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+.footer {
+  position: relative;
+  z-index: 1;
+  padding: 26px 40px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: var(--text-faint);
+}
