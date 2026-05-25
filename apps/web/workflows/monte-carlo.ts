@@ -20,13 +20,14 @@ const BATCH = 6; // parallel cascades per batch — bounds Gemini Tier-1 load
 const TEMPERATURE = 0.85;
 
 /** Build the LLM client inside a step (full Node + process.env). */
-async function makeLLM(mode: "gemini" | "mock") {
+async function makeLLM(mode: "gemini" | "mock", apiKey: string) {
   const mod = await import("@wake/llm");
   if (mode === "mock") {
     const { cannedResponder } = await import("@wake/kernel");
     return new mod.MockLLMClient({ responder: cannedResponder });
   }
-  return new mod.GeminiLLMClient();
+  // BYO key (from the request) takes precedence; falls back to the server env.
+  return new mod.GeminiLLMClient(apiKey ? { apiKey } : {});
 }
 
 /** Append one newline-delimited JSON chunk to the run's default stream. */
@@ -46,12 +47,13 @@ async function runOneCascade(
   seed: number,
   total: number,
   llmMode: "gemini" | "mock",
+  apiKey: string,
 ): Promise<Cascade> {
   "use step";
   const { runCascade } = await import("@wake/kernel");
   const { tickFn } = await import("@wake/nodes");
   const { edgeTransform } = await import("@wake/edges");
-  const llm = await makeLLM(llmMode);
+  const llm = await makeLLM(llmMode, apiKey);
   let cascade: Cascade;
   try {
     cascade = await runCascade(
@@ -91,6 +93,7 @@ export async function monteCarloWorkflow(
   seedId: string,
   variations: number,
   llmMode: "gemini" | "mock" = "gemini",
+  apiKey = "",
 ): Promise<MonteCarloResult> {
   "use workflow";
   const cascades: Cascade[] = [];
@@ -98,7 +101,7 @@ export async function monteCarloWorkflow(
     const end = Math.min(i + BATCH, variations);
     const batch: Promise<Cascade>[] = [];
     for (let j = i; j < end; j++) {
-      batch.push(runOneCascade(world, seedId, j + 1, variations, llmMode));
+      batch.push(runOneCascade(world, seedId, j + 1, variations, llmMode, apiKey));
     }
     const settled = await Promise.all(batch);
     for (const c of settled) cascades.push(c);

@@ -6,6 +6,7 @@ import type { SeedAction, World } from "@wake/contracts";
 import WorldStep, { type PrebuiltWorld } from "./steps/WorldStep";
 import ActionStep from "./steps/ActionStep";
 import RunStep from "./steps/RunStep";
+import KeyInput from "./KeyInput";
 import s from "./studio.module.css";
 
 export type { PrebuiltWorld };
@@ -131,6 +132,7 @@ export default function Studio({ prebuilt }: Props) {
             })}
           </div>
           <div className={s.barRight}>
+            <KeyInput />
             <Link href="/genesis" className={s.barLink}>
               /genesis
             </Link>

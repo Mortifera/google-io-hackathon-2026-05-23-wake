@@ -8,6 +8,7 @@
  */
 import { useCallback, useRef, useState } from "react";
 import type { World } from "@wake/contracts";
+import { getApiKey } from "./apiKey";
 
 // The six stages the pipeline emits, in order.
 export const GENESIS_STEPS = [
@@ -93,7 +94,7 @@ export function useGenesis(): UseGenesis {
         const res = await fetch("/api/genesis", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ scenario: scenario.trim(), budget, ticks }),
+          body: JSON.stringify({ scenario: scenario.trim(), budget, ticks, apiKey: getApiKey() }),
           signal: ctrl.signal,
         });
         if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);

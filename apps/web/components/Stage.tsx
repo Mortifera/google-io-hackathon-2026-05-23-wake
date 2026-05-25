@@ -15,6 +15,7 @@ import {
 } from "../lib/explain";
 import { appendTick, emptyCascade, openByoWorldStream, openCascadeStream } from "../lib/liveStream";
 import { usePlayback } from "../lib/usePlayback";
+import { getApiKey } from "../lib/apiKey";
 import { AFFECT_LEGEND, affectStyle } from "../lib/palette";
 import { DEFAULT_ACTION_ID, isLive, scenarioFor } from "../lib/scenarios";
 import GraphCanvas, { type TraceViz } from "./GraphCanvas";
@@ -230,7 +231,7 @@ export default function Stage({ world, studio }: Props) {
         fetch("/api/explain", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ seedActionId: actionId, question }),
+          body: JSON.stringify({ seedActionId: actionId, question, apiKey: getApiKey() }),
         })
           .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
           .then(

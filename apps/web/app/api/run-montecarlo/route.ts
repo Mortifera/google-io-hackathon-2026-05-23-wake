@@ -36,12 +36,17 @@ export async function POST(req: Request) {
   // Allow an offline mock run (no key) via {mock:true} or WAKE_LLM=mock.
   const mock =
     Boolean((body as { mock?: unknown }).mock) || process.env.WAKE_LLM === "mock";
+  // BYO key (per request) — transits the workflow run's event log (local
+  // .workflow-data in dev); used only for this run, never persisted by us.
+  const apiKeyRaw = (body as { apiKey?: unknown }).apiKey;
+  const apiKey = typeof apiKeyRaw === "string" ? apiKeyRaw.trim() : "";
 
   const run = await start(monteCarloWorkflow, [
     parsed.data,
     seed,
     m,
     mock ? "mock" : "gemini",
+    apiKey,
   ]);
 
   return new Response(run.readable as unknown as ReadableStream<Uint8Array>, {

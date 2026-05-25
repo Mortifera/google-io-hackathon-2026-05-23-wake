@@ -347,3 +347,45 @@
   color: var(--text-dim);
 }
 .placeholderTitle { font-size: 18px; font-weight: 600; color: var(--text); }
+
+/* BYO API key control */
+.keyWrap { position: relative; }
+.keyBtn {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 13px; color: var(--text-dim);
+  background: transparent; border: 1px solid var(--border);
+  padding: 6px 12px; border-radius: 8px; cursor: pointer;
+  transition: border-color 0.16s, color 0.16s;
+}
+.keyBtn:hover { color: var(--text); border-color: var(--text-faint); }
+.keyBtn[data-has="true"] { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.keyDot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-faint); }
+.keyDot[data-has="true"] { background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
+.keyPop {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 50;
+  width: 320px; padding: 16px;
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 12px; box-shadow: var(--shadow-1);
+  animation: wake-fade-in 0.16s var(--ease-out);
+}
+.keyLabel { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-faint); margin-bottom: 8px; }
+.keyField {
+  width: 100%; padding: 10px 12px; font-size: 13px;
+  font-family: var(--font-geist-mono), monospace;
+  color: var(--text); background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.keyField:focus { outline: none; border-color: var(--accent); }
+.keyHint { font-size: 11.5px; color: var(--text-faint); line-height: 1.5; margin: 10px 0 14px; }
+.keyHint a { color: var(--accent); }
+.keyActions { display: flex; justify-content: flex-end; gap: 8px; }
+.keyClear {
+  font-size: 13px; color: var(--text-dim); background: transparent;
+  border: 1px solid var(--border); padding: 7px 14px; border-radius: 8px; cursor: pointer;
+}
+.keyClear:hover { color: var(--hostile); border-color: color-mix(in srgb, var(--hostile) 40%, transparent); }
+.keySave {
+  font-size: 13px; font-weight: 600; color: #04130c; background: var(--accent);
+  border: none; padding: 7px 16px; border-radius: 8px; cursor: pointer;
+}
+.keySave:disabled { opacity: 0.4; cursor: not-allowed; }

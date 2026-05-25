@@ -5,6 +5,7 @@ import type {
   Tick,
   World,
 } from "@wake/contracts";
+import { getApiKey } from "./apiKey";
 
 /** Divergence on the wire may be a bare count or a {tick,count} point. */
 export type StreamDivergence = number | { tick: number; count: number };
@@ -189,7 +190,7 @@ export function openByoWorldStream(
       const res = await fetch("/api/stream-cascade", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ world: byoWorld, seed }),
+        body: JSON.stringify({ world: byoWorld, seed, apiKey: getApiKey() }),
         signal: ctrl.signal,
       });
       if (!res.ok || !res.body) {
@@ -284,7 +285,7 @@ export function startMonteCarlo(
       const res = await fetch("/api/run-montecarlo", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ world, seedId, variations }),
+        body: JSON.stringify({ world, seedId, variations, apiKey: getApiKey() }),
         signal: ctrl.signal,
       });
       if (!res.ok || !res.body) {
