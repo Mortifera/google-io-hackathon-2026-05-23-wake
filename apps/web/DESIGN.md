@@ -14,10 +14,19 @@ hero fan, the how-it-works sequence, and the claim distribution. One real demo,
 not a gallery of unrelated diagrams. (Schwartz: identification images must be
 specific to *this* product; subtract anything a competitor could also use.)
 
-## Palette (tokens in globals.css)
+## Palette — landing-scoped (the /app studio keeps the global mint)
+Defined on `.root` in `marketing.module.css`, overriding the global tokens so the
+brand reads "dark observatory / precision," not "AI-startup mint":
 - Surfaces: `--bg #06080d` (top) → `--bg-deep #04060a` (bottom). The page
   **descends into the dark** — see Scroll-depth grammar.
-- Accent: mint `--accent #5bd1a0` (the action / primary CTA), sky `--accent-sky`.
+- **Brand / CTA: starlight white** (`--accent` overridden to `#eef3f9`, ink
+  `--accent-ink`). Premium white-on-black confidence; not mint.
+- **"Live" glow: cold cyan** (`--m-live #69d3e3`, `--accent-glow` cyan) — the
+  instrument is *on*. Used for pulses, seed cores' glow, focus, dividers, the
+  caret, FAQ markers.
+- **All saturated colour is reserved for the affect data** (below). Brand ≠ any
+  data hue, so the data colours mean something. (Schwartz: colour must mean
+  something + fit the identity.)
 - Outcome / affect ramp (the product's signature color language):
   calm `#56c7d6` · attentive `#5b9cf0` · excited/integration `#4fd18b` ·
   alarmed/competitor `#f2b450` · hostile/backlash `#f0556b` · churning `#b06bf0`.
@@ -44,14 +53,24 @@ The "stacked sections" / generic feel was a *form* problem. Rules:
 - Sections are separated by **thin horizontal rules** (`.divider`, a hairline +
   a single accent node). **Never** a card border, background band, or shadow box
   to delimit a section. The page reads as *one continuous document*, not a slideshow.
-- **Every section gets a distinct layout** (no repeated 3-card grid):
-  | Section | Layout | Length |
-  |---|---|---|
-  | Hero | split: copy left (centered), live fan right, full-height | short |
-  | Problem beat | before/after split: dim flat-tool ‖ bright Wake world | shorter |
-  | How it works | one continuous L→R mechanism sequence (action→graph→fan) | medium |
-  | Claim | animated distribution + institutional caption set off by a rule | short |
-  | CTA | sparse, boxless: headline + button + one permission line in open dark | very short |
+- **Every section gets a distinct layout** (no repeated 3-card grid). The arc
+  descends into the dark; **Use Cases is the one LIGHT section** — a deliberate
+  "step into daylight and see your own decisions" beat + mid-page relief:
+  | # | Section | Layout | Emotion |
+  |---|---|---|---|
+  | 1 | Hero | split: copy left, live fan right, full-height | desire |
+  | 2 | Trust strip | slim mono credibility band | credibility |
+  | 3 | Problem | before/after: dim flat-tool ‖ bright Wake world | recognition |
+  | 4 | How it works | one continuous L→R sequence on a through-line | belief |
+  | 5 | Use cases | **LIGHT** asymmetric bento (big tile + small) | identification |
+  | 6 | Claim | the distribution that *moves* (animated regimes) | trust |
+  | 7 | Pricing | two transparent cards (free / ~2¢ live) | confidence |
+  | 8 | FAQ | native `<details>` accordion (objection handling) | doubts gone |
+  | 9 | CTA | sparse, boxless headline + button in open dark | invitation |
+  | 10 | Footer | brand + link columns + bar | legitimacy |
+- Section separators are **thin rules** (`.divider`) — never a card/band/box.
+- Undocking nav (`SiteNav`): flush + transparent at top, contracts to a blurred
+  floating island past ~70% of the first viewport.
 
 ## Visuals = demonstration, not decoration
 Each visual must be something the eye can *verify* as real output:
