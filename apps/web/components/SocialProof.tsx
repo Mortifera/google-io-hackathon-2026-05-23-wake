@@ -8,6 +8,7 @@ import s from "../app/marketing.module.css";
  */
 const QUOTES = [
   {
+    highlight: "I saw the audience before I addressed it.",
     quote:
       "Forty-eight hours before announcing a 30% layoff, I ran the message through Wake. It surfaced the exact mid-level managers who would read the criteria as arbitrary, and the alumni community ready to amplify it. We rewrote for them directly, and the second story I had been dreading never broke. It was the first time I felt like I had seen the audience before I addressed it.",
     name: "Maya Ellison",
@@ -16,6 +17,7 @@ const QUOTES = [
     color: "#f0556b",
   },
   {
+    highlight: "It found what the diligence missed.",
     quote:
       "The financial diligence on the acquisition was clean, but I had a feeling we were missing how the developer community would react. Within an hour, Wake surfaced the power users who would read it as an end-of-life signal, with alternatives already lined up. We rebuilt the comms and the integration timeline around that, and six-month retention was the best of any deal we had done in three years.",
     name: "Priya Nair",
@@ -24,6 +26,7 @@ const QUOTES = [
     color: "#5b9cf0",
   },
   {
+    highlight: "I walked into the board knowing.",
     quote:
       "The board backed the pricing change. What I had not modeled was how our biggest power sellers would react in public. Wake built them as they actually are and ran the announcement: three had audiences that would turn it into press within a day. We called them first, and turned likely critics into our first supporters. The board asked how we anticipated it; we had run the simulation.",
     name: "David Reyes",
@@ -51,7 +54,10 @@ export default function SocialProof() {
         <StaggerReveal className={s.proofGrid}>
           {QUOTES.map((q) => (
             <figure className={s.proofCard} key={q.name}>
-              <blockquote className={s.proofQuote}>&ldquo;{q.quote}&rdquo;</blockquote>
+              <div>
+                <p className={s.proofHighlight}>{q.highlight}</p>
+                <blockquote className={s.proofQuote}>&ldquo;{q.quote}&rdquo;</blockquote>
+              </div>
               <figcaption className={s.proofWho}>
                 <span
                   className={s.proofAvatar}
