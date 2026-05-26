@@ -101,8 +101,8 @@
   max-width: 1120px; margin: 0 auto; padding: 104px 32px 72px; min-height: 90vh;
 }
 @media (max-width: 900px) {
-  .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 88px; gap: 8px; }
-  .heroVisualWrap { order: -1; height: 280px; }
+  .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 88px; gap: 20px; }
+  .heroVisualWrap { order: 1; height: 280px; } /* headline first, fan below */
 }
 .heroCopy { animation: wake-fade-in 0.7s var(--ease-out) both; }
 .heroEyebrow { margin-bottom: 22px; }
@@ -713,10 +713,28 @@
 .proofDotOn::before { width: 22px; border-radius: 4px; background: var(--accent); opacity: 1; }
 .proofDot:focus-visible { outline: 2px solid var(--m-live); outline-offset: 2px; border-radius: 8px; }
 
+/* in-page anchor targets clear the floating nav when jumped to via footer/nav links */
+.how, .pricing, .faq { scroll-margin-top: 90px; }
+
 @media (max-width: 700px) {
   .proofHead { margin-bottom: 22px; }
   .proofNav { display: none; } /* mobile = swipe + dots */
   .proofScroller::before, .proofScroller::after { width: 28px; }
+  /* carousel: clear next-card peek so "swipe" is obvious */
+  .proofCard { flex-basis: 80vw; }
+  /* tighten vertical rhythm so the page reads as intentional, not airy */
+  .hero { padding-bottom: 44px; }
+  .beat2 { padding: 52px 24px; }
+  .how { padding: 48px 0; }
+  .uc { padding: 56px 0; }
+  .proof { padding: 56px 0; }
+  .pricing { padding: 52px 0; }
+  .faq { padding: 48px 0; }
+  .finalCta { padding: 56px 24px 60px; }
+  /* footer: even 3-column block instead of an unbalanced 2 + 1 wrap
+     (scoped to .footer2 to outrank the later base rules in the cascade) */
+  .footer2 .footerInner { flex-direction: column; gap: 30px; }
+  .footer2 .footerCols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px 16px; }
 }
 
 /* ── Claim — animated distribution knob ── */
