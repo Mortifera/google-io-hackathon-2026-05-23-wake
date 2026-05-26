@@ -14,15 +14,12 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export async function POST(req: Request) {
-  const key =
+  const envKey =
     process.env.GEMINI_API_KEY ||
     process.env.GOOGLE_API_KEY ||
     process.env.GOOGLE_GENERATIVE_AI_API_KEY;
-  if (!key) {
-    return NextResponse.json({ error: "no-key" }, { status: 503 });
-  }
 
-  let body: { seedActionId?: string; question?: string };
+  let body: { seedActionId?: string; question?: string; apiKey?: string };
   try {
     body = await req.json();
   } catch {
@@ -32,11 +29,16 @@ export async function POST(req: Request) {
   if (!question) {
     return NextResponse.json({ error: "no-question" }, { status: 400 });
   }
+  // Per-request key (BYO) falls back to the server env.
+  const key = (body.apiKey && body.apiKey.trim()) || envKey;
+  if (!key) {
+    return NextResponse.json({ error: "no-key" }, { status: 503 });
+  }
 
   const cascade = scenarioFor(body.seedActionId ?? "").cascade as Cascade;
 
   try {
-    const llm = new GeminiLLMClient();
+    const llm = new GeminiLLMClient({ apiKey: key });
     const result = await explain(cascade, question, llm);
     // A one-sentence headline for the on-stage caption; the full multi-sentence
     // answer goes to the inspector panel.

@@ -265,9 +265,9 @@ export default function GenesisClient() {
           <span className={s.navDesc}>building a new world</span>
         </div>
         <div className={s.navRight}>
-          <a href="/" className={s.navLink}>sim</a>
+          <a href="/app" className={s.navLink}>app</a>
           <span className={s.navSep}>·</span>
-          <a href="/" className={s.navLink}>format</a>
+          <a href="/" className={s.navLink}>home</a>
         </div>
       </nav>
 
@@ -451,14 +451,14 @@ export default function GenesisClient() {
               Download world.json
             </button>
             <a
-              href={`/?byoWorld=${encodeURIComponent(world.id)}`}
+              href={`/app?byoWorld=${encodeURIComponent(world.id)}`}
               className={s.runBtn}
               onClick={(e) => {
                 e.preventDefault();
                 // Encode world as query param is too large; use sessionStorage.
                 try {
                   sessionStorage.setItem("byo-world", JSON.stringify(world));
-                  window.location.href = "/?byo=1";
+                  window.location.href = "/app?byo=1";
                 } catch {
                   // Fallback: download only
                   handleDownload();

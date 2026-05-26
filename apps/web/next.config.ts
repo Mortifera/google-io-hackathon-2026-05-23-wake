@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import path from "node:path";
+import { withWorkflow } from "workflow/next";
 
 const repoRoot = path.resolve(process.cwd(), "..", "..");
 
@@ -13,6 +14,7 @@ const nextConfig: NextConfig = {
     "@wake/kernel",
     "@wake/nodes",
     "@wake/edges",
+    "@wake/analysis",
   ],
   // We import fixtures/worlds JSON from the monorepo root; pin the root so
   // Turbopack resolves and traces files outside apps/web correctly.
@@ -35,4 +37,4 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: repoRoot,
 };
 
-export default nextConfig;
+export default withWorkflow(nextConfig);

@@ -1,4 +1,11 @@
-import type { Cascade, StateSnapshot, Tick, World } from "@wake/contracts";
+import type {
+  Cascade,
+  MonteCarloResult,
+  StateSnapshot,
+  Tick,
+  World,
+} from "@wake/contracts";
+import { getApiKey } from "./apiKey";
 
 /** Divergence on the wire may be a bare count or a {tick,count} point. */
 export type StreamDivergence = number | { tick: number; count: number };
@@ -183,7 +190,7 @@ export function openByoWorldStream(
       const res = await fetch("/api/stream-cascade", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ world: byoWorld, seed }),
+        body: JSON.stringify({ world: byoWorld, seed, apiKey: getApiKey() }),
         signal: ctrl.signal,
       });
       if (!res.ok || !res.body) {
@@ -240,6 +247,82 @@ export function openByoWorldStream(
       if (!closed) fail();
     } catch (err) {
       if ((err as Error).name !== "AbortError") fail();
+    }
+  })();
+
+  return { close: cleanup };
+}
+
+export interface MonteCarloHandlers {
+  /** Fires once per finished cascade — `done` counts completed, `total` is M. */
+  onProgress: (done: number, total: number) => void;
+  onResult: (result: MonteCarloResult) => void;
+  onError: () => void;
+}
+
+/**
+ * Start a Monte Carlo run via the Vercel Workflow route and consume its
+ * newline-delimited JSON stream (progress chunks + a final result). Returns a
+ * handle whose close() aborts the request. No EventSource — the workflow route
+ * streams over a POST body, same shape as the BYO cascade reader.
+ */
+export function startMonteCarlo(
+  world: World,
+  seedId: string,
+  variations: number,
+  handlers: MonteCarloHandlers,
+): LiveHandle {
+  const ctrl = new AbortController();
+  let done = 0;
+  let closed = false;
+  const cleanup = () => {
+    closed = true;
+    ctrl.abort();
+  };
+
+  void (async () => {
+    try {
+      const res = await fetch("/api/run-montecarlo", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ world, seedId, variations, apiKey: getApiKey() }),
+        signal: ctrl.signal,
+      });
+      if (!res.ok || !res.body) {
+        handlers.onError();
+        return;
+      }
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = "";
+      while (!closed) {
+        const { value, done: streamDone } = await reader.read();
+        if (streamDone) break;
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split("\n");
+        buf = lines.pop() ?? "";
+        for (const line of lines) {
+          const t = line.trim();
+          if (!t) continue;
+          let msg: { type: string; total?: number; result?: MonteCarloResult };
+          try {
+            msg = JSON.parse(t);
+          } catch {
+            continue;
+          }
+          if (msg.type === "progress") {
+            done += 1;
+            handlers.onProgress(done, msg.total ?? variations);
+          } else if (msg.type === "result" && msg.result) {
+            handlers.onResult(msg.result);
+          } else if (msg.type === "error") {
+            handlers.onError();
+            return;
+          }
+        }
+      }
+    } catch (err) {
+      if ((err as Error).name !== "AbortError") handlers.onError();
     }
   })();
 

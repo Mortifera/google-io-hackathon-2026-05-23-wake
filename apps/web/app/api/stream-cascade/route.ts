@@ -118,6 +118,10 @@ export async function POST(req: Request) {
 
   const uploadedWorld = parsed.data;
   const seed = String((body as Record<string, unknown>)?.seed ?? uploadedWorld.seeds[0]?.id ?? "");
+  // Bring-your-own key (per request) takes precedence over the server env. Used
+  // only for this request; never persisted or logged.
+  const userKey = (body as Record<string, unknown>)?.apiKey;
+  const effectiveKey = (typeof userKey === "string" && userKey.trim()) || key;
 
   const encoder = new TextEncoder();
 
@@ -135,8 +139,8 @@ export async function POST(req: Request) {
       const heartbeat = setInterval(() => send(`: keep-alive\n\n`), HEARTBEAT_MS);
 
       try {
-        if (!key) throw new Error("no Gemini API key configured");
-        const llm = new GeminiLLMClient();
+        if (!effectiveKey) throw new Error("no Gemini API key configured");
+        const llm = new GeminiLLMClient({ apiKey: effectiveKey });
 
         for await (const ev of runCascadeStream(
           uploadedWorld,

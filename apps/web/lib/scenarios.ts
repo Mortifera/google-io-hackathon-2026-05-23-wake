@@ -1,4 +1,4 @@
-import type { Cascade, MonteCarloResult } from "@wake/contracts";
+import type { Cascade, MonteCarloResult, SeedAction, World } from "@wake/contracts";
 import acquisitionCascade from "@fixtures/cascades/notion-world.acquisition.json";
 import acquisitionMc from "@fixtures/montecarlo/notion-world.acquisition.json";
 import freeTierCascade from "@fixtures/cascades/notion-world.free-tier-removal.json";
@@ -77,6 +77,22 @@ export function scenarioFor(actionId: string): Scenario {
 
 export function isLive(actionId: string): boolean {
   return actionId in SCENARIOS;
+}
+
+/**
+ * Find a precomputed scenario for a prebuilt world + action — but ONLY when the
+ * action is unmodified from the world's seed and the precompute was generated
+ * from this same world. Lets prebuilt picks replay instantly (no live spend);
+ * any edit to the action, or a different world, falls through to a live run.
+ */
+export function precomputedFor(world: World, action: SeedAction): Scenario | null {
+  const seed = world.seeds.find((s) => s.id === action.id);
+  if (!seed || seed.payload !== action.payload) return null; // edited → run it live
+  const scen = SCENARIOS[action.id];
+  if (!scen) return null;
+  const fromWorld = scen.cascade.meta?.worldId;
+  if (fromWorld && world.id && fromWorld !== world.id) return null; // different world
+  return scen;
 }
 
 /**

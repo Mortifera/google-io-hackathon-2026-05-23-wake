@@ -1,3 +1,4 @@
+.gstack
 # Dependencies
 node_modules/
 .pnp
@@ -25,6 +26,7 @@ out/
 runs/
 *.cascade.json
 .cache/
+.workflow-data/
 
 # Editor / OS
 .DS_Store

@@ -22,12 +22,19 @@ export async function POST(req: Request) {
   let scenario: string;
   let budget: number;
   let ticks: number;
+  let userKey = "";
 
   try {
-    const body = (await req.json()) as { scenario?: string; budget?: unknown; ticks?: unknown };
+    const body = (await req.json()) as {
+      scenario?: string;
+      budget?: unknown;
+      ticks?: unknown;
+      apiKey?: unknown;
+    };
     scenario = (body.scenario ?? "").trim();
     budget = Number(body.budget ?? 5);
     ticks = Number(body.ticks ?? 12);
+    if (typeof body.apiKey === "string") userKey = body.apiKey.trim();
     if (!scenario) throw new Error("scenario is required");
     if (!Number.isFinite(budget) || budget <= 0) budget = 5;
     if (!Number.isFinite(ticks) || ticks < 1) ticks = 12;
@@ -39,6 +46,7 @@ export async function POST(req: Request) {
   }
 
   const key =
+    userKey ||
     process.env.GEMINI_API_KEY ||
     process.env.GOOGLE_API_KEY ||
     process.env.GOOGLE_GENERATIVE_AI_API_KEY;
